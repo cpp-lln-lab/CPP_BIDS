@@ -1,12 +1,7 @@
+function test_saveEventsFile()
 % test for events.tsv file creation
 
-% add parent folder to the parth
-addpath(genpath(fullfile(fileparts(mfilename), '..')))
-
-
 %% set up
-
-clear
 
 expParameters.subjectGrp = '';
 expParameters.subjectNb = 1;

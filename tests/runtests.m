@@ -1,4 +1,4 @@
-function results = bids_runtests(pth)
+function results = runtests(pth)
 % Run tests
 % List all the 'test_*.m' files located in the same directory as this
 % function, run them and keep track of how many passed, failed or are
@@ -32,6 +32,7 @@ for i=1:numel(d)
         fprintf('%s',d(i).name(1:end-2));
         feval(d(i).name(1:end-2));
         results(i).Passed = true;
+        
     catch err
         results(i).Failed = true;
         fprintf('\n%s',err.message);

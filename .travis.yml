@@ -31,4 +31,4 @@ before_script:
   - cd tests
 
 script:
-  - octave $OCTFLAGS --eval "results = bids_runtests; assert(all(~[results.Failed]))"
+  - octave $OCTFLAGS --eval "results = runtests; assert(all(~[results.Failed]))"

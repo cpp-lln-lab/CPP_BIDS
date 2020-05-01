@@ -1,12 +1,8 @@
+function test_createFilename()
+
 % test for filename creation and their directories
 
-% add parent folder to the parth
-addpath(genpath(fullfile(fileparts(mfilename), '..')))
-
-
 %% check directory and filename creation (PC and eyetracker)
-
-clear
 
 expParameters.subjectGrp = '';
 expParameters.subjectNb = 1;

@@ -26,7 +26,8 @@ pattern = ['%0' num2str(zeroPadding) '.0f'];
 
 dateFormat = 'yyyymmdd_HHMM';
 
-
+% Setting some defaults: no need to change things here
+expParameters = checkCFG(expParameters);
 
 % extract input
 subjectGrp = expParameters.subjectGrp;

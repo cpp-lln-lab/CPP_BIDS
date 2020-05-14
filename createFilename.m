@@ -1,9 +1,9 @@
 function expParameters = createFilename(expParameters, cfg)
 % create the BIDS compliant directories and filenames for the behavioral output for this subject /
-% session / run.
+% session / run using the information from cfg and expParameters.
 % Will also create the right filename for the eyetracking data file.
 %
-% For the moment the date of acquisition is appreneded to the filename
+% For the moment the date of acquisition is appended to the filename
 %
 % can work for behavioral experiment if cfg.device is set to 'PC'
 % can work for fMRI experiment if cfg.device is set to 'scanner'
@@ -20,6 +20,9 @@ function expParameters = createFilename(expParameters, cfg)
 %
 % EYETRACKER
 % sub-<participant_label>[_ses-<label>][_acq-<label>]_task-<task_label>_eyetrack.<manufacturer_specific_extension>
+%
+%
+% See test_createFilename in the test folder for more details on how to use it.
 
 zeroPadding = 3;
 pattern = ['%0' num2str(zeroPadding) '.0f'];
@@ -97,49 +100,49 @@ end
 %% create filenames
 
 switch modality
-    
+
     case 'beh'
-        
+
         expParameters.fileName.events = ...
             [expParameters.fileName.base, runSuffix, '_events_date-' expParameters.date '.tsv'];
-        
+
     case 'func'
-        
+
         expParameters.fileName.events = ...
             [expParameters.fileName.base, ...
             expParameters.acqSuffix, expParameters.ceSuffix, ...
             expParameters.dirSuffix, expParameters.recSuffix, ...
             runSuffix, expParameters.echoSuffix, ...
             '_events_date-' expParameters.date '.tsv'];
-        
+
 end
 
 if cfg.eyeTracker
-    
+
     expParameters.fileName.eyetracker = ...
         [expParameters.fileName.base, expParameters.acqSuffix, ...
         runSuffix, '_eyetrack_date-' expParameters.date '.edf'];
-    
+
 end
 
 if expParameters.verbose
-    
+
     fprintf(1,'\nData will be saved in this directory:\n\t%s\n', ...
         fullfile(expParameters.outputDir, modality));
-    
+
     fprintf(1,'\nData will be saved in this file:\n\t%s\n', ...
         expParameters.fileName.events);
-    
+
     if cfg.eyeTracker
-        
+
         fprintf(1,'\nEyetracking data will be saved in this directory:\n\t%s\n', ...
             fullfile(expParameters.outputDir, 'eyetracker'));
 
         fprintf(1,'\nEyetracking data will be saved in this file:\n\t%s\n', ...
             expParameters.fileName.eyetracker);
-        
+
     end
-    
+
 end
 
 

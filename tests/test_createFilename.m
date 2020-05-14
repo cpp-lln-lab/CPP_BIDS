@@ -9,6 +9,7 @@ expParameters.subjectNb = 1;
 expParameters.sessionNb = 1;
 expParameters.runNb = 1;
 expParameters.task = 'testtask';
+expParameters.verbose = 1;
 
 cfg.eyeTracker = true;
 cfg.device = 'PC';

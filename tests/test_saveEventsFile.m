@@ -8,6 +8,7 @@ expParameters.subjectNb = 1;
 expParameters.sessionNb = 1;
 expParameters.runNb = 1;
 expParameters.task = 'testtask';
+expParameters.verbose = 1;
 
 cfg.eyeTracker = false;
 cfg.device = 'scanner';
@@ -72,4 +73,4 @@ assert(isequal(C{4}{1}, 'speed')); % check header
 assert(isequal(C{4}{2}, 'NaN')); % check that empty values are entered as NaN
 assert(isequal(C{4}{4}, 'NaN')); % check that missing fields are entered as NaN
 
-assert(isequal(str2num(C{5}{4}), 3)); % check values entered properly
+assert(isequal(str2double(C{5}{4}), 3)); % check values entered properly

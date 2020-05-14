@@ -74,12 +74,6 @@ switch input
         fclose(logFile(1).eventLogFile);
         
         if expParameters.verbose
-            fprintf(1,'\nData were saved in this file:\n\n%s\n\n', ...
-                fullfile(...
-                expParameters.outputDir, ...
-                expParameters.modality, ...
-                expParameters.fileName.events));
-            
-        end
+        fullfile(expParameters.outputDir, expParameters.modality, expParameters.fileName.events)
         
 end

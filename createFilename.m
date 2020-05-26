@@ -100,49 +100,59 @@ end
 %% create filenames
 
 switch modality
-
+    
     case 'beh'
-
+        
         expParameters.fileName.events = ...
             [expParameters.fileName.base, runSuffix, '_events_date-' expParameters.date '.tsv'];
-
+        
+        expParameters.fileName.stim = ...
+            [expParameters.fileName.base, runSuffix, '_stim_date-' expParameters.date '.tsv'];
+        
     case 'func'
-
+        
         expParameters.fileName.events = ...
             [expParameters.fileName.base, ...
             expParameters.acqSuffix, expParameters.ceSuffix, ...
             expParameters.dirSuffix, expParameters.recSuffix, ...
             runSuffix, expParameters.echoSuffix, ...
             '_events_date-' expParameters.date '.tsv'];
-
+        
+        expParameters.fileName.stim = ...
+            [expParameters.fileName.base, ...
+            expParameters.acqSuffix, expParameters.ceSuffix, ...
+            expParameters.dirSuffix, expParameters.recSuffix, ...
+            runSuffix, expParameters.echoSuffix, ...
+            '_stim_date-' expParameters.date '.tsv'];
+        
 end
 
 if cfg.eyeTracker
-
+    
     expParameters.fileName.eyetracker = ...
         [expParameters.fileName.base, expParameters.acqSuffix, ...
         runSuffix, '_eyetrack_date-' expParameters.date '.edf'];
-
+    
 end
 
 if expParameters.verbose
-
+    
     fprintf(1,'\nData will be saved in this directory:\n\t%s\n', ...
         fullfile(expParameters.outputDir, modality));
-
+    
     fprintf(1,'\nData will be saved in this file:\n\t%s\n', ...
         expParameters.fileName.events);
-
+    
     if cfg.eyeTracker
-
+        
         fprintf(1,'\nEyetracking data will be saved in this directory:\n\t%s\n', ...
             fullfile(expParameters.outputDir, 'eyetracker'));
-
+        
         fprintf(1,'\nEyetracking data will be saved in this file:\n\t%s\n', ...
             expParameters.fileName.eyetracker);
-
+        
     end
-
+    
 end
 
 

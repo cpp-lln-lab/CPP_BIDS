@@ -1,4 +1,4 @@
-function expParameters = createFilename(expParameters, cfg)
+function expParameters = createFilename(cfg,expParameters)
 % create the BIDS compliant directories and filenames for the behavioral output for this subject /
 % session / run.
 % Will also create the right filename for the eyetracking data file.

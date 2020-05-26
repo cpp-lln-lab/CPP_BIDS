@@ -1,4 +1,4 @@
-function expParameters = checkCFG(expParameters)
+function [expParameters, cfg] = checkCFG(cfg,expParameters)
 % check that we have all the fields that we need in the experiment
 % parameters
 

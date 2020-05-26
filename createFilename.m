@@ -114,7 +114,7 @@ switch modality
         
 end
 
-if cfg.eyeTracker
+if isfield(cfg,'eyeTracker')
     
     expParameters.fileName.eyetracker = ...
         [expParameters.fileName.base, expParameters.acqSuffix, ...

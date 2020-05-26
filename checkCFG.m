@@ -22,9 +22,19 @@ fields2Check = { ...
     'acq'       % For BIDS file naming: acquisition of fMRI images
     };
 
+fields2CheckFalse = { ...
+    'eyeTracker'
+    }
+
 for iField = 1:numel(fields2Check)
     if ~isfield(expParameters, fields2Check{iField})
         expParameters = setfield(expParameters, fields2Check{iField}, []); %#ok<SFLD>
+    end
+end
+
+for iField = 1:numel(fields2CheckFalse)
+    if ~isfield(cfg, fields2CheckFalse{iField})
+        cfg = setfield(cfg, fields2CheckFalse{iField}, false); %#ok<SFLD>
     end
 end
 

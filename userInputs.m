@@ -1,5 +1,5 @@
 function [expParameters] = userInputs(cfg, expParameters)
-% Get subject, run and session number and mae sure they are
+% Get subject, run and session number and make sure they are
 % positive integer values
 
 if nargin<1
@@ -12,25 +12,25 @@ end
 
 
 if cfg.debug
-    
+
     subjectGrp = 'ctrl';
     subjectNb = 666;
     runNb = 666;
     sessionNb = 666;
-    
+
 else
-    
+
     subjectGrp = lower(input('Enter subject group (leave empty if none): ', 's'));
-    
+
     subjectNb = str2double(input('Enter subject number (1-999): ', 's') );
     subjectNb = checkInput(subjectNb);
-    
+
     sessionNb = str2double(input('Enter the session (i.e day - 1-999)) number: ', 's'));
     sessionNb = checkInput(sessionNb);
-    
+
     runNb = str2double(input('Enter the run number (1-999): ', 's'));
     runNb = checkInput(runNb);
-    
+
 end
 
 

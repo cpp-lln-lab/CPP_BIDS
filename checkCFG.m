@@ -2,6 +2,10 @@ function expParameters = checkCFG(expParameters)
 % check that we have all the fields that we need in the experiment
 % parameters
 
+if ~isfield(expParameters, 'verbose') || isempty(expParameters.verbose)
+    expParameters.verbose = 0;
+end
+
 if ~isfield(expParameters, 'outputDir')
     expParameters.outputDir = fullfile(...
         fileparts(mfilename('fullpath')), ...

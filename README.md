@@ -23,7 +23,6 @@ Here are the naming templates used.
 
 `sub-<participant_label>[_ses-<label>][_acq-<label>]_task-<task_label>_eyetrack.<manufacturer_specific_extension>`
 
-
 ## Contributing
 
 Feel free to open issues to report a bug and ask for improvements.
@@ -102,6 +101,68 @@ Function to save output files for events that will be BIDS compliant.
 
 ### checkCFG
 Check that we have all the fields that we need in the experiment parameters.
+
+
+## Usage
+
+```matlab
+
+% define the folder where the data will be saved
+expParameters.outputDir = fullfile(pwd, '..', 'output');
+
+% define the name of the task
+expParameters.task = 'testtask';
+
+% can use the userInputs function to collect subject info
+% expParameters = userInputs;
+
+% or declare it directly
+expParameters.subjectGrp = '';
+expParameters.subjectNb = 1;
+expParameters.sessionNb = 1;
+expParameters.runNb = 1;
+
+% Use the verbose switch to know where your data is being saved
+expParameters.verbose = true;
+
+% In case you are using en eyetracker
+cfg.eyeTracker = false;
+
+% if the device is set to 'PC' then the data will be saved in the `beh` folder
+cfg.device = 'PC';
+
+% if the device is set to 'scanner' then the data will be saved in the `func` folder
+% cfg.device = 'scanner';
+
+% check that cfg and exparameters have all the necessary information and fill in any missing field
+expParameters = checkCFG(cfg, expParameters);
+
+% create the filenames
+expParameters = createFilename(cfg, expParameters);
+
+% initialize the events files with the typical BIDS columns (onsets, duration, trial_type)
+% and add some more in this case (Speed and is_Fixation)
+logFile = saveEventsFile('open', expParameters, [], 'Speed', 'is_Fixation');
+
+% create the information about 2 events that we want to save
+logFile(1,1).onset = 2;
+logFile(1,1).trial_type = 'motion_up';
+logFile(1,1).duration = 1;
+logFile(1,1).speed = 2;
+logFile(1,1).is_fixation = true;
+
+logFile(2,1).onset = 3;
+logFile(2,1).trial_type = 'static';
+logFile(2,1).duration = 4;
+logFile(2,1).is_fixation = 3;
+
+% add those 2 events to the events.tsv file
+saveEventsFile('save', expParameters, logFile, 'speed', 'is_fixation');
+
+% close the file
+saveEventsFile('close', expParameters, logFile);
+
+```
 
 ## Contributors ✨
 

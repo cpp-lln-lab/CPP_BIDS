@@ -1,0 +1,48 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "CerenB",
+      "name": "CerenB",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/10451654?v=4",
+      "profile": "https://github.com/CerenB",
+      "contributions": [
+        "code",
+        "design",
+        "doc"
+      ]
+    },
+    {
+      "login": "marcobarilari",
+      "name": "marcobarilari",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/38101692?v=4",
+      "profile": "https://github.com/marcobarilari",
+      "contributions": [
+        "code",
+        "design",
+        "doc"
+      ]
+    },
+    {
+      "login": "Remi-Gau",
+      "name": "Remi Gau",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6961185?v=4",
+      "profile": "https://remi-gau.github.io/",
+      "contributions": [
+        "code",
+        "design",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "CPP_BIDS",
+  "projectOwner": "cpp-lln-lab",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}

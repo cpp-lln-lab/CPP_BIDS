@@ -1,7 +1,27 @@
-# CPP_BIDS
+[![Build Status](https://travis-ci.com/cpp-lln-lab/CPP_BIDS.svg?branch=master)](https://travis-ci.com/cpp-lln-lab/CPP_BIDS)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+# CPP_BIDS
+
+<!-- TOC -->
+
+- [CPP_BIDS](#cpp_bids)
+  - [Usage](#usage)
+  - [Functions descriptions](#functions-descriptions)
+    - [userInputs](#userinputs)
+    - [createFilename](#createfilename)
+    - [saveEventsFile](#saveeventsfile)
+    - [checkCFG](#checkcfg)
+  - [How to install](#how-to-install)
+    - [Use the matlab package manager](#use-the-matlab-package-manager)
+  - [Contributing](#contributing)
+    - [Guidestyle](#guidestyle)
+    - [BIDS naming convention](#bids-naming-convention)
+
+<!-- /TOC -->
 
 A set of function for matlab and octave to create [BIDS-compatible](https://bids-specification.readthedocs.io/en/stable/) folder structure and filenames for the output of behavioral, EEG, fMRI, eyetracking studies.
 

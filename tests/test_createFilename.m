@@ -14,8 +14,8 @@ expParameters.verbose = 1;
 cfg.eyeTracker = true;
 cfg.device = 'PC';
 
-expParameters = checkCFG(expParameters);
-expParameters = createFilename(expParameters, cfg);
+expParameters = checkCFG(cfg,expParameters);
+expParameters = createFilename(cfg,expParameters);
 
 outputDir = fullfile(pwd, ...
     '..', '..', ...
@@ -49,8 +49,8 @@ expParameters.task = 'testtask';
 cfg.eyeTracker = false;
 cfg.device = 'scanner';
 
-expParameters = checkCFG(expParameters);
-expParameters = createFilename(expParameters, cfg);
+expParameters = checkCFG(cfg,expParameters);
+expParameters = createFilename(cfg,expParameters);
 
 outputDir = fullfile(pwd, ...
     '..', '..', ...

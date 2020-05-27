@@ -18,18 +18,20 @@ expParameters = createFilename(cfg,expParameters);
 
 
 
-%% create the file
+%% create the events and stim files
 
 logFile = saveEventsFile('open', expParameters, [], 'Speed', 'is_Fixation');
 
+stimFile = saveEventsFile('open_stim', expParameters, []);
 
 % ---- test section
 
 fileName = fullfile(expParameters.outputDir, expParameters.modality, expParameters.fileName.events);
+stimFileName = fullfile(expParameters.outputDir, expParameters.modality, expParameters.fileName.stim);
 
 % check that the file has the right path and name
 assert(exist(fileName, 'file')==2)
-
+assert(exist(stimFileName, 'file')==2)
 
 
 %%  write things in it

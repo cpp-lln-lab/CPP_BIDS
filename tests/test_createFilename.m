@@ -2,7 +2,7 @@ function test_createFilename()
 
 % test for filename creation and their directories
 
-%% check directory and filename creation (PC and eyetracker)
+%% check directory and filename creation (PC)
 
 expParameters.subjectGrp = '';
 expParameters.subjectNb = 1;
@@ -34,9 +34,11 @@ assert(exist(eyetrackerDir, 'dir')==0)
 assert(strcmp(...
               expParameters.fileName.events, ...
               ['sub-001_ses-001_task-testtask_run-001_events_date-' expParameters.date '.tsv']));
-
+assert(strcmp(...
+              expParameters.fileName.stim, ...
+              ['sub-001_ses-001_task-testtask_run-001_stim_date-' expParameters.date '.tsv']));
           
-%% check directory and filename creation (fMRI)
+%% check directory and filename creation (fMRI and eye tracker)
 
 clear
 

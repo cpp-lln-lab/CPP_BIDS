@@ -47,7 +47,6 @@ logFile(1).is_fixation = 'true';
 
 saveEventsFile('save', expParameters, logFile, 'speed', 'is_fixation');
 
-
 logFile(1,1).onset = 2;
 logFile(1,1).trial_type = 'motion_up';
 logFile(1,1).duration = 1;
@@ -77,5 +76,7 @@ assert(isequal(C{4}{1}, 'speed')); % check header
 
 assert(isequal(C{4}{2}, 'NaN')); % check that empty values are entered as NaN
 assert(isequal(C{4}{4}, 'NaN')); % check that missing fields are entered as NaN
+
+assert(isequal(str2double(C{4}{3}), 2)); % check values entered properly
 
 assert(isequal(str2double(C{5}{4}), 3)); % check values entered properly

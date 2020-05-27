@@ -13,6 +13,9 @@ expParameters.verbose = 1;
 cfg.eyeTracker = false;
 cfg.device = 'scanner';
 
+outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+expParameters.outputDir = outputDir;
 expParameters = checkCFG(cfg,expParameters);
 expParameters = createFilename(cfg,expParameters);
 

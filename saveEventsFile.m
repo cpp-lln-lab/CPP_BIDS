@@ -22,21 +22,21 @@ function [ logFile ] = saveEventsFile(action, expParameters, logFile, varargin)
 %
 %
 % action:
-%  - 'open': will create the file ID and return it in logFile.eventLogFile using the information in
+%  - 'open': will create the file ID and return it in logFile.fileID using the information in
 % the expParameters structure. This file ID is then reused when calling that function to save data
 % into this file.
 % This creates the header with the obligatory 'onset', 'trial_type', 'duration' required bt BIDS and other
 % coluns can be specified in varargin.
 % example : logFile = saveEventsFile('open', expParameters, [], 'direction', 'speed', 'target');
 %
-%  - 'save': will save the data contained in logfile by using the file ID logFile.eventLogFile;
+%  - 'save': will save the data contained in logfile by using the file ID logFile.fileID;
 % logfile must then contain:
 %     - logFile.onset
 %     - logFile.trial_type
 %     - logFile.duration
 % The name of any extra column whose content must be saved should be listed in varargin.
 %
-%  - 'close': closes the file with file ID logFile.eventLogFile. If expParameters.verbose is set to true
+%  - 'close': closes the file with file ID logFile.fileID. If expParameters.verbose is set to true
 % then this will tell you where the file is located.
 %
 % See test_saveEventsFile in the test folder for more details on how to use it.
@@ -53,7 +53,7 @@ switch action
         
         % Initialize txt logfiles and empty fields for the standard BIDS
         %  event file
-        logFile.eventLogFile = fopen(...
+        logFile.fileID = fopen(...
             fullfile(...
             expParameters.outputDir, ...
             expParameters.modality, ...
@@ -68,7 +68,7 @@ switch action
         
         % Initialize txt logfiles and empty fields for the standard BIDS
         %  event file
-        logFile.eventLogFile = fopen(...
+        logFile.fileID = fopen(...
             fullfile(...
             expParameters.outputDir, ...
             expParameters.modality, ...
@@ -87,7 +87,7 @@ switch action
         % first with the standard BIDS data and then any extra things
         for iEvent = 1:size(logFile,1)
             
-            fprintf(logFile(1).eventLogFile,'%f\t%s\t%f\t',...
+            fprintf(logFile(1).fileID,'%f\t%s\t%f\t',...
                 logFile(iEvent).onset, ...
                 logFile(iEvent).trial_type, ...
                 logFile(iEvent).duration);
@@ -109,20 +109,20 @@ switch action
                 end
                 
                 if ischar(data)
-                    fprintf(logFile(1).eventLogFile, '%s\t', data);
+                    fprintf(logFile(1).fileID, '%s\t', data);
                 else
-                    fprintf(logFile(1).eventLogFile, '%f\t', data);
+                    fprintf(logFile(1).fileID, '%f\t', data);
                 end
                 
             end
             
-            fprintf(logFile(1).eventLogFile, '\n');
+            fprintf(logFile(1).fileID, '\n');
         end
         
     case 'close'
         
         % close txt log file
-        fclose(logFile(1).eventLogFile);
+        fclose(logFile(1).fileID);
         
         if expParameters.verbose
             fprintf(1,'\nData were saved in this file:\n\n%s\n\n', ...
@@ -140,16 +140,16 @@ end
 function initializeHeader(logFile, varargin)
 
 % print the basic BIDS columns
-fprintf(logFile.eventLogFile, '%s\t%s\t%s\t', 'onset', 'trial_type', 'duration');
+fprintf(logFile.fileID, '%s\t%s\t%s\t', 'onset', 'trial_type', 'duration');
 
 % print any extra column specified by the user
 %  also prepare an empty field in the structure to collect data
 %  for those
 for iExtraColumn = 1:numel(varargin{1})
-    fprintf(logFile.eventLogFile,'%s\t', lower(varargin{1}{iExtraColumn}));
+    fprintf(logFile.fileID,'%s\t', lower(varargin{1}{iExtraColumn}));
 end
 
 % next line so we start printing at the right place
-fprintf(logFile.eventLogFile, '\n');
+fprintf(logFile.fileID, '\n');
 
 end

@@ -92,7 +92,7 @@ end
 [~, ~, ~] = mkdir(expParameters.outputDir);
 [~, ~, ~] = mkdir(fullfile(expParameters.outputDir, modality));
 
-if isfield(cfg,'eyeTracker')
+if cfg.eyeTracker
     [~, ~, ~] = mkdir(fullfile(expParameters.outputDir, 'eyetracker'));
 end
 

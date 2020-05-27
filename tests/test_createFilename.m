@@ -14,19 +14,17 @@ expParameters.verbose = 1;
 cfg.eyeTracker = true;
 cfg.device = 'PC';
 
+outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+behDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'beh');
+eyetrackerDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'eyetracker');
+
+expParameters.outputDir = outputDir;
 expParameters = checkCFG(cfg,expParameters);
+
 expParameters = createFilename(cfg,expParameters);
 
-outputDir = fullfile(pwd, ...
-    '..', '..', ...
-    'output', 'source', 'sub-001', 'ses-001', 'beh');
-
-eyetrackerDir = fullfile(pwd, ...
-    '..', '..', ...
-    'output', 'source', 'sub-001', 'ses-001', 'eyetracker');
-
-
-assert(exist(outputDir, 'dir')==7)
+assert(exist(behDir, 'dir')==7)
 assert(exist(eyetrackerDir, 'dir')==7)
 assert(strcmp(...
               expParameters.fileName.events, ...
@@ -49,19 +47,15 @@ expParameters.task = 'testtask';
 cfg.eyeTracker = false;
 cfg.device = 'scanner';
 
+outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+funcDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'func');
+
+expParameters.outputDir = outputDir;
 expParameters = checkCFG(cfg,expParameters);
 expParameters = createFilename(cfg,expParameters);
 
-outputDir = fullfile(pwd, ...
-    '..', '..', ...
-    'output', 'source', 'sub-ctrl002', 'ses-002', 'func');
-
-eyetrackerDir = fullfile(pwd, ...
-    '..', '..', ...
-    'output', 'source', 'sub-ctrl002', 'ses-002', 'eyetracker');
-
-
-assert(exist(outputDir, 'dir')==7)
+assert(exist(funcDir, 'dir')==7)
 assert(strcmp(expParameters.fileName.base, 'sub-ctrl002_ses-002_task-testtask'))
 assert(strcmp(...
               expParameters.fileName.events, ...

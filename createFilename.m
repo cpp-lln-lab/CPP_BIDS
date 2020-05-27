@@ -1,4 +1,4 @@
-function expParameters = createFilename(expParameters, cfg)
+function expParameters = createFilename(cfg,expParameters)
 % create the BIDS compliant directories and filenames for the behavioral output for this subject /
 % session / run using the information from cfg and expParameters.
 % Will also create the right filename for the eyetracking data file.
@@ -30,7 +30,7 @@ pattern = ['%0' num2str(zeroPadding) '.0f'];
 dateFormat = 'yyyymmdd_HHMM';
 
 % Setting some defaults: no need to change things here
-expParameters = checkCFG(expParameters);
+[expParameters, cfg] = checkCFG(cfg,expParameters);
 
 % extract input
 subjectGrp = expParameters.subjectGrp;
@@ -92,7 +92,7 @@ end
 [~, ~, ~] = mkdir(expParameters.outputDir);
 [~, ~, ~] = mkdir(fullfile(expParameters.outputDir, modality));
 
-if cfg.eyeTracker
+if isfield(cfg,'eyeTracker')
     [~, ~, ~] = mkdir(fullfile(expParameters.outputDir, 'eyetracker'));
 end
 
@@ -127,8 +127,8 @@ switch modality
         
 end
 
+
 if cfg.eyeTracker
-    
     expParameters.fileName.eyetracker = ...
         [expParameters.fileName.base, expParameters.acqSuffix, ...
         runSuffix, '_eyetrack_date-' expParameters.date '.edf'];

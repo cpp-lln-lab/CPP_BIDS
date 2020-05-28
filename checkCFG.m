@@ -14,17 +14,26 @@ if ~isfield(expParameters, 'outputDir')
 end
 
 % set empty values for a series of field if they have not been specified
+% 'ce'
+% 'dir'        For BIDS file naming: phase encoding direction of acquisition for fMRI
+% 'rec'        For BIDS file naming: reconstruction of fMRI images
+% 'echo'       For BIDS file naming: echo fMRI images
+% 'acq'        For BIDS file naming: acquisition of fMRI images
+% 'subjectGrp' in case no group was provided
+% 'sessionNb'  in case no session was provided
+
 fields2Check = { ...
     'ce', ...
-    'dir', ...  % For BIDS file naming: phase encoding direction of acquisition for fMRI
-    'rec', ...  % For BIDS file naming: reconstruction of fMRI images
-    'echo', ... % For BIDS file naming: echo fMRI images
-    'acq'       % For BIDS file naming: acquisition of fMRI images
-    };
+    'dir', ...  
+    'rec', ...  
+    'echo', ... 
+    'acq', ...  
+    'subjectGrp', ... 
+    'sessionNb'};
 
 fields2CheckFalse = { ...
     'eyeTracker'
-    }
+    };
 
 for iField = 1:numel(fields2Check)
     if ~isfield(expParameters, fields2Check{iField})

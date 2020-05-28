@@ -8,13 +8,13 @@ function [expParameters] = userInputs(cfg, expParameters, askGrpSess)
 %    group
 %    - the second value set to false will skip asking for the session
 
-if nargin<1
+if nargin<1 || isempty(cfg.debug)
     cfg.debug = false;
 end
 if nargin<2
     expParameters = [];
 end
-if nargin<3
+if nargin<3 || isempty(askGrpSess)
     askGrpSess = [true true];
 end
 
@@ -39,7 +39,7 @@ else
     subjectNb = checkInput(subjectNb);
     
     % the session number
-    if askGrpSess(2)
+    if  numel(askGrpSess)>1 && askGrpSess(2)
         sessionNb = str2double(input('Enter the session (i.e day - 1-999)) number: ', 's'));
         sessionNb = checkInput(sessionNb);
     end

@@ -2,7 +2,7 @@ function test_createFilename()
 
 % test for filename creation and their directories
 
-%% check directory and filename creation (PC and eyetracker)
+%% check directory and filename creation (PC)
 
 expParameters.subjectGrp = '';
 expParameters.subjectNb = 1;
@@ -16,9 +16,8 @@ cfg.device = 'PC';
 
 outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-behDir = fullfile(pwd, ...
-    '..', '..', ...
-    'output', 'source', 'sub-001', 'ses-001', 'beh');
+behDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'beh');
+eyetrackerDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'eyetracker');
 
 expParameters.outputDir = outputDir;
 expParameters = checkCFG(cfg,expParameters);
@@ -33,9 +32,11 @@ assert(exist(eyetrackerDir, 'dir')==0)
 assert(strcmp(...
               expParameters.fileName.events, ...
               ['sub-001_ses-001_task-testtask_run-001_events_date-' expParameters.date '.tsv']));
-
+assert(strcmp(...
+              expParameters.fileName.stim, ...
+              ['sub-001_ses-001_task-testtask_run-001_stim_date-' expParameters.date '.tsv']));
           
-%% check directory and filename creation (fMRI)
+%% check directory and filename creation (fMRI and eye tracker)
 
 clear
 
@@ -67,4 +68,3 @@ assert(strcmp(...
 assert(strcmp(...
               expParameters.fileName.eyetracker, ...
               ['sub-ctrl002_ses-002_task-testtask_run-002_eyetrack_date-' expParameters.date '.edf']));
-

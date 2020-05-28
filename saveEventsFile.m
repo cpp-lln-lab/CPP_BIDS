@@ -4,6 +4,24 @@ function [ logFile ] = saveEventsFile(action, expParameters, logFile, varargin)
 % INPUTS
 %
 % logFile:
+%   When you want to save your data logFile contains the data you want to save. 
+% The logFile variable that contains the n events you want to % save must be a nx1 structure. 
+% Each field will be saved in a separate column.
+%
+% example:
+% logFile(1,1).onset = 2;
+% logFile(1,1).trial_type = 'motion_up';
+% logFile(1,1).duration = 1;
+% logFile(1,1).speed = 2;
+% logFile(1,1).is_fixation = true;
+% 
+% logFile(2,1).onset = 3;
+% logFile(2,1).trial_type = 'static';
+% logFile(2,1).duration = 4;
+% logFile(2,1).is_fixation = 3;
+%
+%
+% logFile:
 %   When you want to save your data logFile contains the data you want to save.
 % The logFile variable that contains the n events you want to % save must be a nx1 structure.
 % Each field will be saved in a separate column.
@@ -27,6 +45,7 @@ function [ logFile ] = saveEventsFile(action, expParameters, logFile, varargin)
 % into this file.
 % This creates the header with the obligatory 'onset', 'trial_type', 'duration' required bt BIDS and other
 % coluns can be specified in varargin.
+%
 % example : logFile = saveEventsFile('open', expParameters, [], 'direction', 'speed', 'target');
 %
 %  - 'save': will save the data contained in logfile by using the file ID logFile.fileID;

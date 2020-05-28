@@ -66,6 +66,9 @@ expParameters = createFilename(cfg, expParameters);
 % and add some more in this case (Speed and is_Fixation)
 logFile = saveEventsFile('open', expParameters, [], 'Speed', 'is_Fixation');
 
+% to initialize a stim file in case you want to store the info about the stimuli in it
+stimFile = saveEventsFile('open_stim', expParameters, []);
+
 % create the information about 2 events that we want to save
 logFile(1,1).onset = 2;
 logFile(1,1).trial_type = 'motion_up';

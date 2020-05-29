@@ -95,6 +95,24 @@ saveEventsFile('close', expParameters, logFile);
 
 Get subject, run and session number and make sure they are positive integer values.
 
+```matlab
+[expParameters] = userInputs(cfg, expParameters)
+```
+
+if you use it with `expParameters.askGrpSess = [0 0]`
+it won't ask you about group or session
+
+if you use it with `expParameters.askGrpSess = [1]`
+it will only ask you about group
+
+if you use it with `expParameters.askGrpSess = [0 1]`
+it will only ask you about session
+
+if you use it with `expParameters.askGrpSess = [1 1]`
+it will ask you about both
+this is the defaut
+
+
 ### createFilename
 
 Create the BIDS compliant directories  and filenames (but not the files) for the behavioral

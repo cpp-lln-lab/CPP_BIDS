@@ -31,20 +31,26 @@ fields2Check = { ...
     'subjectGrp', ... 
     'sessionNb'};
 
-fields2CheckFalse = { ...
-    'eyeTracker'
-    };
-
 for iField = 1:numel(fields2Check)
     if ~isfield(expParameters, fields2Check{iField})
         expParameters = setfield(expParameters, fields2Check{iField}, []); %#ok<SFLD>
     end
 end
 
+% set false value for a series of field if they have not been specified
+fields2CheckFalse = { ...
+    'eyeTracker'
+    };
+
 for iField = 1:numel(fields2CheckFalse)
     if ~isfield(cfg, fields2CheckFalse{iField})
         cfg = setfield(cfg, fields2CheckFalse{iField}, false); %#ok<SFLD>
     end
+end
+
+% other defaults
+if ~isfield(expParameters, 'askGrpSess')
+    expParameters.askGrpSess = [true true];
 end
 
 

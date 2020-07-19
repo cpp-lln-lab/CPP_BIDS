@@ -30,7 +30,7 @@ function expParameters = createFilename(cfg, expParameters)
     dateFormat = 'yyyymmdd_HHMM';
 
     % Setting some defaults: no need to change things here
-    [expParameters, cfg] = checkCFG(cfg, expParameters);
+    [cfg, expParameters] = checkCFG(cfg, expParameters);
 
     % extract input
     subjectGrp = expParameters.subjectGrp;

@@ -16,7 +16,6 @@ function test_saveEventsFile()
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
     expParameters.outputDir = outputDir;
-    expParameters = checkCFG(cfg, expParameters);
     expParameters = createFilename(cfg, expParameters);
 
     %% create the events and stim files

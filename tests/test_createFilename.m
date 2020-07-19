@@ -22,7 +22,6 @@ function test_createFilename()
     behDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'beh');
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'eyetracker');
 
-    expParameters = checkCFG(cfg, expParameters);
     expParameters = createFilename(cfg, expParameters);
 
     %%% test part
@@ -64,7 +63,7 @@ function test_createFilename()
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'eyetracker');
 
     expParameters.outputDir = outputDir;
-    expParameters = checkCFG(cfg, expParameters);
+    [cfg, expParameters] = checkCFG(cfg, expParameters);
     expParameters = createFilename(cfg, expParameters);
 
     %%% test part

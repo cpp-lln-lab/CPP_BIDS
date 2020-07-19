@@ -16,6 +16,7 @@
   - [Contributing](#contributing)
     - [Guidestyle](#guidestyle)
     - [BIDS naming convention](#bids-naming-convention)
+    - [Contributors ✨](#contributors-)
 
 <!-- /TOC -->
 
@@ -184,7 +185,8 @@ Feel free to open issues to report a bug and ask for improvements.
 ### Guidestyle
 
 -   We use camelCase.
--   We keep the McCabe complexity as reported by the [check_my_code function](https://github.com/Remi-Gau/matlab_checkcode) below 15.
+-   We keep the McCabe complexity as reported by the [check_my_code function](https://github.com/Remi-Gau/check_my_code) below 15.
+-   We use the [MISS_HIT linter](https://florianschanda.github.io/miss_hit/style_checker.html) to automatically fix some linting issues.
 
 ### BIDS naming convention
 

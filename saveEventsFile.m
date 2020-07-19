@@ -41,10 +41,10 @@ function [logFile] = saveEventsFile(action, expParameters, logFile, varargin)
     %
     % action:
     %  - 'open': will create the file ID and return it in logFile.fileID using the information in
-    % the expParameters structure. This file ID is then reused when calling that function to save data
-    % into this file.
-    % This creates the header with the obligatory 'onset', 'trial_type', 'duration' required bt BIDS and other
-    % coluns can be specified in varargin.
+    % the expParameters structure. This file ID is then reused when calling that function
+    % to save data into this file.
+    % This creates the header with the obligatory 'onset', 'trial_type', 'duration' required
+    % by BIDS and other columns can be specified in varargin.
     %
     % example : logFile = saveEventsFile('open', expParameters, [], 'direction', 'speed', 'target');
     %
@@ -55,8 +55,8 @@ function [logFile] = saveEventsFile(action, expParameters, logFile, varargin)
     %     - logFile.duration
     % The name of any extra column whose content must be saved should be listed in varargin.
     %
-    %  - 'close': closes the file with file ID logFile.fileID. If expParameters.verbose is set to true
-    % then this will tell you where the file is located.
+    %  - 'close': closes the file with file ID logFile.fileID. If expParameters.verbose is set
+    % to true then this will tell you where the file is located.
     %
     % See test_saveEventsFile in the test folder for more details on how to use it.
 
@@ -98,7 +98,7 @@ function [logFile] = saveEventsFile(action, expParameters, logFile, varargin)
         case 'save'
 
             if ~isstruct(logFile) || size(logFile, 2) > 1
-                error('The logFile variable that contains the n events you want to save must be a nx1 structure.');
+                error('The variable containing the n events to save must be a nx1 structure.');
             end
 
             % appends to the logfile all the data stored in the structure

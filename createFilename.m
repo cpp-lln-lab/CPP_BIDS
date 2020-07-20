@@ -130,24 +130,23 @@ function expParameters = createFilename(cfg, expParameters)
 
     end
 
-    if expParameters.verbose
 
-        fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
-            fullfile(expParameters.outputDir, modality));
 
-        fprintf(1, '\nData will be saved in this file:\n\t%s\n', ...
-            expParameters.fileName.events);
-
-        if cfg.eyeTracker
-
-            fprintf(1, '\nEyetracking data will be saved in this directory:\n\t%s\n', ...
-                fullfile(expParameters.outputDir, 'eyetracker'));
-
-            fprintf(1, '\nEyetracking data will be saved in this file:\n\t%s\n', ...
-                expParameters.fileName.eyetracker);
-
-        end
-
+    fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
+        fullfile(expParameters.outputDir, modality));
+    
+    fprintf(1, '\nData will be saved in this file:\n\t%s\n', ...
+        expParameters.fileName.events);
+    
+    if cfg.eyeTracker
+        
+        fprintf(1, '\nEyetracking data will be saved in this directory:\n\t%s\n', ...
+            fullfile(expParameters.outputDir, 'eyetracker'));
+        
+        fprintf(1, '\nEyetracking data will be saved in this file:\n\t%s\n', ...
+            expParameters.fileName.eyetracker);
+        
     end
+
 
 end

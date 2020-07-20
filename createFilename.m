@@ -55,10 +55,10 @@ function expParameters = createFilename(cfg, expParameters)
 
     runSuffix = ['_run-' sprintf(pattern, runNb)];
 
-    switch lower(cfg.device)
+    switch lower(cfg.testingDevice)
         case 'pc'
             modality = 'beh';
-        case 'scanner'
+        case 'mri'
             modality = 'func';
         otherwise
             modality = 'beh';

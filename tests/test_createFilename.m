@@ -11,9 +11,8 @@ function test_createFilename()
     expParameters.runNb = 1;
     expParameters.task = 'testtask';
     expParameters.verbose = 1;
-
-    cfg.eyeTracker = false;
-    cfg.device = 'PC';
+    
+    cfg = struct();
 
     % set up the output directories
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');

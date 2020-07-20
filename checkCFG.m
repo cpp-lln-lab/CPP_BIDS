@@ -33,6 +33,7 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     %% set the cfg defaults
     
     clear fieldsToSet
+    fieldsToSet.testingDevice = 'pc';
     fieldsToSet.eyeTracker = false;
     
     % loop through the defaults and set them in cfg if they don't exist

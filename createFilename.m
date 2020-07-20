@@ -11,16 +11,16 @@ function [cfg, expParameters] = createFilename(cfg, expParameters)
     %
     %
     % See test_createFilename in the test folder for more details on how to use it.
-    
+
     zeroPadding = 3;
     pattern = ['%0' num2str(zeroPadding) '.0f'];
     expParameters.pattern = pattern;
-    
+
     dateFormat = 'yyyymmdd_HHMM';
     expParameters.date = datestr(now, dateFormat);
-    
+
     [cfg, expParameters] = checkCFG(cfg, expParameters);
-    
+
     switch lower(cfg.testingDevice)
         case 'pc'
             modality = 'beh';
@@ -28,60 +28,61 @@ function [cfg, expParameters] = createFilename(cfg, expParameters)
             modality = 'func';
         case 'eeg'
             modality = 'eeg';
+        case 'ieeg'
+            modality = 'ieeg';
+        case 'meg'
+            modality = 'meg';
         otherwise
             modality = 'beh';
     end
     expParameters.modality = modality;
-    
+
     expParameters = createDirectories(cfg, expParameters);
-    
+
     expParameters = setSuffixes(expParameters);
-    
+
     expParameters = setFilenames(cfg, expParameters);
-    
-    talkToMe(cfg, expParameters)
-    
+
+    talkToMe(cfg, expParameters);
+
 end
 
-
 function [subjectGrp, subjectNb, sessionNb, modality] = extractInput(expParameters)
-    
+
     subjectGrp = expParameters.subjectGrp;
     subjectNb = expParameters.subjectNb;
     sessionNb = expParameters.sessionNb;
     modality = expParameters.modality;
-    
+
 end
 
-
 function expParameters = createDirectories(cfg, expParameters)
-    
+
     [subjectGrp, subjectNb, sessionNb, modality] = extractInput(expParameters);
-    
+
     pattern = expParameters.pattern;
-    
+
     % output dir
     expParameters.subjectOutputDir = fullfile ( ...
         expParameters.outputDir, ...
         'source', ...
         ['sub-' subjectGrp, sprintf(pattern, subjectNb)], ...
         ['ses-', sprintf(pattern, sessionNb)]);
-    
+
     [~, ~, ~] = mkdir(expParameters.outputDir);
     [~, ~, ~] = mkdir(expParameters.subjectOutputDir);
     [~, ~, ~] = mkdir(fullfile(expParameters.subjectOutputDir, modality));
-    
+
     if cfg.eyeTracker
         [~, ~, ~] = mkdir(fullfile(expParameters.subjectOutputDir, 'eyetracker'));
     end
-    
+
 end
 
-
 function expParameters = setSuffixes(expParameters)
-    
+
     expParameters.runSuffix = ['_run-' sprintf(expParameters.pattern, expParameters.runNb)];
-    
+
     % set values for the suffixes for the different fields in the BIDS name
     fields2Check = { ...
         'ce', ...
@@ -90,7 +91,7 @@ function expParameters = setSuffixes(expParameters)
         'echo', ... % For BIDS file naming: echo fMRI images
         'acq'       % For BIDS file naming: acquisition of fMRI images
         };
-    
+
     for iField = 1:numel(fields2Check)
         if isempty (getfield(expParameters.MRI, fields2Check{iField})) %#ok<*GFLD>
             expParameters.MRI = setfield(expParameters.MRI, [fields2Check{iField} 'Suffix'], ...
@@ -100,88 +101,77 @@ function expParameters = setSuffixes(expParameters)
                 ['_' fields2Check{iField} '-' getfield(expParameters.MRI, fields2Check{iField})]);
         end
     end
-    
+
 end
 
-
 function expParameters = setFilenames(cfg, expParameters)
-    
+
     [subjectGrp, subjectNb, sessionNb, modality] = extractInput(expParameters);
-    
+
     runSuffix = expParameters.runSuffix;
     pattern = expParameters.pattern;
     acqSuffix = expParameters.MRI.acqSuffix ;
-    ceSuffix  = expParameters.MRI.ceSuffix ;
-    dirSuffix   = expParameters.MRI.dirSuffix ;
-    recSuffix   = expParameters.MRI.recSuffix ;
+    ceSuffix = expParameters.MRI.ceSuffix ;
+    dirSuffix = expParameters.MRI.dirSuffix ;
+    recSuffix = expParameters.MRI.recSuffix ;
     echoSuffix = expParameters.MRI.echoSuffix;
-    
+
     expParameters.datasetDescription.filename = fullfile ( ...
         expParameters.outputDir, ...
         'dataset_description.json');
-    
+
     % create base filename
     fileNameBase = ...
         ['sub-', subjectGrp, sprintf(pattern, subjectNb), ...
         '_ses-', sprintf(pattern, sessionNb), ...
         '_task-', expParameters.task];
     expParameters.fileName.base = fileNameBase;
-    
-    
+
     switch modality
-        
-        case 'beh'
-            
-            expParameters.fileName.events = ...
-                [fileNameBase, runSuffix, '_events_date-' expParameters.date '.tsv'];
-            
-            expParameters.fileName.stim = ...
-                [fileNameBase, runSuffix, '_stim_date-' expParameters.date '.tsv'];
-            
+
         case 'func'
-            
+
             expParameters.fileName.events = ...
                 [fileNameBase, ...
                 acqSuffix, ceSuffix, ...
                 dirSuffix, recSuffix, ...
                 runSuffix, echoSuffix, ...
                 '_events_date-' expParameters.date '.tsv'];
-            
-            expParameters.fileName.stim = ...
-                [fileNameBase, ...
-                acqSuffix, ceSuffix, ...
-                dirSuffix, recSuffix, ...
-                runSuffix, echoSuffix, ...
-                '_stim_date-' expParameters.date '.tsv'];
-            
+
+        otherwise
+
+            expParameters.fileName.events = ...
+                [fileNameBase, runSuffix, '_events_date-' expParameters.date '.tsv'];
+
     end
-    
+
+    expParameters.fileName.stim = strrep(expParameters.fileName.events, 'events', 'stim');
+
     if cfg.eyeTracker
         expParameters.fileName.eyetracker = ...
             [fileNameBase, acqSuffix, ...
             runSuffix, '_eyetrack_date-' expParameters.date '.edf'];
-        
+
     end
-    
+
 end
 
-
 function talkToMe(cfg, expParameters)
-    
+
     fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
         fullfile(expParameters.subjectOutputDir, expParameters.modality));
-    
+
     fprintf(1, '\nData will be saved in this file:\n\t%s\n', ...
         expParameters.fileName.events);
-    
+
     if cfg.eyeTracker
-        
+
         fprintf(1, '\nEyetracking data will be saved in this directory:\n\t%s\n', ...
             fullfile(expParameters.subjectOutputDir, 'eyetracker'));
-        
+
         fprintf(1, '\nEyetracking data will be saved in this file:\n\t%s\n', ...
             expParameters.fileName.eyetracker);
-        
+
     end
-    
+
 end

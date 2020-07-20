@@ -54,6 +54,11 @@ function test_saveEventsFile()
     logFile(2, 1).duration = 4;
     logFile(2, 1).is_fixation = 3;
     
+    logFile(3, 1).onset = [];
+    logFile(3, 1).trial_type = '';
+    logFile(3, 1).duration = [];
+
+    
     saveEventsFile('save', expParameters, logFile, 'speed', 'is_fixation');
     
     % close the file

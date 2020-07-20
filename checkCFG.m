@@ -9,18 +9,36 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
             '..', ...
             'output');
 
-    % For BIDS file naming
-    fieldsToSet.ce = [];
-    fieldsToSet.dir = []; % phase encoding direction of acquisition for fMRI
-    fieldsToSet.rec = []; % reconstruction of fMRI images
-    fieldsToSet.echo = []; % echo fMRI images
-    fieldsToSet.acq = []; % acquisition of fMRI images
-    
     fieldsToSet.subjectGrp = []; % in case no group was provided
     fieldsToSet.sessionNb = []; % in case no session was provided
     fieldsToSet.askGrpSess = [true true];
     
-    % loop through the defaults and set them in expParameters if they don't exist
+    % BIDS
+    
+    % dataset description json
+    % required
+    fieldsToSet.bids.datasetDescription.json.Name = '';
+    fieldsToSet.bids.datasetDescription.json.BIDSVersion = '';
+    % recommended
+    fieldsToSet.bids.datasetDescription.json.License = '';
+    fieldsToSet.bids.datasetDescription.json.Authors = {''};
+    fieldsToSet.bids.datasetDescription.json.Acknowledgements = '';
+    fieldsToSet.bids.datasetDescription.json.HowToAcknowledge = '';
+    fieldsToSet.bids.datasetDescription.json.Funding = {''};
+    fieldsToSet.bids.datasetDescription.json.ReferencesAndLinks = {''};
+    fieldsToSet.bids.datasetDescription.json.DatasetDOI = '';
+    
+    % mri
+    % for json
+    fieldsToSet.MRI.repetitionTime = [];
+    % for file naming
+    fieldsToSet.MRI.ce = [];
+    fieldsToSet.MRI.dir = []; % phase encoding direction of acquisition for fMRI
+    fieldsToSet.MRI.rec = []; % reconstruction of fMRI images
+    fieldsToSet.MRI.echo = []; % echo fMRI images
+    fieldsToSet.MRI.acq = []; % acquisition of fMRI images
+    
+    %% loop through the defaults and set them in expParameters if they don't exist
     names = fieldnames(fieldsToSet);
     
     for i = 1:numel(names)

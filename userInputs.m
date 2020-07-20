@@ -14,11 +14,19 @@ function [expParameters] = userInputs(cfg, expParameters)
     if nargin < 2
         expParameters = [];
     end
-    if ~isfield(expParameters, 'askGrpSess') || isempty(expParameters.askGrpSess)
-        askGrpSess = [true true];
-    else
+    
+    askGrpSess = [true true];
+    if isfield(expParameters, 'askGrpSess') && ~isempty(expParameters.askGrpSess)
         askGrpSess = expParameters.askGrpSess;
     end
+    if numel(askGrpSess) < 2
+        askGrpSess(2) = 1;
+    end
+    
+    subjectGrp = '';
+    subjectNb = []; %#ok<*NASGU>
+    sessionNb = [];
+    runNb = [];
 
     % When in debug more this function returns some dummy values
     if cfg.debug

@@ -155,7 +155,7 @@ function logFile = initializeFile(expParameters, logFile, varargin)
     %  also prepare an empty field in the structure to collect data
     %  for those
     for iExtraColumn = 1:numel(varargin{1})
-        fprintf(logFile.fileID, '%s\t', lower(varargin{1}{iExtraColumn}));
+        fprintf(logFile.fileID, '%s\t', varargin{1}{iExtraColumn});
     end
     
     % next line so we start printing at the right place

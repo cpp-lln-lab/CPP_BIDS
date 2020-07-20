@@ -73,7 +73,7 @@ function test_saveEventsFile()
     C = textscan(FID, '%s%s%s%s%s', 'Delimiter', '\t', 'EndOfLine', '\n');
     
     % check header
-    assert(isequal(C{4}{1}, 'speed'));
+    assert(isequal(C{4}{1}, 'Speed'));
     
     % check that empty values are entered as NaN
     assert(isequal(C{4}{2}, 'NaN'));

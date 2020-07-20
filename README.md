@@ -41,26 +41,18 @@ expParameters.subjectNb = 1;
 expParameters.sessionNb = 1;
 expParameters.runNb = 1;
 
-% Use the verbose switch to know where your data is being saved
-expParameters.verbose = true;
-
-% In case you are using en eyetracker
+% by default we assume you are running things on a behavioral PC with no eyetracker
 cfg.eyeTracker = false;
+cfg.testingDevice = 'PC';
 
-% if the device is set to 'PC' then the data will be saved
-% in the `beh` folder
-cfg.device = 'PC';
+% if the testing device is set to 'PC' then the data will be saved in the `beh` folder
+% if set to 'mri' then the data will be saved in the `func` folder
+% cfg.testingDevice = 'mri';
+% if set to 'eeg' then the data will be saved in the `eeg` folder
+% cfg.testingDevice = 'eeg';
 
-% if the device is set to 'scanner' then the data will be saved
-% in the `func` folder
-% cfg.device = 'scanner';
-
-% check that cfg and exparameters have all the necessary information
-% and fill in any missing field
-expParameters = checkCFG(cfg, expParameters);
-
-% create the filenames
-expParameters = createFilename(cfg, expParameters);
+% create the filenames: this include a step to check that all the information is there (checkCFG)
+[cfg, expParameters] = createFilename(cfg, expParameters);
 
 % initialize the events files with the typical BIDS
 % columns (onsets, duration, trial_type)

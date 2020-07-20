@@ -14,7 +14,7 @@ function [expParameters] = userInputs(cfg, expParameters)
     if nargin < 2
         expParameters = [];
     end
-    
+
     askGrpSess = [true true];
     if isfield(expParameters, 'askGrpSess') && ~isempty(expParameters.askGrpSess)
         askGrpSess = expParameters.askGrpSess;
@@ -22,7 +22,7 @@ function [expParameters] = userInputs(cfg, expParameters)
     if numel(askGrpSess) < 2
         askGrpSess(2) = 1;
     end
-    
+
     subjectGrp = '';
     subjectNb = []; %#ok<*NASGU>
     sessionNb = [];

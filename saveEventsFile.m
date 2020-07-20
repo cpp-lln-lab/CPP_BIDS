@@ -59,86 +59,85 @@ function [logFile] = saveEventsFile(action, expParameters, logFile, varargin)
     % to true then this will tell you where the file is located.
     %
     % See test_saveEventsFile in the test folder for more details on how to use it.
-    
+
     if nargin < 3 || isempty(logFile)
         logFile = struct();
     end
-    
+
     switch action
-        
+
         case 'open'
-            
+
             logFile.filename = expParameters.fileName.events;
-            
+
             logFile = initializeFile(expParameters, logFile, varargin);
-            
+
         case 'open_stim'
-            
+
             logFile.filename = expParameters.fileName.stim;
-            
+
             logFile = initializeFile(expParameters, logFile, varargin);
-            
+
         case 'save'
-            
+
             if ~isstruct(logFile) || size(logFile, 2) > 1
                 error('The variable containing the n events to save must be a nx1 structure.');
             end
-            
+
             % appends to the logfile all the data stored in the structure
             % first with the standard BIDS data and then any extra things
             for iEvent = 1:size(logFile, 1)
-                
+
                 onset = checkInput(logFile(iEvent).onset);
                 duration = checkInput(logFile(iEvent).duration);
                 trial_type = checkInput(logFile(iEvent).trial_type);
-                
+
                 fprintf(logFile(1).fileID, '%f\t%s\t%f\t', ...
                     onset, ...
                     trial_type, ...
                     duration);
-                
+
                 for iExtraColumn = 1:numel(varargin)
-                    
+
                     % if the field we are looking for does not exist or is empty in the
                     % action logFile structure we will write a NaN otherwise we
                     % write its content
-                    
+
                     data = 'NA';
                     if isfield(logFile, varargin{iExtraColumn})
                         data = getfield(logFile(iEvent), varargin{iExtraColumn}); %#ok<GFLD>
                     end
-                    
+
                     data = checkInput(data);
-                    
+
                     if ischar(data)
                         fprintf(logFile(1).fileID, '%s\t', data);
                     else
                         fprintf(logFile(1).fileID, '%f\t', data);
                     end
-                    
+
                 end
-                
+
                 fprintf(logFile(1).fileID, '\n');
             end
-            
+
         case 'close'
-            
+
             % close txt log file
             fclose(logFile(1).fileID);
-            
+
             fprintf(1, '\nData were saved in this file:\n\n%s\n\n', ...
                 fullfile( ...
                 expParameters.subjectOutputDir, ...
                 expParameters.modality, ...
                 logFile.filename));
-            
-            
+
     end
-    
+
 end
 
 function logFile = initializeFile(expParameters, logFile, varargin)
-    
+
     % Initialize txt logfiles and empty fields for the standard BIDS
     %  event file
     logFile.fileID = fopen( ...
@@ -147,29 +146,28 @@ function logFile = initializeFile(expParameters, logFile, varargin)
         expParameters.modality, ...
         logFile.filename), ...
         'w');
-    
+
     % print the basic BIDS columns
     fprintf(logFile.fileID, '%s\t%s\t%s\t', 'onset', 'trial_type', 'duration');
-    
+
     % print any extra column specified by the user
     %  also prepare an empty field in the structure to collect data
     %  for those
     for iExtraColumn = 1:numel(varargin{1})
         fprintf(logFile.fileID, '%s\t', varargin{1}{iExtraColumn});
     end
-    
+
     % next line so we start printing at the right place
     fprintf(logFile.fileID, '\n');
-    
+
 end
 
-
 function data = checkInput(data)
-    
+
     if ischar(data) && isempty(data) || strcmp(data, '')
         data = 'NA';
     elseif isempty(data)
         data = nan;
     end
-    
+
 end

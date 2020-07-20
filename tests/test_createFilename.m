@@ -1,8 +1,11 @@
 function test_createFilename()
     % test for filename creation and their directories
 
-    %% check directory and filename creation (PC)
+    %% PC
 
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    
+    
     %%% set up part
 
     expParameters.subjectGrp = '';
@@ -10,20 +13,22 @@ function test_createFilename()
     expParameters.sessionNb = 1;
     expParameters.runNb = 1;
     expParameters.task = 'testtask';
-    expParameters.verbose = 1;
+    expParameters.outputDir = outputDir;
     
     cfg = struct();
 
-    % set up the output directories
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
-    expParameters.outputDir = outputDir;
+    
+    %%% run part
+    [cfg, expParameters] = createFilename(cfg, expParameters);
 
+    
+    %%% test part
+    
+    % test data
     behDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'beh');
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'eyetracker');
-
-    expParameters = createFilename(cfg, expParameters);
-
-    %%% test part
+    eventFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' expParameters.date '.tsv'];
+    stimFilename =  ['sub-001_ses-001_task-testtask_run-001_stim_date-' expParameters.date '.tsv'];
 
     % make sure the beh dir is created
     assert(exist(behDir, 'dir') == 7);
@@ -32,19 +37,19 @@ function test_createFilename()
     assert(exist(eyetrackerDir, 'dir') == 0);
 
     % make sure the events filename is created
-    assert(strcmp( ...
-        expParameters.fileName.events, ...
-        ['sub-001_ses-001_task-testtask_run-001_events_date-' expParameters.date '.tsv']));
+    assert(strcmp(expParameters.fileName.events, eventFilename));
 
     % make sure the stim filename is created
-    assert(strcmp( ...
-        expParameters.fileName.stim, ...
-        ['sub-001_ses-001_task-testtask_run-001_stim_date-' expParameters.date '.tsv']));
+    assert(strcmp(expParameters.fileName.stim, stimFilename));
 
-    %% check directory and filename creation (fMRI and eye tracker)
+    
+    %% fMRI and eye tracker
 
     clear;
+    
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
+    
     %%% set up part
 
     expParameters.subjectGrp = 'ctrl';
@@ -52,20 +57,22 @@ function test_createFilename()
     expParameters.sessionNb = 2;
     expParameters.runNb = 2;
     expParameters.task = 'testtask';
+    expParameters.outputDir = outputDir;
 
     cfg.eyeTracker = true;
-    cfg.device = 'scanner';
+    cfg.testingDevice = 'mri';
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
 
+    
+    %%% test part
+    
+    % test data
     funcDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'func');
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'eyetracker');
-
-    expParameters.outputDir = outputDir;
-    [cfg, expParameters] = checkCFG(cfg, expParameters);
-    expParameters = createFilename(cfg, expParameters);
-
-    %%% test part
+    baseFilename = 'sub-ctrl002_ses-002_task-testtask';
+    eventFilename = ['sub-ctrl002_ses-002_task-testtask_run-002_events_date-' expParameters.date '.tsv'];
+    eyetrackerFilename =  ['sub-ctrl002_ses-002_task-testtask_run-002_eyetrack_date-' expParameters.date '.edf'];
 
     % make sure the func dir is created
     assert(exist(funcDir, 'dir') == 7);
@@ -73,13 +80,7 @@ function test_createFilename()
     % make sure the eyetracker dir is created
     assert(exist(eyetrackerDir, 'dir') == 7);
 
-    % make sure the events filename is created
-    assert(strcmp(expParameters.fileName.base, 'sub-ctrl002_ses-002_task-testtask'));
-    assert(strcmp( ...
-        expParameters.fileName.events, ...
-        ['sub-ctrl002_ses-002_task-testtask_run-002_events_date-' expParameters.date '.tsv']));
-
-    % make sure the eyetracker filename is created
-    assert(strcmp( ...
-        expParameters.fileName.eyetracker, ...
-        ['sub-ctrl002_ses-002_task-testtask_run-002_eyetrack_date-' expParameters.date '.edf']));
+    % make sure the right filenames are created
+    assert(strcmp(expParameters.fileName.base, baseFilename));
+    assert(strcmp(expParameters.fileName.events, eventFilename));
+    assert(strcmp(expParameters.fileName.eyetracker, eyetrackerFilename));

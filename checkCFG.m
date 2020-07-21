@@ -5,12 +5,12 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
 
     fieldsToSet.verbose = 0;
     fieldsToSet.outputDir = fullfile( ...
-            fileparts(mfilename('fullpath')), ...
-            '..', ...
-            'output');
+        fileparts(mfilename('fullpath')), ...
+        '..', ...
+        'output');
 
     fieldsToSet.subjectGrp = []; % in case no group was provided
-    fieldsToSet.sessionNb = []; % in case no session was provided
+    fieldsToSet.sessionNb = 1; % in case no session was provided
     fieldsToSet.askGrpSess = [true true];
 
     % BIDS
@@ -38,15 +38,7 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     fieldsToSet.MRI.echo = []; % echo fMRI images
     fieldsToSet.MRI.acq = []; % acquisition of fMRI images
 
-    %% loop through the defaults and set them in expParameters if they don't exist
-    names = fieldnames(fieldsToSet);
-
-    for i = 1:numel(names)
-        expParameters = setFieldToIfNotPresent( ...
-            expParameters, ...
-            names{i}, ...
-            getfield(fieldsToSet, names{i})); %#ok<GFLD>
-    end
+    expParameters = setDefaults(expParameters, fieldsToSet);
 
     %% set the cfg defaults
 
@@ -54,20 +46,30 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     fieldsToSet.testingDevice = 'pc';
     fieldsToSet.eyeTracker = false;
 
-    % loop through the defaults and set them in cfg if they don't exist
+    cfg = setDefaults(cfg, fieldsToSet);
+
+end
+
+function structure = setDefaults(structure, fieldsToSet)
+    % loop through the defaults fiels to set and update if they don't exist
+
     names = fieldnames(fieldsToSet);
 
     for i = 1:numel(names)
-        cfg = setFieldToIfNotPresent( ...
-            cfg, ...
+
+        thisField = fieldsToSet.(names{i});
+
+        structure = setFieldToIfNotPresent( ...
+            structure, ...
             names{i}, ...
-            getfield(fieldsToSet, names{i})); %#ok<GFLD>
+            thisField);
+
     end
 
 end
 
-function struct = setFieldToIfNotPresent(struct, fieldName, value)
-    if ~isfield(struct, fieldName)
-        struct = setfield(struct, fieldName, value); %#ok<SFLD>
+function structure = setFieldToIfNotPresent(structure, fieldName, value)
+    if ~isfield(structure, fieldName)
+        structure.(fieldName) = value;
     end
 end

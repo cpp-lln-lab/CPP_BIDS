@@ -41,26 +41,18 @@ expParameters.subjectNb = 1;
 expParameters.sessionNb = 1;
 expParameters.runNb = 1;
 
-% Use the verbose switch to know where your data is being saved
-expParameters.verbose = true;
-
-% In case you are using en eyetracker
+% by default we assume you are running things on a behavioral PC with no eyetracker
 cfg.eyeTracker = false;
+cfg.testingDevice = 'PC';
 
-% if the device is set to 'PC' then the data will be saved
-% in the `beh` folder
-cfg.device = 'PC';
+% if the testing device is set to 'PC' then the data will be saved in the `beh` folder
+% if set to 'mri' then the data will be saved in the `func` folder
+% cfg.testingDevice = 'mri';
+% if set to 'eeg' then the data will be saved in the `eeg` folder
+% cfg.testingDevice = 'eeg';
 
-% if the device is set to 'scanner' then the data will be saved
-% in the `func` folder
-% cfg.device = 'scanner';
-
-% check that cfg and exparameters have all the necessary information
-% and fill in any missing field
-expParameters = checkCFG(cfg, expParameters);
-
-% create the filenames
-expParameters = createFilename(cfg, expParameters);
+% create the filenames: this include a step to check that all the information is there (checkCFG)
+[cfg, expParameters] = createFilename(cfg, expParameters);
 
 % initialize the events files with the typical BIDS
 % columns (onsets, duration, trial_type)
@@ -96,6 +88,9 @@ saveEventsFile('close', expParameters, logFile);
 
 Get subject, run and session number and make sure they are positive integer values.
 
+By default this will return `expParameters.session = 1` even if you asked it to omit enquiring about sessions. This means
+that the folder tree will always include a session folder.
+
 ```matlab
 [expParameters] = userInputs(cfg, expParameters)
 ```
@@ -111,7 +106,7 @@ it will only ask you about session
 
 if you use it with `expParameters.askGrpSess = [1 1]`
 it will ask you about both
-this is the defaut
+this is the default
 
 
 ### createFilename
@@ -119,11 +114,13 @@ this is the defaut
 Create the BIDS compliant directories  and filenames (but not the files) for the behavioral
 output for this subject / session / run.
 
+The folder tree will always include a session folder.
+
 Will also create the right filename for the eye-tracking data file.
 
 For the moment the date of acquisition is appended to the filename
--   can work for behavioral experiment if cfg.device is set to 'PC'
--   can work for fMRI experiment if cfg.device is set to 'scanner'
+-   can work for behavioral experiment if cfg.testingDevice is set to 'PC'
+-   can work for fMRI experiment if cfg.testingDevice is set to 'mri'
 -   can work for simple eyetracking data if cfg.eyeTracker is set to 1
 
 ### saveEventsFile

@@ -20,7 +20,7 @@ function test_saveEventsFileOpenMultiColumn()
 
     % define the extra columns: here we specify how many columns we want for
     % each variable
-    logFile.extraColumns.Speed.length = 1; % will set 1 columns with name sequenceNum
+    logFile.extraColumns.Speed.length = 1; % will set 1 columns with name Speed
     logFile.extraColumns.LHL24.length = 12; % will set 12 columns with names LHL24-01, LHL24-02, ...
     logFile.extraColumns.is_Fixation.length = 1;
 

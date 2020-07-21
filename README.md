@@ -6,6 +6,7 @@
 
 - [CPP_BIDS](#cpp_bids)
   - [Usage](#usage)
+    - [To save events.tsv file](#to-save-eventstsv-file)
   - [Functions descriptions](#functions-descriptions)
     - [userInputs](#userinputs)
     - [createFilename](#createfilename)
@@ -24,6 +25,8 @@ A set of function for matlab and octave to create [BIDS-compatible](https://bids
 
 ## Usage
 
+### To save events.tsv file
+
 ```matlab
 
 % define the folder where the data will be saved
@@ -36,14 +39,12 @@ expParameters.task = 'testtask';
 % expParameters = userInputs;
 
 % or declare it directly
-expParameters.subjectGrp = '';
 expParameters.subjectNb = 1;
-expParameters.sessionNb = 1;
 expParameters.runNb = 1;
 
 % by default we assume you are running things on a behavioral PC with no eyetracker
-cfg.eyeTracker = false;
-cfg.testingDevice = 'PC';
+% cfg.eyeTracker = false;
+% cfg.testingDevice = 'PC';
 
 % if the testing device is set to 'PC' then the data will be saved in the `beh` folder
 % if set to 'mri' then the data will be saved in the `func` folder
@@ -54,30 +55,65 @@ cfg.testingDevice = 'PC';
 % create the filenames: this include a step to check that all the information is there (checkCFG)
 [cfg, expParameters] = createFilename(cfg, expParameters);
 
-% initialize the events files with the typical BIDS
-% columns (onsets, duration, trial_type)
-% and add some more in this case (Speed and is_Fixation)
-logFile = saveEventsFile('open', expParameters, [], 'Speed', 'is_Fixation');
+% initialize the events files with the typical BIDS columns (onsets, duration, trial_type)
+% logFile = saveEventsFile('open', expParameters);
 
-% to initialize a stim file in case you want to store the info about the stimuli in it
-stimFile = saveEventsFile('open_stim', expParameters, []);
+% You can add some more in this case (Speed and is_Fixation)
+logFile.extraColumns = {'Speed', 'is_Fixation'};
+logFile = saveEventsFile('open', expParameters, logFile);
 
-% create the information about 2 events that we want to save
+% The information about 2 events that we want to save
 logFile(1,1).onset = 2;
 logFile(1,1).trial_type = 'motion_up';
 logFile(1,1).duration = 1;
-logFile(1,1).speed = 2;
-logFile(1,1).is_fixation = true;
+logFile(1,1).Speed = 2;
+logFile(1,1).is_Fixation = true;
 
 logFile(2,1).onset = 3;
 logFile(2,1).trial_type = 'static';
 logFile(2,1).duration = 4;
-logFile(2,1).is_fixation = 3;
+logFile(2,1).is_Fixation = 3;
 
 % add those 2 events to the events.tsv file
-saveEventsFile('save', expParameters, logFile, 'speed', 'is_fixation');
+saveEventsFile('save', expParameters, logFile);
 
 % close the file
+saveEventsFile('close', expParameters, logFile);
+
+```
+
+If you want to save more complex events.tsv file you can save several columns at once.
+
+```matlab
+expParameters.subjectNb = 1;
+expParameters.runNb = 1;
+expParameters.task = 'testtask';
+expParameters.outputDir = outputDir;
+
+cfg.testingDevice = 'mri';
+
+[cfg, expParameters] = createFilename(cfg, expParameters);
+
+% You can specify how many columns we want for each variable
+% will set 1 columns with name Speed
+% will set 12 columns with names LHL24-01, LHL24-02, ...
+% will set 1 columns with name is_Fixation
+
+logFile.extraColumns.Speed.length = 1;
+logFile.extraColumns.LHL24.length = 12;
+logFile.extraColumns.is_Fixation.length = 1;
+
+logFile = saveEventsFile('open', expParameters, logFile);
+
+logFile(1, 1).onset = 2;
+logFile(end, 1).trial_type = 'motion_up';
+logFile(end, 1).duration = 3;
+logFile(end, 1).Speed = 2;
+logFile(end, 1).is_Fixation = true;
+logFile(end, 1).LHL24 = 1:12;
+
+saveEventsFile('save', expParameters, logFile);
+
 saveEventsFile('close', expParameters, logFile);
 
 ```
@@ -128,6 +164,7 @@ For the moment the date of acquisition is appended to the filename
 Function to save output files for events that will be BIDS compliant.
 
 ### checkCFG
+
 Check that we have all the fields that we need in the experiment parameters.
 
 ## How to install

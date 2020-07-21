@@ -242,6 +242,14 @@ function printExtraColumns(logFile, iEvent)
         end
 
         data = checkInput(data, nbCol);
+        
+        if any(isnan(data))
+            warning('Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
+            disp(logFile(iEvent));
+        elseif  all(isnan(data)) || strcmp(data, 'NA')
+            warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
+            disp(logFile(iEvent));
+        end
 
         if ischar(data)
             fprintf(logFile(1).fileID, '%s\t', data);

@@ -44,9 +44,7 @@ function test_saveEventsFileOpen()
     assert(isequal(C{1}{1}, 'onset'));
     assert(isequal(C{2}{1}, 'trial_type'));
     assert(isequal(C{3}{1}, 'duration'));
-    
-    
-    
+
     %% check header writing with extra columns
     fprintf('\n\n--------------------------------------------------------------------\n\n');
 

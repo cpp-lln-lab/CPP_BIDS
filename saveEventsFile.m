@@ -47,8 +47,7 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
     end
 
     if nargin < 3 || isempty(logFile)
-        logFile = struct('filename', [], 'extraColumns', cell(1));
-        logFile(1).filename = '';
+        logFile = checklLogFile('init');
     end
 
     switch action
@@ -67,9 +66,8 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
         case 'save'
 
-            if ~isstruct(logFile) || size(logFile, 2) > 1
-                error('The variable containing the n events to save must be a nx1 structure.');
-            end
+            checklLogFile('checkID', logFile);
+            checklLogFile('type&size', logFile);
 
             % appends to the logfile all the data stored in the structure
             % first with the standard BIDS data and then any extra things
@@ -103,6 +101,8 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
         case 'close'
 
+            checklLogFile('checkID', logFile);
+
             % close txt log file
             fclose(logFile(1).fileID);
 
@@ -113,13 +113,37 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
                 logFile.filename));
 
         otherwise
-            errorStruct.message = 'unknown action for saveEventsFile';
-            errorStruct.identifier = 'saveEventsFile:unknownActionType';
-            error(errorStruct);
+
+            errorSaveEventsFile('unknownActionType');
 
     end
 
     logFile = resetLogFileVar(logFile);
+
+end
+
+function logFile = checklLogFile(action, logFile)
+
+    switch action
+
+        case 'init'
+
+            logFile = struct('filename', [], 'extraColumns', cell(1));
+            logFile(1).filename = '';
+
+        case 'checkID'
+
+            if ~isfield(logFile(1), 'fileID') || isempty(logFile(1).fileID)
+                errorSaveEventsFile('missingFileID');
+            end
+
+        case 'type&size'
+
+            if ~isstruct(logFile) || size(logFile, 2) > 1
+                errorSaveEventsFile('wrongFileID');
+            end
+
+    end
 
 end
 
@@ -284,4 +308,22 @@ function logFile = resetLogFileVar(logFile)
 
     end
 
+end
+
+function errorSaveEventsFile(identifier)
+
+    switch identifier
+        case 'unknownActionType'
+            errorStruct.message = 'unknown action for saveEventsFile';
+
+        case 'missingFileID'
+            errorStruct.message = 'logFile must contain a valid fileID field';
+
+        case 'wrongFileID'
+            errorStruct.message = 'logFile must be a nx1 structure';
+
+    end
+
+    errorStruct.identifier = ['saveEventsFile:' unknownActionType];
+    error(errorStruct);
 end

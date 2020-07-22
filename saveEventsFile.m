@@ -171,6 +171,10 @@ function logFile = printHeaderExtraColumns(logFile)
     for iExtraColumn = 1:numel(namesExtraColumns)
 
         nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
+        
+        if ~isfield(logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}), 'length')
+            logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}).length = nbCol;
+        end
 
         for iColNb = 1:nbCol
 
@@ -189,9 +193,11 @@ function logFile = printHeaderExtraColumns(logFile)
 end
 
 function nbCol = returnNbColumns(logFile, nameExtraColumn)
+    
     thisExtraColumn = logFile(1).extraColumns.(nameExtraColumn);
 
     nbCol = 1;
+    
     if isfield(thisExtraColumn, 'length')
         nbCol = thisExtraColumn.length;
     end
@@ -242,7 +248,7 @@ function printExtraColumns(logFile, iEvent)
         end
 
         data = checkInput(data, nbCol);
-        
+
         if any(isnan(data))
             warning('Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
             disp(logFile(iEvent));

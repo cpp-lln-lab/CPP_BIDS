@@ -47,7 +47,8 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
     end
 
     if nargin < 3 || isempty(logFile)
-        logFile = struct();
+        logFile = struct('filename', [], 'extraColumns', cell(1));
+        logFile(1).filename = '';
     end
 
     switch action
@@ -157,7 +158,7 @@ function [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
         logFile(1).extraColumns = tmp;
     end
 
-    if isfield(logFile, 'extraColumns')
+    if isfield(logFile, 'extraColumns') && ~isempty(logFile(1).extraColumns)
         namesExtraColumns = fieldnames(logFile(1).extraColumns);
     end
 
@@ -171,7 +172,7 @@ function logFile = printHeaderExtraColumns(logFile)
     for iExtraColumn = 1:numel(namesExtraColumns)
 
         nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
-        
+
         if ~isfield(logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}), 'length')
             logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}).length = nbCol;
         end
@@ -193,11 +194,11 @@ function logFile = printHeaderExtraColumns(logFile)
 end
 
 function nbCol = returnNbColumns(logFile, nameExtraColumn)
-    
+
     thisExtraColumn = logFile(1).extraColumns.(nameExtraColumn);
 
     nbCol = 1;
-    
+
     if isfield(thisExtraColumn, 'length')
         nbCol = thisExtraColumn.length;
     end

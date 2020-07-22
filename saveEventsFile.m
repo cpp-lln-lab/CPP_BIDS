@@ -324,6 +324,6 @@ function errorSaveEventsFile(identifier)
 
     end
 
-    errorStruct.identifier = ['saveEventsFile:' unknownActionType];
+    errorStruct.identifier = ['saveEventsFile:' identifier];
     error(errorStruct);
 end

@@ -63,6 +63,7 @@ logFile.extraColumns = {'Speed', 'is_Fixation'};
 logFile = saveEventsFile('open', expParameters, logFile);
 
 % The information about 2 events that we want to save
+% NOTE : If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped.
 logFile(1,1).onset = 2;
 logFile(1,1).trial_type = 'motion_up';
 logFile(1,1).duration = 1;
@@ -118,6 +119,24 @@ saveEventsFile('close', expParameters, logFile);
 
 ```
 
+If you have many columns to define but only a few with several columns, you can do this:
+
+```matlab
+% define the extra columns: they will be added to the tsv files in the order the user input them
+logFile.extraColumns = {'Speed', 'is_Fixation'};
+
+[cfg, expParameters] = createFilename(cfg, expParameters);
+
+% dummy call to initialize the logFile variable
+logFile = saveEventsFile('open', expParameters, logFile);
+
+% set the real length we really want
+logFile.extraColumns.Speed.length = 12;
+
+% actual inititalization
+logFile = saveEventsFile('open', expParameters, logFile);
+```
+
 ## Functions descriptions
 
 ### userInputs
@@ -162,6 +181,9 @@ For the moment the date of acquisition is appended to the filename
 ### saveEventsFile
 
 Function to save output files for events that will be BIDS compliant.
+
+If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped. `duration` will be set to "NaN" if 
+no value is provided.
 
 ### checkCFG
 

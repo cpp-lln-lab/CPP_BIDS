@@ -168,26 +168,6 @@ function logFile = initializeFile(expParameters, logFile)
 
 end
 
-function [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
-
-    namesExtraColumns = [];
-
-    % convert the cell of column name into a structure
-    if iscell(logFile(1).extraColumns)
-        tmp = struct();
-        for iExtraColumn = 1:numel(logFile(1).extraColumns)
-            extraColumnName = logFile(1).extraColumns{iExtraColumn};
-            tmp.(extraColumnName) = struct('length', 1);
-        end
-        logFile(1).extraColumns = tmp;
-    end
-
-    if isfield(logFile, 'extraColumns') && ~isempty(logFile(1).extraColumns)
-        namesExtraColumns = fieldnames(logFile(1).extraColumns);
-    end
-
-end
-
 function logFile = printHeaderExtraColumns(logFile)
     % print any extra column specified by the user
 

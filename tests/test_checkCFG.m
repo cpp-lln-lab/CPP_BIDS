@@ -45,9 +45,9 @@ function test_checkCFG()
     expectedStructure.bids.MRI.RepetitionTime = 1.56;
     expectedStructure.bids.MRI.SliceTiming = '';
     expectedStructure.bids.MRI.TaskName = 'testtask';
-%     expectedStructure.bids.MRI.PhaseEncodingDirection = '';
-%     expectedStructure.bids.MRI.EffectiveEchoSpacing = '';
-%     expectedStructure.bids.MRI.EchoTime = '';
+    %     expectedStructure.bids.MRI.PhaseEncodingDirection = '';
+    %     expectedStructure.bids.MRI.EffectiveEchoSpacing = '';
+    %     expectedStructure.bids.MRI.EchoTime = '';
     expectedStructure.bids.MRI.Instructions = '';
     expectedStructure.bids.MRI.TaskDescription = '';
 
@@ -62,9 +62,9 @@ function test_checkCFG()
     expectedStructure.bids.datasetDescription.DatasetDOI = '';
 
     expectedStructure = orderfields(expectedStructure);
-    
-    expectedStructure.bids.MRI
-    expParameters.bids.MRI
+
+    expectedStructure.bids.MRI;
+    expParameters.bids.MRI;
 
     assert(isequal(expectedStructure, expParameters));
 

@@ -109,12 +109,11 @@ function expParameters = setSuffixes(expParameters)
         };
 
     for iField = 1:numel(fields2Check)
-        if isempty (getfield(expParameters.MRI, fields2Check{iField})) %#ok<*GFLD>
-            expParameters.MRI = setfield(expParameters.MRI, [fields2Check{iField} 'Suffix'], ...
-                ''); %#ok<*SFLD>
+        if isempty (expParameters.MRI.(fields2Check{iField})) %#ok<*GFLD>
+            expParameters.MRI.([fields2Check{iField} 'Suffix']) = ''; %#ok<*SFLD>
         else
-            expParameters.MRI = setfield(expParameters.MRI, [fields2Check{iField} 'Suffix'], ...
-                ['_' fields2Check{iField} '-' getfield(expParameters.MRI, fields2Check{iField})]);
+            expParameters.MRI.([fields2Check{iField} 'Suffix']) = ...
+                ['_' fields2Check{iField} '-' getfield(expParameters.MRI, fields2Check{iField})];
         end
     end
 

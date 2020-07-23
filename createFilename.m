@@ -16,7 +16,7 @@ function [cfg, expParameters] = createFilename(cfg, expParameters)
     pattern = ['%0' num2str(zeroPadding) '.0f'];
     expParameters.pattern = pattern;
 
-    dateFormat = 'yyyymmdd_HHMM';
+    dateFormat = 'yyyymmddHHMM';
     expParameters.date = datestr(now, dateFormat);
 
     [cfg, expParameters] = checkCFG(cfg, expParameters);

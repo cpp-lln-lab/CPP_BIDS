@@ -42,8 +42,8 @@ function test_saveEventsFileOpen()
 
     % check the extra columns of the header
     assert(isequal(C{1}{1}, 'onset'));
-    assert(isequal(C{2}{1}, 'trial_type'));
-    assert(isequal(C{3}{1}, 'duration'));
+    assert(isequal(C{2}{1}, 'duration'));
+    assert(isequal(C{3}{1}, 'trial_type'));
 
     %% check header writing with extra columns
     fprintf('\n\n--------------------------------------------------------------------\n\n');
@@ -66,7 +66,7 @@ function test_saveEventsFileOpen()
 
     %%% do stuff
 
-    [cfg, expParameters] = createFilename(cfg, expParameters);
+    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
 
     % create the events file and header
     logFile = saveEventsFile('open', expParameters, logFile);
@@ -87,8 +87,8 @@ function test_saveEventsFileOpen()
 
     % check the extra columns of the header
     assert(isequal(C{1}{1}, 'onset'));
-    assert(isequal(C{2}{1}, 'trial_type'));
-    assert(isequal(C{3}{1}, 'duration'));
+    assert(isequal(C{2}{1}, 'duration'));
+    assert(isequal(C{3}{1}, 'trial_type'));
     assert(isequal(C{4}{1}, 'Speed'));
     assert(isequal(C{5}{1}, 'is_Fixation'));
 

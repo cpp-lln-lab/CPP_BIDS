@@ -94,8 +94,8 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
                 else
 
                     printData(logFile(1).fileID, onset);
-                    printData(logFile(1).fileID, trial_type);
                     printData(logFile(1).fileID, duration);
+                    printData(logFile(1).fileID, trial_type);
 
                     printExtraColumns(logFile, iEvent);
 
@@ -174,7 +174,7 @@ function logFile = initializeFile(expParameters, logFile)
         'w');
 
     % print the basic BIDS columns
-    fprintf(logFile.fileID, '%s\t%s\t%s\t', 'onset', 'trial_type', 'duration');
+    fprintf(logFile.fileID, '%s\t%s\t%s\t', 'onset', 'duration', 'trial_type');
 
     logFile = printHeaderExtraColumns(logFile);
 

@@ -16,10 +16,19 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     fieldsToSet.subjectGrp = ''; % in case no group was provided
     fieldsToSet.sessionNb = 1; % in case no session was provided
     fieldsToSet.askGrpSess = [true true];
-
+    
     expParameters = setDefaultFields(expParameters, fieldsToSet);
 
     %% BIDS
+    fieldsToSet.bids = struct();
+    expParameters = setDefaultFields(expParameters, fieldsToSet);
+    
+    clear fieldsToSet;
+    fieldsToSet = struct();
+    fieldsToSet.MRI = struct();
+    fieldsToSet.datasetDescription = struct();
+    expParameters.bids = setDefaultFields(expParameters.bids, fieldsToSet);
+    
     clear fieldsToSet;
     fieldsToSet = struct();
     fieldsToSet = datasetDescriptionDefaults(fieldsToSet);
@@ -34,7 +43,6 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
         fieldsToSet.TaskName = expParameters.task;
     end
 
-    expParameters.bids.MRI = struct();
     expParameters.bids.MRI = ...
         setDefaultFields(expParameters.bids.MRI, fieldsToSet);
 

@@ -13,8 +13,8 @@ before_install:
   - travis_retry sudo apt-get -y -qq update
   - travis_retry sudo apt-get -y install octave
   - travis_retry sudo apt-get -y install liboctave-dev
-  # - travis_retry sudo apt-get -y install nodejs
-  # - travis_retry sudo apt-get -y install npm
+  - travis_retry sudo apt-get -y install nodejs
+  - travis_retry sudo apt-get -y install npm
   - cd .. && git clone https://github.com/florianschanda/miss_hit.git && export PATH=$PATH:`pwd`/miss_hit && cd CPP_BIDS
 
 
@@ -26,7 +26,7 @@ install:
   # Install BIDS-MATLAB
   - octave $OCTFLAGS --eval "addpath (pwd); savepath ();"
   # Install BIDS-Validator
-  #- sudo npm install -g bids-validator
+  - sudo npm install -g bids-validator
 
 before_script:
   # Change current directory
@@ -39,3 +39,7 @@ jobs:
       script: octave $OCTFLAGS --eval "results = runTests; assert(all(~[results.Failed]))"
     - script: cd .. && mh_style.py `pwd`
       name: "miss_hit linter" # names the second job
+    - stage: "BIDS validator"
+      name: "create and check dataset" # names the second job
+    - script: octave $OCTFLAGS --eval "makeRawDataset_test" && bids-validator `pwd`/../output/rawdata/ --ignoreNiftiHeaders
+    

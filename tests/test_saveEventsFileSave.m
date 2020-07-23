@@ -16,7 +16,7 @@ function test_saveEventsFileSave()
 
     cfg.testingDevice = 'mri';
 
-    [cfg, expParameters] = createFilename(cfg, expParameters);
+    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
 
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 12;
@@ -58,11 +58,17 @@ function test_saveEventsFileSave()
     logFile(4, 1).onset = 1;
     logFile(end, 1).trial_type = '';
 
-    % ROW 5: missing info (array is not the right size)
+    % ROW 5: missing info (array is too short)
     logFile(5, 1).onset = 5;
     logFile(end, 1).trial_type = 'jazz';
     logFile(end, 1).duration = 3;
     logFile(end, 1).LHL24 = rand(1, 10);
+
+    % ROW 6: too much info (array is too long)
+    %     logFile(5, 1).onset = 5;
+    %     logFile(end, 1).trial_type = 'blues';
+    %     logFile(end, 1).duration = 3;
+    %     logFile(end, 1).LHL24 = rand(1, 15);
 
     saveEventsFile('save', expParameters, logFile);
 
@@ -93,20 +99,20 @@ function test_saveEventsFileSave()
     assert(isequal(C{17}{2}, 'true'));
 
     % event 2 / ROW 3: missing info replaced by nans
-    assert(isequal(C{4}{3}, 'NaN'));
-    assert(isequal(C{5}{3}, 'NaN'));
-    assert(isequal(C{16}{3}, 'NaN'));
+    assert(isequal(C{4}{3}, 'n/a'));
+    assert(isequal(C{5}{3}, 'n/a'));
+    assert(isequal(C{16}{3}, 'n/a'));
     assert(isequal(C{17}{3}, 'false'));
 
     % event 3 / ROW 4: missing info (duration is missing and speed is empty)
-    assert(isequal(C{3}{4}, 'NaN'));
-    assert(isequal(C{4}{4}, 'NaN'));
+    assert(isequal(C{3}{4}, 'n/a'));
+    assert(isequal(C{4}{4}, 'n/a'));
 
     % event 4-5 / ROW 5-6: skip empty events
-    assert(~isequal(C{1}{5}, 'NaN'));
+    assert(~isequal(C{1}{5}, 'n/a'));
 
     % check values entered properly
-    assert(isequal(C{15}{5}, 'NaN'));
-    assert(isequal(C{16}{5}, 'NaN'));
+    assert(isequal(C{15}{5}, 'n/a'));
+    assert(isequal(C{16}{5}, 'n/a'));
 
 end

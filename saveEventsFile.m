@@ -43,7 +43,7 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
     % See test_saveEventsFile in the test folder for more details on how to use it.
 
     if nargin < 1
-        errror('Missing action input');
+        error('Missing action input');
     end
 
     if nargin < 3 || isempty(logFile)
@@ -77,13 +77,15 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
             % first with the standard BIDS data and then any extra things
             for iEvent = 1:size(logFile, 1)
 
-                onset = checkInput(logFile(iEvent).onset);
-                duration = checkInput(logFile(iEvent).duration);
-                trial_type = checkInput(logFile(iEvent).trial_type);
+                logFile = checklLogFile('fields', logFile, iEvent);
+
+                onset = logFile(iEvent).onset;
+                duration = logFile(iEvent).duration;
+                trial_type = logFile(iEvent).trial_type;
 
                 if any(isnan([onset trial_type])) || ...
                         any(isempty([onset trial_type])) || ...
-                        any(strcmp({onset, trial_type}, 'NA'))
+                        any(strcmp({onset, trial_type}, 'n/a'))
 
                     warning('\nSkipping saving this event.\n onset: %f \n trial_type: %s\n', ...
                         onset, ...
@@ -91,10 +93,9 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
                 else
 
-                    fprintf(logFile(1).fileID, '%f\t%s\t%f\t', ...
-                        onset, ...
-                        trial_type, ...
-                        duration);
+                    printData(logFile(1).fileID, onset);
+                    printData(logFile(1).fileID, trial_type);
+                    printData(logFile(1).fileID, duration);
 
                     printExtraColumns(logFile, iEvent);
 
@@ -126,7 +127,7 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
 end
 
-function logFile = checklLogFile(action, logFile)
+function logFile = checklLogFile(action, logFile, iEvent)
 
     switch action
 
@@ -147,6 +148,16 @@ function logFile = checklLogFile(action, logFile)
                 errorSaveEventsFile('wrongFileID');
             end
 
+        case 'fields'
+            if ~isfield(logFile, 'onset') || isempty(logFile(iEvent).onset)
+                logFile(iEvent).onset = nan;
+            end
+            if ~isfield(logFile, 'trial_type') || isempty(logFile(iEvent).trial_type)
+                logFile(iEvent).trial_type = nan;
+            end
+            if ~isfield(logFile, 'duration') || isempty(logFile(iEvent).duration)
+                logFile(iEvent).duration = nan;
+            end
     end
 
 end
@@ -203,7 +214,7 @@ function data = checkInput(data, expectedLength)
     end
 
     if ischar(data) && isempty(data) || strcmp(data, ' ')
-        data = 'NA';
+        data = 'n/a';
     elseif isempty(data)
         data = nan;
     end
@@ -232,7 +243,7 @@ function printExtraColumns(logFile, iEvent)
         % if the field we are looking for does not exist or is empty in the
         % action logFile structure we will write a NaN otherwise we
         % write its content
-        data = 'NA';
+        data = 'n/a';
         if isfield(logFile, namesExtraColumns{iExtraColumn})
             data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
         end
@@ -242,19 +253,29 @@ function printExtraColumns(logFile, iEvent)
         if any(isnan(data))
             warning('Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
             disp(logFile(iEvent));
-        elseif  all(isnan(data)) || strcmp(data, 'NA')
+        elseif  all(isnan(data)) || strcmp(data, 'n/a')
             warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
             disp(logFile(iEvent));
         end
 
-        if ischar(data)
-            fprintf(logFile(1).fileID, '%s\t', data);
-        else
-            fprintf(logFile(1).fileID, '%f\t', data);
-        end
+        printData(logFile(1).fileID, data);
 
     end
 
+end
+
+function printData(output, data)
+    if ischar(data)
+        fprintf(output, '%s\t', data);
+    else
+        for i = 1:numel(data)
+            if isnan(data(i))
+                fprintf(output, '%s\t', 'n/a');
+            else
+                fprintf(output, '%f\t', data(i));
+            end
+        end
+    end
 end
 
 function logFile = resetLogFileVar(logFile)

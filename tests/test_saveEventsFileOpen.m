@@ -1,8 +1,6 @@
 function test_saveEventsFileOpen()
 
     %% Initialize file
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
-
     clear;
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
@@ -46,7 +44,7 @@ function test_saveEventsFileOpen()
     assert(isequal(C{3}{1}, 'trial_type'));
 
     %% check header writing with extra columns
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
+    fprintf('\n\n--------------------------------------------------------------------');
 
     clear;
 

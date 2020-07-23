@@ -30,8 +30,9 @@ function results = runTests(pth)
 
         % -Run each test file and catch error message in case of failure
         try
-
+            fprintf('\n\n--------------------------------------------------------------------\n');
             fprintf('%s', d(i).name(1:end - 2));
+            fprintf('\n--------------------------------------------------------------------\n');
             feval(d(i).name(1:end - 2));
             results(i).Passed = true;
 

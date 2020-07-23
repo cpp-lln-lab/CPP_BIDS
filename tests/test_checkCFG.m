@@ -1,7 +1,5 @@
 function test_checkCFG()
 
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
-
     clear;
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');

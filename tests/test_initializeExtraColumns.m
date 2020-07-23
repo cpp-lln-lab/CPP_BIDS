@@ -1,6 +1,6 @@
 function test_initializeExtraColumns()
 
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
+    %%
 
     clear;
 
@@ -18,8 +18,9 @@ function test_initializeExtraColumns()
 
     assert(isequal(expectedStrcut, logFile));
 
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
-
+    %%
+    fprintf('\n--------------------------------------------------------------------');
+    
     clear;
 
     %%% set up
@@ -38,7 +39,8 @@ function test_initializeExtraColumns()
 
     assert(isequal(expectedStrcut, logFile));
 
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
+    %%
+    fprintf('\n--------------------------------------------------------------------');
 
     clear;
 

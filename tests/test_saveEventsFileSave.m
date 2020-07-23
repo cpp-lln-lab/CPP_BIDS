@@ -1,8 +1,6 @@
 function test_saveEventsFileSave()
 
     %%  write things in it
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
-
     clear;
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');

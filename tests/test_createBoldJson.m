@@ -1,7 +1,5 @@
 function test_createBoldJson()
 
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
-
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
     %%% set up part

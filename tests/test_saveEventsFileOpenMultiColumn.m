@@ -1,8 +1,6 @@
 function test_saveEventsFileOpenMultiColumn()
 
     %% check header writing with several columns for one variable
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
-
     clear;
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');

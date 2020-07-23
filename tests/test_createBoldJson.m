@@ -14,8 +14,9 @@ function test_createBoldJson()
     cfg = struct();
     cfg.testingDevice = 'mri';
 
-    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
-    logFile = saveEventsFile('open', expParameters);
+    [cfg, expParameters] = createFilename(cfg, expParameters);  %#ok<*ASGLU>
+
+    logFile = saveEventsFile('open', expParameters); %#ok<*NASGU>
 
     createBoldJson(expParameters);
 

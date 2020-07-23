@@ -5,6 +5,7 @@ function test_initializeExtraColumns()
     clear;
 
     %%% set up
+    checkCppBidsDependencies()
     logFile = struct('filename', [], 'extraColumns', cell(1));
     logFile(1).filename = '';
 
@@ -22,6 +23,7 @@ function test_initializeExtraColumns()
     clear;
 
     %%% set up
+    checkCppBidsDependencies()
     logFile.extraColumns = {'Speed'};
 
     %%% do stuff
@@ -41,6 +43,7 @@ function test_initializeExtraColumns()
     clear;
 
     %%% set up
+    checkCppBidsDependencies()
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
 

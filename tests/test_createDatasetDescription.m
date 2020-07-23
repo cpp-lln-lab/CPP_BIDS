@@ -2,7 +2,7 @@ function test_createDatasetDescription()
 
     fprintf('\n\n--------------------------------------------------------------------\n\n');
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output', 'source');
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
     %%% set up part
 

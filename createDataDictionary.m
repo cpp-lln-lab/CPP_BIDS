@@ -23,9 +23,20 @@ function createDataDictionary(expParameters, logFile)
 
     % transfer content of extra fields to json content
     namesExtraColumns = returnNamesExtraColumns(logFile);
+
     for iExtraColumn = 1:numel(namesExtraColumns)
-        jsonContent.(namesExtraColumns{iExtraColumn}) = ...
-            logFile(1).extraColumns.(namesExtraColumns{iExtraColumn});
+
+        nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
+
+        for iCol = 1:nbCol
+
+            headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
+
+            jsonContent.(headerName) = ...
+                logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}).bids;
+
+        end
+
     end
 
     bids.util.jsonencode(fileName, jsonContent, opts);

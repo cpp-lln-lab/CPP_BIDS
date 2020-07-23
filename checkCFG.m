@@ -11,7 +11,7 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
         '..', ...
         'output');
 
-    fieldsToSet.subjectGrp = []; % in case no group was provided
+    fieldsToSet.subjectGrp = ''; % in case no group was provided
     fieldsToSet.sessionNb = 1; % in case no session was provided
     fieldsToSet.askGrpSess = [true true];
 

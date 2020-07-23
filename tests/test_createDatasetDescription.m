@@ -22,7 +22,7 @@ function test_createDatasetDescription()
     %%% test part
 
     % test data
-    directory = fullfile(outputDir);
+    directory = fullfile(outputDir, 'source');
     filename = 'dataset_description.json';
 
     % check that the file has the right path and name

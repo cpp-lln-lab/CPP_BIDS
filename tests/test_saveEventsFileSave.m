@@ -91,8 +91,8 @@ function test_saveEventsFileSave()
 
     % event 1/ ROW 2: check that values are entered correctly
     assert(isequal(C{1}{2}, sprintf('%f', 2)));
-    assert(isequal(C{2}{2}, 'motion_up'));
-    assert(isequal(C{3}{2}, sprintf('%f', 3)));
+    assert(isequal(C{3}{2}, 'motion_up'));
+    assert(isequal(C{2}{2}, sprintf('%f', 3)));
     assert(isequal(C{4}{2}, sprintf('%f', 2)));
     assert(isequal(C{5}{2}, sprintf('%f', 1)));
     assert(isequal(C{16}{2}, sprintf('%f', 12)));
@@ -105,7 +105,7 @@ function test_saveEventsFileSave()
     assert(isequal(C{17}{3}, 'false'));
 
     % event 3 / ROW 4: missing info (duration is missing and speed is empty)
-    assert(isequal(C{3}{4}, 'n/a'));
+    assert(isequal(C{2}{4}, 'n/a'));
     assert(isequal(C{4}{4}, 'n/a'));
 
     % event 4-5 / ROW 5-6: skip empty events

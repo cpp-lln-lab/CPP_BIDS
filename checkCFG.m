@@ -34,6 +34,7 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
         fieldsToSet.TaskName = expParameters.task;
     end
 
+    expParameters.bids.MRI = struct();
     expParameters.bids.MRI = ...
         setDefaultFields(expParameters.bids.MRI, fieldsToSet);
 

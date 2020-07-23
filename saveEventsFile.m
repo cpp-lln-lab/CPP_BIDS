@@ -54,11 +54,15 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
         case 'open'
 
+            logFile = initializeExtraColumns(logFile);
+
             logFile.filename = expParameters.fileName.events;
 
             logFile = initializeFile(expParameters, logFile);
 
         case 'open_stim'
+
+            logFile = initializeExtraColumns(logFile);
 
             logFile.filename = expParameters.fileName.stim;
 
@@ -177,17 +181,9 @@ function logFile = printHeaderExtraColumns(logFile)
 
         nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
 
-        if ~isfield(logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}), 'length')
-            logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}).length = nbCol;
-        end
+        for iCol = 1:nbCol
 
-        for iColNb = 1:nbCol
-
-            if nbCol == 1
-                headerName = sprintf('%s', namesExtraColumns{iExtraColumn});
-            else
-                headerName = sprintf('%s-%02.0f', namesExtraColumns{iExtraColumn}, iColNb);
-            end
+            headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
 
             fprintf(logFile.fileID, '%s\t', headerName);
 
@@ -195,17 +191,6 @@ function logFile = printHeaderExtraColumns(logFile)
 
     end
 
-end
-
-function nbCol = returnNbColumns(logFile, nameExtraColumn)
-
-    thisExtraColumn = logFile(1).extraColumns.(nameExtraColumn);
-
-    nbCol = 1;
-
-    if isfield(thisExtraColumn, 'length')
-        nbCol = thisExtraColumn.length;
-    end
 end
 
 function data = checkInput(data, expectedLength)

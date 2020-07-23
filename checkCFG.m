@@ -23,7 +23,7 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
         fieldsToSet.bids.MRI.TaskName = expParameters.task;
     end
 
-    expParameters = setDefaults(expParameters, fieldsToSet);
+    expParameters = setDefaultFields(expParameters, fieldsToSet);
 
     %% set the cfg defaults
 
@@ -31,35 +31,11 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     fieldsToSet.testingDevice = 'pc';
     fieldsToSet.eyeTracker = false;
 
-    cfg = setDefaults(cfg, fieldsToSet);
+    cfg = setDefaultFields(cfg, fieldsToSet);
 
     % sort fields alphabetically
     cfg = orderfields(cfg);
 
-end
-
-function structure = setDefaults(structure, fieldsToSet)
-    % loop through the defaults fiels to set and update if they don't exist
-
-    names = fieldnames(fieldsToSet);
-
-    for i = 1:numel(names)
-
-        thisField = fieldsToSet.(names{i});
-
-        structure = setFieldToIfNotPresent( ...
-            structure, ...
-            names{i}, ...
-            thisField);
-
-    end
-
-end
-
-function structure = setFieldToIfNotPresent(structure, fieldName, value)
-    if ~isfield(structure, fieldName)
-        structure.(fieldName) = value;
-    end
 end
 
 function fieldsToSet = datasetDescriptionDefaults(fieldsToSet)

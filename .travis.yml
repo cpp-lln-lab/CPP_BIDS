@@ -15,6 +15,8 @@ before_install:
   - travis_retry sudo apt-get -y install liboctave-dev
   # - travis_retry sudo apt-get -y install nodejs
   # - travis_retry sudo apt-get -y install npm
+  - cd .. && git clone https://github.com/florianschanda/miss_hit.git && export PATH=$PATH:`pwd`/miss_hit && cd CPP_BIDS
+
 
 install:
   # Install JSONio
@@ -30,5 +32,10 @@ before_script:
   # Change current directory
   - cd tests
 
-script:
-  - octave $OCTFLAGS --eval "results = runTests; assert(all(~[results.Failed]))"
+jobs:
+  include:
+    - stage: "Tests and linter"
+      name: "Unit Tests" # names the first job
+      script: octave $OCTFLAGS --eval "results = runTests; assert(all(~[results.Failed]))"
+    - script: cd .. && mh_style.py `pwd`
+      name: "miss_hit linter" # names the second job

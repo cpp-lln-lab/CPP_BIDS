@@ -21,6 +21,23 @@ function [cfg, expParameters] = createFilename(cfg, expParameters)
 
     [cfg, expParameters] = checkCFG(cfg, expParameters);
 
+    if ~isfield(expParameters, 'task')
+        error('createFilename: missing a task name. i.e expParameters.task');
+    end
+
+    expParameters = getModality(cfg, expParameters);
+
+    expParameters = createDirectories(cfg, expParameters);
+
+    expParameters = setSuffixes(expParameters);
+
+    expParameters = setFilenames(cfg, expParameters);
+
+    talkToMe(cfg, expParameters);
+
+end
+
+function expParameters = getModality(cfg, expParameters)
     switch lower(cfg.testingDevice)
         case 'pc'
             modality = 'beh';
@@ -35,16 +52,8 @@ function [cfg, expParameters] = createFilename(cfg, expParameters)
         otherwise
             modality = 'beh';
     end
+
     expParameters.modality = modality;
-
-    expParameters = createDirectories(cfg, expParameters);
-
-    expParameters = setSuffixes(expParameters);
-
-    expParameters = setFilenames(cfg, expParameters);
-
-    talkToMe(cfg, expParameters);
-
 end
 
 function [subjectGrp, subjectNb, sessionNb, modality] = extractInput(expParameters)
@@ -53,6 +62,10 @@ function [subjectGrp, subjectNb, sessionNb, modality] = extractInput(expParamete
     subjectNb = expParameters.subjectNb;
     sessionNb = expParameters.sessionNb;
     modality = expParameters.modality;
+
+    if isempty(sessionNb)
+        sessionNb = 1;
+    end
 
 end
 

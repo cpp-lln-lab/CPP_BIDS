@@ -171,10 +171,10 @@ function logFile = checklLogFile(action, logFile, iEvent)
 end
 
 function logFile = initializeFile(expParameters, logFile)
+    
+    logFile = initializeExtraColumns(logFile);
 
     createDataDictionary(expParameters, logFile);
-
-    logFile = initializeExtraColumns(logFile);
 
     % Initialize txt logfiles and empty fields for the standard BIDS
     %  event file

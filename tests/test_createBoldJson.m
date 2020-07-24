@@ -14,7 +14,7 @@ function test_createBoldJson()
 
     [cfg, expParameters] = createFilename(cfg, expParameters);  %#ok<*ASGLU>
 
-    logFile = saveEventsFile('open', expParameters); %#ok<*NASGU>
+    logFile = saveEventsFile('init', expParameters); %#ok<*NASGU>
 
     createBoldJson(expParameters);
 

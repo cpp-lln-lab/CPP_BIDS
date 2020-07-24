@@ -18,7 +18,7 @@ function test_createDataDictionary()
 
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
-    logFile = saveEventsFile('open', expParameters, logFile);
+    logFile = saveEventsFile('init', expParameters, logFile);
 
     createDataDictionary(expParameters, logFile);
 

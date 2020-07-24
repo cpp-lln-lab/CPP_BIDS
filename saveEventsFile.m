@@ -171,6 +171,8 @@ function logFile = checklLogFile(action, logFile, iEvent)
 end
 
 function logFile = initializeFile(expParameters, logFile)
+    
+    createDataDictionary(expParameters, logFile);
 
     logFile = initializeExtraColumns(logFile);
 
@@ -214,36 +216,6 @@ function printHeaderExtraColumns(logFile)
 
 end
 
-function data = checkInput(data, expectedLength)
-    % check the data to write
-    % default will be 'n/a' for chars and NaN for numeric data
-    % for numeric data that don't have the expected length, it will be padded with NaNs
-
-    if nargin < 2
-        expectedLength = [];
-    end
-
-    if ischar(data) && isempty(data) || strcmp(data, ' ')
-        data = 'n/a';
-    elseif isempty(data)
-        % important to not set this to n/a as we still need to check if this
-        % numeric valur has the right length and needs to be nan padded
-        data = nan;
-    end
-
-    if islogical(data) && data
-        data = 'true';
-    elseif islogical(data) && ~data
-        data = 'false';
-    end
-
-    if ~isempty(expectedLength) && isnumeric(data) && max(size(data)) < expectedLength
-        padding = expectedLength - max(size(data));
-        data(end + 1:end + padding) = nan(1, padding);
-    end
-
-end
-
 function logFile = checkExtracolumns(logFile, iEvent)
     % loops through the extra columns
     % if the field we are looking for does not exist or is empty in the
@@ -273,6 +245,40 @@ function logFile = checkExtracolumns(logFile, iEvent)
             disp(logFile(iEvent));
         end
 
+    end
+
+end
+
+function data = checkInput(data, expectedLength)
+    % check the data to write
+    % default will be 'n/a' for chars and NaN for numeric data
+    % for numeric data that don't have the expected length, it will be padded with NaNs
+
+    if nargin < 2
+        expectedLength = [];
+    end
+    
+    if islogical(data) && data
+        data = 'true';
+    elseif islogical(data) && ~data
+        data = 'false';
+    end
+    
+
+    if ischar(data) && isempty(data) || strcmp(data, ' ')
+        data = 'n/a';
+    elseif isempty(data)
+        % important to not set this to n/a as we still need to check if this
+        % numeric valur has the right length and needs to be nan padded
+        data = nan;
+    end
+
+    if ~isempty(expectedLength) && isnumeric(data) && max(size(data)) < expectedLength
+        padding = expectedLength - max(size(data));
+        data(end + 1:end + padding) = nan(1, padding);
+    elseif ~isempty(expectedLength) && isnumeric(data) && max(size(data)) > expectedLength
+        data = data(1:expectedLength);
+        warning('A field for this event is longer than expected. Truncating the extra values.')
     end
 
 end

@@ -19,11 +19,8 @@ before_install:
 
 
 install:
-  # Install JSONio
-  #- travis_retry git clone git://github.com/gllmflndn/JSONio.git --depth 1
+  # make octave file for JSONio
   - cd lib/JSONio; mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS; cd ../..
-  #- octave $OCTFLAGS --eval "addpath (fullfile (pwd, 'JSONio')); savepath ();"
-  # Install BIDS-MATLAB
   - octave $OCTFLAGS --eval "addpath (pwd); savepath ();"
   # Install BIDS-Validator
   - sudo npm install -g bids-validator
@@ -41,5 +38,5 @@ jobs:
       name: "miss_hit linter" # names the second job
     - stage: "BIDS validator"
       name: "create and check dataset" # names the second job
-    - script: octave $OCTFLAGS --eval "makeRawDataset_test" && bids-validator `pwd`/../output/rawdata/ --ignoreNiftiHeaders
+      script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/../output/rawdata/ --ignoreNiftiHeaders
     

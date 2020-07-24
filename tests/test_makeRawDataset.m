@@ -27,8 +27,6 @@ function test_makeRawDataset()
 
     cfg.testingDevice = 'mri';
 
-    cfg.testingDevice = 'pc';
-
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
     logFile.extraColumns.is_Fixation.length = 1;
@@ -40,7 +38,6 @@ function test_makeRawDataset()
     % create the events file and header
     logFile = saveEventsFile('open', expParameters, logFile);
 
-    createDataDictionary(expParameters, logFile);
     createBoldJson(expParameters);
     createDatasetDescription(expParameters);
 

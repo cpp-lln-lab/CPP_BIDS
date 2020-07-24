@@ -171,7 +171,7 @@ function logFile = checklLogFile(action, logFile, iEvent)
 end
 
 function logFile = initializeFile(expParameters, logFile)
-    
+
     createDataDictionary(expParameters, logFile);
 
     logFile = initializeExtraColumns(logFile);
@@ -257,13 +257,12 @@ function data = checkInput(data, expectedLength)
     if nargin < 2
         expectedLength = [];
     end
-    
+
     if islogical(data) && data
         data = 'true';
     elseif islogical(data) && ~data
         data = 'false';
     end
-    
 
     if ischar(data) && isempty(data) || strcmp(data, ' ')
         data = 'n/a';
@@ -278,7 +277,7 @@ function data = checkInput(data, expectedLength)
         data(end + 1:end + padding) = nan(1, padding);
     elseif ~isempty(expectedLength) && isnumeric(data) && max(size(data)) > expectedLength
         data = data(1:expectedLength);
-        warning('A field for this event is longer than expected. Truncating the extra values.')
+        warning('A field for this event is longer than expected. Truncating the extra values.');
     end
 
 end

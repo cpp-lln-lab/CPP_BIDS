@@ -3,6 +3,13 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
 
     checkCppBidsDependencies();
 
+    if nargin < 1 || isempty(cfg)
+        cfg = struct();
+    end
+    if nargin < 2 || isempty(expParameters)
+        expParameters = struct();
+    end
+
     %% set the expParameters defaults
 
     fieldsToSet.verbose = 0;
@@ -20,25 +27,23 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     expParameters = setDefaultFields(expParameters, fieldsToSet);
 
     %% BIDS
+    clear fieldsToSet;
     fieldsToSet.bids = struct();
     expParameters = setDefaultFields(expParameters, fieldsToSet);
 
     clear fieldsToSet;
-    fieldsToSet = struct();
     fieldsToSet.MRI = struct();
     fieldsToSet.datasetDescription = struct();
     expParameters.bids = setDefaultFields(expParameters.bids, fieldsToSet);
 
     clear fieldsToSet;
-    fieldsToSet = struct();
-    fieldsToSet = datasetDescriptionDefaults(fieldsToSet);
+    fieldsToSet = datasetDescriptionDefaults();
 
     expParameters.bids.datasetDescription = ...
         setDefaultFields(expParameters.bids.datasetDescription, fieldsToSet);
 
     clear fieldsToSet;
-    fieldsToSet = struct();
-    fieldsToSet = mriJsonDefaults(fieldsToSet);
+    fieldsToSet = mriJsonDefaults();
     if isfield(expParameters, 'task')
         fieldsToSet.TaskName = expParameters.task;
     end
@@ -73,7 +78,7 @@ function fieldsToSet = mriDefaults(fieldsToSet)
 
 end
 
-function fieldsToSet = datasetDescriptionDefaults(fieldsToSet)
+function fieldsToSet = datasetDescriptionDefaults()
     % required
     fieldsToSet.Name = '';
     fieldsToSet.BIDSVersion = '';
@@ -87,7 +92,7 @@ function fieldsToSet = datasetDescriptionDefaults(fieldsToSet)
     fieldsToSet.DatasetDOI = '';
 end
 
-function fieldsToSet = mriJsonDefaults(fieldsToSet)
+function fieldsToSet = mriJsonDefaults()
 
     % for json for funcfional data
     % required

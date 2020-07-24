@@ -1,5 +1,16 @@
 function test_checkCFG()
 
+    expParameters.outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    [cfg, expParameters] = checkCFG([], expParameters);
+
+    expectedStructure = returnExpectedStructure();
+    expectedStructure.outputDir = expParameters.outputDir;
+
+    assert(isequal(expectedStructure, expParameters));
+
+    %%
+    fprintf('\n--------------------------------------------------------------------');
+
     clear;
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
@@ -22,17 +33,36 @@ function test_checkCFG()
     %%% test
 
     % test data
+    expectedStructure = returnExpectedStructure();
     expectedStructure.subjectNb = 1;
     expectedStructure.runNb = 1;
+
+    expectedStructure.outputDir = outputDir;
+
+    expectedStructure.task = 'testtask';
+
+    expectedStructure.bids.MRI.RepetitionTime = 1.56;
+    expectedStructure.bids.MRI.TaskName = 'testtask';
+
+    expectedStructure.bids.datasetDescription.Name = 'dummy';
+    expectedStructure.bids.datasetDescription.BIDSVersion =  '1.0.0';
+    expectedStructure.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
+
+    expectedStructure = orderfields(expectedStructure);
+
+    assert(isequal(expectedStructure, expParameters));
+
+    fprintf('\n');
+
+end
+
+function expectedStructure = returnExpectedStructure()
+
     expectedStructure.subjectGrp = '';
     expectedStructure.sessionNb = 1;
 
     expectedStructure.verbose = 0;
     expectedStructure.askGrpSess = [true true];
-
-    expectedStructure.outputDir = outputDir;
-
-    expectedStructure.task = 'testtask';
 
     expectedStructure.MRI.ce = [];
     expectedStructure.MRI.dir = [];
@@ -40,19 +70,19 @@ function test_checkCFG()
     expectedStructure.MRI.echo = [];
     expectedStructure.MRI.acq = [];
 
-    expectedStructure.bids.MRI.RepetitionTime = 1.56;
+    expectedStructure.bids.MRI.RepetitionTime = [];
     expectedStructure.bids.MRI.SliceTiming = '';
-    expectedStructure.bids.MRI.TaskName = 'testtask';
+    expectedStructure.bids.MRI.TaskName = '';
     %     expectedStructure.bids.MRI.PhaseEncodingDirection = '';
     %     expectedStructure.bids.MRI.EffectiveEchoSpacing = '';
     %     expectedStructure.bids.MRI.EchoTime = '';
     expectedStructure.bids.MRI.Instructions = '';
     expectedStructure.bids.MRI.TaskDescription = '';
 
-    expectedStructure.bids.datasetDescription.Name = 'dummy';
-    expectedStructure.bids.datasetDescription.BIDSVersion =  '1.0.0';
+    expectedStructure.bids.datasetDescription.Name = '';
+    expectedStructure.bids.datasetDescription.BIDSVersion =  '';
     expectedStructure.bids.datasetDescription.License = '';
-    expectedStructure.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
+    expectedStructure.bids.datasetDescription.Authors = {''};
     expectedStructure.bids.datasetDescription.Acknowledgements = '';
     expectedStructure.bids.datasetDescription.HowToAcknowledge = '';
     expectedStructure.bids.datasetDescription.Funding = {''};
@@ -60,10 +90,4 @@ function test_checkCFG()
     expectedStructure.bids.datasetDescription.DatasetDOI = '';
 
     expectedStructure = orderfields(expectedStructure);
-
-    expectedStructure.bids.MRI;
-    expParameters.bids.MRI;
-
-    assert(isequal(expectedStructure, expParameters));
-
 end

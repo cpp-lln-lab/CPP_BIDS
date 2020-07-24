@@ -1,16 +1,13 @@
-function test_initializeExtraColumns()
+function test_saveEventsFileInit()
 
     %%
 
-    clear;
-
     %%% set up
-    checkCppBidsDependencies();
-    logFile = struct('filename', [], 'extraColumns', cell(1));
-    logFile(1).filename = '';
+    % make sure the dependencies are there
+    checkCFG();
 
     %%% do stuff
-    logFile = initializeExtraColumns(logFile);
+    [logFile] = saveEventsFile('init');
 
     %%% test section
     expectedStrcut(1).filename = '';
@@ -20,15 +17,15 @@ function test_initializeExtraColumns()
 
     %%
     fprintf('\n--------------------------------------------------------------------');
-    
+
     clear;
 
     %%% set up
-    checkCppBidsDependencies();
+    [cfg, expParameters] = checkCFG(); %#ok<ASGLU>
     logFile.extraColumns = {'Speed'};
 
     %%% do stuff
-    logFile = initializeExtraColumns(logFile);
+    [logFile] = saveEventsFile('init', expParameters, logFile);
 
     %%% test section
     expectedStrcut(1).extraColumns.Speed.length = 1;
@@ -45,12 +42,12 @@ function test_initializeExtraColumns()
     clear;
 
     %%% set up
-    checkCppBidsDependencies();
+    [cfg, expParameters] = checkCFG(); %#ok<ASGLU>
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
 
     %%% do stuff
-    logFile = initializeExtraColumns(logFile);
+    [logFile] = saveEventsFile('init', expParameters, logFile);
 
     %%% test section
     expectedStrcut(1).extraColumns.Speed.length = 1;
@@ -65,5 +62,7 @@ function test_initializeExtraColumns()
     expectedStrcut(1).extraColumns.LHL24.bids.TermURL = '';
 
     assert(isequal(expectedStrcut, logFile));
+
+    fprintf('\n');
 
 end

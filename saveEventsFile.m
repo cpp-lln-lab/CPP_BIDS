@@ -46,23 +46,27 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
         error('Missing action input');
     end
 
+    if nargin < 2
+        expParameters = struct();
+    end
+
     if nargin < 3 || isempty(logFile)
         logFile = checklLogFile('init');
     end
 
     switch action
 
-        case 'open'
+        case 'init'
 
             logFile = initializeExtraColumns(logFile);
+
+        case 'open'
 
             logFile.filename = expParameters.fileName.events;
 
             logFile = initializeFile(expParameters, logFile);
 
         case 'open_stim'
-
-            logFile = initializeExtraColumns(logFile);
 
             logFile.filename = expParameters.fileName.stim;
 
@@ -145,10 +149,11 @@ function logFile = checklLogFile(action, logFile, iEvent)
         case 'type&size'
 
             if ~isstruct(logFile) || size(logFile, 2) > 1
-                errorSaveEventsFile('wrongFileID');
+                errorSaveEventsFile('wrongLogSize');
             end
 
         case 'fields'
+
             if ~isfield(logFile, 'onset') || isempty(logFile(iEvent).onset)
                 logFile(iEvent).onset = nan;
             end
@@ -158,11 +163,16 @@ function logFile = checklLogFile(action, logFile, iEvent)
             if ~isfield(logFile, 'duration') || isempty(logFile(iEvent).duration)
                 logFile(iEvent).duration = nan;
             end
+
+            logFile = checkExtracolumns(logFile, iEvent);
+
     end
 
 end
 
 function logFile = initializeFile(expParameters, logFile)
+
+    logFile = initializeExtraColumns(logFile);
 
     % Initialize txt logfiles and empty fields for the standard BIDS
     %  event file
@@ -176,14 +186,14 @@ function logFile = initializeFile(expParameters, logFile)
     % print the basic BIDS columns
     fprintf(logFile.fileID, '%s\t%s\t%s\t', 'onset', 'duration', 'trial_type');
 
-    logFile = printHeaderExtraColumns(logFile);
+    printHeaderExtraColumns(logFile);
 
     % next line so we start printing at the right place
     fprintf(logFile.fileID, '\n');
 
 end
 
-function logFile = printHeaderExtraColumns(logFile)
+function printHeaderExtraColumns(logFile)
     % print any extra column specified by the user
 
     [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile);
@@ -206,7 +216,7 @@ end
 
 function data = checkInput(data, expectedLength)
     % check the data to write
-    % default will be 'NA' for chars and NaN for numeric data
+    % default will be 'n/a' for chars and NaN for numeric data
     % for numeric data that don't have the expected length, it will be padded with NaNs
 
     if nargin < 2
@@ -216,6 +226,8 @@ function data = checkInput(data, expectedLength)
     if ischar(data) && isempty(data) || strcmp(data, ' ')
         data = 'n/a';
     elseif isempty(data)
+        % important to not set this to n/a as we still need to check if this
+        % numeric valur has the right length and needs to be nan padded
         data = nan;
     end
 
@@ -232,7 +244,11 @@ function data = checkInput(data, expectedLength)
 
 end
 
-function printExtraColumns(logFile, iEvent)
+function logFile = checkExtracolumns(logFile, iEvent)
+    % loops through the extra columns
+    % if the field we are looking for does not exist or is empty in the
+    % action logFile structure we will write a n/a
+    % otherwise we write its content
 
     namesExtraColumns = returnNamesExtraColumns(logFile);
 
@@ -240,15 +256,14 @@ function printExtraColumns(logFile, iEvent)
 
         nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
 
-        % if the field we are looking for does not exist or is empty in the
-        % action logFile structure we will write a NaN otherwise we
-        % write its content
         data = 'n/a';
         if isfield(logFile, namesExtraColumns{iExtraColumn})
             data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
         end
 
         data = checkInput(data, nbCol);
+
+        logFile(iEvent).(namesExtraColumns{iExtraColumn}) = data;
 
         if any(isnan(data))
             warning('Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
@@ -258,6 +273,19 @@ function printExtraColumns(logFile, iEvent)
             disp(logFile(iEvent));
         end
 
+    end
+
+end
+
+function printExtraColumns(logFile, iEvent)
+    % loops through the extra columns and print them
+
+    namesExtraColumns = returnNamesExtraColumns(logFile);
+
+    for iExtraColumn = 1:numel(namesExtraColumns)
+
+        data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
+
         printData(logFile(1).fileID, data);
 
     end
@@ -265,6 +293,8 @@ function printExtraColumns(logFile, iEvent)
 end
 
 function printData(output, data)
+    % write char
+    % for numeric data we replace any nan by n/a
     if ischar(data)
         fprintf(output, '%s\t', data);
     else
@@ -305,7 +335,7 @@ function errorSaveEventsFile(identifier)
         case 'missingFileID'
             errorStruct.message = 'logFile must contain a valid fileID field';
 
-        case 'wrongFileID'
+        case 'wrongLogSize'
             errorStruct.message = 'logFile must be a nx1 structure';
 
     end

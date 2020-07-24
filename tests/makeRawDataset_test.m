@@ -23,9 +23,9 @@ function makeRawDataset_test()
     expParameters.bids.datasetDescription.BIDSVersion = '1.0.0';
     expParameters.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
 
-    %     expParameters.bids.MRI.RepetitionTime = 1.56;
-    %
-    %     cfg.testingDevice = 'mri';
+    expParameters.bids.MRI.RepetitionTime = 1.56;
+
+    cfg.testingDevice = 'mri';
 
     cfg.testingDevice = 'pc';
 
@@ -41,7 +41,7 @@ function makeRawDataset_test()
     logFile = saveEventsFile('open', expParameters, logFile);
 
     createDataDictionary(expParameters, logFile);
-    %     createBoldJson(expParameters);
+    createBoldJson(expParameters);
     createDatasetDescription(expParameters);
 
     % ROW 2: normal events : all info is there
@@ -79,9 +79,9 @@ function makeRawDataset_test()
     % add dummy functional data
     funcDir = fullfile(expParameters.outputDir, 'source', 'sub-001', 'ses-001', 'func');
     boldFilename = 'sub-001_ses-001_task-testtask_run-001_bold.nii.gz';
-    %     copyfile( ...
-    %         fullfile('..', 'dummyData', 'dummyData.nii.gz'), ...
-    %         fullfile(funcDir, boldFilename));
+    copyfile( ...
+        fullfile('..', 'dummyData', 'dummyData.nii.gz'), ...
+        fullfile(funcDir, boldFilename));
 
     %%
 

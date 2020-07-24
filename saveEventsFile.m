@@ -171,7 +171,7 @@ function logFile = checklLogFile(action, logFile, iEvent)
 end
 
 function logFile = initializeFile(expParameters, logFile)
-    
+
     logFile = initializeExtraColumns(logFile);
 
     createDataDictionary(expParameters, logFile);

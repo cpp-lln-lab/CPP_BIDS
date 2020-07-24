@@ -31,12 +31,14 @@ before_script:
 
 jobs:
   include:
-    - stage: "Tests and linter"
-      name: "Unit Tests" # names the first job
+    - stage: "Tests"
+      name: "Unit and integration Tests"
       script: octave $OCTFLAGS --eval "results = runTests; assert(all(~[results.Failed]))"
-    - script: cd .. && mh_style `pwd`
-      name: "miss_hit linter" # names the second job
     - stage: "BIDS validator"
-      name: "create and check dataset" # names the second job
+      name: "Create and check dataset"
       script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/../output/rawdata/ --ignoreNiftiHeaders
+    - stage: "Linter"
+      name: "miss_hit"
+      script: cd .. && mh_style `pwd`
+      
     

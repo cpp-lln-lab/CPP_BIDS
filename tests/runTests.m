@@ -30,8 +30,9 @@ function results = runTests(pth)
 
         % -Run each test file and catch error message in case of failure
         try
-
+            fprintf('\n\n--------------------------------------------------------------------\n');
             fprintf('%s', d(i).name(1:end - 2));
+            fprintf('\n--------------------------------------------------------------------\n');
             feval(d(i).name(1:end - 2));
             results(i).Passed = true;
 
@@ -50,4 +51,13 @@ function results = runTests(pth)
         fprintf(['Totals (%d tests):\n\t%d Passed, %d Failed, %d Incomplete.\n' ...
             '\t%f seconds testing time.\n\n'], numel(results), nnz([results.Passed]), ...
             nnz([results.Failed]), nnz([results.Incomplete]), sum([results.Duration]));
+        for i = 1:numel(d)
+            status = 'Incomplete';
+            if results(i).Passed
+                status = 'Passed';
+            elseif results(i).Failed
+                status = 'Failed';
+            end
+            fprintf('%s: %s\n', d(i).name(1:end - 2), status);
+        end
     end

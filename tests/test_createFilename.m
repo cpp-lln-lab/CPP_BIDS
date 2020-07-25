@@ -2,7 +2,6 @@ function test_createFilename()
     % test for filename creation and their directories
 
     %% PC
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
@@ -41,7 +40,7 @@ function test_createFilename()
     assert(strcmp(expParameters.fileName.stim, stimFilename));
 
     %% fMRI and eye tracker
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
+    fprintf('\n--------------------------------------------------------------------');
 
     clear;
 
@@ -84,7 +83,7 @@ function test_createFilename()
     assert(strcmp(expParameters.fileName.eyetracker, eyetrackerFilename));
 
     %% EEG
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
+    fprintf('\n--------------------------------------------------------------------');
 
     clear;
 

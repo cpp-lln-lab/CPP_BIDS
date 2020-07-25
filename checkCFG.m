@@ -1,6 +1,15 @@
 function [cfg, expParameters] = checkCFG(cfg, expParameters)
     % check that we have all the fields that we need in the experiment parameters
 
+    checkCppBidsDependencies();
+
+    if nargin < 1 || isempty(cfg)
+        cfg = struct();
+    end
+    if nargin < 2 || isempty(expParameters)
+        expParameters = struct();
+    end
+
     %% set the expParameters defaults
 
     fieldsToSet.verbose = 0;
@@ -9,36 +18,41 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
         '..', ...
         'output');
 
-    fieldsToSet.subjectGrp = []; % in case no group was provided
+    fieldsToSet = mriDefaults(fieldsToSet);
+
+    fieldsToSet.subjectGrp = ''; % in case no group was provided
     fieldsToSet.sessionNb = 1; % in case no session was provided
     fieldsToSet.askGrpSess = [true true];
 
-    % BIDS
+    expParameters = setDefaultFields(expParameters, fieldsToSet);
 
-    % dataset description json
-    % required
-    fieldsToSet.bids.datasetDescription.json.Name = '';
-    fieldsToSet.bids.datasetDescription.json.BIDSVersion = '';
-    % recommended
-    fieldsToSet.bids.datasetDescription.json.License = '';
-    fieldsToSet.bids.datasetDescription.json.Authors = {''};
-    fieldsToSet.bids.datasetDescription.json.Acknowledgements = '';
-    fieldsToSet.bids.datasetDescription.json.HowToAcknowledge = '';
-    fieldsToSet.bids.datasetDescription.json.Funding = {''};
-    fieldsToSet.bids.datasetDescription.json.ReferencesAndLinks = {''};
-    fieldsToSet.bids.datasetDescription.json.DatasetDOI = '';
+    %% BIDS
+    clear fieldsToSet;
+    fieldsToSet.bids = struct();
+    expParameters = setDefaultFields(expParameters, fieldsToSet);
 
-    % mri
-    % for json
-    fieldsToSet.MRI.repetitionTime = [];
-    % for file naming
-    fieldsToSet.MRI.ce = [];
-    fieldsToSet.MRI.dir = []; % phase encoding direction of acquisition for fMRI
-    fieldsToSet.MRI.rec = []; % reconstruction of fMRI images
-    fieldsToSet.MRI.echo = []; % echo fMRI images
-    fieldsToSet.MRI.acq = []; % acquisition of fMRI images
+    clear fieldsToSet;
+    fieldsToSet.MRI = struct();
+    fieldsToSet.datasetDescription = struct();
+    expParameters.bids = setDefaultFields(expParameters.bids, fieldsToSet);
 
-    expParameters = setDefaults(expParameters, fieldsToSet);
+    clear fieldsToSet;
+    fieldsToSet = datasetDescriptionDefaults();
+
+    expParameters.bids.datasetDescription = ...
+        setDefaultFields(expParameters.bids.datasetDescription, fieldsToSet);
+
+    clear fieldsToSet;
+    fieldsToSet = mriJsonDefaults();
+    if isfield(expParameters, 'task')
+        fieldsToSet.TaskName = expParameters.task;
+    end
+
+    expParameters.bids.MRI = ...
+        setDefaultFields(expParameters.bids.MRI, fieldsToSet);
+
+    % sort fields alphabetically
+    expParameters = orderfields(expParameters);
 
     %% set the cfg defaults
 
@@ -46,30 +60,50 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     fieldsToSet.testingDevice = 'pc';
     fieldsToSet.eyeTracker = false;
 
-    cfg = setDefaults(cfg, fieldsToSet);
+    cfg = setDefaultFields(cfg, fieldsToSet);
+
+    % sort fields alphabetically
+    cfg = orderfields(cfg);
 
 end
 
-function structure = setDefaults(structure, fieldsToSet)
-    % loop through the defaults fiels to set and update if they don't exist
+function fieldsToSet = mriDefaults(fieldsToSet)
 
-    names = fieldnames(fieldsToSet);
-
-    for i = 1:numel(names)
-
-        thisField = fieldsToSet.(names{i});
-
-        structure = setFieldToIfNotPresent( ...
-            structure, ...
-            names{i}, ...
-            thisField);
-
-    end
+    % for file naming
+    fieldsToSet.MRI.ce = [];
+    fieldsToSet.MRI.dir = []; % phase encoding direction of acquisition for fMRI
+    fieldsToSet.MRI.rec = []; % reconstruction of fMRI images
+    fieldsToSet.MRI.echo = []; % echo fMRI images
+    fieldsToSet.MRI.acq = []; % acquisition of fMRI images
 
 end
 
-function structure = setFieldToIfNotPresent(structure, fieldName, value)
-    if ~isfield(structure, fieldName)
-        structure.(fieldName) = value;
-    end
+function fieldsToSet = datasetDescriptionDefaults()
+    % required
+    fieldsToSet.Name = '';
+    fieldsToSet.BIDSVersion = '';
+    % recommended
+    fieldsToSet.License = '';
+    fieldsToSet.Authors = {''};
+    fieldsToSet.Acknowledgements = '';
+    fieldsToSet.HowToAcknowledge = '';
+    fieldsToSet.Funding = {''};
+    fieldsToSet.ReferencesAndLinks = {''};
+    fieldsToSet.DatasetDOI = '';
+end
+
+function fieldsToSet = mriJsonDefaults()
+
+    % for json for funcfional data
+    % required
+    fieldsToSet.RepetitionTime = [];
+    fieldsToSet.SliceTiming = [];
+    fieldsToSet.TaskName = [];
+    %     fieldsToSet.PhaseEncodingDirection = [];
+    %     fieldsToSet.EffectiveEchoSpacing = [];
+    %     fieldsToSet.EchoTime = [];
+    % recommended
+    fieldsToSet.Instructions = [];
+    fieldsToSet.TaskDescription = [];
+
 end

@@ -43,7 +43,11 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
     % See test_saveEventsFile in the test folder for more details on how to use it.
 
     if nargin < 1
-        errror('Missing action input');
+        error('Missing action input');
+    end
+
+    if nargin < 2
+        expParameters = struct();
     end
 
     if nargin < 3 || isempty(logFile)
@@ -51,6 +55,10 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
     end
 
     switch action
+
+        case 'init'
+
+            logFile = initializeExtraColumns(logFile);
 
         case 'open'
 
@@ -73,13 +81,15 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
             % first with the standard BIDS data and then any extra things
             for iEvent = 1:size(logFile, 1)
 
-                onset = checkInput(logFile(iEvent).onset);
-                duration = checkInput(logFile(iEvent).duration);
-                trial_type = checkInput(logFile(iEvent).trial_type);
+                logFile = checklLogFile('fields', logFile, iEvent);
+
+                onset = logFile(iEvent).onset;
+                duration = logFile(iEvent).duration;
+                trial_type = logFile(iEvent).trial_type;
 
                 if any(isnan([onset trial_type])) || ...
                         any(isempty([onset trial_type])) || ...
-                        any(strcmp({onset, trial_type}, 'NA'))
+                        any(strcmp({onset, trial_type}, 'n/a'))
 
                     warning('\nSkipping saving this event.\n onset: %f \n trial_type: %s\n', ...
                         onset, ...
@@ -87,10 +97,9 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
                 else
 
-                    fprintf(logFile(1).fileID, '%f\t%s\t%f\t', ...
-                        onset, ...
-                        trial_type, ...
-                        duration);
+                    printData(logFile(1).fileID, onset);
+                    printData(logFile(1).fileID, duration);
+                    printData(logFile(1).fileID, trial_type);
 
                     printExtraColumns(logFile, iEvent);
 
@@ -122,7 +131,7 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
 end
 
-function logFile = checklLogFile(action, logFile)
+function logFile = checklLogFile(action, logFile, iEvent)
 
     switch action
 
@@ -140,14 +149,32 @@ function logFile = checklLogFile(action, logFile)
         case 'type&size'
 
             if ~isstruct(logFile) || size(logFile, 2) > 1
-                errorSaveEventsFile('wrongFileID');
+                errorSaveEventsFile('wrongLogSize');
             end
+
+        case 'fields'
+
+            if ~isfield(logFile, 'onset') || isempty(logFile(iEvent).onset)
+                logFile(iEvent).onset = nan;
+            end
+            if ~isfield(logFile, 'trial_type') || isempty(logFile(iEvent).trial_type)
+                logFile(iEvent).trial_type = nan;
+            end
+            if ~isfield(logFile, 'duration') || isempty(logFile(iEvent).duration)
+                logFile(iEvent).duration = nan;
+            end
+
+            logFile = checkExtracolumns(logFile, iEvent);
 
     end
 
 end
 
 function logFile = initializeFile(expParameters, logFile)
+
+    logFile = initializeExtraColumns(logFile);
+
+    createDataDictionary(expParameters, logFile);
 
     % Initialize txt logfiles and empty fields for the standard BIDS
     %  event file
@@ -159,36 +186,16 @@ function logFile = initializeFile(expParameters, logFile)
         'w');
 
     % print the basic BIDS columns
-    fprintf(logFile.fileID, '%s\t%s\t%s\t', 'onset', 'trial_type', 'duration');
+    fprintf(logFile.fileID, '%s\t%s\t%s\t', 'onset', 'duration', 'trial_type');
 
-    logFile = printHeaderExtraColumns(logFile);
+    printHeaderExtraColumns(logFile);
 
     % next line so we start printing at the right place
     fprintf(logFile.fileID, '\n');
 
 end
 
-function [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
-
-    namesExtraColumns = [];
-
-    % convert the cell of column name into a structure
-    if iscell(logFile(1).extraColumns)
-        tmp = struct();
-        for iExtraColumn = 1:numel(logFile(1).extraColumns)
-            extraColumnName = logFile(1).extraColumns{iExtraColumn};
-            tmp.(extraColumnName) = struct('length', 1);
-        end
-        logFile(1).extraColumns = tmp;
-    end
-
-    if isfield(logFile, 'extraColumns') && ~isempty(logFile(1).extraColumns)
-        namesExtraColumns = fieldnames(logFile(1).extraColumns);
-    end
-
-end
-
-function logFile = printHeaderExtraColumns(logFile)
+function printHeaderExtraColumns(logFile)
     % print any extra column specified by the user
 
     [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile);
@@ -197,17 +204,9 @@ function logFile = printHeaderExtraColumns(logFile)
 
         nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
 
-        if ~isfield(logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}), 'length')
-            logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}).length = nbCol;
-        end
+        for iCol = 1:nbCol
 
-        for iColNb = 1:nbCol
-
-            if nbCol == 1
-                headerName = sprintf('%s', namesExtraColumns{iExtraColumn});
-            else
-                headerName = sprintf('%s-%02.0f', namesExtraColumns{iExtraColumn}, iColNb);
-            end
+            headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
 
             fprintf(logFile.fileID, '%s\t', headerName);
 
@@ -217,30 +216,46 @@ function logFile = printHeaderExtraColumns(logFile)
 
 end
 
-function nbCol = returnNbColumns(logFile, nameExtraColumn)
+function logFile = checkExtracolumns(logFile, iEvent)
+    % loops through the extra columns
+    % if the field we are looking for does not exist or is empty in the
+    % action logFile structure we will write a n/a
+    % otherwise we write its content
 
-    thisExtraColumn = logFile(1).extraColumns.(nameExtraColumn);
+    namesExtraColumns = returnNamesExtraColumns(logFile);
 
-    nbCol = 1;
+    for iExtraColumn = 1:numel(namesExtraColumns)
 
-    if isfield(thisExtraColumn, 'length')
-        nbCol = thisExtraColumn.length;
+        nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
+
+        data = 'n/a';
+        if isfield(logFile, namesExtraColumns{iExtraColumn})
+            data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
+        end
+
+        data = checkInput(data, nbCol);
+
+        logFile(iEvent).(namesExtraColumns{iExtraColumn}) = data;
+
+        if any(isnan(data))
+            warning('Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
+            disp(logFile(iEvent));
+        elseif  all(isnan(data)) || strcmp(data, 'n/a')
+            warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
+            disp(logFile(iEvent));
+        end
+
     end
+
 end
 
 function data = checkInput(data, expectedLength)
     % check the data to write
-    % default will be 'NA' for chars and NaN for numeric data
+    % default will be 'n/a' for chars and NaN for numeric data
     % for numeric data that don't have the expected length, it will be padded with NaNs
 
     if nargin < 2
         expectedLength = [];
-    end
-
-    if ischar(data) && isempty(data) || strcmp(data, ' ')
-        data = 'NA';
-    elseif isempty(data)
-        data = nan;
     end
 
     if islogical(data) && data
@@ -249,47 +264,53 @@ function data = checkInput(data, expectedLength)
         data = 'false';
     end
 
+    if ischar(data) && isempty(data) || strcmp(data, ' ')
+        data = 'n/a';
+    elseif isempty(data)
+        % important to not set this to n/a as we still need to check if this
+        % numeric valur has the right length and needs to be nan padded
+        data = nan;
+    end
+
     if ~isempty(expectedLength) && isnumeric(data) && max(size(data)) < expectedLength
         padding = expectedLength - max(size(data));
         data(end + 1:end + padding) = nan(1, padding);
+    elseif ~isempty(expectedLength) && isnumeric(data) && max(size(data)) > expectedLength
+        data = data(1:expectedLength);
+        warning('A field for this event is longer than expected. Truncating the extra values.');
     end
 
 end
 
 function printExtraColumns(logFile, iEvent)
+    % loops through the extra columns and print them
 
     namesExtraColumns = returnNamesExtraColumns(logFile);
 
     for iExtraColumn = 1:numel(namesExtraColumns)
 
-        nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
+        data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
 
-        % if the field we are looking for does not exist or is empty in the
-        % action logFile structure we will write a NaN otherwise we
-        % write its content
-        data = 'NA';
-        if isfield(logFile, namesExtraColumns{iExtraColumn})
-            data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
-        end
-
-        data = checkInput(data, nbCol);
-
-        if any(isnan(data))
-            warning('Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
-            disp(logFile(iEvent));
-        elseif  all(isnan(data)) || strcmp(data, 'NA')
-            warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
-            disp(logFile(iEvent));
-        end
-
-        if ischar(data)
-            fprintf(logFile(1).fileID, '%s\t', data);
-        else
-            fprintf(logFile(1).fileID, '%f\t', data);
-        end
+        printData(logFile(1).fileID, data);
 
     end
 
+end
+
+function printData(output, data)
+    % write char
+    % for numeric data we replace any nan by n/a
+    if ischar(data)
+        fprintf(output, '%s\t', data);
+    else
+        for i = 1:numel(data)
+            if isnan(data(i))
+                fprintf(output, '%s\t', 'n/a');
+            else
+                fprintf(output, '%f\t', data(i));
+            end
+        end
+    end
 end
 
 function logFile = resetLogFileVar(logFile)
@@ -319,7 +340,7 @@ function errorSaveEventsFile(identifier)
         case 'missingFileID'
             errorStruct.message = 'logFile must contain a valid fileID field';
 
-        case 'wrongFileID'
+        case 'wrongLogSize'
             errorStruct.message = 'logFile must be a nx1 structure';
 
     end

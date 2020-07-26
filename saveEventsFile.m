@@ -185,7 +185,7 @@ function logFile = initializeFile(expParameters, logFile)
         'w');
 
     % print the basic BIDS columns
-    fprintf(logFile.fileID, '%s\t%s\t%s\t', 'onset', 'duration', 'trial_type');
+    fprintf(logFile.fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
 
     printHeaderExtraColumns(logFile);
 
@@ -207,7 +207,7 @@ function printHeaderExtraColumns(logFile)
 
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
 
-            fprintf(logFile.fileID, '%s\t', headerName);
+            fprintf(logFile.fileID, '\t%s', headerName);
 
         end
 
@@ -239,7 +239,7 @@ function logFile = checkExtracolumns(logFile, iEvent)
         if any(isnan(data))
             warning('Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
             disp(logFile(iEvent));
-        elseif  all(isnan(data)) || strcmp(data, 'n/a')
+        elseif  all(isnan(data))
             warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
             disp(logFile(iEvent));
         end

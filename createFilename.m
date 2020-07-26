@@ -34,6 +34,9 @@ function [cfg, expParameters] = createFilename(cfg, expParameters)
     expParameters = setFilenames(cfg, expParameters);
 
     talkToMe(cfg, expParameters);
+    
+    cfg = orderfields(cfg);
+    expParameters = orderfields(expParameters);
 
 end
 

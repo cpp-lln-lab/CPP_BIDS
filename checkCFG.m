@@ -12,7 +12,7 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
 
     %% set the expParameters defaults
 
-    fieldsToSet.verbose = 0;
+    fieldsToSet.verbose = false;
     fieldsToSet.outputDir = fullfile( ...
         fileparts(mfilename('fullpath')), ...
         '..', ...
@@ -57,6 +57,7 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     %% set the cfg defaults
 
     clear fieldsToSet;
+    fieldsToSet.verbose = false;
     fieldsToSet.testingDevice = 'pc';
     fieldsToSet.eyeTracker = false;
 

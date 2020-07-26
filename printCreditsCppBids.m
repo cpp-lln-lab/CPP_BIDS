@@ -1,4 +1,4 @@
-function printCredits()
+function printCreditsCppBids()
     
     version = '0.0.1';
     

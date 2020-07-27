@@ -7,14 +7,14 @@ function test_saveEventsFileOpenMultiColumn()
 
     %%% set up
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subjectNb = 1;
+    cfg.runNb = 1;
+    cfg.task = 'testtask';
+    cfg.outputDir = outputDir;
 
     cfg.testingDevice = 'mri';
 
-    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
+    cfg = createFilename(cfg); 
 
     % define the extra columns: here we specify how many columns we want for
     % each variable
@@ -25,10 +25,10 @@ function test_saveEventsFileOpenMultiColumn()
     %%% do stuff
 
     % create the events file and header
-    logFile = saveEventsFile('open', expParameters, logFile);
+    logFile = saveEventsFile('open', cfg, logFile);
 
     % close the file
-    saveEventsFile('close', expParameters, logFile);
+    saveEventsFile('close', cfg, logFile);
 
     %%% test section
 
@@ -38,9 +38,9 @@ function test_saveEventsFileOpenMultiColumn()
         logFile(1).extraColumns.LHL24.length + ...
         logFile(1).extraColumns.is_Fixation.length;
     FID = fopen(fullfile( ...
-        expParameters.subjectOutputDir, ...
-        expParameters.modality, ...
-        expParameters.fileName.events), ...
+        cfg.subjectOutputDir, ...
+        cfg.modality, ...
+        cfg.fileName.events), ...
         'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 

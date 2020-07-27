@@ -7,21 +7,21 @@ function test_saveEventsFileSave()
 
     %%% set up
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subjectNb = 1;
+    cfg.runNb = 1;
+    cfg.task = 'testtask';
+    cfg.outputDir = outputDir;
 
     cfg.testingDevice = 'mri';
 
-    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
+    cfg = createFilename(cfg); 
 
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 12;
     logFile.extraColumns.is_Fixation.length = 1;
 
     % create the events file and header
-    logFile = saveEventsFile('open', expParameters, logFile);
+    logFile = saveEventsFile('open', cfg, logFile);
 
     %%% do stuff
 
@@ -33,7 +33,7 @@ function test_saveEventsFileSave()
     logFile(end, 1).is_Fixation = true;
     logFile(end, 1).LHL24 = 1:12;
 
-    logFile = saveEventsFile('save', expParameters, logFile);
+    logFile = saveEventsFile('save', cfg, logFile);
 
     % ROW 3: missing info (speed, LHL24)
     logFile(1, 1).onset = 3;
@@ -68,10 +68,10 @@ function test_saveEventsFileSave()
     %     logFile(end, 1).duration = 3;
     %     logFile(end, 1).LHL24 = rand(1, 15);
 
-    saveEventsFile('save', expParameters, logFile);
+    saveEventsFile('save', cfg, logFile);
 
     % close the file
-    saveEventsFile('close', expParameters, logFile);
+    saveEventsFile('close', cfg, logFile);
 
     %%% test section
 
@@ -81,9 +81,9 @@ function test_saveEventsFileSave()
         logFile(1).extraColumns.LHL24.length + ...
         logFile(1).extraColumns.is_Fixation.length;
     FID = fopen(fullfile( ...
-        expParameters.subjectOutputDir, ...
-        expParameters.modality, ...
-        expParameters.fileName.events), ...
+        cfg.subjectOutputDir, ...
+        cfg.modality, ...
+        cfg.fileName.events), ...
         'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 

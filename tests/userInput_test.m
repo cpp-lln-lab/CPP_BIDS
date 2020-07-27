@@ -1,34 +1,33 @@
 %%
-cfg = struct('debug', true);
-expParameters = struct();
+cfg.debug = true;
 
-[expParameters] = userInputs(cfg, expParameters);
-disp(expParameters);
-
-%%
-cfg = struct('debug', false);
-expParameters = struct('askGrpSess', 0);
-
-[expParameters] = userInputs(cfg, expParameters);
-disp(expParameters);
+cfg = userInputs(cfg);
+disp(cfg);
 
 %%
-cfg = struct('debug', false);
-expParameters = struct('askGrpSess', [0 0]);
+cfg.debug = false;
+cfg.askGrpSess = 0;
 
-[expParameters] = userInputs(cfg, expParameters);
-disp(expParameters);
-
-%%
-cfg = struct('debug', false);
-expParameters = struct('askGrpSess', [0 1]);
-
-[expParameters] = userInputs(cfg, expParameters);
-disp(expParameters);
+cfg = userInputs(cfg);
+disp(cfg);
 
 %%
-cfg = struct('debug', false);
-expParameters = struct('askGrpSess', []);
+cfg.debug = false;
+cfg.askGrpSess = [0 0];
 
-[expParameters] = userInputs(cfg, expParameters);
-disp(expParameters);
+cfg = userInputs(cfg);
+disp(cfg);
+
+%%
+cfg.debug = false;
+cfg.askGrpSess = [0 1];
+
+cfg = userInputs(cfg);
+disp(cfg);
+
+%%
+cfg.debug = false;
+cfg.askGrpSess = [];
+
+cfg = userInputs(cfg);
+disp(cfg);

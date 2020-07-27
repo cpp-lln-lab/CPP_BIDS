@@ -6,28 +6,27 @@ function test_createDataDictionary()
 
     %%% set up part
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subjectNb = 1;
+    cfg.runNb = 1;
+    cfg.task = 'testtask';
+    cfg.outputDir = outputDir;
 
-    cfg = struct();
     cfg.testingDevice = 'mri';
 
-    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
+    cfg = createFilename(cfg);
 
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
-    logFile = saveEventsFile('init', expParameters, logFile);
+    logFile = saveEventsFile('init', cfg, logFile);
 
-    createDataDictionary(expParameters, logFile);
+    createDataDictionary(cfg, logFile);
 
     %%% test part
 
     % test data
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
     jsonFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
-        expParameters.date '.json'];
+        cfg.date '.json'];
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, jsonFilename), 'file') == 2);

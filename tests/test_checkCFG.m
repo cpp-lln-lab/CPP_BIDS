@@ -1,12 +1,13 @@
 function test_checkCFG()
 
-    expParameters.outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
-    [cfg, expParameters] = checkCFG([], expParameters);
+    cfg.outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    cfg = checkCFG(cfg);
 
     expectedStructure = returnExpectedStructure();
-    expectedStructure.outputDir = expParameters.outputDir;
+    expectedStructure.outputDir = cfg.outputDir;
+    expectedStructure.testingDevice = 'pc';
 
-    assert(isequal(expectedStructure, expParameters));
+    assert(isequal(expectedStructure, cfg));
 
     %%
     fprintf('\n--------------------------------------------------------------------');
@@ -15,20 +16,20 @@ function test_checkCFG()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subjectNb = 1;
+    cfg.runNb = 1;
+    cfg.task = 'testtask';
+    cfg.outputDir = outputDir;
 
-    expParameters.bids.datasetDescription.Name = 'dummy';
-    expParameters.bids.datasetDescription.BIDSVersion = '1.0.0';
-    expParameters.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
+    cfg.bids.datasetDescription.Name = 'dummy';
+    cfg.bids.datasetDescription.BIDSVersion = '1.0.0';
+    cfg.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
 
-    expParameters.bids.MRI.RepetitionTime = 1.56;
+    cfg.bids.MRI.RepetitionTime = 1.56;
 
     cfg.testingDevice = 'mri';
 
-    [~, expParameters] = checkCFG(cfg, expParameters);
+    cfg = checkCFG(cfg);
 
     %%% test
 
@@ -40,6 +41,7 @@ function test_checkCFG()
     expectedStructure.outputDir = outputDir;
 
     expectedStructure.task = 'testtask';
+    expectedStructure.testingDevice = 'mri'
 
     expectedStructure.bids.MRI.RepetitionTime = 1.56;
     expectedStructure.bids.MRI.TaskName = 'testtask';
@@ -50,7 +52,7 @@ function test_checkCFG()
 
     expectedStructure = orderfields(expectedStructure);
 
-    assert(isequal(expectedStructure, expParameters));
+    assert(isequal(expectedStructure, cfg));
 
     fprintf('\n');
 
@@ -63,7 +65,9 @@ function expectedStructure = returnExpectedStructure()
 
     expectedStructure.verbose = 0;
     expectedStructure.askGrpSess = [true true];
-
+    
+    expectedStructure.eyeTracker = false;
+    
     expectedStructure.MRI.ce = [];
     expectedStructure.MRI.dir = [];
     expectedStructure.MRI.rec = [];

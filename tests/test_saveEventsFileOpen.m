@@ -7,29 +7,29 @@ function test_saveEventsFileOpen()
 
     %%% set up
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subjectNb = 1;
+    cfg.runNb = 1;
+    cfg.task = 'testtask';
+    cfg.outputDir = outputDir;
 
     cfg.testingDevice = 'mri';
 
     %%% do stuff
 
-    [cfg, expParameters] = createFilename(cfg, expParameters);
+    cfg = createFilename(cfg);
 
     % create the events file and header
-    logFile = saveEventsFile('open', expParameters);
+    logFile = saveEventsFile('open', cfg);
 
     % close the file
-    saveEventsFile('close', expParameters, logFile);
+    saveEventsFile('close', cfg, logFile);
 
     %%% test section
 
     % test data
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
-        expParameters.date '.tsv'];
+        cfg.date '.tsv'];
 
     % open the file
     FID = fopen(fullfile(funcDir, eventFilename), 'r');
@@ -52,10 +52,10 @@ function test_saveEventsFileOpen()
 
     %%% set up
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subjectNb = 1;
+    cfg.runNb = 1;
+    cfg.task = 'testtask';
+    cfg.outputDir = outputDir;
 
     cfg.testingDevice = 'mri';
 
@@ -64,22 +64,22 @@ function test_saveEventsFileOpen()
 
     %%% do stuff
 
-    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
+    cfg = createFilename(cfg); 
 
     % create the events file and header
-    logFile = saveEventsFile('open', expParameters, logFile);
+    logFile = saveEventsFile('open', cfg, logFile);
 
     % close the file
-    saveEventsFile('close', expParameters, logFile);
+    saveEventsFile('close', cfg, logFile);
 
     %%% test section
 
     % open the file
     nbExtraCol = 2;
     FID = fopen(fullfile( ...
-        expParameters.subjectOutputDir, ...
-        expParameters.modality, ...
-        expParameters.fileName.events), ...
+        cfg.subjectOutputDir, ...
+        cfg.modality, ...
+        cfg.fileName.events), ...
         'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 

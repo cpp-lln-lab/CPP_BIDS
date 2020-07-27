@@ -21,11 +21,11 @@ function test_saveEventsFileInit()
     clear;
 
     %%% set up
-    [cfg, expParameters] = checkCFG(); %#ok<ASGLU>
+    cfg = checkCFG(); 
     logFile.extraColumns = {'Speed'};
 
     %%% do stuff
-    [logFile] = saveEventsFile('init', expParameters, logFile);
+    [logFile] = saveEventsFile('init', cfg, logFile);
 
     %%% test section
     expectedStrcut(1).extraColumns.Speed.length = 1;
@@ -42,12 +42,12 @@ function test_saveEventsFileInit()
     clear;
 
     %%% set up
-    [cfg, expParameters] = checkCFG(); %#ok<ASGLU>
+    cfg = checkCFG(); 
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
 
     %%% do stuff
-    [logFile] = saveEventsFile('init', expParameters, logFile);
+    [logFile] = saveEventsFile('init', cfg, logFile);
 
     %%% test section
     expectedStrcut(1).extraColumns.Speed.length = 1;

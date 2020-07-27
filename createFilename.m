@@ -16,7 +16,7 @@ function [cfg, expParameters] = createFilename(cfg, expParameters)
     pattern = ['%0' num2str(zeroPadding) '.0f'];
     expParameters.pattern = pattern;
 
-    dateFormat = 'yyyymmdd_HHMM';
+    dateFormat = 'yyyymmddHHMM';
     expParameters.date = datestr(now, dateFormat);
 
     [cfg, expParameters] = checkCFG(cfg, expParameters);
@@ -34,10 +34,14 @@ function [cfg, expParameters] = createFilename(cfg, expParameters)
     expParameters = setFilenames(cfg, expParameters);
 
     talkToMe(cfg, expParameters);
+    
+    cfg = orderfields(cfg);
+    expParameters = orderfields(expParameters);
 
 end
 
 function expParameters = getModality(cfg, expParameters)
+
     switch lower(cfg.testingDevice)
         case 'pc'
             modality = 'beh';
@@ -54,14 +58,16 @@ function expParameters = getModality(cfg, expParameters)
     end
 
     expParameters.modality = modality;
+
 end
 
-function [subjectGrp, subjectNb, sessionNb, modality] = extractInput(expParameters)
+function [subjectGrp, subjectNb, sessionNb, modality, taskName] = extractInput(expParameters)
 
     subjectGrp = expParameters.subjectGrp;
     subjectNb = expParameters.subjectNb;
     sessionNb = expParameters.sessionNb;
     modality = expParameters.modality;
+    taskName = expParameters.task;
 
     if isempty(sessionNb)
         sessionNb = 1;
@@ -106,12 +112,11 @@ function expParameters = setSuffixes(expParameters)
         };
 
     for iField = 1:numel(fields2Check)
-        if isempty (getfield(expParameters.MRI, fields2Check{iField})) %#ok<*GFLD>
-            expParameters.MRI = setfield(expParameters.MRI, [fields2Check{iField} 'Suffix'], ...
-                ''); %#ok<*SFLD>
+        if isempty (expParameters.MRI.(fields2Check{iField})) %#ok<*GFLD>
+            expParameters.MRI.([fields2Check{iField} 'Suffix']) = ''; %#ok<*SFLD>
         else
-            expParameters.MRI = setfield(expParameters.MRI, [fields2Check{iField} 'Suffix'], ...
-                ['_' fields2Check{iField} '-' getfield(expParameters.MRI, fields2Check{iField})]);
+            expParameters.MRI.([fields2Check{iField} 'Suffix']) = ...
+                ['_' fields2Check{iField} '-' getfield(expParameters.MRI, fields2Check{iField})];
         end
     end
 
@@ -119,7 +124,7 @@ end
 
 function expParameters = setFilenames(cfg, expParameters)
 
-    [subjectGrp, subjectNb, sessionNb, modality] = extractInput(expParameters);
+    [subjectGrp, subjectNb, sessionNb, modality, taskName] = extractInput(expParameters);
 
     runSuffix = expParameters.runSuffix;
     pattern = expParameters.pattern;
@@ -137,7 +142,7 @@ function expParameters = setFilenames(cfg, expParameters)
     fileNameBase = ...
         ['sub-', subjectGrp, sprintf(pattern, subjectNb), ...
         '_ses-', sprintf(pattern, sessionNb), ...
-        '_task-', expParameters.task];
+        '_task-', taskName];
     expParameters.fileName.base = fileNameBase;
 
     switch modality

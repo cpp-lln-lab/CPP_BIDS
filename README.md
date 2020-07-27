@@ -127,15 +127,16 @@ logFile.extraColumns = {'Speed', 'is_Fixation'};
 
 [cfg, expParameters] = createFilename(cfg, expParameters);
 
-% dummy call to initialize the logFile variable
-logFile = saveEventsFile('open', expParameters, logFile);
+% initialize the logFile variable
+[logFile] = saveEventsFile('init', expParameters, logFile);
 
 % set the real length we really want
 logFile.extraColumns.Speed.length = 12;
 
-% actual inititalization
+% open the file
 logFile = saveEventsFile('open', expParameters, logFile);
 ```
+
 
 ## Functions descriptions
 

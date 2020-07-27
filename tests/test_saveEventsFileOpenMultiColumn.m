@@ -1,8 +1,6 @@
 function test_saveEventsFileOpenMultiColumn()
 
     %% check header writing with several columns for one variable
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
-
     clear;
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
@@ -16,7 +14,7 @@ function test_saveEventsFileOpenMultiColumn()
 
     cfg.testingDevice = 'mri';
 
-    [cfg, expParameters] = createFilename(cfg, expParameters);
+    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
 
     % define the extra columns: here we specify how many columns we want for
     % each variable
@@ -48,8 +46,8 @@ function test_saveEventsFileOpenMultiColumn()
 
     % check the extra columns of the header
     assert(isequal(C{4}{1}, 'Speed'));
-    assert(isequal(C{5}{1}, 'LHL24-01'));
-    assert(isequal(C{16}{1}, 'LHL24-12'));
+    assert(isequal(C{5}{1}, 'LHL24_01'));
+    assert(isequal(C{16}{1}, 'LHL24_12'));
     assert(isequal(C{17}{1}, 'is_Fixation'));
 
 end

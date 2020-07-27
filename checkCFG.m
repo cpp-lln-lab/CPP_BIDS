@@ -1,4 +1,4 @@
-function [cfg, expParameters] = checkCFG(cfg, expParameters)
+function cfg = checkCFG(cfg)
     % check that we have all the fields that we need in the experiment parameters
 
     checkCppBidsDependencies();
@@ -6,9 +6,7 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     if nargin < 1 || isempty(cfg)
         cfg = struct();
     end
-    if nargin < 2 || isempty(expParameters)
-        expParameters = struct();
-    end
+
 
     %% set the expParameters defaults
 
@@ -24,35 +22,35 @@ function [cfg, expParameters] = checkCFG(cfg, expParameters)
     fieldsToSet.sessionNb = 1; % in case no session was provided
     fieldsToSet.askGrpSess = [true true];
 
-    expParameters = setDefaultFields(expParameters, fieldsToSet);
+    cfg = setDefaultFields(cfg, fieldsToSet);
 
     %% BIDS
     clear fieldsToSet;
     fieldsToSet.bids = struct();
-    expParameters = setDefaultFields(expParameters, fieldsToSet);
+    cfg = setDefaultFields(cfg, fieldsToSet);
 
     clear fieldsToSet;
     fieldsToSet.MRI = struct();
     fieldsToSet.datasetDescription = struct();
-    expParameters.bids = setDefaultFields(expParameters.bids, fieldsToSet);
+    cfg.bids = setDefaultFields(cfg.bids, fieldsToSet);
 
     clear fieldsToSet;
     fieldsToSet = datasetDescriptionDefaults();
 
-    expParameters.bids.datasetDescription = ...
-        setDefaultFields(expParameters.bids.datasetDescription, fieldsToSet);
+    cfg.bids.datasetDescription = ...
+        setDefaultFields(cfg.bids.datasetDescription, fieldsToSet);
 
     clear fieldsToSet;
     fieldsToSet = mriJsonDefaults();
-    if isfield(expParameters, 'task')
-        fieldsToSet.TaskName = expParameters.task;
+    if isfield(cfg, 'task')
+        fieldsToSet.TaskName = cfg.task;
     end
 
-    expParameters.bids.MRI = ...
-        setDefaultFields(expParameters.bids.MRI, fieldsToSet);
+    cfg.bids.MRI = ...
+        setDefaultFields(cfg.bids.MRI, fieldsToSet);
 
     % sort fields alphabetically
-    expParameters = orderfields(expParameters);
+    cfg = orderfields(cfg);
 
     %% set the cfg defaults
 

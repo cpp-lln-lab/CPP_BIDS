@@ -1,4 +1,4 @@
-function [logFile] = saveEventsFile(action, expParameters, logFile)
+function [logFile] = saveEventsFile(action, cfg, logFile)
     % Function to save output files for events that will be BIDS compliant.
     %
     % INPUTS
@@ -47,7 +47,7 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
     end
 
     if nargin < 2
-        expParameters = struct();
+        cfg = struct();
     end
 
     if nargin < 3 || isempty(logFile)
@@ -62,15 +62,15 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
         case 'open'
 
-            logFile.filename = expParameters.fileName.events;
+            logFile.filename = cfg.fileName.events;
 
-            logFile = initializeFile(expParameters, logFile);
+            logFile = initializeFile(cfg, logFile);
 
         case 'open_stim'
 
-            logFile.filename = expParameters.fileName.stim;
+            logFile.filename = cfg.fileName.stim;
 
-            logFile = initializeFile(expParameters, logFile);
+            logFile = initializeFile(cfg, logFile);
 
         case 'save'
 
@@ -116,8 +116,8 @@ function [logFile] = saveEventsFile(action, expParameters, logFile)
 
             fprintf(1, '\nData were saved in this file:\n\n%s\n\n', ...
                 fullfile( ...
-                expParameters.subjectOutputDir, ...
-                expParameters.modality, ...
+                cfg.subjectOutputDir, ...
+                cfg.modality, ...
                 logFile.filename));
 
         otherwise
@@ -169,18 +169,18 @@ function logFile = checklLogFile(action, logFile, iEvent)
 
 end
 
-function logFile = initializeFile(expParameters, logFile)
+function logFile = initializeFile(cfg, logFile)
 
     logFile = initializeExtraColumns(logFile);
 
-    createDataDictionary(expParameters, logFile);
+    createDataDictionary(cfg, logFile);
 
     % Initialize txt logfiles and empty fields for the standard BIDS
     %  event file
     logFile.fileID = fopen( ...
         fullfile( ...
-        expParameters.subjectOutputDir, ...
-        expParameters.modality, ...
+        cfg.subjectOutputDir, ...
+        cfg.modality, ...
         logFile.filename), ...
         'w');
 

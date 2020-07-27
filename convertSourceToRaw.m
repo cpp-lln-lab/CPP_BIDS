@@ -1,7 +1,7 @@
-function convertSourceToRaw(expParameters)
+function convertSourceToRaw(cfg)
 
-    sourceDir = fullfile(expParameters.outputDir, 'source');
-    rawDir = fullfile(expParameters.outputDir, 'rawdata');
+    sourceDir = fullfile(cfg.outputDir, 'source');
+    rawDir = fullfile(cfg.outputDir, 'rawdata');
 
     % add dummy readme and change file
     copyfile(fullfile('..', 'dummyData', 'README'), sourceDir);

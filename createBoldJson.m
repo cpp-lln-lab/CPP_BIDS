@@ -1,16 +1,16 @@
-function createBoldJson(expParameters)
+function createBoldJson(cfg)
 
     opts.Indent = '    ';
 
-    fileName = strrep(expParameters.fileName.events, '_events', '_bold');
+    fileName = strrep(cfg.fileName.events, '_events', '_bold');
     fileName = strrep(fileName, '.tsv', '.json');
 
     fileName = fullfile( ...
-        expParameters.subjectOutputDir, ...
-        expParameters.modality, ...
+        cfg.subjectOutputDir, ...
+        cfg.modality, ...
         fileName);
 
-    jsonContent = expParameters.bids.MRI;
+    jsonContent = cfg.bids.MRI;
 
     bids.util.jsonencode(fileName, jsonContent, opts);
 

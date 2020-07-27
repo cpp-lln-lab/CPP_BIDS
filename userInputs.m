@@ -1,4 +1,4 @@
-function [expParameters] = userInputs(cfg, expParameters)
+function cfg = userInputs(cfg)
     % Get subject, run and session number and make sure they are
     % positive integer values
     %
@@ -8,16 +8,16 @@ function [expParameters] = userInputs(cfg, expParameters)
     %    group
     %    - the second value set to false will skip asking for the session
 
-    if nargin < 1 || isempty(cfg.debug)
-        cfg.debug = false;
+    if nargin < 1
+        cfg = [];
     end
-    if nargin < 2
-        expParameters = [];
+    if isempty(cfg.debug)
+        cfg.debug = false;
     end
 
     askGrpSess = [true true];
-    if isfield(expParameters, 'askGrpSess') && ~isempty(expParameters.askGrpSess)
-        askGrpSess = expParameters.askGrpSess;
+    if isfield(cfg, 'askGrpSess') && ~isempty(cfg.askGrpSess)
+        askGrpSess = cfg.askGrpSess;
     end
     if numel(askGrpSess) < 2
         askGrpSess(2) = 1;
@@ -59,10 +59,10 @@ function [expParameters] = userInputs(cfg, expParameters)
 
     end
 
-    expParameters.subjectGrp = subjectGrp;
-    expParameters.subjectNb = subjectNb;
-    expParameters.sessionNb = sessionNb;
-    expParameters.runNb = runNb;
+    cfg.subjectGrp = subjectGrp;
+    cfg.subjectNb = subjectNb;
+    cfg.sessionNb = sessionNb;
+    cfg.runNb = runNb;
 
 end
 

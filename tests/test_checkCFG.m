@@ -1,88 +1,97 @@
 function test_checkCFG()
-
-    cfg.outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    
+    cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
     cfg = checkCFG(cfg);
-
+    
     expectedStructure = returnExpectedStructure();
-    expectedStructure.outputDir = cfg.outputDir;
+    expectedStructure.dir.output = cfg.dir.output;
     expectedStructure.testingDevice = 'pc';
-
-    assert(isequal(expectedStructure, cfg));
-
+    
+    testSubFields(expectedStructure, cfg)
+    
     %%
     fprintf('\n--------------------------------------------------------------------');
-
+    
     clear;
-
+    
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
-
-    cfg.subjectNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
-
+    
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    
+    cfg.task.name = 'testtask';
+    
+    cfg.dir.output = outputDir;
+    
     cfg.bids.datasetDescription.Name = 'dummy';
     cfg.bids.datasetDescription.BIDSVersion = '1.0.0';
     cfg.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
-
-    cfg.bids.MRI.RepetitionTime = 1.56;
-
+    
+    cfg.bids.mri.RepetitionTime = 1.56;
+    
     cfg.testingDevice = 'mri';
-
+    
     cfg = checkCFG(cfg);
-
+    
     %%% test
-
+    
     % test data
     expectedStructure = returnExpectedStructure();
-    expectedStructure.subjectNb = 1;
-    expectedStructure.runNb = 1;
-
-    expectedStructure.outputDir = outputDir;
-
-    expectedStructure.task = 'testtask';
-    expectedStructure.testingDevice = 'mri'
-
-    expectedStructure.bids.MRI.RepetitionTime = 1.56;
-    expectedStructure.bids.MRI.TaskName = 'testtask';
-
+    expectedStructure.subject.subjectNb = 1;
+    expectedStructure.subject.runNb = 1;
+    
+    expectedStructure.dir.output = outputDir;
+    
+    expectedStructure.task.name = 'testtask';
+    expectedStructure.testingDevice = 'mri';
+    
+    expectedStructure.bids.mri.RepetitionTime = 1.56;
+    expectedStructure.bids.mri.TaskName = 'testtask';
+    
+    expectedStructure.bids.meg.TaskName = 'testtask';
+    
     expectedStructure.bids.datasetDescription.Name = 'dummy';
     expectedStructure.bids.datasetDescription.BIDSVersion =  '1.0.0';
     expectedStructure.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
-
+    
     expectedStructure = orderfields(expectedStructure);
-
-    assert(isequal(expectedStructure, cfg));
-
+    
+    testSubFields(expectedStructure, cfg)
+    
     fprintf('\n');
-
+    
 end
 
 function expectedStructure = returnExpectedStructure()
-
-    expectedStructure.subjectGrp = '';
-    expectedStructure.sessionNb = 1;
-
+    
+    expectedStructure.subject.subjectGrp = '';
+    expectedStructure.subject.sessionNb = 1;
+    expectedStructure.subject.askGrpSess = [true true];
+    
     expectedStructure.verbose = 0;
-    expectedStructure.askGrpSess = [true true];
     
-    expectedStructure.eyeTracker = false;
+    expectedStructure.eyeTracker.do = false;
     
-    expectedStructure.MRI.ce = [];
-    expectedStructure.MRI.dir = [];
-    expectedStructure.MRI.rec = [];
-    expectedStructure.MRI.echo = [];
-    expectedStructure.MRI.acq = [];
-
-    expectedStructure.bids.MRI.RepetitionTime = [];
-    expectedStructure.bids.MRI.SliceTiming = '';
-    expectedStructure.bids.MRI.TaskName = '';
-    %     expectedStructure.bids.MRI.PhaseEncodingDirection = '';
-    %     expectedStructure.bids.MRI.EffectiveEchoSpacing = '';
-    %     expectedStructure.bids.MRI.EchoTime = '';
-    expectedStructure.bids.MRI.Instructions = '';
-    expectedStructure.bids.MRI.TaskDescription = '';
-
+    expectedStructure.fileName.mri.ce = [];
+    expectedStructure.fileName.mri.dir = [];
+    expectedStructure.fileName.mri.rec = [];
+    expectedStructure.fileName.mri.echo = [];
+    expectedStructure.fileName.mri.acq = [];
+    
+    expectedStructure.bids.mri.RepetitionTime = [];
+    expectedStructure.bids.mri.SliceTiming = '';
+    expectedStructure.bids.mri.TaskName = '';
+    expectedStructure.bids.mri.Instructions = '';
+    expectedStructure.bids.mri.TaskDescription = '';
+    
+    expectedStructure.bids.meg.TaskName = '';
+    expectedStructure.bids.meg.SamplingFrequency = [];
+    expectedStructure.bids.meg.PowerLineFrequency = [];
+    expectedStructure.bids.meg.DewarPosition = [];
+    expectedStructure.bids.meg.SoftwareFilters = [];
+    expectedStructure.bids.meg.DigitizedLandmarks = [];
+    expectedStructure.bids.meg.DigitizedHeadPoints = [];
+    
     expectedStructure.bids.datasetDescription.Name = '';
     expectedStructure.bids.datasetDescription.BIDSVersion =  '';
     expectedStructure.bids.datasetDescription.License = '';
@@ -92,6 +101,39 @@ function expectedStructure = returnExpectedStructure()
     expectedStructure.bids.datasetDescription.Funding = {''};
     expectedStructure.bids.datasetDescription.ReferencesAndLinks = {''};
     expectedStructure.bids.datasetDescription.DatasetDOI = '';
-
+    
     expectedStructure = orderfields(expectedStructure);
+    
 end
+
+
+function testSubFields(expectedStructure, cfg)
+    % check that that the structures match
+    % if it fails it check from which subfield the error comes from
+    
+    try
+        
+        assert(isequal(expectedStructure, cfg));
+        
+    catch ME
+        
+        if isstruct(expectedStructure)
+            
+            names = fieldnames(expectedStructure);
+            
+            for i = 1:numel(names)
+                
+                disp(names{i})
+                testSubFields(expectedStructure.(names{i}), cfg.(names{i}))
+                
+            end
+            
+        end
+        
+        expectedStructure
+        cfg
+        
+        rethrow(ME)
+    end
+end
+

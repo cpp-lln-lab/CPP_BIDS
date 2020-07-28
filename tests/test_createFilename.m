@@ -7,10 +7,10 @@ function test_createFilename()
 
     %%% set up part
 
-    cfg.subjectNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     %%% run part
     cfg = createFilename(cfg);
@@ -21,9 +21,9 @@ function test_createFilename()
     behDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'beh');
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'eyetracker');
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-'...
-        cfg.date '.tsv'];
+        cfg.fileName.date '.tsv'];
     stimFilename =  ['sub-001_ses-001_task-testtask_run-001_stim_date-'...
-        cfg.date '.tsv'];
+        cfg.fileName.date '.tsv'];
 
     % make sure the beh dir is created
     assert(exist(behDir, 'dir') == 7);
@@ -46,14 +46,14 @@ function test_createFilename()
 
     %%% set up part
 
-    cfg.subjectGrp = 'ctrl';
-    cfg.subjectNb = 2;
-    cfg.sessionNb = 2;
-    cfg.runNb = 2;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectGrp = 'ctrl';
+    cfg.subject.subjectNb = 2;
+    cfg.subject.sessionNb = 2;
+    cfg.subject.runNb = 2;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
-    cfg.eyeTracker = true;
+    cfg.eyeTracker.do = true;
     cfg.testingDevice = 'mri';
 
     cfg = createFilename(cfg);
@@ -65,9 +65,9 @@ function test_createFilename()
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'eyetracker');
     baseFilename = 'sub-ctrl002_ses-002_task-testtask';
     eventFilename = ['sub-ctrl002_ses-002_task-testtask_run-002_events_date-' ...
-        cfg.date '.tsv'];
+        cfg.fileName.date '.tsv'];
     eyetrackerFilename =  ['sub-ctrl002_ses-002_task-testtask_run-002_eyetrack_date-' ...
-        cfg.date '.edf'];
+        cfg.fileName.date '.edf'];
 
     % make sure the func dir is created
     assert(exist(funcDir, 'dir') == 7);
@@ -89,12 +89,12 @@ function test_createFilename()
 
     %%% set up part
 
-    cfg.subjectGrp = 'blind';
-    cfg.subjectNb = 3;
-    cfg.sessionNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectGrp = 'blind';
+    cfg.subject.subjectNb = 3;
+    cfg.subject.sessionNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'eeg';
 

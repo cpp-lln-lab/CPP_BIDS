@@ -12,6 +12,9 @@ function cfg = checkCFG(cfg)
     
     fieldsToSet.verbose = false;
     
+    cfg.fileName.zeroPadding = 3;
+    cfg.fileName.dateFormat = 'yyyymmddHHMM';
+    
     fieldsToSet.dir.output = fullfile( ...
         fileparts(mfilename('fullpath')), ...
         '..', ...
@@ -56,6 +59,8 @@ function fieldsToSet = mriDefaults(fieldsToSet)
     fieldsToSet.fileName.mri.echo = []; % echo fMRI images
     fieldsToSet.fileName.mri.acq = []; % acquisition of fMRI images
     
+    fieldsToSet.fileName.mri = orderfields(fieldsToSet.fileName.mri);
+    
 end
 
 function fieldsToSet = datasetDescriptionDefaults(fieldsToSet)
@@ -97,7 +102,7 @@ function fieldsToSet = datasetDescriptionDefaults(fieldsToSet)
     fieldsToSet.bids.datasetDescription.DatasetDOI = '';
     
     % sort fields alphabetically
-    fieldsToSet = orderfields(fieldsToSet);
+    fieldsToSet.bids.datasetDescription = orderfields(fieldsToSet.bids.datasetDescription);
     
 end
 
@@ -143,6 +148,8 @@ function fieldsToSet = mriJsonDefaults(fieldsToSet)
     % fieldsToSet.EffectiveEchoSpacing = [];
     % fieldsToSet.EchoTime = [];
     
+    fieldsToSet.bids.mri = orderfields(fieldsToSet.bids.mri);
+    
 end
 
 function fieldsToSet = megJsonDefaults(fieldsToSet)
@@ -179,6 +186,8 @@ function fieldsToSet = megJsonDefaults(fieldsToSet)
     % REQUIRED Boolean (“true” or “false”) value indicating whether head points
     % outlining the scalp/face surface are contained within this recording
     fieldsToSet.bids.meg.DigitizedHeadPoints = [];
+    
+    fieldsToSet.bids.meg = orderfields(fieldsToSet.bids.meg);
     
 end
 

@@ -70,6 +70,9 @@ function expectedStructure = returnExpectedStructure()
     
     expectedStructure.verbose = 0;
     
+    expectedStructure.fileName.zeroPadding = 3;
+    expectedStructure.fileName.dateFormat = 'yyyymmddHHMM';
+    
     expectedStructure.eyeTracker.do = false;
     
     expectedStructure.fileName.mri.ce = [];

@@ -3,6 +3,8 @@ function structure = setDefaultFields(structure, fieldsToSet)
     %
     % recursively loop through the fields of a structure and sets a value if they don't exist
     %
+    
+    fieldsToSet = orderfields(fieldsToSet);
 
     names = fieldnames(fieldsToSet);
 
@@ -24,6 +26,8 @@ function structure = setDefaultFields(structure, fieldsToSet)
         end
 
     end
+    
+    structure = orderfields(structure);
 
 end
 

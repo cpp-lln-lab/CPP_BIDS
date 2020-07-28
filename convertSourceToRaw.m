@@ -1,11 +1,15 @@
 function convertSourceToRaw(cfg)
 
-    sourceDir = fullfile(cfg.outputDir, 'source');
-    rawDir = fullfile(cfg.outputDir, 'rawdata');
+    sourceDir = fullfile(cfg.dir.output, 'source');
+    rawDir = fullfile(cfg.dir.output, 'rawdata');
 
     % add dummy readme and change file
-    copyfile(fullfile('..', 'dummyData', 'README'), sourceDir);
-    copyfile(fullfile('..', 'dummyData', 'CHANGES'), sourceDir);
+    copyfile(fullfile( ...
+        fileparts(mfilename('fullpath')), 'dummyData', 'README'), ...
+        sourceDir);
+    copyfile(fullfile( ...
+        fileparts(mfilename('fullpath')), 'dummyData', 'CHANGES'), ...
+        sourceDir);
 
     copyfile(sourceDir, rawDir);
 

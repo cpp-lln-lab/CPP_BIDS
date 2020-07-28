@@ -33,7 +33,7 @@ function testmanual_makeRawDataset()
 
     %%% do stuff
 
-    cfg = createFilename(cfg); 
+    cfg = createFilename(cfg);
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);

@@ -16,8 +16,8 @@ function cfg = userInputs(cfg)
     end
 
     askGrpSess = [true true];
-    if isfield(cfg, 'askGrpSess') && ~isempty(cfg.askGrpSess)
-        askGrpSess = cfg.askGrpSess;
+    if isfield(cfg, 'askGrpSess') && ~isempty(cfg.subject.askGrpSess)
+        askGrpSess = cfg.subject.askGrpSess;
     end
     if numel(askGrpSess) < 2
         askGrpSess(2) = 1;
@@ -59,10 +59,10 @@ function cfg = userInputs(cfg)
 
     end
 
-    cfg.subjectGrp = subjectGrp;
-    cfg.subjectNb = subjectNb;
-    cfg.sessionNb = sessionNb;
-    cfg.runNb = runNb;
+    cfg.subject.subjectGrp = subjectGrp;
+    cfg.subject.subjectNb = subjectNb;
+    cfg.subject.sessionNb = sessionNb;
+    cfg.subject.runNb = runNb;
 
 end
 

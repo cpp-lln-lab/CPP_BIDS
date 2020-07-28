@@ -176,14 +176,14 @@ function fieldsToSet = megJsonDefaults(fieldsToSet)
     % key:value pairs of pre-applied software filters and their parameter
     % values: e.g., {"SSS": {"frame": "head", "badlimit": 7}},
     % {"SpatialCompensation": {"GradientOrder": Order of the gradient
-    % compensation}}. Write “n/a” if no software filters applied.
+    % compensation}}. Write "n/a" if no software filters applied.
     fieldsToSet.bids.meg.SoftwareFilters = [];
 
-    % REQUIRED Boolean (“true” or “false”) value indicating whether anatomical
+    % REQUIRED Boolean ("true" or "false") value indicating whether anatomical
     % landmark points (i.e. fiducials) are contained within this recording.
     fieldsToSet.bids.meg.DigitizedLandmarks = [];
 
-    % REQUIRED Boolean (“true” or “false”) value indicating whether head points
+    % REQUIRED Boolean ("true" or "false") value indicating whether head points
     % outlining the scalp/face surface are contained within this recording
     fieldsToSet.bids.meg.DigitizedHeadPoints = [];
 

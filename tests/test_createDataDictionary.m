@@ -6,10 +6,10 @@ function test_createDataDictionary()
 
     %%% set up part
 
-    cfg.subjectNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
 
@@ -26,7 +26,7 @@ function test_createDataDictionary()
     % test data
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
     jsonFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
-        cfg.date '.json'];
+        cfg.fileName.date '.json'];
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, jsonFilename), 'file') == 2);

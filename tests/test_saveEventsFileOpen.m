@@ -7,10 +7,10 @@ function test_saveEventsFileOpen()
 
     %%% set up
 
-    cfg.subjectNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
 
@@ -29,14 +29,13 @@ function test_saveEventsFileOpen()
     % test data
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
-        cfg.date '.tsv'];
-
-    % open the file
-    FID = fopen(fullfile(funcDir, eventFilename), 'r');
-    C = textscan(FID, repmat('%s', 1, 3), 'Delimiter', '\t', 'EndOfLine', '\n');
+        cfg.fileName.date '.tsv'];
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);
+    
+    FID = fopen(fullfile(funcDir, eventFilename), 'r');
+    C = textscan(FID, repmat('%s', 1, 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 
     % check the extra columns of the header
     assert(isequal(C{1}{1}, 'onset'));
@@ -52,10 +51,10 @@ function test_saveEventsFileOpen()
 
     %%% set up
 
-    cfg.subjectNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
 
@@ -64,7 +63,7 @@ function test_saveEventsFileOpen()
 
     %%% do stuff
 
-    cfg = createFilename(cfg); 
+    cfg = createFilename(cfg);
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);
@@ -75,12 +74,11 @@ function test_saveEventsFileOpen()
     %%% test section
 
     % open the file
+    funcDir = fullfile(cfg.dir.outputSubject, cfg.fileName.modality);
+    eventFilename = cfg.fileName.events;
+    
     nbExtraCol = 2;
-    FID = fopen(fullfile( ...
-        cfg.subjectOutputDir, ...
-        cfg.modality, ...
-        cfg.fileName.events), ...
-        'r');
+    FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 
     % check the extra columns of the header
@@ -89,5 +87,7 @@ function test_saveEventsFileOpen()
     assert(isequal(C{3}{1}, 'trial_type'));
     assert(isequal(C{4}{1}, 'Speed'));
     assert(isequal(C{5}{1}, 'is_Fixation'));
+    
+    
 
 end

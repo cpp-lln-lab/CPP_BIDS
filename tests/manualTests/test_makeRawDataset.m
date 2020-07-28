@@ -4,7 +4,7 @@ function test_makeRawDataset()
 
     clear;
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
     if isdir(outputDir)
         rmdir(outputDir, 's');

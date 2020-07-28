@@ -33,7 +33,7 @@ function test_saveEventsFileOpen()
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);
-    
+
     FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 
@@ -76,7 +76,7 @@ function test_saveEventsFileOpen()
     % open the file
     funcDir = fullfile(cfg.dir.outputSubject, cfg.fileName.modality);
     eventFilename = cfg.fileName.events;
-    
+
     nbExtraCol = 2;
     FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
@@ -87,7 +87,5 @@ function test_saveEventsFileOpen()
     assert(isequal(C{3}{1}, 'trial_type'));
     assert(isequal(C{4}{1}, 'Speed'));
     assert(isequal(C{5}{1}, 'is_Fixation'));
-    
-    
 
 end

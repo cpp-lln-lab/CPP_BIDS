@@ -1,4 +1,4 @@
-function testmanual_makeRawDataset()
+function test_makeRawDataset()
 
     fprintf('\n\n--------------------------------------------------------------------\n\n');
 

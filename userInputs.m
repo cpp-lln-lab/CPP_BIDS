@@ -16,8 +16,12 @@ function cfg = userInputs(cfg)
     end
 
     askGrpSess = [true true];
-    if isfield(cfg, 'subject') && isfield(cfg.subject, 'askGrpSess') && ~isempty(cfg.subject.askGrpSess)
+    if isfield(cfg, 'subject') && ...
+            isfield(cfg.subject, 'askGrpSess') && ...
+            ~isempty(cfg.subject.askGrpSess)
+
         askGrpSess = cfg.subject.askGrpSess;
+
     end
     if numel(askGrpSess) < 2
         askGrpSess(2) = 1;

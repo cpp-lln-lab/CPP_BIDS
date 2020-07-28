@@ -13,7 +13,7 @@ function cfg = createFilename(cfg)
     % See test_createFilename in the test folder for more details on how to use it.
 
     cfg = checkCFG(cfg);
-    
+
     cfg.fileName.pattern = ['%0' num2str(cfg.fileName.zeroPadding) '.0f'];
     cfg.fileName.date = datestr(now, cfg.fileName.dateFormat);
 
@@ -30,7 +30,7 @@ function cfg = createFilename(cfg)
     cfg = setFilenames(cfg);
 
     talkToMe(cfg);
-    
+
     cfg = orderfields(cfg);
     cfg.fileName = orderfields(cfg.fileName);
     cfg.dir = orderfields(cfg.dir);
@@ -118,7 +118,7 @@ function cfg = setSuffixes(cfg)
     end
 
     cfg.fileName.suffix = orderfields(cfg.fileName.suffix);
-    
+
 end
 
 function cfg = setFilenames(cfg)
@@ -126,14 +126,14 @@ function cfg = setFilenames(cfg)
     [subjectGrp, subjectNb, sessionNb, modality, taskName] = extractInput(cfg);
 
     pattern = cfg.fileName.pattern;
-    
+
     runSuffix = cfg.fileName.suffix.run;
     acqSuffix = cfg.fileName.suffix.mri.acq ;
     ceSuffix = cfg.fileName.suffix.mri.ce ;
     dirSuffix = cfg.fileName.suffix.mri.dir ;
     recSuffix = cfg.fileName.suffix.mri.rec ;
     echoSuffix = cfg.fileName.suffix.mri.echo;
-    
+
     thisDate = cfg.fileName.date;
 
     cfg.fileName.datasetDescription = fullfile ( ...

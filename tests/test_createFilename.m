@@ -98,7 +98,7 @@ function test_createFilename()
 
     cfg.testingDevice = 'eeg';
 
-    cfg = createFilename(cfg); 
+    cfg = createFilename(cfg);
 
     %%% test part
 

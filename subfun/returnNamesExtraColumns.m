@@ -1,5 +1,7 @@
 function [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
-
+    % [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
+    %
+    
     namesExtraColumns = [];
 
     if isfield(logFile, 'extraColumns') && ~isempty(logFile(1).extraColumns)

@@ -1,4 +1,5 @@
 function logFile = initializeExtraColumns(logFile)
+    % logFile = initializeExtraColumns(logFile)
     %    initialize the fields for the extra columns
     %    USAGE
     %       logfile.extraColumns{'Speed', 'Response key'}

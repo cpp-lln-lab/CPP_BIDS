@@ -1,4 +1,7 @@
 function headerName = returnHeaderName(columnName, nbCol, iCol)
+    % headerName = returnHeaderName(columnName, nbCol, iCol)
+    %
+    
     if nbCol == 1
         headerName = sprintf('%s', columnName);
     else

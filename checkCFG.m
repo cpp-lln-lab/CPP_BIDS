@@ -1,4 +1,6 @@
 function cfg = checkCFG(cfg)
+    % cfg = checkCFG(cfg)
+    %
     % check that we have all the fields that we need in the experiment parameters
     % reuses a lot of code from the BIDS starter kit
 

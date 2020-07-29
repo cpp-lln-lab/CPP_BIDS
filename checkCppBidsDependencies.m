@@ -1,5 +1,7 @@
-function checkCppBidsDependencies
-
+function checkCppBidsDependencies()
+    % checkCppBidsDependencies()
+    %
+    
     pth = fileparts(mfilename('fullpath'));
 
     checkSubmodule(fullfile(pth, 'lib', 'JSONio'));

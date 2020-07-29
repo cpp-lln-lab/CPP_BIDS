@@ -7,7 +7,7 @@ function cfg = createFilename(cfg)
     %
     % can work for behavioral experiment if cfg.device is set to 'PC'
     % can work for fMRI experiment if cfg.device is set to 'scanner'
-    % can work for simple eyetracking data if cfg.eyeTracker is set to 1
+    % can work for simple eyetracking data if cfg.eyeTracker.do is set to 1
     %
     %
     % See test_createFilename in the test folder for more details on how to use it.

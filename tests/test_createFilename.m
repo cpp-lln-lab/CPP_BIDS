@@ -9,7 +9,7 @@ function test_createFilename()
 
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
-    cfg.task.name = 'testtask';
+    cfg.task.name = 'test task';
     cfg.dir.output = outputDir;
 
     %%% run part
@@ -20,9 +20,9 @@ function test_createFilename()
     % test data
     behDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'beh');
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'eyetracker');
-    eventFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-'...
+    eventFilename = ['sub-001_ses-001_task-testTask_run-001_events_date-'...
         cfg.fileName.date '.tsv'];
-    stimFilename =  ['sub-001_ses-001_task-testtask_run-001_stim_date-'...
+    stimFilename =  ['sub-001_ses-001_task-testTask_run-001_stim_date-'...
         cfg.fileName.date '.tsv'];
 
     % make sure the beh dir is created
@@ -50,7 +50,7 @@ function test_createFilename()
     cfg.subject.subjectNb = 2;
     cfg.subject.sessionNb = 2;
     cfg.subject.runNb = 2;
-    cfg.task.name = 'testtask';
+    cfg.task.name = 'testTask';
     cfg.dir.output = outputDir;
 
     cfg.eyeTracker.do = true;
@@ -63,10 +63,10 @@ function test_createFilename()
     % test data
     funcDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'func');
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'eyetracker');
-    baseFilename = 'sub-ctrl002_ses-002_task-testtask';
-    eventFilename = ['sub-ctrl002_ses-002_task-testtask_run-002_events_date-' ...
+    baseFilename = 'sub-ctrl002_ses-002_task-testTask';
+    eventFilename = ['sub-ctrl002_ses-002_task-testTask_run-002_events_date-' ...
         cfg.fileName.date '.tsv'];
-    eyetrackerFilename =  ['sub-ctrl002_ses-002_task-testtask_run-002_eyetrack_date-' ...
+    eyetrackerFilename =  ['sub-ctrl002_ses-002_task-testTask_run-002_eyetrack_date-' ...
         cfg.fileName.date '.edf'];
 
     % make sure the func dir is created
@@ -93,7 +93,7 @@ function test_createFilename()
     cfg.subject.subjectNb = 3;
     cfg.subject.sessionNb = 1;
     cfg.subject.runNb = 1;
-    cfg.task.name = 'testtask';
+    cfg.task.name = 'testTask';
     cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'eeg';

@@ -64,7 +64,7 @@ function [subjectGrp, subjectNb, sessionNb, modality, taskName] = extractInput(c
     subjectNb = cfg.subject.subjectNb;
     sessionNb = cfg.subject.sessionNb;
     modality = cfg.fileName.modality;
-    taskName = cfg.task.name;
+    taskName = cfg.fileName.task;
 
     if isempty(sessionNb)
         sessionNb = 1;
@@ -101,19 +101,19 @@ function cfg = setSuffixes(cfg)
 
     % set values for the suffixes for the different fields in the BIDS name
     fields2Check = { ...
-        'ce', ...
-        'dir', ...  % For BIDS file naming: phase encoding direction of acquisition for fMRI
-        'rec', ...  % For BIDS file naming: reconstruction of fMRI images
+        'contrastEnhancement', ...
+        'phaseEncodingDirection', ...  % For BIDS file naming: phase encoding direction of acquisition for fMRI
+        'reconstruction', ...  % For BIDS file naming: reconstruction of fMRI images
         'echo', ... % For BIDS file naming: echo fMRI images
-        'acq'       % For BIDS file naming: acquisition of fMRI images
+        'acquisition'       % For BIDS file naming: acquisition of fMRI images
         };
 
     for iField = 1:numel(fields2Check)
-        if isempty (cfg.fileName.mri.(fields2Check{iField})) %#ok<*GFLD>
+        if isempty (cfg.mri.(fields2Check{iField})) %#ok<*GFLD>
             cfg.fileName.suffix.mri.(fields2Check{iField}) = ''; %#ok<*SFLD>
         else
             cfg.fileName.suffix.mri.(fields2Check{iField}) = ...
-                ['_' fields2Check{iField} '-' getfield(cfg.fileName.mri, fields2Check{iField})];
+                ['_' fields2Check{iField} '-' getfield(cfg.mri, fields2Check{iField})];
         end
     end
 
@@ -128,10 +128,10 @@ function cfg = setFilenames(cfg)
     pattern = cfg.fileName.pattern;
 
     runSuffix = cfg.fileName.suffix.run;
-    acqSuffix = cfg.fileName.suffix.mri.acq ;
-    ceSuffix = cfg.fileName.suffix.mri.ce ;
-    dirSuffix = cfg.fileName.suffix.mri.dir ;
-    recSuffix = cfg.fileName.suffix.mri.rec ;
+    acqSuffix = cfg.fileName.suffix.mri.acquisition ;
+    ceSuffix = cfg.fileName.suffix.mri.contrastEnhancement ;
+    dirSuffix = cfg.fileName.suffix.mri.phaseEncodingDirection ;
+    recSuffix = cfg.fileName.suffix.mri.reconstruction ;
     echoSuffix = cfg.fileName.suffix.mri.echo;
 
     thisDate = cfg.fileName.date;

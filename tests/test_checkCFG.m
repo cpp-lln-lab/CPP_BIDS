@@ -43,13 +43,13 @@ function test_checkCFG()
     expectedStructure.dir.output = outputDir;
 
     expectedStructure.task.name = 'test task';
-    
+
     expectedStructure.testingDevice = 'mri';
 
     expectedStructure.mri.repetitionTime = 1.56;
-    
+
     expectedStructure.fileName.task = 'testTask';
-    
+
     expectedStructure.bids.mri.RepetitionTime = 1.56;
     expectedStructure.bids.mri.TaskName = 'test Task';
 

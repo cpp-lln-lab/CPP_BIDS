@@ -38,16 +38,16 @@ function cfg = checkCFG(cfg)
     fieldsToSet = datasetDescriptionDefaults(fieldsToSet);
     fieldsToSet = mriJsonDefaults(fieldsToSet);
     fieldsToSet = megJsonDefaults(fieldsToSet);
-    
+
     fieldsToSet = transferInfoToBids(fieldsToSet, cfg);
-    
+
     cfg = setDefaultFields(cfg, fieldsToSet);
 
 end
 
 function fieldsToSet = mriDefaults(fieldsToSet)
 
-    % for file naming and JSON    
+    % for file naming and JSON
     fieldsToSet.mri.contrastEnhancement = [];
     fieldsToSet.mri.phaseEncodingDirection = [];
     fieldsToSet.mri.reconstruction = [];

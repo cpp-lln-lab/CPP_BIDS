@@ -50,7 +50,7 @@ function test_createFilename()
     cfg.subject.subjectNb = 2;
     cfg.subject.sessionNb = 2;
     cfg.subject.runNb = 2;
-    cfg.task.name = 'testTask';
+    cfg.task.name = 'test task';
     cfg.dir.output = outputDir;
 
     cfg.eyeTracker.do = true;
@@ -93,7 +93,7 @@ function test_createFilename()
     cfg.subject.subjectNb = 3;
     cfg.subject.sessionNb = 1;
     cfg.subject.runNb = 1;
-    cfg.task.name = 'testTask';
+    cfg.task.name = 'test task';
     cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'eeg';

@@ -12,8 +12,9 @@ function cfg = checkCFG(cfg)
 
     fieldsToSet.verbose = false;
 
-    cfg.fileName.zeroPadding = 3;
-    cfg.fileName.dateFormat = 'yyyymmddHHMM';
+    fieldsToSet.fileName.task = '';
+    fieldsToSet.fileName.zeroPadding = 3;
+    fieldsToSet.fileName.dateFormat = 'yyyymmddHHMM';
 
     fieldsToSet.dir.output = fullfile( ...
         fileparts(mfilename('fullpath')), ...
@@ -35,31 +36,26 @@ function cfg = checkCFG(cfg)
     %% BIDS
 
     fieldsToSet = datasetDescriptionDefaults(fieldsToSet);
-
     fieldsToSet = mriJsonDefaults(fieldsToSet);
-    if isfield(cfg, 'task') && isfield(cfg.task, 'name')
-        fieldsToSet.bids.mri.TaskName = cfg.task.name;
-    end
-
     fieldsToSet = megJsonDefaults(fieldsToSet);
-    if isfield(cfg, 'task') && isfield(cfg.task, 'name')
-        fieldsToSet.bids.meg.TaskName = cfg.task.name;
-    end
-
+    
+    fieldsToSet = transferInfoToBids(fieldsToSet, cfg);
+    
     cfg = setDefaultFields(cfg, fieldsToSet);
 
 end
 
 function fieldsToSet = mriDefaults(fieldsToSet)
 
-    % for file naming
-    fieldsToSet.fileName.mri.ce = [];
-    fieldsToSet.fileName.mri.dir = []; % phase encoding direction of acquisition for fMRI
-    fieldsToSet.fileName.mri.rec = []; % reconstruction of fMRI images
-    fieldsToSet.fileName.mri.echo = []; % echo fMRI images
-    fieldsToSet.fileName.mri.acq = []; % acquisition of fMRI images
+    % for file naming and JSON    
+    fieldsToSet.mri.contrastEnhancement = [];
+    fieldsToSet.mri.phaseEncodingDirection = [];
+    fieldsToSet.mri.reconstruction = [];
+    fieldsToSet.mri.echo = [];
+    fieldsToSet.mri.acquisition = [];
+    fieldsToSet.mri.repetitionTime = [];
 
-    fieldsToSet.fileName.mri = orderfields(fieldsToSet.fileName.mri);
+    fieldsToSet.mri = orderfields(fieldsToSet.mri);
 
 end
 

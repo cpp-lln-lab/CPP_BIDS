@@ -19,7 +19,7 @@ function test_checkCFG()
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
 
-    cfg.task.name = 'testtask';
+    cfg.task.name = 'test task';
 
     cfg.dir.output = outputDir;
 
@@ -27,7 +27,7 @@ function test_checkCFG()
     cfg.bids.datasetDescription.BIDSVersion = '1.0.0';
     cfg.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
 
-    cfg.bids.mri.RepetitionTime = 1.56;
+    cfg.mri.repetitionTime = 1.56;
 
     cfg.testingDevice = 'mri';
 
@@ -42,13 +42,18 @@ function test_checkCFG()
 
     expectedStructure.dir.output = outputDir;
 
-    expectedStructure.task.name = 'testtask';
+    expectedStructure.task.name = 'test task';
+    
     expectedStructure.testingDevice = 'mri';
 
+    expectedStructure.mri.repetitionTime = 1.56;
+    
+    expectedStructure.fileName.task = 'testTask';
+    
     expectedStructure.bids.mri.RepetitionTime = 1.56;
-    expectedStructure.bids.mri.TaskName = 'testtask';
+    expectedStructure.bids.mri.TaskName = 'test Task';
 
-    expectedStructure.bids.meg.TaskName = 'testtask';
+    expectedStructure.bids.meg.TaskName = 'test Task';
 
     expectedStructure.bids.datasetDescription.Name = 'dummy';
     expectedStructure.bids.datasetDescription.BIDSVersion =  '1.0.0';
@@ -70,16 +75,18 @@ function expectedStructure = returnExpectedStructure()
 
     expectedStructure.verbose = 0;
 
+    expectedStructure.fileName.task = '';
     expectedStructure.fileName.zeroPadding = 3;
     expectedStructure.fileName.dateFormat = 'yyyymmddHHMM';
 
     expectedStructure.eyeTracker.do = false;
 
-    expectedStructure.fileName.mri.ce = [];
-    expectedStructure.fileName.mri.dir = [];
-    expectedStructure.fileName.mri.rec = [];
-    expectedStructure.fileName.mri.echo = [];
-    expectedStructure.fileName.mri.acq = [];
+    expectedStructure.mri.contrastEnhancement = [];
+    expectedStructure.mri.phaseEncodingDirection = [];
+    expectedStructure.mri.reconstruction = [];
+    expectedStructure.mri.echo = [];
+    expectedStructure.mri.acquisition = [];
+    expectedStructure.mri.repetitionTime = [];
 
     expectedStructure.bids.mri.RepetitionTime = [];
     expectedStructure.bids.mri.SliceTiming = '';

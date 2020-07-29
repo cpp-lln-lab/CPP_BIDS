@@ -36,7 +36,7 @@ jobs:
       script: octave $OCTFLAGS --eval "results = runTests; assert(all(~[results.Failed]))"
     - stage: "BIDS validator"
       name: "Create and check dataset"
-      script: octave $OCTFLAGS --eval "testmanual_makeRawDataset" && bids-validator `pwd`/../output/rawdata/ --ignoreNiftiHeaders
+      script: cd manualTests && octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/rawdata/ --ignoreNiftiHeaders
     - stage: "Linter"
       name: "miss_hit"
       script: cd .. && mh_style `pwd`

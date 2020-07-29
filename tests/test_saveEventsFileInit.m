@@ -21,7 +21,7 @@ function test_saveEventsFileInit()
     clear;
 
     %%% set up
-    cfg = checkCFG(); 
+    cfg = checkCFG();
     logFile.extraColumns = {'Speed'};
 
     %%% do stuff
@@ -42,7 +42,7 @@ function test_saveEventsFileInit()
     clear;
 
     %%% set up
-    cfg = checkCFG(); 
+    cfg = checkCFG();
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
 

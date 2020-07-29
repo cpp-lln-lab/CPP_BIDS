@@ -77,35 +77,7 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
             checklLogFile('checkID', logFile);
             checklLogFile('type&size', logFile);
 
-            % appends to the logfile all the data stored in the structure
-            % first with the standard BIDS data and then any extra things
-            for iEvent = 1:size(logFile, 1)
-
-                logFile = checklLogFile('fields', logFile, iEvent);
-
-                onset = logFile(iEvent).onset;
-                duration = logFile(iEvent).duration;
-                trial_type = logFile(iEvent).trial_type;
-
-                if isnan(onset) || ischar(onset) || any(isempty({onset trial_type})) || ...
-                        strcmp(trial_type, 'n/a')
-
-                    warning('\nSkipping saving this event.\n onset: %f \n trial_type: %s\n', ...
-                        onset, ...
-                        trial_type);
-
-                else
-
-                    printData(logFile(1).fileID, onset);
-                    printData(logFile(1).fileID, duration);
-                    printData(logFile(1).fileID, trial_type);
-
-                    printExtraColumns(logFile, iEvent);
-
-                    fprintf(logFile(1).fileID, '\n');
-
-                end
-            end
+            logFile = saveToLogFile(logFile);
 
         case 'close'
 
@@ -116,8 +88,8 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
 
             fprintf(1, '\nData were saved in this file:\n\n%s\n\n', ...
                 fullfile( ...
-                cfg.subjectOutputDir, ...
-                cfg.modality, ...
+                cfg.dir.outputSubject, ...
+                cfg.fileName.modality, ...
                 logFile.filename));
 
         otherwise
@@ -153,14 +125,10 @@ function logFile = checklLogFile(action, logFile, iEvent)
 
         case 'fields'
 
-            if ~isfield(logFile, 'onset') || isempty(logFile(iEvent).onset)
-                logFile(iEvent).onset = nan;
-            end
-            if ~isfield(logFile, 'trial_type') || isempty(logFile(iEvent).trial_type)
-                logFile(iEvent).trial_type = nan;
-            end
-            if ~isfield(logFile, 'duration') || isempty(logFile(iEvent).duration)
-                logFile(iEvent).duration = nan;
+            for iFields = {'onset', 'trial_type', 'duration'}
+                if ~isfield(logFile, iFields) || isempty(logFile(iEvent).(iFields{1}))
+                    logFile(iEvent).(iFields{1}) = nan;
+                end
             end
 
             logFile = checkExtracolumns(logFile, iEvent);
@@ -179,8 +147,8 @@ function logFile = initializeFile(cfg, logFile)
     %  event file
     logFile.fileID = fopen( ...
         fullfile( ...
-        cfg.subjectOutputDir, ...
-        cfg.modality, ...
+        cfg.dir.outputSubject, ...
+        cfg.fileName.modality, ...
         logFile.filename), ...
         'w');
 
@@ -232,7 +200,9 @@ function logFile = checkExtracolumns(logFile, iEvent)
             data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
         end
 
-        data = checkInput(data, nbCol);
+        data = checkInput(data);
+
+        data = nanPadding(data, nbCol);
 
         logFile(iEvent).(namesExtraColumns{iExtraColumn}) = data;
 
@@ -248,14 +218,10 @@ function logFile = checkExtracolumns(logFile, iEvent)
 
 end
 
-function data = checkInput(data, expectedLength)
+function data = checkInput(data)
     % check the data to write
     % default will be 'n/a' for chars and NaN for numeric data
     % for numeric data that don't have the expected length, it will be padded with NaNs
-
-    if nargin < 2
-        expectedLength = [];
-    end
 
     if islogical(data) && data
         data = 'true';
@@ -271,12 +237,54 @@ function data = checkInput(data, expectedLength)
         data = nan;
     end
 
+end
+
+function data = nanPadding(data, expectedLength)
+
+    if nargin < 2
+        expectedLength = [];
+    end
+
     if ~isempty(expectedLength) && isnumeric(data) && max(size(data)) < expectedLength
         padding = expectedLength - max(size(data));
         data(end + 1:end + padding) = nan(1, padding);
     elseif ~isempty(expectedLength) && isnumeric(data) && max(size(data)) > expectedLength
-        data = data(1:expectedLength);
         warning('A field for this event is longer than expected. Truncating the extra values.');
+        data = data(1:expectedLength);
+    end
+
+end
+
+function logFile = saveToLogFile(logFile)
+
+    % appends to the logfile all the data stored in the structure
+    % first with the standard BIDS data and then any extra things
+    for iEvent = 1:size(logFile, 1)
+
+        logFile = checklLogFile('fields', logFile, iEvent);
+
+        onset = logFile(iEvent).onset;
+        duration = logFile(iEvent).duration;
+        trial_type = logFile(iEvent).trial_type;
+
+        if isnan(onset) || ischar(onset) || any(isempty({onset trial_type})) || ...
+                strcmp(trial_type, 'n/a')
+
+            warning('\nSkipping saving this event.\n onset: %f \n trial_type: %s\n', ...
+                onset, ...
+                trial_type);
+
+        else
+
+            printData(logFile(1).fileID, onset);
+            printData(logFile(1).fileID, duration);
+            printData(logFile(1).fileID, trial_type);
+
+            printExtraColumns(logFile, iEvent);
+
+            fprintf(logFile(1).fileID, '\n');
+
+        end
     end
 
 end

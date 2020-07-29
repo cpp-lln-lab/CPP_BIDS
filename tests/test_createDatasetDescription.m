@@ -4,15 +4,14 @@ function test_createDatasetDescription()
 
     %%% set up part
 
-    cfg.outputDir = outputDir;
+    cfg.dir.output = outputDir;
 
     cfg.bids.datasetDescription.json.Name = 'dummy_dataset';
     cfg.bids.datasetDescription.json.BIDSVersion = '1.0.0';
     cfg.bids.datasetDescription.json.License = 'none';
     cfg.bids.datasetDescription.json.Authors = {'Jane Doe'};
 
-
-    cfg = checkCFG(cfg); 
+    cfg = checkCFG(cfg);
 
     createDatasetDescription(cfg);
 

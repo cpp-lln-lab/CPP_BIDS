@@ -4,15 +4,15 @@ function test_createBoldJson()
 
     %%% set up part
 
-    cfg.subjectNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
-    %cfg = struct();
+    % cfg = struct();
     cfg.testingDevice = 'mri';
 
-    cfg = createFilename(cfg);  
+    cfg = createFilename(cfg);
 
     logFile = saveEventsFile('init', cfg); %#ok<*NASGU>
 
@@ -23,7 +23,7 @@ function test_createBoldJson()
     % test data
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_bold_date-' ...
-        cfg.date '.json'];
+        cfg.fileName.date '.json'];
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);

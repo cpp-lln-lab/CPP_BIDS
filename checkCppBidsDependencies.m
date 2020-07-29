@@ -1,13 +1,13 @@
 function checkCppBidsDependencies
 
     pth = fileparts(mfilename('fullpath'));
-    
+
     checkSubmodule(fullfile(pth, 'lib', 'JSONio'));
     checkSubmodule(fullfile(pth, 'lib', 'bids-matlab'));
-    
+
     addpath(fullfile(pth, 'lib', 'utils'));
     addpath(fullfile(pth, 'subfun'));
-    
+
     printCreditsCppBids();
 
 end

@@ -1,10 +1,10 @@
-function testmanual_makeRawDataset()
+function test_makeRawDataset()
 
     fprintf('\n\n--------------------------------------------------------------------\n\n');
 
     clear;
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
     if isdir(outputDir)
         rmdir(outputDir, 's');
@@ -14,16 +14,16 @@ function testmanual_makeRawDataset()
 
     %%% set up
 
-    cfg.subjectNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     cfg.bids.datasetDescription.Name = 'dummy';
     cfg.bids.datasetDescription.BIDSVersion = '1.0.0';
     cfg.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
 
-    cfg.bids.MRI.RepetitionTime = 1.56;
+    cfg.bids.mri.RepetitionTime = 1.56;
 
     cfg.testingDevice = 'mri';
 
@@ -33,7 +33,7 @@ function testmanual_makeRawDataset()
 
     %%% do stuff
 
-    cfg = createFilename(cfg); 
+    cfg = createFilename(cfg);
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);
@@ -74,10 +74,10 @@ function testmanual_makeRawDataset()
     saveEventsFile('close', cfg, logFile);
 
     % add dummy functional data
-    funcDir = fullfile(cfg.outputDir, 'source', 'sub-001', 'ses-001', 'func');
+    funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'func');
     boldFilename = 'sub-001_ses-001_task-testtask_run-001_bold.nii.gz';
     copyfile( ...
-        fullfile('..', 'dummyData', 'dummyData.nii.gz'), ...
+        fullfile('..', '..', 'dummyData', 'dummyData.nii.gz'), ...
         fullfile(funcDir, boldFilename));
 
     %%

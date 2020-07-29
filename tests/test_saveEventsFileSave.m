@@ -7,14 +7,14 @@ function test_saveEventsFileSave()
 
     %%% set up
 
-    cfg.subjectNb = 1;
-    cfg.runNb = 1;
-    cfg.task = 'testtask';
-    cfg.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
 
-    cfg = createFilename(cfg); 
+    cfg = createFilename(cfg);
 
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 12;
@@ -80,11 +80,10 @@ function test_saveEventsFileSave()
         logFile(1).extraColumns.Speed.length + ...
         logFile(1).extraColumns.LHL24.length + ...
         logFile(1).extraColumns.is_Fixation.length;
-    FID = fopen(fullfile( ...
-        cfg.subjectOutputDir, ...
-        cfg.modality, ...
-        cfg.fileName.events), ...
-        'r');
+
+    funcDir = fullfile(cfg.dir.outputSubject, cfg.fileName.modality);
+    eventFilename = cfg.fileName.events;
+    FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 
     % event 1/ ROW 2: check that values are entered correctly

@@ -1,9 +1,9 @@
 function cfg = createFilename(cfg)
-    % create the BIDS compliant directories and filenames for the behavioral output
+    % create the BIDS compliant directories and fileNames for the behavioral output
     % for this subject / session / run using the information from cfg and expParameters.
-    % Will also create the right filename for the eyetracking data file.
+    % Will also create the right fileName for the eyetracking data file.
     %
-    % For the moment the date of acquisition is appended to the filename
+    % For the moment the date of acquisition is appended to the fileName
     %
     % can work for behavioral experiment if cfg.device is set to 'PC'
     % can work for fMRI experiment if cfg.device is set to 'scanner'
@@ -12,17 +12,13 @@ function cfg = createFilename(cfg)
     %
     % See test_createFilename in the test folder for more details on how to use it.
 
-    zeroPadding = 3;
-    pattern = ['%0' num2str(zeroPadding) '.0f'];
-    cfg.pattern = pattern;
-
-    dateFormat = 'yyyymmddHHMM';
-    cfg.date = datestr(now, dateFormat);
-
     cfg = checkCFG(cfg);
 
+    cfg.fileName.pattern = ['%0' num2str(cfg.fileName.zeroPadding) '.0f'];
+    cfg.fileName.date = datestr(now, cfg.fileName.dateFormat);
+
     if ~isfield(cfg, 'task')
-        error('createFilename: missing a task name. i.e cfg.task');
+        error('createFilename: missing a task name. i.e cfg.task.name');
     end
 
     cfg = getModality(cfg);
@@ -34,9 +30,10 @@ function cfg = createFilename(cfg)
     cfg = setFilenames(cfg);
 
     talkToMe(cfg);
-    
+
     cfg = orderfields(cfg);
-    cfg = orderfields(cfg);
+    cfg.fileName = orderfields(cfg.fileName);
+    cfg.dir = orderfields(cfg.dir);
 
 end
 
@@ -57,17 +54,17 @@ function cfg = getModality(cfg)
             modality = 'beh';
     end
 
-    cfg.modality = modality;
+    cfg.fileName.modality = modality;
 
 end
 
 function [subjectGrp, subjectNb, sessionNb, modality, taskName] = extractInput(cfg)
 
-    subjectGrp = cfg.subjectGrp;
-    subjectNb = cfg.subjectNb;
-    sessionNb = cfg.sessionNb;
-    modality = cfg.modality;
-    taskName = cfg.task;
+    subjectGrp = cfg.subject.subjectGrp;
+    subjectNb = cfg.subject.subjectNb;
+    sessionNb = cfg.subject.sessionNb;
+    modality = cfg.fileName.modality;
+    taskName = cfg.fileName.task;
 
     if isempty(sessionNb)
         sessionNb = 1;
@@ -79,46 +76,48 @@ function cfg = createDirectories(cfg)
 
     [subjectGrp, subjectNb, sessionNb, modality] = extractInput(cfg);
 
-    pattern = cfg.pattern;
+    pattern = cfg.fileName.pattern;
 
     % output dir
-    cfg.subjectOutputDir = fullfile ( ...
-        cfg.outputDir, ...
+    cfg.dir.outputSubject = fullfile ( ...
+        cfg.dir.output, ...
         'source', ...
         ['sub-' subjectGrp, sprintf(pattern, subjectNb)], ...
         ['ses-', sprintf(pattern, sessionNb)]);
 
-    [~, ~, ~] = mkdir(cfg.outputDir);
-    [~, ~, ~] = mkdir(cfg.subjectOutputDir);
-    [~, ~, ~] = mkdir(fullfile(cfg.subjectOutputDir, modality));
+    [~, ~, ~] = mkdir(cfg.dir.output);
+    [~, ~, ~] = mkdir(cfg.dir.outputSubject);
+    [~, ~, ~] = mkdir(fullfile(cfg.dir.outputSubject, modality));
 
-    if cfg.eyeTracker
-        [~, ~, ~] = mkdir(fullfile(cfg.subjectOutputDir, 'eyetracker'));
+    if cfg.eyeTracker.do
+        [~, ~, ~] = mkdir(fullfile(cfg.dir.outputSubject, 'eyetracker'));
     end
 
 end
 
 function cfg = setSuffixes(cfg)
 
-    cfg.runSuffix = ['_run-' sprintf(cfg.pattern, cfg.runNb)];
+    cfg.fileName.suffix.run = ['_run-' sprintf(cfg.fileName.pattern, cfg.subject.runNb)];
 
     % set values for the suffixes for the different fields in the BIDS name
     fields2Check = { ...
-        'ce', ...
-        'dir', ...  % For BIDS file naming: phase encoding direction of acquisition for fMRI
-        'rec', ...  % For BIDS file naming: reconstruction of fMRI images
-        'echo', ... % For BIDS file naming: echo fMRI images
-        'acq'       % For BIDS file naming: acquisition of fMRI images
+        'contrastEnhancement', ...
+        'phaseEncodingDirection', ...
+        'reconstruction', ...
+        'echo', ...
+        'acquisition'
         };
 
     for iField = 1:numel(fields2Check)
-        if isempty (cfg.MRI.(fields2Check{iField})) %#ok<*GFLD>
-            cfg.MRI.([fields2Check{iField} 'Suffix']) = ''; %#ok<*SFLD>
+        if isempty (cfg.mri.(fields2Check{iField})) %#ok<*GFLD>
+            cfg.fileName.suffix.mri.(fields2Check{iField}) = ''; %#ok<*SFLD>
         else
-            cfg.MRI.([fields2Check{iField} 'Suffix']) = ...
-                ['_' fields2Check{iField} '-' getfield(cfg.MRI, fields2Check{iField})];
+            cfg.fileName.suffix.mri.(fields2Check{iField}) = ...
+                ['_' fields2Check{iField} '-' getfield(cfg.mri, fields2Check{iField})];
         end
     end
+
+    cfg.fileName.suffix = orderfields(cfg.fileName.suffix);
 
 end
 
@@ -126,19 +125,22 @@ function cfg = setFilenames(cfg)
 
     [subjectGrp, subjectNb, sessionNb, modality, taskName] = extractInput(cfg);
 
-    runSuffix = cfg.runSuffix;
-    pattern = cfg.pattern;
-    acqSuffix = cfg.MRI.acqSuffix ;
-    ceSuffix = cfg.MRI.ceSuffix ;
-    dirSuffix = cfg.MRI.dirSuffix ;
-    recSuffix = cfg.MRI.recSuffix ;
-    echoSuffix = cfg.MRI.echoSuffix;
+    pattern = cfg.fileName.pattern;
 
-    cfg.datasetDescription.filename = fullfile ( ...
-        cfg.outputDir, ...
+    runSuffix = cfg.fileName.suffix.run;
+    acqSuffix = cfg.fileName.suffix.mri.acquisition ;
+    ceSuffix = cfg.fileName.suffix.mri.contrastEnhancement ;
+    dirSuffix = cfg.fileName.suffix.mri.phaseEncodingDirection ;
+    recSuffix = cfg.fileName.suffix.mri.reconstruction ;
+    echoSuffix = cfg.fileName.suffix.mri.echo;
+
+    thisDate = cfg.fileName.date;
+
+    cfg.fileName.datasetDescription = fullfile ( ...
+        cfg.dir.output, ...
         'dataset_description.json');
 
-    % create base filename
+    % create base fileName
     fileNameBase = ...
         ['sub-', subjectGrp, sprintf(pattern, subjectNb), ...
         '_ses-', sprintf(pattern, sessionNb), ...
@@ -154,22 +156,21 @@ function cfg = setFilenames(cfg)
                 acqSuffix, ceSuffix, ...
                 dirSuffix, recSuffix, ...
                 runSuffix, echoSuffix, ...
-                '_events_date-' cfg.date '.tsv'];
+                '_events_date-' thisDate '.tsv'];
 
         otherwise
 
             cfg.fileName.events = ...
-                [fileNameBase, runSuffix, '_events_date-' cfg.date '.tsv'];
+                [fileNameBase, runSuffix, '_events_date-' thisDate '.tsv'];
 
     end
 
     cfg.fileName.stim = strrep(cfg.fileName.events, 'events', 'stim');
 
-    if cfg.eyeTracker
+    if cfg.eyeTracker.do
         cfg.fileName.eyetracker = ...
             [fileNameBase, acqSuffix, ...
-            runSuffix, '_eyetrack_date-' cfg.date '.edf'];
-
+            runSuffix, '_eyetrack_date-' thisDate '.edf'];
     end
 
 end
@@ -177,15 +178,15 @@ end
 function talkToMe(cfg)
 
     fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
-        fullfile(cfg.subjectOutputDir, cfg.modality));
+        fullfile(cfg.dir.outputSubject, cfg.fileName.modality));
 
     fprintf(1, '\nData will be saved in this file:\n\t%s\n', ...
         cfg.fileName.events);
 
-    if cfg.eyeTracker
+    if cfg.eyeTracker.do
 
         fprintf(1, '\nEyetracking data will be saved in this directory:\n\t%s\n', ...
-            fullfile(cfg.subjectOutputDir, 'eyetracker'));
+            fullfile(cfg.dir.outputSubject, 'eyetracker'));
 
         fprintf(1, '\nEyetracking data will be saved in this file:\n\t%s\n', ...
             cfg.fileName.eyetracker);

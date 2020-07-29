@@ -14,7 +14,7 @@ function cfg = userInputs(cfg)
         cfg = [];
     end
     if isempty(cfg.debug)
-        cfg.debug = false;
+        cfg.debug.do = false;
     end
 
     askGrpSess = [true true];
@@ -35,7 +35,7 @@ function cfg = userInputs(cfg)
     runNb = [];
 
     % When in debug more this function returns some dummy values
-    if cfg.debug
+    if cfg.debug.do
         subjectGrp = 'ctrl';
         subjectNb = 666;
         runNb = 666;

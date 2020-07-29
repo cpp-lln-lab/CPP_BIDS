@@ -1,4 +1,6 @@
 function [logFile] = saveEventsFile(action, cfg, logFile)
+    % [logFile] = saveEventsFile(action, cfg, logFile)
+    %
     % Function to save output files for events that will be BIDS compliant.
     %
     % INPUTS
@@ -28,7 +30,7 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
     % This creates the header with the obligatory 'onset', 'trial_type', 'duration' required
     % by BIDS and other columns can be specified in varargin.
     %
-    % example : logFile = saveEventsFile('open', expParameters, [], 'direction', 'speed', 'target');
+    % example : logFile = saveEventsFile('open', cfg, [], 'direction', 'speed', 'target');
     %
     %  - 'save': will save the data contained in logfile by using the file ID logFile.fileID;
     % logfile must then contain:

@@ -1,4 +1,6 @@
 function nbCol = returnNbColumns(logFile, nameExtraColumn)
+    % nbCol = returnNbColumns(logFile, nameExtraColumn)
+    %
 
     thisExtraColumn = logFile(1).extraColumns.(nameExtraColumn);
 

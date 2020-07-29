@@ -1,4 +1,9 @@
 function createDataDictionary(cfg, logFile)
+    % createDataDictionary(cfg, logFile)
+    %
+    % creates the data dictionary to be associated with a _events.tsv file
+    % will create empty field that you can then fill in manually in the JSON
+    % file
 
     opts.Indent = '    ';
 

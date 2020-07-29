@@ -5,6 +5,8 @@
 <!-- TOC -->
 
 - [CPP_BIDS](#cpp_bids)
+  - [Output format](#output-format)
+  - [Modality agnostic aspect](#modality-agnostic-aspect)
   - [Usage](#usage)
     - [To save events.tsv file](#to-save-eventstsv-file)
   - [Functions descriptions](#functions-descriptions)
@@ -12,6 +14,7 @@
     - [createFilename](#createfilename)
     - [saveEventsFile](#saveeventsfile)
     - [checkCFG](#checkcfg)
+  - [CFG content](#cfg-content)
   - [How to install](#how-to-install)
     - [Use the matlab package manager](#use-the-matlab-package-manager)
   - [Contributing](#contributing)
@@ -23,6 +26,24 @@
 
 A set of function for matlab and octave to create [BIDS-compatible](https://bids-specification.readthedocs.io/en/stable/) folder structure and filenames for the output of behavioral, EEG, fMRI, eyetracking studies.
 
+## Output format
+
+## Modality agnostic aspect
+
+Subjects, session and run number labels will be numbers with zero padding up to 3 values (e.g subject 1 will become `sub-001`).
+
+A session folder will ALWAYS be created even if not requested (default will be `ses-001`).
+
+Task labels will be printed in camelCase in the filenames. 
+
+Time stamps are added directly in the filename by adding a suffix `_date-YYYYMMDDHHMM` which makes the file name non-BIDS compliant. This was added to prevent overwriting files in case a certain run needs to be done a second time because of a crash (Some of us are paranoid about keeping even cancelled runs during my experiments). This suffix should be removed to make the data set BIDS compliant. See `convertSourceToRaw.m` for more details.
+
+For example:
+
+```
+sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-202007291536.tsv
+```
+
 ## Usage
 
 ### To save events.tsv file
@@ -30,17 +51,17 @@ A set of function for matlab and octave to create [BIDS-compatible](https://bids
 ```matlab
 
 % define the folder where the data will be saved
-expParameters.outputDir = fullfile(pwd, '..', 'output');
+cfg.outputDir = fullfile(pwd, '..', 'output');
 
 % define the name of the task
-expParameters.task = 'testtask';
+cfg.task = 'test task';
 
 % can use the userInputs function to collect subject info
-% expParameters = userInputs;
+% cfg = userInputs;
 
 % or declare it directly
-expParameters.subjectNb = 1;
-expParameters.runNb = 1;
+cfg.subjectNb = 1;
+cfg.runNb = 1;
 
 % by default we assume you are running things on a behavioral PC with no eyetracker
 % cfg.eyeTracker = false;
@@ -53,14 +74,14 @@ expParameters.runNb = 1;
 % cfg.testingDevice = 'eeg';
 
 % create the filenames: this include a step to check that all the information is there (checkCFG)
-[cfg, expParameters] = createFilename(cfg, expParameters);
+[cfg] = createFilename(cfg);
 
 % initialize the events files with the typical BIDS columns (onsets, duration, trial_type)
-% logFile = saveEventsFile('open', expParameters);
+% logFile = saveEventsFile('open', cfg);
 
 % You can add some more in this case (Speed and is_Fixation)
 logFile.extraColumns = {'Speed', 'is_Fixation'};
-logFile = saveEventsFile('open', expParameters, logFile);
+logFile = saveEventsFile('open', cfg, logFile);
 
 % The information about 2 events that we want to save
 % NOTE : If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped.
@@ -76,24 +97,24 @@ logFile(2,1).duration = 4;
 logFile(2,1).is_Fixation = 3;
 
 % add those 2 events to the events.tsv file
-saveEventsFile('save', expParameters, logFile);
+saveEventsFile('save', cfg, logFile);
 
 % close the file
-saveEventsFile('close', expParameters, logFile);
+saveEventsFile('close', cfg, logFile);
 
 ```
 
 If you want to save more complex events.tsv file you can save several columns at once.
 
 ```matlab
-expParameters.subjectNb = 1;
-expParameters.runNb = 1;
-expParameters.task = 'testtask';
-expParameters.outputDir = outputDir;
+cfg.subjectNb = 1;
+cfg.runNb = 1;
+cfg.task = 'testtask';
+cfg.outputDir = outputDir;
 
 cfg.testingDevice = 'mri';
 
-[cfg, expParameters] = createFilename(cfg, expParameters);
+[cfg] = createFilename(cfg);
 
 % You can specify how many columns we want for each variable
 % will set 1 columns with name Speed
@@ -104,7 +125,7 @@ logFile.extraColumns.Speed.length = 1;
 logFile.extraColumns.LHL24.length = 12;
 logFile.extraColumns.is_Fixation.length = 1;
 
-logFile = saveEventsFile('open', expParameters, logFile);
+logFile = saveEventsFile('open', cfg, logFile);
 
 logFile(1, 1).onset = 2;
 logFile(end, 1).trial_type = 'motion_up';
@@ -113,9 +134,9 @@ logFile(end, 1).Speed = 2;
 logFile(end, 1).is_Fixation = true;
 logFile(end, 1).LHL24 = 1:12;
 
-saveEventsFile('save', expParameters, logFile);
+saveEventsFile('save', cfg, logFile);
 
-saveEventsFile('close', expParameters, logFile);
+saveEventsFile('close', cfg, logFile);
 
 ```
 
@@ -125,16 +146,16 @@ If you have many columns to define but only a few with several columns, you can 
 % define the extra columns: they will be added to the tsv files in the order the user input them
 logFile.extraColumns = {'Speed', 'is_Fixation'};
 
-[cfg, expParameters] = createFilename(cfg, expParameters);
+[cfg] = createFilename(cfg);
 
 % initialize the logFile variable
-[logFile] = saveEventsFile('init', expParameters, logFile);
+[logFile] = saveEventsFile('init', cfg, logFile);
 
 % set the real length we really want
 logFile.extraColumns.Speed.length = 12;
 
 % open the file
-logFile = saveEventsFile('open', expParameters, logFile);
+logFile = saveEventsFile('open', cfg, logFile);
 ```
 
 
@@ -144,23 +165,23 @@ logFile = saveEventsFile('open', expParameters, logFile);
 
 Get subject, run and session number and make sure they are positive integer values.
 
-By default this will return `expParameters.session = 1` even if you asked it to omit enquiring about sessions. This means
+By default this will return `cfg.subject.session = 1` even if you asked it to omit enquiring about sessions. This means
 that the folder tree will always include a session folder.
 
 ```matlab
-[expParameters] = userInputs(cfg, expParameters)
+[cfg] = userInputs(cfg)
 ```
 
-if you use it with `expParameters.askGrpSess = [0 0]`
+if you use it with `cfg.subject.askGrpSess = [0 0]`
 it won't ask you about group or session
 
-if you use it with `expParameters.askGrpSess = [1]`
+if you use it with `cfg.subject.askGrpSess = [1]`
 it will only ask you about group
 
-if you use it with `expParameters.askGrpSess = [0 1]`
+if you use it with `cfg.subject.askGrpSess = [0 1]`
 it will only ask you about session
 
-if you use it with `expParameters.askGrpSess = [1 1]`
+if you use it with `cfg.subject.askGrpSess = [1 1]`
 it will ask you about both
 this is the default
 
@@ -189,6 +210,74 @@ no value is provided.
 ### checkCFG
 
 Check that we have all the fields that we need in the experiment parameters.
+
+## CFG content
+
+```matlab
+%% Can be modified by users 
+% but their effect might only be effective after running
+% checkCFG
+
+cfg.verbose = 0;
+
+cfg.subject.subjectGrp = '';
+cfg.subject.sessionNb = 1;
+cfg.subject.askGrpSess = [true true];
+
+% BOLD MRI details
+% some of those will be transferred to the correct fields in cfg.bids by checkCFG
+cfg.mri.repetitionTime = [];
+cfg.mri.contrastEnhancement = [];
+cfg.mri.phaseEncodingDirection = [];
+cfg.mri.reconstruction = [];
+cfg.mri.echo = [];
+cfg.mri.acquisition = [];
+
+cfg.fileName.task = '';
+cfg.fileName.zeroPadding = 3; % amount of 0 padding the subject, session, run number
+
+cfg.eyeTracker.do = false;
+
+% content of the json side-car file for bold data
+cfg.bids.mri.RepetitionTime = [];
+cfg.bids.mri.SliceTiming = '';
+cfg.bids.mri.TaskName = '';
+cfg.bids.mri.Instructions = '';
+cfg.bids.mri.TaskDescription = '';
+
+% content of the json side-car file for MEG
+cfg.bids.meg.TaskName = '';
+cfg.bids.meg.SamplingFrequency = [];
+cfg.bids.meg.PowerLineFrequency = [];
+cfg.bids.meg.DewarPosition = [];
+cfg.bids.meg.SoftwareFilters = [];
+cfg.bids.meg.DigitizedLandmarks = [];
+cfg.bids.meg.DigitizedHeadPoints = [];
+
+% content of the datasetDescription.json file
+cfg.bids.datasetDescription.Name = '';
+cfg.bids.datasetDescription.BIDSVersion =  '';
+cfg.bids.datasetDescription.License = '';
+cfg.bids.datasetDescription.Authors = {''};
+cfg.bids.datasetDescription.Acknowledgements = '';
+cfg.bids.datasetDescription.HowToAcknowledge = '';
+cfg.bids.datasetDescription.Funding = {''};
+cfg.bids.datasetDescription.ReferencesAndLinks = {''};
+cfg.bids.datasetDescription.DatasetDOI = '';
+
+
+%% Should not be modified by users
+% many of those fields are set up by checkCFG and you might get non BIDS valid
+% output if you touch those
+cfg.fileName.dateFormat = 'yyyymmddHHMM'; % actual date of the experiment that is appended to the filename
+cfg.fileName.modality
+cgf.fileName.suffix.mri
+cgf.fileName.suffix.meg
+cfg.fileName.stim
+cfg.fileName.events
+cfg.fileName.datasetDescription
+
+```
 
 ## How to install
 
@@ -260,6 +349,10 @@ Here are the naming templates used.
 -   EEG
 
 `sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.<manufacturer_specific_extension>`
+
+-   MEG
+
+???
 
 -   Eyetracker
 

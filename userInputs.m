@@ -1,8 +1,10 @@
 function cfg = userInputs(cfg)
+    % cfg = userInputs(cfg)
+    %
     % Get subject, run and session number and make sure they are
     % positive integer values
     %
-    % expParameters.askGrpSess
+    % expParameters.subject.askGrpSess
     % a 1 X 2 array of booleans (default is [true true] ):
     %    - the first value set to false will skip asking for the participants
     %    group

@@ -1,4 +1,9 @@
 function createBoldJson(cfg)
+    % createBoldJson(cfg)
+    %
+    % Creates the side car JSON file for a BOLD functional run.
+    % This will only contain the minimum BIDS requirement and will likey be less
+    % complete than the info you could from DICOM conversion.
 
     opts.Indent = '    ';
 

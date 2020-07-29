@@ -7,36 +7,35 @@ function test_saveEventsFileOpen()
 
     %%% set up
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
 
     %%% do stuff
 
-    [cfg, expParameters] = createFilename(cfg, expParameters);
+    cfg = createFilename(cfg);
 
     % create the events file and header
-    logFile = saveEventsFile('open', expParameters);
+    logFile = saveEventsFile('open', cfg);
 
     % close the file
-    saveEventsFile('close', expParameters, logFile);
+    saveEventsFile('close', cfg, logFile);
 
     %%% test section
 
     % test data
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
-        expParameters.date '.tsv'];
-
-    % open the file
-    FID = fopen(fullfile(funcDir, eventFilename), 'r');
-    C = textscan(FID, repmat('%s', 1, 3), 'Delimiter', '\t', 'EndOfLine', '\n');
+        cfg.fileName.date '.tsv'];
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);
+
+    FID = fopen(fullfile(funcDir, eventFilename), 'r');
+    C = textscan(FID, repmat('%s', 1, 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 
     % check the extra columns of the header
     assert(isequal(C{1}{1}, 'onset'));
@@ -52,10 +51,10 @@ function test_saveEventsFileOpen()
 
     %%% set up
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
 
@@ -64,23 +63,22 @@ function test_saveEventsFileOpen()
 
     %%% do stuff
 
-    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<ASGLU>
+    cfg = createFilename(cfg);
 
     % create the events file and header
-    logFile = saveEventsFile('open', expParameters, logFile);
+    logFile = saveEventsFile('open', cfg, logFile);
 
     % close the file
-    saveEventsFile('close', expParameters, logFile);
+    saveEventsFile('close', cfg, logFile);
 
     %%% test section
 
     % open the file
+    funcDir = fullfile(cfg.dir.outputSubject, cfg.fileName.modality);
+    eventFilename = cfg.fileName.events;
+
     nbExtraCol = 2;
-    FID = fopen(fullfile( ...
-        expParameters.subjectOutputDir, ...
-        expParameters.modality, ...
-        expParameters.fileName.events), ...
-        'r');
+    FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 
     % check the extra columns of the header

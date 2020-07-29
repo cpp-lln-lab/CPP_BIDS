@@ -4,7 +4,7 @@ function test_makeRawDataset()
 
     clear;
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
     if isdir(outputDir)
         rmdir(outputDir, 's');
@@ -14,16 +14,16 @@ function test_makeRawDataset()
 
     %%% set up
 
-    expParameters.subjectNb = 1;
-    expParameters.runNb = 1;
-    expParameters.task = 'testtask';
-    expParameters.outputDir = outputDir;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'testtask';
+    cfg.dir.output = outputDir;
 
-    expParameters.bids.datasetDescription.Name = 'dummy';
-    expParameters.bids.datasetDescription.BIDSVersion = '1.0.0';
-    expParameters.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
+    cfg.bids.datasetDescription.Name = 'dummy';
+    cfg.bids.datasetDescription.BIDSVersion = '1.0.0';
+    cfg.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
 
-    expParameters.bids.MRI.RepetitionTime = 1.56;
+    cfg.bids.mri.RepetitionTime = 1.56;
 
     cfg.testingDevice = 'mri';
 
@@ -33,13 +33,13 @@ function test_makeRawDataset()
 
     %%% do stuff
 
-    [cfg, expParameters] = createFilename(cfg, expParameters); %#ok<*ASGLU>
+    cfg = createFilename(cfg);
 
     % create the events file and header
-    logFile = saveEventsFile('open', expParameters, logFile);
+    logFile = saveEventsFile('open', cfg, logFile);
 
-    createBoldJson(expParameters);
-    createDatasetDescription(expParameters);
+    createBoldJson(cfg);
+    createDatasetDescription(cfg);
 
     % ROW 2: normal events : all info is there
     logFile(1, 1).onset = 2;
@@ -68,19 +68,19 @@ function test_makeRawDataset()
     logFile(end, 1).duration = 3;
     logFile(end, 1).LHL24 = rand(1, 2);
 
-    saveEventsFile('save', expParameters, logFile);
+    saveEventsFile('save', cfg, logFile);
 
     % close the file
-    saveEventsFile('close', expParameters, logFile);
+    saveEventsFile('close', cfg, logFile);
 
     % add dummy functional data
-    funcDir = fullfile(expParameters.outputDir, 'source', 'sub-001', 'ses-001', 'func');
+    funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'func');
     boldFilename = 'sub-001_ses-001_task-testtask_run-001_bold.nii.gz';
     copyfile( ...
-        fullfile('..', 'dummyData', 'dummyData.nii.gz'), ...
+        fullfile('..', '..', 'dummyData', 'dummyData.nii.gz'), ...
         fullfile(funcDir, boldFilename));
 
     %%
 
-    convertSourceToRaw(expParameters);
+    convertSourceToRaw(cfg);
 end

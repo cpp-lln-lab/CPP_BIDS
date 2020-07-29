@@ -4,18 +4,16 @@ function test_createDatasetDescription()
 
     %%% set up part
 
-    expParameters.outputDir = outputDir;
+    cfg.dir.output = outputDir;
 
-    expParameters.bids.datasetDescription.json.Name = 'dummy_dataset';
-    expParameters.bids.datasetDescription.json.BIDSVersion = '1.0.0';
-    expParameters.bids.datasetDescription.json.License = 'none';
-    expParameters.bids.datasetDescription.json.Authors = {'Jane Doe'};
+    cfg.bids.datasetDescription.json.Name = 'dummy_dataset';
+    cfg.bids.datasetDescription.json.BIDSVersion = '1.0.0';
+    cfg.bids.datasetDescription.json.License = 'none';
+    cfg.bids.datasetDescription.json.Authors = {'Jane Doe'};
 
-    cfg = struct();
+    cfg = checkCFG(cfg);
 
-    [cfg, expParameters] = checkCFG(cfg, expParameters); %#ok<*ASGLU>
-
-    createDatasetDescription(expParameters);
+    createDatasetDescription(cfg);
 
     %%% test part
 

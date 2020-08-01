@@ -29,17 +29,19 @@ install:
   - sudo npm install -g bids-validator
 
 before_script:
+  # Add to src functions to path
+  - octave $OCTFLAGS --eval "addpath(genpath(fullfile(pwd, 'src'))); savepath ();"
   # Change current directory
-  - cd tests
+  - cd manualTests
 
 jobs:
   include:
-    - stage: "Tests" 
-      name: "Unit and integration Tests"
-      script: octave $OCTFLAGS --eval "results = runTests; assert(all(~[results.Failed]))"
+    # - stage: "Tests" 
+    #   name: "Unit and integration Tests"
+    #   script: octave $OCTFLAGS --eval "results = runTests; assert(all(~[results.Failed]))"
     - stage: "BIDS validator"
       name: "Create and check dataset"
-      script: cd manualTests && octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/rawdata/ --ignoreNiftiHeaders
+      script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/rawdata/ --ignoreNiftiHeaders
     - stage: "Linter"
       name: "miss_hit"
       script: cd .. && mh_style `pwd`

@@ -1,10 +1,20 @@
-function test_createDatasetDescription()
+function test_suite = test_createDatasetDescription %#ok<*STOUT>
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions = localfunctions(); %#ok<*NASGU>
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
+    initTestSuite;
+end
+
+function test_createDatasetDescriptionBasic()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    %%% set up part
+    %% set up
 
     cfg.dir.output = outputDir;
+
+    cfg.verbose = false;
 
     cfg.bids.datasetDescription.json.Name = 'dummy_dataset';
     cfg.bids.datasetDescription.json.BIDSVersion = '1.0.0';
@@ -15,13 +25,11 @@ function test_createDatasetDescription()
 
     createDatasetDescription(cfg);
 
-    %%% test part
-
-    % test data
+    %% data to test against
     directory = fullfile(outputDir, 'source');
     filename = 'dataset_description.json';
 
-    % check that the file has the right path and name
-    assert(exist(fullfile(directory, filename), 'file') == 2);
+    %% test
+    assertTrue(exist(fullfile(directory, filename), 'file') == 2);
 
 end

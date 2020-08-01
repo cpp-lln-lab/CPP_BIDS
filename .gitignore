@@ -1,14 +1,25 @@
-
+# exclude mac file
 *DS_Store
 
+# exclude matlab autosaves and octave workspace info
 *.m~
 *octave-workspace
 
 # exclude content of logfiles folders
+tests/output/*
+manualTests/output/*
+output/*
 *.tsv
 *.mat
 
-check_my_code_report.txt
+# exclude temp files from tests and coverage
+tests/coverage*
+tests/test_code_report.txt
 test_code_report.txt
 
-output/**
+# exclude report from check_my_code
+check_my_code_report.txt
+
+
+
+

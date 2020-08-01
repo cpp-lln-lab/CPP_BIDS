@@ -88,11 +88,7 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
             % close txt log file
             fclose(logFile(1).fileID);
 
-            fprintf(1, '\nData were saved in this file:\n\n%s\n\n', ...
-                fullfile( ...
-                cfg.dir.outputSubject, ...
-                cfg.fileName.modality, ...
-                logFile.filename));
+            talkToMe(cfg, logFile);
 
         otherwise
 
@@ -356,4 +352,18 @@ function errorSaveEventsFile(identifier)
 
     errorStruct.identifier = ['saveEventsFile:' identifier];
     error(errorStruct);
+end
+
+function talkToMe(cfg, logFile)
+
+    if cfg.verbose
+
+        fprintf(1, '\nData were saved in this file:\n\n%s\n\n', ...
+            fullfile( ...
+            cfg.dir.outputSubject, ...
+            cfg.fileName.modality, ...
+            logFile.filename));
+
+    end
+
 end

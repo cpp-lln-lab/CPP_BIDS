@@ -19,11 +19,13 @@ jobs:
       uses: joergbrech/moxunit-action@v1.1
       with:
         tests: tests
+        src: src
         with_coverage: true
         cover_xml_file: coverage.xml
     - name: Code coverage
       uses: codecov/codecov-action@v1
       with:
+       token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
        file:  coverage.xml # optional
        flags: unittests # optional
        name: codecov-umbrella # optional

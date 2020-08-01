@@ -6,7 +6,9 @@
 *octave-workspace
 
 # exclude content of logfiles folders
-output/**
+tests/output/*
+manualTests/output/*
+output/*
 *.tsv
 *.mat
 

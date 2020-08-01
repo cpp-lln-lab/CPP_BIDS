@@ -1,4 +1,4 @@
-function checkCppBidsDependencies()
+function checkCppBidsDependencies(cfg)
     % checkCppBidsDependencies()
     %
     
@@ -10,7 +10,7 @@ function checkCppBidsDependencies()
     addpath(fullfile(pth, 'lib', 'utils'));
     addpath(fullfile(pth, 'subfun'));
 
-    printCreditsCppBids();
+    printCreditsCppBids(cfg);
 
 end
 

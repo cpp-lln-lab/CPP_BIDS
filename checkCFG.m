@@ -4,13 +4,13 @@ function cfg = checkCFG(cfg)
     % check that we have all the fields that we need in the experiment parameters
     % reuses a lot of code from the BIDS starter kit
 
-    checkCppBidsDependencies();
-
     if nargin < 1 || isempty(cfg)
         cfg = struct();
     end
+    
+    checkCppBidsDependencies(cfg);
 
-    %% set the cfg defaults
+    %% list the defaults to set
 
     fieldsToSet.verbose = false;
 
@@ -43,6 +43,7 @@ function cfg = checkCFG(cfg)
 
     fieldsToSet = transferInfoToBids(fieldsToSet, cfg);
 
+    %% Set defaults
     cfg = setDefaultFields(cfg, fieldsToSet);
 
 end

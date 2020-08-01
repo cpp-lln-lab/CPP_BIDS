@@ -10,15 +10,15 @@ function test_createBoldJsonBasic()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    %% set up 
+    %% set up
 
     cfg.verbose = false;
-    
+
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
-    
+
     cfg.task.name = 'testtask';
-    
+
     cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
@@ -31,7 +31,7 @@ function test_createBoldJsonBasic()
 
     %% data to test against
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
-    
+
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_bold_date-' ...
         cfg.fileName.date '.json'];
 

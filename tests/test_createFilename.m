@@ -22,17 +22,17 @@ function test_createFilenameBasic()
 
     %% data to test against
     behDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'beh');
-    
+
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'eyetracker');
-    
+
     eventFilename = ['sub-001_ses-001_task-testTask_run-001_events_date-'...
         cfg.fileName.date '.tsv'];
-    
+
     stimFilename =  ['sub-001_ses-001_task-testTask_run-001_stim_date-'...
         cfg.fileName.date '.tsv'];
 
     %% test
-    
+
     % make sure the beh dir is created
     assertTrue(exist(behDir, 'dir') == 7);
 
@@ -45,7 +45,6 @@ function test_createFilenameBasic()
     % make sure the stim filename is created
     assertEqual(cfg.fileName.stim, stimFilename);
 
-    
 end
 
 function test_createFilenameMriEyetracker()
@@ -68,16 +67,16 @@ function test_createFilenameMriEyetracker()
     cfg = createFilename(cfg);
 
     %% data to test against
-    
+
     funcDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'func');
-    
+
     eyetrackerDir = fullfile(outputDir, 'source', 'sub-ctrl002', 'ses-002', 'eyetracker');
-    
+
     baseFilename = 'sub-ctrl002_ses-002_task-testTask';
-    
+
     eventFilename = ['sub-ctrl002_ses-002_task-testTask_run-002_events_date-' ...
         cfg.fileName.date '.tsv'];
-    
+
     eyetrackerFilename =  ['sub-ctrl002_ses-002_task-testTask_run-002_eyetrack_date-' ...
         cfg.fileName.date '.edf'];
 
@@ -92,9 +91,9 @@ function test_createFilenameMriEyetracker()
     assertEqual(cfg.fileName.base, baseFilename);
     assertEqual(cfg.fileName.events, eventFilename);
     assertEqual(cfg.fileName.eyetracker, eyetrackerFilename);
-    
+
 end
-    
+
 function test_createFilenameEeg()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');

@@ -6,7 +6,7 @@ function convertSourceToRaw(cfg)
     % - creates dummy README and CHANGE file
     % - copy source dir to raw dir
     % - remove the date suffix (_date-YYYYMMDDHHMM) from the files where it is present
-    % 
+    %
 
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'rawdata');

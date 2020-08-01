@@ -8,10 +8,10 @@ end
 
 function test_createTaskNameRemoveInvalidCharacters()
 
-    %% set up 
-    
+    %% set up
+
     taskName = '&|@#-_(§!{})[]ù%£+/=:;.?,\<> visual task';
-    
+
     [taskName, taskNameValid] = createTaskName(taskName);
 
     [unvalidCharacters] = regexp(taskNameValid, '[^a-zA-Z0-9]');
@@ -41,7 +41,7 @@ function test_createTaskNameCamelCase()
     %% set up
     taskName = 'foo bar';
     [taskName, taskNameValid] = createTaskName(taskName);
-    
+
     %% test
     assertEqual(taskName, 'foo Bar');
     assertEqual(taskNameValid, 'fooBar');

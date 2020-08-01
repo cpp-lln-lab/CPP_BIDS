@@ -29,7 +29,7 @@ function test_createDataDictionaryBasic()
     createDataDictionary(cfg, logFile);
 
     %% check that the file has the right path and name
-    
+
     % data to test against
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
     jsonFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
@@ -40,11 +40,11 @@ function test_createDataDictionaryBasic()
 
     %% check content
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
-    
+
     % data to test against
-    expectedStruct = bids.util.jsondecode(...
+    expectedStruct = bids.util.jsondecode( ...
         fullfile(pwd, 'testData', 'eventsDataDictionary.json'));
-    
+
     % test
     assertTrue(isequal(expectedStruct, actualStruct));
 

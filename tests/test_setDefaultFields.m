@@ -20,9 +20,8 @@ function test_setDefaultFieldsWrite()
 
     %% test
     assertEqual(expectedStructure, structure);
-    
-end
 
+end
 
 function test_setDefaultFieldsNoOverwrite()
 

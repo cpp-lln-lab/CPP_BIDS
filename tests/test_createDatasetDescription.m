@@ -13,7 +13,7 @@ function test_createDatasetDescriptionBasic()
     %% set up
 
     cfg.dir.output = outputDir;
-    
+
     cfg.verbose = false;
 
     cfg.bids.datasetDescription.json.Name = 'dummy_dataset';

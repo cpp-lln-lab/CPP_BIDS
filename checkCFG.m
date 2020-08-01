@@ -7,7 +7,7 @@ function cfg = checkCFG(cfg)
     if nargin < 1 || isempty(cfg)
         cfg = struct();
     end
-    
+
     checkCppBidsDependencies(cfg);
 
     %% list the defaults to set

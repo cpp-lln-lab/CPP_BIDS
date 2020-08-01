@@ -10,15 +10,15 @@ function test_saveEventsFileSaveBasic()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    %% set up 
+    %% set up
 
     cfg.verbose = false;
-    
+
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
-    
+
     cfg.task.name = 'testtask';
-    
+
     cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
@@ -89,9 +89,9 @@ function test_saveEventsFileSaveBasic()
         logFile(1).extraColumns.is_Fixation.length;
 
     funcDir = fullfile(cfg.dir.outputSubject, cfg.fileName.modality);
-    
+
     eventFilename = cfg.fileName.events;
-    
+
     FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 

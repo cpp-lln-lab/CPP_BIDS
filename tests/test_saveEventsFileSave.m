@@ -1,15 +1,24 @@
-function test_saveEventsFileSave()
+function test_suite = test_saveEventsFileSave %#ok<*STOUT>
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions = localfunctions(); %#ok<*NASGU>
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
+    initTestSuite;
+end
 
-    %%  write things in it
-    clear;
+function test_saveEventsFileSaveBasic()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    %%% set up
+    %% set up 
 
+    cfg.verbose = false;
+    
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
+    
     cfg.task.name = 'testtask';
+    
     cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
@@ -22,8 +31,6 @@ function test_saveEventsFileSave()
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);
-
-    %%% do stuff
 
     % ROW 2: normal events : all info is there
     logFile(1, 1).onset = 2;
@@ -73,7 +80,7 @@ function test_saveEventsFileSave()
     % close the file
     saveEventsFile('close', cfg, logFile);
 
-    %%% test section
+    %% test
 
     % check the extra columns of the header and some of the content
     nbExtraCol = ...
@@ -82,34 +89,36 @@ function test_saveEventsFileSave()
         logFile(1).extraColumns.is_Fixation.length;
 
     funcDir = fullfile(cfg.dir.outputSubject, cfg.fileName.modality);
+    
     eventFilename = cfg.fileName.events;
+    
     FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, nbExtraCol + 3), 'Delimiter', '\t', 'EndOfLine', '\n');
 
     % event 1/ ROW 2: check that values are entered correctly
-    assert(isequal(C{1}{2}, sprintf('%f', 2)));
-    assert(isequal(C{3}{2}, 'motion_up'));
-    assert(isequal(C{2}{2}, sprintf('%f', 3)));
-    assert(isequal(C{4}{2}, sprintf('%f', 2)));
-    assert(isequal(C{5}{2}, sprintf('%f', 1)));
-    assert(isequal(C{16}{2}, sprintf('%f', 12)));
-    assert(isequal(C{17}{2}, 'true'));
+    assertEqual(C{1}{2}, sprintf('%f', 2));
+    assertEqual(C{3}{2}, 'motion_up');
+    assertEqual(C{2}{2}, sprintf('%f', 3));
+    assertEqual(C{4}{2}, sprintf('%f', 2));
+    assertEqual(C{5}{2}, sprintf('%f', 1));
+    assertEqual(C{16}{2}, sprintf('%f', 12));
+    assertEqual(C{17}{2}, 'true');
 
     % event 2 / ROW 3: missing info replaced by nans
-    assert(isequal(C{4}{3}, 'n/a'));
-    assert(isequal(C{5}{3}, 'n/a'));
-    assert(isequal(C{16}{3}, 'n/a'));
-    assert(isequal(C{17}{3}, 'false'));
+    assertEqual(C{4}{3}, 'n/a');
+    assertEqual(C{5}{3}, 'n/a');
+    assertEqual(C{16}{3}, 'n/a');
+    assertEqual(C{17}{3}, 'false');
 
     % event 3 / ROW 4: missing info (duration is missing and speed is empty)
-    assert(isequal(C{2}{4}, 'n/a'));
-    assert(isequal(C{4}{4}, 'n/a'));
+    assertEqual(C{2}{4}, 'n/a');
+    assertEqual(C{4}{4}, 'n/a');
 
     % event 4-5 / ROW 5-6: skip empty events
-    assert(~isequal(C{1}{5}, 'n/a'));
+    assertTrue(~isequal(C{1}{5}, 'n/a'));
 
     % check values entered properly
-    assert(isequal(C{15}{5}, 'n/a'));
-    assert(isequal(C{16}{5}, 'n/a'));
+    assertEqual(C{15}{5}, 'n/a');
+    assertEqual(C{16}{5}, 'n/a');
 
 end

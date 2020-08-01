@@ -1,19 +1,32 @@
-function test_setDefaultFields()
+function test_suite = test_setDefaultFields %#ok<*STOUT>
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions = localfunctions(); %#ok<*NASGU>
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
+    initTestSuite;
+end
 
+function test_setDefaultFieldsWrite()
+
+    %% set up
     structure = struct();
 
     fieldsToSet.field = 1;
 
     structure = setDefaultFields(structure, fieldsToSet);
 
+    %% data to test against
     expectedStructure.field = 1;
 
-    assert(isequal(expectedStructure, structure));
+    %% test
+    assertEqual(expectedStructure, structure);
+    
+end
 
-    fprintf('\n--------------------------------------------------------------------');
 
-    clear;
+function test_setDefaultFieldsNoOverwrite()
 
+    % set up
     structure.field.subfield_1 = 3;
 
     fieldsToSet.field.subfield_1 = 1;
@@ -21,9 +34,11 @@ function test_setDefaultFields()
 
     structure = setDefaultFields(structure, fieldsToSet);
 
+    % data to test against
     expectedStructure.field.subfield_1 = 3;
     expectedStructure.field.subfield_2 = 1;
 
+    % test
     assert(isequal(expectedStructure, structure));
 
 end

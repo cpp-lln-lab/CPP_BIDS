@@ -1,11 +1,18 @@
-function test_createDataDictionary()
+function test_suite = test_createDataDictionary %#ok<*STOUT>
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions = localfunctions(); %#ok<*NASGU>
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
+    initTestSuite;
+end
 
-    clear;
+function test_createDataDictionaryBasic()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    %%% set up part
+    %% set up
 
+    cfg.verbose = false;
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
     cfg.task.name = 'testtask';
@@ -21,20 +28,24 @@ function test_createDataDictionary()
 
     createDataDictionary(cfg, logFile);
 
-    %%% test part
-
-    % test data
+    %% check that the file has the right path and name
+    
+    % data to test against
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
     jsonFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
         cfg.fileName.date '.json'];
 
-    % check that the file has the right path and name
-    assert(exist(fullfile(funcDir, jsonFilename), 'file') == 2);
+    % test
+    assertTrue(exist(fullfile(funcDir, jsonFilename), 'file') == 2);
 
-    % check content
-    expectedStruct = bids.util.jsondecode(fullfile(pwd, 'testData', 'eventsDataDictionary.json'));
+    %% check content
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
-
-    assert(isequal(expectedStruct, actualStruct));
+    
+    % data to test against
+    expectedStruct = bids.util.jsondecode(...
+        fullfile(pwd, 'testData', 'eventsDataDictionary.json'));
+    
+    % test
+    assertTrue(isequal(expectedStruct, actualStruct));
 
 end

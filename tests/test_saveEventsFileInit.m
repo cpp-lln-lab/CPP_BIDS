@@ -1,55 +1,69 @@
-function test_saveEventsFileInit()
+function test_suite = test_saveEventsFileInit %#ok<*STOUT>
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions = localfunctions(); %#ok<*NASGU>
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
+    initTestSuite;
+end
 
-    %%
+function test_saveEventsFileInitBasic()
+    
+    %% set up 
 
-    %%% set up
+    cfg.verbose = false;
+    
     % make sure the dependencies are there
-    checkCFG();
-
-    %%% do stuff
+    checkCFG(cfg);
+    
     [logFile] = saveEventsFile('init');
-
-    %%% test section
+    
+    %% data to test against
     expectedStrcut(1).filename = '';
     expectedStrcut(1).extraColumns = [];
+    
+    %% test
+    assertEqual(expectedStrcut, logFile);
+    
+end
 
-    assert(isequal(expectedStrcut, logFile));
+function test_saveEventsFileInitExtraColumns()
+    
+    %% set up 
 
-    %%
-    fprintf('\n--------------------------------------------------------------------');
-
-    clear;
-
-    %%% set up
-    cfg = checkCFG();
+    cfg.verbose = false;
+    
+    cfg = checkCFG(cfg);
+    
     logFile.extraColumns = {'Speed'};
-
-    %%% do stuff
+    
     [logFile] = saveEventsFile('init', cfg, logFile);
-
-    %%% test section
+    
+    %% data to test against
     expectedStrcut(1).extraColumns.Speed.length = 1;
     expectedStrcut(1).extraColumns.Speed.bids.LongName = '';
     expectedStrcut(1).extraColumns.Speed.bids.Description = '';
     expectedStrcut(1).extraColumns.Speed.bids.Levels = '';
     expectedStrcut(1).extraColumns.Speed.bids.TermURL = '';
+    
+    %% test
+    assertEqual(expectedStrcut, logFile);
+    
+end
 
-    assert(isequal(expectedStrcut, logFile));
+function test_saveEventsFileInitExtraColumnsArray()
+    
+    %% set up 
 
-    %%
-    fprintf('\n--------------------------------------------------------------------');
-
-    clear;
-
-    %%% set up
-    cfg = checkCFG();
+    cfg.verbose = false;
+    
+    cfg = checkCFG(cfg);
+    
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
-
-    %%% do stuff
+    
     [logFile] = saveEventsFile('init', cfg, logFile);
-
-    %%% test section
+    
+    %% data to test against
     expectedStrcut(1).extraColumns.Speed.length = 1;
     expectedStrcut(1).extraColumns.Speed.bids.LongName = '';
     expectedStrcut(1).extraColumns.Speed.bids.Description = '';
@@ -60,9 +74,8 @@ function test_saveEventsFileInit()
     expectedStrcut(1).extraColumns.LHL24.bids.Description = '';
     expectedStrcut(1).extraColumns.LHL24.bids.Levels = '';
     expectedStrcut(1).extraColumns.LHL24.bids.TermURL = '';
-
-    assert(isequal(expectedStrcut, logFile));
-
-    fprintf('\n');
-
+    
+    %% test
+    assertEqual(expectedStrcut, logFile);
+    
 end

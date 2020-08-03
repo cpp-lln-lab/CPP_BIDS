@@ -1,15 +1,26 @@
-function test_createBoldJson()
+function test_suite = test_createBoldJson %#ok<*STOUT>
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions = localfunctions(); %#ok<*NASGU>
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
+    initTestSuite;
+end
+
+function test_createBoldJsonBasic()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    %%% set up part
+    %% set up
+
+    cfg.verbose = false;
 
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
+
     cfg.task.name = 'testtask';
+
     cfg.dir.output = outputDir;
 
-    % cfg = struct();
     cfg.testingDevice = 'mri';
 
     cfg = createFilename(cfg);
@@ -18,14 +29,13 @@ function test_createBoldJson()
 
     createBoldJson(cfg);
 
-    %%% test part
-
-    % test data
+    %% data to test against
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
+
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_bold_date-' ...
         cfg.fileName.date '.json'];
 
-    % check that the file has the right path and name
-    assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);
+    %% test
+    assertTrue(exist(fullfile(funcDir, eventFilename), 'file') == 2);
 
 end

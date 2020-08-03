@@ -1,4 +1,6 @@
 function [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
+    % [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
+    %
 
     namesExtraColumns = [];
 

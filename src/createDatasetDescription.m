@@ -1,4 +1,8 @@
 function createDatasetDescription(cfg)
+    % createDatasetDescription(cfg)
+    %
+    % creates the datasetDescription.json file that goes in the root of a BIDS
+    % dataset
 
     opts.Indent = '    ';
 

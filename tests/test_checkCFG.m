@@ -1,20 +1,33 @@
-function test_checkCFG()
+function test_suite = test_checkCFG %#ok<*STOUT>
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions = localfunctions(); %#ok<*NASGU>
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
+    initTestSuite;
+end
 
+function test_checkCfgDefault()
+
+    %% set up
     cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
     cfg = checkCFG(cfg);
 
-    expectedStructure = returnExpectedStructure();
+    %% create test data
+    expectedStructure = returnExpectedCfgStructure();
     expectedStructure.dir.output = cfg.dir.output;
     expectedStructure.testingDevice = 'pc';
 
-    testSubFields(expectedStructure, cfg);
+    %% test
+    checkSubFields(expectedStructure, cfg);
 
-    %%
-    fprintf('\n--------------------------------------------------------------------');
+end
 
-    clear;
+function test_checkCfgBasic()
 
+    %% set up
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+    cfg.verbose = false;
 
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
@@ -33,10 +46,8 @@ function test_checkCFG()
 
     cfg = checkCFG(cfg);
 
-    %%% test
-
-    % test data
-    expectedStructure = returnExpectedStructure();
+    %% create test data
+    expectedStructure = returnExpectedCfgStructure();
     expectedStructure.subject.subjectNb = 1;
     expectedStructure.subject.runNb = 1;
 
@@ -61,68 +72,67 @@ function test_checkCFG()
 
     expectedStructure = orderfields(expectedStructure);
 
-    testSubFields(expectedStructure, cfg);
-
-    fprintf('\n');
-
-end
-
-function expectedStructure = returnExpectedStructure()
-
-    expectedStructure.subject.subjectGrp = '';
-    expectedStructure.subject.sessionNb = 1;
-    expectedStructure.subject.askGrpSess = [true true];
-
-    expectedStructure.verbose = 0;
-
-    expectedStructure.fileName.task = '';
-    expectedStructure.fileName.zeroPadding = 3;
-    expectedStructure.fileName.dateFormat = 'yyyymmddHHMM';
-
-    expectedStructure.eyeTracker.do = false;
-
-    expectedStructure.mri.contrastEnhancement = [];
-    expectedStructure.mri.phaseEncodingDirection = [];
-    expectedStructure.mri.reconstruction = [];
-    expectedStructure.mri.echo = [];
-    expectedStructure.mri.acquisition = [];
-    expectedStructure.mri.repetitionTime = [];
-
-    expectedStructure.bids.mri.RepetitionTime = [];
-    expectedStructure.bids.mri.SliceTiming = '';
-    expectedStructure.bids.mri.TaskName = '';
-    expectedStructure.bids.mri.Instructions = '';
-    expectedStructure.bids.mri.TaskDescription = '';
-
-    expectedStructure.bids.meg.TaskName = '';
-    expectedStructure.bids.meg.SamplingFrequency = [];
-    expectedStructure.bids.meg.PowerLineFrequency = [];
-    expectedStructure.bids.meg.DewarPosition = [];
-    expectedStructure.bids.meg.SoftwareFilters = [];
-    expectedStructure.bids.meg.DigitizedLandmarks = [];
-    expectedStructure.bids.meg.DigitizedHeadPoints = [];
-
-    expectedStructure.bids.datasetDescription.Name = '';
-    expectedStructure.bids.datasetDescription.BIDSVersion =  '';
-    expectedStructure.bids.datasetDescription.License = '';
-    expectedStructure.bids.datasetDescription.Authors = {''};
-    expectedStructure.bids.datasetDescription.Acknowledgements = '';
-    expectedStructure.bids.datasetDescription.HowToAcknowledge = '';
-    expectedStructure.bids.datasetDescription.Funding = {''};
-    expectedStructure.bids.datasetDescription.ReferencesAndLinks = {''};
-    expectedStructure.bids.datasetDescription.DatasetDOI = '';
-
-    expectedStructure = orderfields(expectedStructure);
+    %% test
+    checkSubFields(expectedStructure, cfg);
 
 end
 
-function testSubFields(expectedStructure, cfg)
+function expectedCfgStructure = returnExpectedCfgStructure()
+
+    expectedCfgStructure.subject.subjectGrp = '';
+    expectedCfgStructure.subject.sessionNb = 1;
+    expectedCfgStructure.subject.askGrpSess = [true true];
+
+    expectedCfgStructure.verbose = 0;
+
+    expectedCfgStructure.fileName.task = '';
+    expectedCfgStructure.fileName.zeroPadding = 3;
+    expectedCfgStructure.fileName.dateFormat = 'yyyymmddHHMM';
+
+    expectedCfgStructure.eyeTracker.do = false;
+
+    expectedCfgStructure.mri.contrastEnhancement = [];
+    expectedCfgStructure.mri.phaseEncodingDirection = [];
+    expectedCfgStructure.mri.reconstruction = [];
+    expectedCfgStructure.mri.echo = [];
+    expectedCfgStructure.mri.acquisition = [];
+    expectedCfgStructure.mri.repetitionTime = [];
+
+    expectedCfgStructure.bids.mri.RepetitionTime = [];
+    expectedCfgStructure.bids.mri.SliceTiming = '';
+    expectedCfgStructure.bids.mri.TaskName = '';
+    expectedCfgStructure.bids.mri.Instructions = '';
+    expectedCfgStructure.bids.mri.TaskDescription = '';
+
+    expectedCfgStructure.bids.meg.TaskName = '';
+    expectedCfgStructure.bids.meg.SamplingFrequency = [];
+    expectedCfgStructure.bids.meg.PowerLineFrequency = [];
+    expectedCfgStructure.bids.meg.DewarPosition = [];
+    expectedCfgStructure.bids.meg.SoftwareFilters = [];
+    expectedCfgStructure.bids.meg.DigitizedLandmarks = [];
+    expectedCfgStructure.bids.meg.DigitizedHeadPoints = [];
+
+    expectedCfgStructure.bids.datasetDescription.Name = '';
+    expectedCfgStructure.bids.datasetDescription.BIDSVersion =  '';
+    expectedCfgStructure.bids.datasetDescription.License = '';
+    expectedCfgStructure.bids.datasetDescription.Authors = {''};
+    expectedCfgStructure.bids.datasetDescription.Acknowledgements = '';
+    expectedCfgStructure.bids.datasetDescription.HowToAcknowledge = '';
+    expectedCfgStructure.bids.datasetDescription.Funding = {''};
+    expectedCfgStructure.bids.datasetDescription.ReferencesAndLinks = {''};
+    expectedCfgStructure.bids.datasetDescription.DatasetDOI = '';
+
+    expectedCfgStructure = orderfields(expectedCfgStructure);
+
+end
+
+function checkSubFields(expectedStructure, cfg)
     % check that that the structures match
     % if it fails it check from which subfield the error comes from
 
     try
 
-        assert(isequal(expectedStructure, cfg));
+        assertEqual(expectedStructure, cfg);
 
     catch ME
 
@@ -139,8 +149,8 @@ function testSubFields(expectedStructure, cfg)
 
         end
 
-        expectedStructure;
-        cfg;
+        disp(expectedStructure);
+        disp(cfg);
 
         rethrow(ME);
     end

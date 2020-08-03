@@ -7,7 +7,7 @@ function cfg = createFilename(cfg)
     %
     % can work for behavioral experiment if cfg.device is set to 'PC'
     % can work for fMRI experiment if cfg.device is set to 'scanner'
-    % can work for simple eyetracking data if cfg.eyeTracker is set to 1
+    % can work for simple eyetracking data if cfg.eyeTracker.do is set to 1
     %
     %
     % See test_createFilename in the test folder for more details on how to use it.
@@ -177,19 +177,23 @@ end
 
 function talkToMe(cfg)
 
-    fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
-        fullfile(cfg.dir.outputSubject, cfg.fileName.modality));
+    if cfg.verbose
 
-    fprintf(1, '\nData will be saved in this file:\n\t%s\n', ...
-        cfg.fileName.events);
+        fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
+            fullfile(cfg.dir.outputSubject, cfg.fileName.modality));
 
-    if cfg.eyeTracker.do
+        fprintf(1, '\nData will be saved in this file:\n\t%s\n', ...
+            cfg.fileName.events);
 
-        fprintf(1, '\nEyetracking data will be saved in this directory:\n\t%s\n', ...
-            fullfile(cfg.dir.outputSubject, 'eyetracker'));
+        if cfg.eyeTracker.do
 
-        fprintf(1, '\nEyetracking data will be saved in this file:\n\t%s\n', ...
-            cfg.fileName.eyetracker);
+            fprintf(1, '\nEyetracking data will be saved in this directory:\n\t%s\n', ...
+                fullfile(cfg.dir.outputSubject, 'eyetracker'));
+
+            fprintf(1, '\nEyetracking data will be saved in this file:\n\t%s\n', ...
+                cfg.fileName.eyetracker);
+
+        end
 
     end
 

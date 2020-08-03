@@ -5,6 +5,8 @@
 <!-- TOC -->
 
 - [CPP_BIDS](#cpp_bids)
+  - [Output format](#output-format)
+  - [Modality agnostic aspect](#modality-agnostic-aspect)
   - [Usage](#usage)
     - [To save events.tsv file](#to-save-eventstsv-file)
   - [Functions descriptions](#functions-descriptions)
@@ -12,8 +14,11 @@
     - [createFilename](#createfilename)
     - [saveEventsFile](#saveeventsfile)
     - [checkCFG](#checkcfg)
+  - [CFG content](#cfg-content)
   - [How to install](#how-to-install)
-    - [Use the matlab package manager](#use-the-matlab-package-manager)
+    - [Download with git](#download-with-git)
+    - [Add as a submodule](#add-as-a-submodule)
+    - [Direct download](#direct-download)
   - [Contributing](#contributing)
     - [Guidestyle](#guidestyle)
     - [BIDS naming convention](#bids-naming-convention)
@@ -23,6 +28,24 @@
 
 A set of function for matlab and octave to create [BIDS-compatible](https://bids-specification.readthedocs.io/en/stable/) folder structure and filenames for the output of behavioral, EEG, fMRI, eyetracking studies.
 
+## Output format
+
+## Modality agnostic aspect
+
+Subjects, session and run number labels will be numbers with zero padding up to 3 values (e.g subject 1 will become `sub-001`).
+
+A session folder will ALWAYS be created even if not requested (default will be `ses-001`).
+
+Task labels will be printed in camelCase in the filenames. 
+
+Time stamps are added directly in the filename by adding a suffix `_date-YYYYMMDDHHMM` which makes the file name non-BIDS compliant. This was added to prevent overwriting files in case a certain run needs to be done a second time because of a crash (Some of us are paranoid about keeping even cancelled runs during my experiments). This suffix should be removed to make the data set BIDS compliant. See `convertSourceToRaw.m` for more details.
+
+For example:
+
+```
+sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-202007291536.tsv
+```
+
 ## Usage
 
 ### To save events.tsv file
@@ -30,17 +53,17 @@ A set of function for matlab and octave to create [BIDS-compatible](https://bids
 ```matlab
 
 % define the folder where the data will be saved
-expParameters.outputDir = fullfile(pwd, '..', 'output');
+cfg.outputDir = fullfile(pwd, '..', 'output');
 
 % define the name of the task
-expParameters.task = 'testtask';
+cfg.task = 'test task';
 
 % can use the userInputs function to collect subject info
-% expParameters = userInputs;
+% cfg = userInputs;
 
 % or declare it directly
-expParameters.subjectNb = 1;
-expParameters.runNb = 1;
+cfg.subjectNb = 1;
+cfg.runNb = 1;
 
 % by default we assume you are running things on a behavioral PC with no eyetracker
 % cfg.eyeTracker = false;
@@ -53,14 +76,14 @@ expParameters.runNb = 1;
 % cfg.testingDevice = 'eeg';
 
 % create the filenames: this include a step to check that all the information is there (checkCFG)
-[cfg, expParameters] = createFilename(cfg, expParameters);
+[cfg] = createFilename(cfg);
 
 % initialize the events files with the typical BIDS columns (onsets, duration, trial_type)
-% logFile = saveEventsFile('open', expParameters);
+% logFile = saveEventsFile('open', cfg);
 
 % You can add some more in this case (Speed and is_Fixation)
 logFile.extraColumns = {'Speed', 'is_Fixation'};
-logFile = saveEventsFile('open', expParameters, logFile);
+logFile = saveEventsFile('open', cfg, logFile);
 
 % The information about 2 events that we want to save
 % NOTE : If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped.
@@ -76,24 +99,24 @@ logFile(2,1).duration = 4;
 logFile(2,1).is_Fixation = 3;
 
 % add those 2 events to the events.tsv file
-saveEventsFile('save', expParameters, logFile);
+saveEventsFile('save', cfg, logFile);
 
 % close the file
-saveEventsFile('close', expParameters, logFile);
+saveEventsFile('close', cfg, logFile);
 
 ```
 
 If you want to save more complex events.tsv file you can save several columns at once.
 
 ```matlab
-expParameters.subjectNb = 1;
-expParameters.runNb = 1;
-expParameters.task = 'testtask';
-expParameters.outputDir = outputDir;
+cfg.subjectNb = 1;
+cfg.runNb = 1;
+cfg.task = 'testtask';
+cfg.outputDir = outputDir;
 
 cfg.testingDevice = 'mri';
 
-[cfg, expParameters] = createFilename(cfg, expParameters);
+[cfg] = createFilename(cfg);
 
 % You can specify how many columns we want for each variable
 % will set 1 columns with name Speed
@@ -104,7 +127,7 @@ logFile.extraColumns.Speed.length = 1;
 logFile.extraColumns.LHL24.length = 12;
 logFile.extraColumns.is_Fixation.length = 1;
 
-logFile = saveEventsFile('open', expParameters, logFile);
+logFile = saveEventsFile('open', cfg, logFile);
 
 logFile(1, 1).onset = 2;
 logFile(end, 1).trial_type = 'motion_up';
@@ -113,9 +136,9 @@ logFile(end, 1).Speed = 2;
 logFile(end, 1).is_Fixation = true;
 logFile(end, 1).LHL24 = 1:12;
 
-saveEventsFile('save', expParameters, logFile);
+saveEventsFile('save', cfg, logFile);
 
-saveEventsFile('close', expParameters, logFile);
+saveEventsFile('close', cfg, logFile);
 
 ```
 
@@ -125,16 +148,16 @@ If you have many columns to define but only a few with several columns, you can 
 % define the extra columns: they will be added to the tsv files in the order the user input them
 logFile.extraColumns = {'Speed', 'is_Fixation'};
 
-[cfg, expParameters] = createFilename(cfg, expParameters);
+[cfg] = createFilename(cfg);
 
 % initialize the logFile variable
-[logFile] = saveEventsFile('init', expParameters, logFile);
+[logFile] = saveEventsFile('init', cfg, logFile);
 
 % set the real length we really want
 logFile.extraColumns.Speed.length = 12;
 
 % open the file
-logFile = saveEventsFile('open', expParameters, logFile);
+logFile = saveEventsFile('open', cfg, logFile);
 ```
 
 
@@ -144,23 +167,23 @@ logFile = saveEventsFile('open', expParameters, logFile);
 
 Get subject, run and session number and make sure they are positive integer values.
 
-By default this will return `expParameters.session = 1` even if you asked it to omit enquiring about sessions. This means
+By default this will return `cfg.subject.session = 1` even if you asked it to omit enquiring about sessions. This means
 that the folder tree will always include a session folder.
 
 ```matlab
-[expParameters] = userInputs(cfg, expParameters)
+[cfg] = userInputs(cfg)
 ```
 
-if you use it with `expParameters.askGrpSess = [0 0]`
+if you use it with `cfg.subject.askGrpSess = [0 0]`
 it won't ask you about group or session
 
-if you use it with `expParameters.askGrpSess = [1]`
+if you use it with `cfg.subject.askGrpSess = [1]`
 it will only ask you about group
 
-if you use it with `expParameters.askGrpSess = [0 1]`
+if you use it with `cfg.subject.askGrpSess = [0 1]`
 it will only ask you about session
 
-if you use it with `expParameters.askGrpSess = [1 1]`
+if you use it with `cfg.subject.askGrpSess = [1 1]`
 it will ask you about both
 this is the default
 
@@ -190,50 +213,143 @@ no value is provided.
 
 Check that we have all the fields that we need in the experiment parameters.
 
-## How to install
-
-### Use the matlab package manager
-
-This repository can be added as a dependencies by listing it in a
-[mpm-requirements.txt file](.mpm-requirements.txt) as follows:
-
-```
-CPP_BIDS -u https://github.com/cpp-lln-lab/CPP_BIDS.git
-```
-
-You can then use the [matlab package manager](https://github.com/mobeets/mpm), to simply download
-the appropriate version of those dependencies and add them to your path by running a
-`getDependencies` function like the one below where you just need to replace
-`YOUR_EXPERIMENT_NAME` by the name of your experiment.
+## CFG content
 
 ```matlab
-function getDependencies(action)
-% Will install on your computer the matlab dependencies specified in the mpm-requirements.txt
-%  and add them to the matlab path. The path is never saved so you need to run getDependencies() when
-%  you start matlab.
-%
-% getDependencies('update') will force the update and overwrite previous version of the dependencies.
-%
-% getDependencies() If you only already have the appropriate version but just want to add them to the matlab path.
+%% Can be modified by users 
+% but their effect might only be effective after running
+% checkCFG
 
-experimentName = YOUR_EXPERIMENT_NAME;
+cfg.verbose = 0;
 
-if nargin<1
-    action = '';
-end
+cfg.subject.subjectGrp = '';
+cfg.subject.sessionNb = 1;
+cfg.subject.askGrpSess = [true true];
 
-switch action
-    case 'update'
-        % install dependencies
-        mpm install -i mpm-requirements.txt -f -c YOUR_EXPERIMENT_NAME
-end
+% BOLD MRI details
+% some of those will be transferred to the correct fields in cfg.bids by checkCFG
+cfg.mri.repetitionTime = [];
+cfg.mri.contrastEnhancement = [];
+cfg.mri.phaseEncodingDirection = [];
+cfg.mri.reconstruction = [];
+cfg.mri.echo = [];
+cfg.mri.acquisition = [];
 
-% adds them to the path
-mpm_folder = fileparts(which('mpm'));
-addpath(genpath(fullfile(mpm_folder, 'mpm-packages', 'mpm-collections', experimentName)));
+cfg.fileName.task = '';
+cfg.fileName.zeroPadding = 3; % amount of 0 padding the subject, session, run number
 
-end
+cfg.eyeTracker.do = false;
+
+% content of the json side-car file for bold data
+cfg.bids.mri.RepetitionTime = [];
+cfg.bids.mri.SliceTiming = '';
+cfg.bids.mri.TaskName = '';
+cfg.bids.mri.Instructions = '';
+cfg.bids.mri.TaskDescription = '';
+
+% content of the json side-car file for MEG
+cfg.bids.meg.TaskName = '';
+cfg.bids.meg.SamplingFrequency = [];
+cfg.bids.meg.PowerLineFrequency = [];
+cfg.bids.meg.DewarPosition = [];
+cfg.bids.meg.SoftwareFilters = [];
+cfg.bids.meg.DigitizedLandmarks = [];
+cfg.bids.meg.DigitizedHeadPoints = [];
+
+% content of the datasetDescription.json file
+cfg.bids.datasetDescription.Name = '';
+cfg.bids.datasetDescription.BIDSVersion =  '';
+cfg.bids.datasetDescription.License = '';
+cfg.bids.datasetDescription.Authors = {''};
+cfg.bids.datasetDescription.Acknowledgements = '';
+cfg.bids.datasetDescription.HowToAcknowledge = '';
+cfg.bids.datasetDescription.Funding = {''};
+cfg.bids.datasetDescription.ReferencesAndLinks = {''};
+cfg.bids.datasetDescription.DatasetDOI = '';
+
+
+%% Should not be modified by users
+% many of those fields are set up by checkCFG and you might get non BIDS valid
+% output if you touch those
+cfg.fileName.dateFormat = 'yyyymmddHHMM'; % actual date of the experiment that is appended to the filename
+cfg.fileName.modality
+cgf.fileName.suffix.mri
+cgf.fileName.suffix.meg
+cfg.fileName.stim
+cfg.fileName.events
+cfg.fileName.datasetDescription
+
 ```
+
+## How to install
+
+### Download with git
+
+``` bash
+cd fullpath_to_directory_where_to_install
+# use git to download the code
+git clone https://github.com/cpp-lln-lab/CPP_BIDS.git
+# move into the folder you have just created
+cd CPP_PTB
+# add the src folder to the matlab path and save the path
+matlab -nojvm -nosplash -r "addpath(fullfile(pwd, 'src')); savepath ();"
+```
+
+Then get the latest commit:
+```bash
+# from the directory where you downloaded the code
+git pull origin master
+```
+
+To work with a specific version, create a branch at a specific version tag number
+```bash
+# creating and checking out a branch that will be called version1 at the version tag v0.0.1
+git checkout -b version1 v0.0.1
+```
+
+### Add as a submodule
+
+Add it as a submodule in the repo you are working on.
+
+``` bash
+cd fullpath_to_directory_where_to_install
+# use git to download the code
+git submodule add https://github.com/cpp-lln-lab/CPP_BIDS.git
+# move into the folder you have just created
+cd CPP_PTB
+# add the src folder to the matlab path and save the path
+matlab -nojvm -nosplash -r "addpath(fullfile(pwd, 'src'))"
+```
+
+To get the latest commit you then need to update the submodule with the information 
+on its remote repository and then merge those locally.
+```bash
+git submodule update --remote --merge
+```
+
+Remember that updates to submodules need to be commited as well. 
+
+**TO DO**
+<!-- Submodules
+pros: in principle, downloading the experiment you have the whole package plus the benefit to stay updated and use version control of this dependency. Can probably handle a use case in which one uses different version on different projects (e.g. older and newer projects).
+cons: for pro users and not super clear how to use it at the moment. -->
+
+### Direct download
+
+Download the code. Unzip. And add to the matlab path.
+
+Pick a specific version:
+
+https://github.com/cpp-lln-lab/CPP_BIDS/releases
+
+Or take the latest commit (NOT RECOMMENDED):
+
+https://github.com/cpp-lln-lab/CPP_BIDS/archive/master.zip
+
+**TO DO**
+<!-- Download a specific version and c/p it in a subfun folder
+pros: the easiest solution to share the code and 'installing' it on the stimulation computer (usually not the one used to develop the code).
+cons: extreme solution useful only at the very latest stage (i.e. one minute before acquiring your data); prone to be customized/modified (is it what we want?) -->
 
 ## Contributing
 
@@ -260,6 +376,10 @@ Here are the naming templates used.
 -   EEG
 
 `sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.<manufacturer_specific_extension>`
+
+-   MEG
+
+???
 
 -   Eyetracker
 

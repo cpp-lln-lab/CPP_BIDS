@@ -1,4 +1,6 @@
 function fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
+    % fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
+    %
     % transfer any info that might have been provided by the user to the
     % relevant field for its reuse for BIDS filenames or JSON later
 

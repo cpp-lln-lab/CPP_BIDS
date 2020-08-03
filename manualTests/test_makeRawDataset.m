@@ -1,9 +1,5 @@
 function test_makeRawDataset()
 
-    fprintf('\n\n--------------------------------------------------------------------\n\n');
-
-    clear;
-
     outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
     if isdir(outputDir)
@@ -16,7 +12,9 @@ function test_makeRawDataset()
 
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
+
     cfg.task.name = 'testtask';
+
     cfg.dir.output = outputDir;
 
     cfg.bids.datasetDescription.Name = 'dummy';
@@ -77,7 +75,7 @@ function test_makeRawDataset()
     funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'func');
     boldFilename = 'sub-001_ses-001_task-testtask_run-001_bold.nii.gz';
     copyfile( ...
-        fullfile('..', '..', 'dummyData', 'dummyData.nii.gz'), ...
+        fullfile('..', 'dummyData', 'dummyData.nii.gz'), ...
         fullfile(funcDir, boldFilename));
 
     %%

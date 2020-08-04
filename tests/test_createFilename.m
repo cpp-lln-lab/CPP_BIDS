@@ -94,7 +94,6 @@ function test_createFilenameMriEyetracker()
 
 end
 
-
 function test_createFilenameMriSuffix()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
@@ -111,7 +110,7 @@ function test_createFilenameMriSuffix()
 
     cfg.eyeTracker.do = false;
     cfg.testingDevice = 'mri';
-    
+
     cfg.mri.reconstruction = 'fast recon';
     cfg.mri.contrastEnhancement = 'test';
     cfg.mri.phaseEncodingDirection = 'y pos';
@@ -136,7 +135,7 @@ function test_createFilenameMriSuffix()
     assertTrue(exist(funcDir, 'dir') == 7);
 
     % make sure the right filenames are created
-    assertEqual(cfg.fileName.base, baseFilename)
+    assertEqual(cfg.fileName.base, baseFilename);
     assertEqual(cfg.fileName.events, eventFilename);
 
 end

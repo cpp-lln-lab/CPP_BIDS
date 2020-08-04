@@ -108,7 +108,7 @@ function cfg = setSuffixes(cfg)
         'phaseEncodingDirection', ...
         'reconstruction', ...
         };
-    
+
     targetFields = { ...
         'acq', ...
         'ce', ...
@@ -118,20 +118,20 @@ function cfg = setSuffixes(cfg)
         };
 
     for iField = 1:numel(fields2Check)
-        
+
         if isempty (cfg.mri.(fields2Check{iField})) %#ok<*GFLD>
-            
+
             cfg.fileName.suffix.mri.(fields2Check{iField}) = ''; %#ok<*SFLD>
-            
+
         else
-            
+
             % upper camelCase and remove invalid characters
             thisField = getfield(cfg.mri, fields2Check{iField});
             [~, validFieldName] = createValidName(thisField);
-            
+
             cfg.fileName.suffix.mri.(fields2Check{iField}) = ...
                 ['_' targetFields{iField} '-' validFieldName];
-            
+
         end
     end
 

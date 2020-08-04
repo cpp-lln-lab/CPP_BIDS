@@ -152,6 +152,7 @@ function logFile = initializeFile(cfg, logFile)
 
     % print the basic BIDS columns
     fprintf(logFile.fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+    fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
 
     printHeaderExtraColumns(logFile);
 
@@ -174,6 +175,7 @@ function printHeaderExtraColumns(logFile)
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
 
             fprintf(logFile.fileID, '\t%s', headerName);
+            fprintf(1, '\t%s', headerName);
 
         end
 
@@ -281,6 +283,7 @@ function logFile = saveToLogFile(logFile)
             printExtraColumns(logFile, iEvent);
 
             fprintf(logFile(1).fileID, '\n');
+            fprintf(1, '\n');
 
         end
     end
@@ -307,12 +310,15 @@ function printData(output, data)
     % for numeric data we replace any nan by n/a
     if ischar(data)
         fprintf(output, '%s\t', data);
+        fprintf(1, '%s\t', data);
     else
         for i = 1:numel(data)
             if isnan(data(i))
                 fprintf(output, '%s\t', 'n/a');
+                fprintf(1, '%s\t', 'n/a');
             else
                 fprintf(output, '%f\t', data(i));
+                fprintf(1, '%f\t', data(i));
             end
         end
     end

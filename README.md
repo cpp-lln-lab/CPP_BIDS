@@ -36,7 +36,7 @@ Subjects, session and run number labels will be numbers with zero padding up to 
 
 A session folder will ALWAYS be created even if not requested (default will be `ses-001`).
 
-Task labels will be printed in camelCase in the filenames. 
+Task labels will be printed in camelCase in the filenames.
 
 Time stamps are added directly in the filename by adding a suffix `_date-YYYYMMDDHHMM` which makes the file name non-BIDS compliant. This was added to prevent overwriting files in case a certain run needs to be done a second time because of a crash (Some of us are paranoid about keeping even cancelled runs during my experiments). This suffix should be removed to make the data set BIDS compliant. See `convertSourceToRaw.m` for more details.
 
@@ -206,7 +206,7 @@ For the moment the date of acquisition is appended to the filename
 
 Function to save output files for events that will be BIDS compliant.
 
-If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped. `duration` will be set to "NaN" if 
+If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped. `duration` will be set to "NaN" if
 no value is provided.
 
 ### checkCFG
@@ -216,7 +216,7 @@ Check that we have all the fields that we need in the experiment parameters.
 ## CFG content
 
 ```matlab
-%% Can be modified by users 
+%% Can be modified by users
 % but their effect might only be effective after running
 % checkCFG
 
@@ -290,7 +290,7 @@ cd fullpath_to_directory_where_to_install
 # use git to download the code
 git clone https://github.com/cpp-lln-lab/CPP_BIDS.git
 # move into the folder you have just created
-cd CPP_PTB
+cd CPP_BIDS
 # add the src folder to the matlab path and save the path
 matlab -nojvm -nosplash -r "addpath(fullfile(pwd, 'src')); savepath ();"
 ```
@@ -316,18 +316,18 @@ cd fullpath_to_directory_where_to_install
 # use git to download the code
 git submodule add https://github.com/cpp-lln-lab/CPP_BIDS.git
 # move into the folder you have just created
-cd CPP_PTB
+cd CPP_BIDS
 # add the src folder to the matlab path and save the path
 matlab -nojvm -nosplash -r "addpath(fullfile(pwd, 'src'))"
 ```
 
-To get the latest commit you then need to update the submodule with the information 
+To get the latest commit you then need to update the submodule with the information
 on its remote repository and then merge those locally.
 ```bash
 git submodule update --remote --merge
 ```
 
-Remember that updates to submodules need to be commited as well. 
+Remember that updates to submodules need to be commited as well.
 
 **TO DO**
 <!-- Submodules

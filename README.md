@@ -36,7 +36,7 @@ Subjects, session and run number labels will be numbers with zero padding up to 
 
 A session folder will ALWAYS be created even if not requested (default will be `ses-001`).
 
-Task labels will be printed in camelCase in the filenames. 
+Task labels will be printed in camelCase in the filenames.
 
 Time stamps are added directly in the filename by adding a suffix `_date-YYYYMMDDHHMM` which makes the file name non-BIDS compliant. This was added to prevent overwriting files in case a certain run needs to be done a second time because of a crash (Some of us are paranoid about keeping even cancelled runs during my experiments). This suffix should be removed to make the data set BIDS compliant. See `convertSourceToRaw.m` for more details.
 
@@ -56,14 +56,14 @@ sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-2020072915
 cfg.outputDir = fullfile(pwd, '..', 'output');
 
 % define the name of the task
-cfg.task = 'test task';
+cfg.task.name = 'test task';
 
 % can use the userInputs function to collect subject info
 % cfg = userInputs;
 
 % or declare it directly
-cfg.subjectNb = 1;
-cfg.runNb = 1;
+cfg.subject.subjectNb = 1;
+cfg.subject.runNb = 1;
 
 % by default we assume you are running things on a behavioral PC with no eyetracker
 % cfg.eyeTracker = false;
@@ -109,9 +109,9 @@ saveEventsFile('close', cfg, logFile);
 If you want to save more complex events.tsv file you can save several columns at once.
 
 ```matlab
-cfg.subjectNb = 1;
-cfg.runNb = 1;
-cfg.task = 'testtask';
+cfg.subject.subjectNb = 1;
+cfg.subject.runNb = 1;
+cfg.task.name = 'testtask';
 cfg.outputDir = outputDir;
 
 cfg.testingDevice = 'mri';
@@ -206,7 +206,7 @@ For the moment the date of acquisition is appended to the filename
 
 Function to save output files for events that will be BIDS compliant.
 
-If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped. `duration` will be set to "NaN" if 
+If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped. `duration` will be set to "NaN" if
 no value is provided.
 
 ### checkCFG
@@ -216,7 +216,7 @@ Check that we have all the fields that we need in the experiment parameters.
 ## CFG content
 
 ```matlab
-%% Can be modified by users 
+%% Can be modified by users
 % but their effect might only be effective after running
 % checkCFG
 
@@ -290,7 +290,7 @@ cd fullpath_to_directory_where_to_install
 # use git to download the code
 git clone https://github.com/cpp-lln-lab/CPP_BIDS.git
 # move into the folder you have just created
-cd CPP_PTB
+cd CPP_BIDS
 # add the src folder to the matlab path and save the path
 matlab -nojvm -nosplash -r "addpath(fullfile(pwd, 'src')); savepath ();"
 ```
@@ -316,18 +316,37 @@ cd fullpath_to_directory_where_to_install
 # use git to download the code
 git submodule add https://github.com/cpp-lln-lab/CPP_BIDS.git
 # move into the folder you have just created
-cd CPP_PTB
+cd CPP_BIDS
 # add the src folder to the matlab path and save the path
 matlab -nojvm -nosplash -r "addpath(fullfile(pwd, 'src'))"
 ```
 
-To get the latest commit you then need to update the submodule with the information 
+To get the latest commit you then need to update the submodule with the information
 on its remote repository and then merge those locally.
 ```bash
 git submodule update --remote --merge
 ```
 
-Remember that updates to submodules need to be commited as well. 
+Remember that updates to submodules need to be committed as well.
+
+#### Example for submodule usage
+
+So say you want to clone a repo that has some nested submodules, then you would type this to get the content of all the submodules at once (here with assumption that you want to clone my experiment repo):
+```bash
+# clone the repo
+git clone https://github.com/user_name/myExperiment.git
+
+# go into the directory
+cd myExperiment
+
+# initialize and get the content of the first level of submodules  (e.g. CPP_PTB and CPP_BIDS)
+git submodule init
+git submodule update
+
+# get the nested submodules JSONio and BIDS-matlab for CPP_BIDS
+git submodule foreach --recursive 'git submodule init'
+git submodule foreach --recursive 'git submodule update'
+```
 
 **TO DO**
 <!-- Submodules

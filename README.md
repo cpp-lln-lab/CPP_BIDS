@@ -56,7 +56,7 @@ sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-2020072915
 cfg.outputDir = fullfile(pwd, '..', 'output');
 
 % define the name of the task
-cfg.task = 'test task';
+cfg.task.name = 'test task';
 
 % can use the userInputs function to collect subject info
 % cfg = userInputs;
@@ -111,7 +111,7 @@ If you want to save more complex events.tsv file you can save several columns at
 ```matlab
 cfg.subjectNb = 1;
 cfg.runNb = 1;
-cfg.task = 'testtask';
+cfg.task.name = 'testtask';
 cfg.outputDir = outputDir;
 
 cfg.testingDevice = 'mri';

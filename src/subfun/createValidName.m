@@ -1,4 +1,4 @@
-function [taskName, taskNameValid] = createTaskName(taskName)
+function [name, nameValid] = createValidName(name)
     % [taskName, taskNameValid] = createTaskName(taskName)
     %
     % Name of the task (for resting state use the "rest" prefix). No two tasks
@@ -6,12 +6,12 @@ function [taskName, taskNameValid] = createTaskName(taskName)
     % removing all non alphanumeric ([a-zA-Z0-9]) characters.
 
     % camel case: upper case for first letter for all words but the first one
-    spaceIdx = regexp(taskName, '[a-zA-Z0-9]*', 'start');
-    taskName(spaceIdx(2:end)) = upper(taskName(spaceIdx(2:end)));
+    spaceIdx = regexp(name, '[a-zA-Z0-9]*', 'start');
+    name(spaceIdx(2:end)) = upper(name(spaceIdx(2:end)));
 
     % remove invalid characters
-    [unvalidCharacters] = regexp(taskName, '[^a-zA-Z0-9]');
-    taskNameValid = taskName;
-    taskNameValid(unvalidCharacters) = [];
+    [unvalidCharacters] = regexp(name, '[^a-zA-Z0-9]');
+    nameValid = name;
+    nameValid(unvalidCharacters) = [];
 
 end

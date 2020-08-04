@@ -5,7 +5,7 @@ function fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
     % relevant field for its reuse for BIDS filenames or JSON later
 
     if isfield(cfg, 'task') && isfield(cfg.task, 'name')
-        [taskName, taskNameValid] = createTaskName(cfg.task.name);
+        [taskName, taskNameValid] = createValidName(cfg.task.name);
         fieldsToSet.fileName.task = taskNameValid;
         fieldsToSet.bids.meg.TaskName = taskName;
         fieldsToSet.bids.mri.TaskName = taskName;

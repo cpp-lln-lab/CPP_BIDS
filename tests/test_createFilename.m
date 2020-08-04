@@ -94,6 +94,53 @@ function test_createFilenameMriEyetracker()
 
 end
 
+
+function test_createFilenameMriSuffix()
+
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+    %% set up
+
+    cfg.verbose = false;
+    cfg.subject.subjectGrp = 'ssri';
+    cfg.subject.subjectNb = 3;
+    cfg.subject.sessionNb = 4;
+    cfg.subject.runNb = 5;
+    cfg.task.name = 'rest';
+    cfg.dir.output = outputDir;
+
+    cfg.eyeTracker.do = false;
+    cfg.testingDevice = 'mri';
+    
+    cfg.mri.reconstruction = 'fast recon';
+    cfg.mri.contrastEnhancement = 'test';
+    cfg.mri.phaseEncodingDirection = 'y pos';
+    cfg.mri.echo = '1';
+    cfg.mri.acquisition = ' new tYpe';
+
+    cfg = createFilename(cfg);
+
+    %% data to test against
+
+    funcDir = fullfile(outputDir, 'source', 'sub-ssri003', 'ses-004', 'func');
+
+    baseFilename = 'sub-ssri003_ses-004_task-rest';
+
+    eventFilename = ['sub-ssri003_ses-004_task-rest',  ...
+        '_acq-newTYpe_ce-test_dir-yPos_rec-fastRecon', ...
+        '_run-005_echo-1_events_date-' ...
+        cfg.fileName.date '.tsv'];
+
+    %% tests
+    % make sure the func dir is created
+    assertTrue(exist(funcDir, 'dir') == 7);
+
+    % make sure the right filenames are created
+    assertEqual(cfg.fileName.base, baseFilename)
+    assertEqual(cfg.fileName.events, eventFilename);
+
+end
+
 function test_createFilenameEeg()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');

@@ -36,9 +36,6 @@ before_script:
 
 jobs:
   include:
-    # - stage: "Tests" 
-    #   name: "Unit and integration Tests"
-    #   script: octave $OCTFLAGS --eval "results = runTests; assert(all(~[results.Failed]))"
     - stage: "BIDS validator"
       name: "Create and check dataset"
       script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/rawdata/ --ignoreNiftiHeaders

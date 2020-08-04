@@ -1,5 +1,18 @@
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-) [![Build Status](https://travis-ci.com/cpp-lln-lab/CPP_BIDS.svg?branch=master)](https://travis-ci.com/cpp-lln-lab/CPP_BIDS)
+**BIDS validator and linter**
 
+[![Build Status](https://travis-ci.com/cpp-lln-lab/CPP_BIDS.svg?branch=master)](https://travis-ci.com/cpp-lln-lab/CPP_BIDS)
+
+**Unit tests**
+
+[![](https://img.shields.io/badge/Octave-CI-blue?logo=Octave&logoColor=white)](https://github.com/cpp-lln-lab/CPP_BIDS/actions)
+![](https://github.com/cpp-lln-lab/CPP_BIDS/workflows/CI/badge.svg) 
+
+**Contributors**
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-) 
+
+---
+ 
 # CPP_BIDS
 
 <!-- TOC -->
@@ -18,6 +31,7 @@
   - [How to install](#how-to-install)
     - [Download with git](#download-with-git)
     - [Add as a submodule](#add-as-a-submodule)
+      - [Example for submodule usage](#example-for-submodule-usage)
     - [Direct download](#direct-download)
   - [Contributing](#contributing)
     - [Guidestyle](#guidestyle)

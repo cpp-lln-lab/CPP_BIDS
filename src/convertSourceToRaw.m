@@ -11,7 +11,7 @@ function convertSourceToRaw(cfg)
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'rawdata');
 
-    % add dummy readme and change file
+    % add dummy README and CHANGE file
     copyfile(fullfile( ...
         fileparts(mfilename('fullpath')), '..', 'dummyData', 'README'), ...
         sourceDir);
@@ -28,6 +28,7 @@ function convertSourceToRaw(cfg)
         error('No subjects found in BIDS directory.');
     end
 
+    % go through the subject files and parses them to remove the date suffix
     for su = 1:numel(subjects)
 
         sess = cellstr(file_utils('List', fullfile(rawDir, subjects{su}), 'dir', '^ses-.*$'));

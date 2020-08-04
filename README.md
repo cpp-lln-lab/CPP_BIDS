@@ -62,8 +62,8 @@ cfg.task.name = 'test task';
 % cfg = userInputs;
 
 % or declare it directly
-cfg.subjectNb = 1;
-cfg.runNb = 1;
+cfg.subject.subjectNb = 1;
+cfg.subject.runNb = 1;
 
 % by default we assume you are running things on a behavioral PC with no eyetracker
 % cfg.eyeTracker = false;
@@ -109,8 +109,8 @@ saveEventsFile('close', cfg, logFile);
 If you want to save more complex events.tsv file you can save several columns at once.
 
 ```matlab
-cfg.subjectNb = 1;
-cfg.runNb = 1;
+cfg.subject.subjectNb = 1;
+cfg.subject.runNb = 1;
 cfg.task.name = 'testtask';
 cfg.outputDir = outputDir;
 

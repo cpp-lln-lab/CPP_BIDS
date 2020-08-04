@@ -327,7 +327,32 @@ on its remote repository and then merge those locally.
 git submodule update --remote --merge
 ```
 
-Remember that updates to submodules need to be commited as well.
+Remember that updates to submodules need to be committed as well.
+
+#### Example for submodule usage
+
+So say you want to clone a repo that has some nested submodules, then you would type this to get the content of all the submodules at once (here with assumption that you want to clone my experiment repo):
+``` bash
+git clone --recurse-submodules https://github.com/user_name/myExperiment.git
+```
+This would be the way to do it fast way.
+
+To do it in more controlled/slow motion, see below
+```bash
+# clone the repo
+git clone https://github.com/user_name/myExperiment.git
+
+# go into the directory
+cd myExperiment
+
+# initialize and get the content of the first level of submodules  (e.g. CPP_PTB and CPP_BIDS)
+git submodule init
+git submodule update
+
+# get the nested submodules JSONio and BIDS-matlab for CPP_BIDS
+git submodule foreach --recursive 'git submodule init'
+git submodule foreach --recursive 'git submodule update'
+```
 
 **TO DO**
 <!-- Submodules

@@ -332,12 +332,6 @@ Remember that updates to submodules need to be committed as well.
 #### Example for submodule usage
 
 So say you want to clone a repo that has some nested submodules, then you would type this to get the content of all the submodules at once (here with assumption that you want to clone my experiment repo):
-``` bash
-git clone --recurse-submodules https://github.com/user_name/myExperiment.git
-```
-This would be the way to do it fast way.
-
-To do it in more controlled/slow motion, see below
 ```bash
 # clone the repo
 git clone https://github.com/user_name/myExperiment.git

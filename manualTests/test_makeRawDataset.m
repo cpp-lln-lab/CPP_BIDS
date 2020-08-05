@@ -29,7 +29,8 @@ function test_makeRawDataset()
 
     cfg = createFilename(cfg);
 
-    createBoldJson(cfg);
+    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+    createBoldJson(cfg, extraInfo);
 
     createDatasetDescription(cfg);
 

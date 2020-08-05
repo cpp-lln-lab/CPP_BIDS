@@ -63,4 +63,9 @@ function test_removeDateSuffixBasic()
     assertEqual(exist(fullfile(outputDir, expectedBoldName2), 'file'), 2);
     assertEqual(exist(fullfile(outputDir, expectedBoldName), 'file'), 2);
     
+    % clean up
+    delete('*.nii*')
+    delete('*.tsv*')
+    delete('*.json')
+    
 end

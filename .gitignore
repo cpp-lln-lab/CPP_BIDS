@@ -16,6 +16,7 @@ output/*
 tests/coverage*
 tests/test_code_report.txt
 test_code_report.txt
+*/coverage_html/*
 
 # exclude report from check_my_code
 check_my_code_report.txt

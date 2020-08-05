@@ -68,6 +68,19 @@ function test_makeRawDataset()
     % close the file
     saveEventsFile('close', cfg, logFile);
 
+    % add dummy stim data
+    stimLogFile = saveEventsFile('open_stim', cfg, logFile);
+    for i = 1:100
+        stimLogFile(i, 1).onset = cfg.mri.repetitionTime * i;
+        stimLogFile(i, 1).trial_type = 'test';
+        stimLogFile(i, 1).duration = 1;
+        stimLogFile(i, 1).Speed = rand(1);
+        stimLogFile(i, 1).is_Fixation = rand > 0.5;
+        stimLogFile(i, 1).LHL24 = randn(1, 3);
+    end
+    saveEventsFile('save', cfg, stimLogFile);
+    saveEventsFile('close', cfg, stimLogFile);
+
     % add dummy functional data
     funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'func');
     boldFilename = 'sub-001_ses-001_task-testtask_run-001_bold.nii.gz';
@@ -87,6 +100,7 @@ function test_makeRawDataset()
     cfg.subject.sessionNb = 3;
     cfg.subject.runNb = 4;
 
+    % deal with MRI suffixes
     cfg.mri.reconstruction = 'fast recon';
     cfg.mri.contrastEnhancement = 'test';
     cfg.mri.phaseEncodingDirection = 'y pos';
@@ -100,7 +114,7 @@ function test_makeRawDataset()
 
     createBoldJson(cfg);
 
-    % add dummy functional data
+    %% add dummy functional data
     funcDir = fullfile(cfg.dir.output, 'source', 'sub-002', 'ses-003', 'func');
     boldFilename = ['sub-002_ses-003_task-rest',  ...
         '_acq-newTYpe_ce-test_dir-yPos_rec-fastRecon', ...
@@ -110,9 +124,11 @@ function test_makeRawDataset()
         fullfile('..', 'dummyData', 'dummyData.nii.gz'), ...
         fullfile(funcDir, boldFilename));
 
-    %%
+    %% actually do the conversion of the source data thus created
     clear;
+    
     outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
     cfg.dir.output = outputDir;
     convertSourceToRaw(cfg);
+    
 end

@@ -64,13 +64,13 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
 
         case 'open'
 
-            logFile.filename = cfg.fileName.events;
+            logFile(1).filename = cfg.fileName.events;
 
             logFile = initializeFile(cfg, logFile);
 
         case 'open_stim'
 
-            logFile.filename = cfg.fileName.stim;
+            logFile(1).filename = cfg.fileName.stim;
 
             logFile = initializeFile(cfg, logFile);
 
@@ -143,7 +143,7 @@ function logFile = initializeFile(cfg, logFile)
 
     % Initialize txt logfiles and empty fields for the standard BIDS
     %  event file
-    logFile.fileID = fopen( ...
+    logFile(1).fileID = fopen( ...
         fullfile( ...
         cfg.dir.outputSubject, ...
         cfg.fileName.modality, ...
@@ -151,13 +151,14 @@ function logFile = initializeFile(cfg, logFile)
         'w');
 
     % print the basic BIDS columns
-    fprintf(logFile.fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+    fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
     fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
 
     printHeaderExtraColumns(logFile);
 
     % next line so we start printing at the right place
-    fprintf(logFile.fileID, '\n');
+    fprintf(logFile(1).fileID, '\n');
+    fprintf(1, '\n');
 
 end
 
@@ -174,7 +175,7 @@ function printHeaderExtraColumns(logFile)
 
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
 
-            fprintf(logFile.fileID, '\t%s', headerName);
+            fprintf(logFile(1).fileID, '\t%s', headerName);
             fprintf(1, '\t%s', headerName);
 
         end

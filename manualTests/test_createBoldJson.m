@@ -26,7 +26,7 @@ function test_createBoldJsonExtra()
     cfg = createFilename(cfg);
 
     logFile = saveEventsFile('init', cfg); %#ok<*NASGU>
-    
+
     extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
 
     createBoldJson(cfg, extraInfo);
@@ -34,7 +34,7 @@ function test_createBoldJsonExtra()
     %% check content
     fileName = strrep(cfg.fileName.events, '_events', '_bold');
     fileName = strrep(fileName, '.tsv', '.json');
-    
+
     actualStruct = bids.util.jsondecode(fullfile( ...
         cfg.dir.outputSubject, ...
         cfg.fileName.modality, ...

@@ -8,8 +8,8 @@ function createBoldJson(cfg, extraInfo)
     % Extra content can be added to the JSON file
 
     opts.Indent = '    ';
-    
-    if nargin<2
+
+    if nargin < 2
         extraInfo = struct();
     end
 
@@ -22,11 +22,11 @@ function createBoldJson(cfg, extraInfo)
         fileName);
 
     jsonContent = cfg.bids.mri;
-    
+
     % add content of extraInfo to the JSON content
     if ~isstruct(extraInfo)
-        warning('additional info added to a json file must be a structure')
-    end   
+        warning('additional info added to a json file must be a structure');
+    end
     fieldList = fieldnames(extraInfo);
     for iField = 1:numel(fieldList)
         jsonContent.(fieldList{iField}) =  extraInfo.(fieldList{iField});

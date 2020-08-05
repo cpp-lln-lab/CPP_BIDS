@@ -2,10 +2,12 @@
 
 [![Build Status](https://travis-ci.com/cpp-lln-lab/CPP_BIDS.svg?branch=master)](https://travis-ci.com/cpp-lln-lab/CPP_BIDS)
 
-**Unit tests**
+**Unit tests and coverage**
 
 [![](https://img.shields.io/badge/Octave-CI-blue?logo=Octave&logoColor=white)](https://github.com/cpp-lln-lab/CPP_BIDS/actions)
 ![](https://github.com/cpp-lln-lab/CPP_BIDS/workflows/CI/badge.svg) 
+
+[![codecov](https://codecov.io/gh/cpp-lln-lab/CPP_BIDS/branch/master/graph/badge.svg)](https://codecov.io/gh/cpp-lln-lab/CPP_BIDS)
 
 **Contributors**
 

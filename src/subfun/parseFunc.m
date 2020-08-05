@@ -17,7 +17,7 @@ function parseFunc(rawDir, subjName, sesName)
             sprintf('^%s.*_task-.*_bold_date-.*$', subjName));
 
         removeDateSuffix(filenames, subjectPath);
-        
+
         % do stim
         filenames = file_utils('List', subjectPath, ...
             sprintf('^%s.*_task-.*_stim_date-.*tsv$', subjName));
@@ -37,9 +37,9 @@ function compressFiles(filenames, subjectPath)
     end
 
     for i = 1:numel(filenames)
-        
-        gzip(fullfile(subjectPath, filenames{i}))
-        delete(fullfile(subjectPath, filenames{i}))
+
+        gzip(fullfile(subjectPath, filenames{i}));
+        delete(fullfile(subjectPath, filenames{i}));
 
     end
 end

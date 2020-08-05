@@ -41,7 +41,3 @@ function convertSourceToRaw(cfg)
     end
 
 end
-
-
-
-

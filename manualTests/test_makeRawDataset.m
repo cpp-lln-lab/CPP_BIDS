@@ -126,9 +126,9 @@ function test_makeRawDataset()
 
     %% actually do the conversion of the source data thus created
     clear;
-    
+
     outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
     cfg.dir.output = outputDir;
     convertSourceToRaw(cfg);
-    
+
 end

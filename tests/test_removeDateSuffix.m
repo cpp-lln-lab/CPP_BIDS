@@ -6,18 +6,17 @@ function test_suite = test_removeDateSuffix %#ok<*STOUT>
     initTestSuite;
 end
 
-
 function test_removeDateSuffixBasic()
 
     %% set up
     cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
-    
+
     % clean up
     if isdir(cfg.dir.output)
         rmdir(cfg.dir.output, 's');
     end
     [~, ~, ~] = mkdir(cfg.dir.output);
-    
+
     % TODO
     % make sure we use the default date parameter (to implement?)
     % cfg = checkCFG(cfg);
@@ -30,7 +29,7 @@ function test_removeDateSuffixBasic()
     eventsName = 'test_events_date-202008050730.tsv';
     stimName = 'test_stim_date-202008050730.tsv';
     stimNameZipped = 'test2_stim_date-202008050730.tsv.gz';
-    
+
     filesToProcess = { ...
         boldName ;
         boldName2 ;
@@ -46,12 +45,12 @@ function test_removeDateSuffixBasic()
             fullfile('..', 'dummyData', 'dummyData.nii.gz'), ...
             fullfile(cfg.dir.output, filesToProcess{iFile}));
     end
-    
+
     %% do stuff
     filenames = file_utils('List', cfg.dir.output, '^test.*$');
 
     removeDateSuffix(filenames, cfg.dir.output);
-    
+
     %% expected data
     expectedBoldName = 'test_bold.nii.gz';
     expectedBoldName2 = 'test2_bold.nii.gz';
@@ -71,9 +70,3 @@ function test_removeDateSuffixBasic()
     assertEqual(exist(fullfile(cfg.dir.output, expectedBoldName), 'file'), 2);
 
 end
-
-
-
-
-
-

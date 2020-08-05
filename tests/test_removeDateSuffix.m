@@ -7,20 +7,12 @@ function test_suite = test_removeDateSuffix %#ok<*STOUT>
 end
 
 function test_removeDateSuffixBasic()
-
-    %% set up
-    cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
-
-    % clean up
-    if isdir(cfg.dir.output)
-        rmdir(cfg.dir.output, 's');
-    end
-    [~, ~, ~] = mkdir(cfg.dir.output);
-
-    % TODO
-    % make sure we use the default date parameter (to implement?)
-    % cfg = checkCFG(cfg);
-
+    
+    outputDir = pwd;
+    
+    createFiles = 0;
+    testDo = 1;
+    
     %% set up
     boldName = 'test_bold_date-202008050730.nii.gz';
     boldName2 = 'test2_bold.nii.gz';
@@ -29,7 +21,7 @@ function test_removeDateSuffixBasic()
     eventsName = 'test_events_date-202008050730.tsv';
     stimName = 'test_stim_date-202008050730.tsv';
     stimNameZipped = 'test2_stim_date-202008050730.tsv.gz';
-
+    
     filesToProcess = { ...
         boldName ;
         boldName2 ;
@@ -39,18 +31,16 @@ function test_removeDateSuffixBasic()
         stimName ;
         stimNameZipped ;
         };
-
+    
+    % create new files for new tests
     for iFile = 1:numel(filesToProcess)
-        copyfile( ...
-            fullfile('..', 'dummyData', 'dummyData.nii.gz'), ...
-            fullfile(cfg.dir.output, filesToProcess{iFile}));
+        system(sprintf('touch %s', filesToProcess{iFile}));
     end
-
+    
+    
     %% do stuff
-    filenames = file_utils('List', cfg.dir.output, '^test.*$');
-
-    removeDateSuffix(filenames, cfg.dir.output);
-
+    filenames = file_utils('List', outputDir, '^test.*$');
+    
     %% expected data
     expectedBoldName = 'test_bold.nii.gz';
     expectedBoldName2 = 'test2_bold.nii.gz';
@@ -59,14 +49,18 @@ function test_removeDateSuffixBasic()
     expectedEventsName = 'test_events.tsv';
     expectedStimName = 'test_stim.tsv';
     expectedStimNameZipped = 'test2_stim.tsv.gz';
-
+    
+    removeDateSuffix(filenames, outputDir);
+    
     %% test
-    assertEqual(exist(fullfile(cfg.dir.output, expectedBoldName3), 'file'), 2);
-    assertEqual(exist(fullfile(cfg.dir.output, expectedJsonName), 'file'), 2);
-    assertEqual(exist(fullfile(cfg.dir.output, expectedEventsName), 'file'), 2);
-    assertEqual(exist(fullfile(cfg.dir.output, expectedStimName), 'file'), 2);
-    assertEqual(exist(fullfile(cfg.dir.output, expectedStimNameZipped), 'file'), 2);
-    assertEqual(exist(fullfile(cfg.dir.output, expectedBoldName2), 'file'), 2);
-    assertEqual(exist(fullfile(cfg.dir.output, expectedBoldName), 'file'), 2);
-
+    fprintf(1, fullfile(outputDir, expectedBoldName3));
+    assertEqual(exist(fullfile(outputDir, expectedBoldName3), 'file'), 2);
+    assertEqual(exist(fullfile(outputDir, expectedJsonName), 'file'), 2);
+    fprintf(1, fullfile(outputDir, expectedEventsName));
+    assertEqual(exist(fullfile(outputDir, expectedEventsName), 'file'), 2);
+    assertEqual(exist(fullfile(outputDir, expectedStimName), 'file'), 2);
+    assertEqual(exist(fullfile(outputDir, expectedStimNameZipped), 'file'), 2);
+    assertEqual(exist(fullfile(outputDir, expectedBoldName2), 'file'), 2);
+    assertEqual(exist(fullfile(outputDir, expectedBoldName), 'file'), 2);
+    
 end

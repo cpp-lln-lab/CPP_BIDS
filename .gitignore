@@ -6,17 +6,17 @@
 *octave-workspace
 
 # exclude content of logfiles folders
-tests/output/*
-manualTests/output/*
-output/*
+*output*
 *.tsv
 *.mat
 
 # exclude temp files from tests and coverage
-tests/coverage*
-tests/test_code_report.txt
-test_code_report.txt
-*/coverage_html/*
+*test_code_report.txt
+*coverage*
+
+tests/*.nii*
+tests/*.json*
+tests/*.tsv*
 
 # exclude report from check_my_code
 check_my_code_report.txt

@@ -3,6 +3,14 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
     %
     % Function to save output files for events that will be BIDS compliant.
     %
+    % USAGE
+    %
+    % [logFile] = saveEventsFile('init', [cfg], logFile)
+    % [logFile] = saveEventsFile('open', [cfg], logFile)
+    % [logFile] = saveEventsFile('open_stim', [cfg], logFile)
+    % [logFile] = saveEventsFile('save', [cfg], logFile)
+    % [logFile] = saveEventsFile('close', cfg, logFile)
+    %
     % INPUTS
     %
     % logFile:
@@ -326,6 +334,7 @@ function printData(output, data)
 end
 
 function logFile = resetLogFileVar(logFile)
+    % removes the content of all the events from (2:end)
 
     logFile(2:end) = [];
 

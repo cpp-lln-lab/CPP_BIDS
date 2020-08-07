@@ -50,6 +50,50 @@ function test_saveEventsFileOpenBasic()
 
 end
 
+function test_saveEventsFileOpenStimfile()
+
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+    %% set up
+
+    cfg.verbose = false;
+
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+
+    cfg.task.name = 'testtask';
+
+    cfg.dir.output = outputDir;
+
+    cfg.testingDevice = 'mri';
+
+    cfg = createFilename(cfg);
+
+    % create the events file and header
+    logFile = saveEventsFile('open_stim', cfg);
+
+    % close the file
+    saveEventsFile('close', cfg, logFile);
+
+    %% data to test against
+    funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
+    eventFilename = ['sub-001_ses-001_task-testtask_run-001_stim_date-' ...
+        cfg.fileName.date '.tsv'];
+
+    % check that the file has the right path and name
+    assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);
+
+    FID = fopen(fullfile(funcDir, eventFilename), 'r');
+    C = textscan(FID, repmat('%s', 1, 3), 'Delimiter', '\t', 'EndOfLine', '\n');
+
+    %% test
+    % check the extra columns of the header
+    assertEqual(C{1}{1}, 'onset');
+    assertEqual(C{2}{1}, 'duration');
+    assertEqual(C{3}{1}, 'trial_type');
+
+end
+
 function test_saveEventsFileOpenExtraColumns()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');

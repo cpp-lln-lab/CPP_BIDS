@@ -1,4 +1,6 @@
 function cfg = createFilename(cfg)
+    % cfg = createFilename(cfg)
+    %
     % create the BIDS compliant directories and fileNames for the behavioral output
     % for this subject / session / run using the information from cfg and expParameters.
     % Will also create the right fileName for the eyetracking data file.
@@ -99,21 +101,39 @@ function cfg = setSuffixes(cfg)
 
     cfg.fileName.suffix.run = ['_run-' sprintf(cfg.fileName.pattern, cfg.subject.runNb)];
 
+    %% MRI
     % set values for the suffixes for the different fields in the BIDS name
     fields2Check = { ...
+        'acquisition', ...
         'contrastEnhancement', ...
+        'echo', ...
         'phaseEncodingDirection', ...
         'reconstruction', ...
+        };
+
+    targetFields = { ...
+        'acq', ...
+        'ce', ...
         'echo', ...
-        'acquisition'
+        'dir', ...
+        'rec', ...
         };
 
     for iField = 1:numel(fields2Check)
+
         if isempty (cfg.mri.(fields2Check{iField})) %#ok<*GFLD>
+
             cfg.fileName.suffix.mri.(fields2Check{iField}) = ''; %#ok<*SFLD>
+
         else
+
+            % upper camelCase and remove invalid characters
+            thisField = getfield(cfg.mri, fields2Check{iField});
+            [~, validFieldName] = createValidName(thisField);
+
             cfg.fileName.suffix.mri.(fields2Check{iField}) = ...
-                ['_' fields2Check{iField} '-' getfield(cfg.mri, fields2Check{iField})];
+                ['_' targetFields{iField} '-' validFieldName];
+
         end
     end
 

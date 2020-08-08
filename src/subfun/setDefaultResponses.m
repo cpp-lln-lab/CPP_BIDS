@@ -4,14 +4,14 @@ function [cfg, responses] = setDefaultResponses(cfg)
         cfg = struct('debug', []);
     end
     
-    if isempty(cfg.debug)
+    if ~isfield(cfg, 'debug') || isempty(cfg.debug)
         cfg.debug.do = false;
     end
     
     responses{1,1} = ''; % subjectGrp
-    responses{2,1} = []; % subjectNb
-    responses{3,1} = 1; % runNb
-    responses{4,1} = []; % sessionNb
+    responses{2,1} = ''; % subjectNb
+    responses{3,1} = 1; % session
+    responses{4,1} = ''; % run
     
     if cfg.debug.do
         

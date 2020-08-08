@@ -12,9 +12,9 @@ function test_setDefaultResponsesBasic()
     [~, responses] = setDefaultResponses(); %#ok<*NODEF>
     
     expectedCell{1,1} = '';
-    expectedCell{2,1} = [];
+    expectedCell{2,1} = '';
     expectedCell{3,1} = 1;
-    expectedCell{4,1} = [];
+    expectedCell{4,1} = '';
     
     assertEqual(expectedCell, responses)
     

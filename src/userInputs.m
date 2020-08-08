@@ -20,7 +20,11 @@ function cfg = userInputs(cfg)
         
         questions = createQuestionList(cfg);
         
-        responses = askUserCli(questions, responses);
+%         try
+            responses = askUserGui(questions, responses);
+%         catch
+%             responses = askUserCli(questions, responses);
+%         end
         
     end
     

@@ -4,7 +4,7 @@ function questions = createQuestionList(cfg)
     
     questions.group = 'Enter subject group (leave empty if none): ';
     questions.subject = 'Enter subject number (1-999): ';
-    questions.session = 'Enter the session (i.e day - 1-999)) number: ';
+    questions.session = 'Enter the session number (i.e day ; 1-999): ';
     questions.run = 'Enter the run number (1-999): ';
     questions.mustBePositiveInteger = 'Please enter a positive integer: ';
     % questions.questionsToAsk is a cell array : second column is a boolean

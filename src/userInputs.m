@@ -2,7 +2,8 @@ function cfg = userInputs(cfg)
     % cfg = userInputs(cfg)
     %
     % Get subject, run and session number and make sure they are
-    % positive integer values
+    % positive integer values.
+    % Will do ii with a graphic interface if possible.
     %
     % expParameters.subject.askGrpSess
     % a 1 X 2 array of booleans (default is [true true] ):
@@ -20,11 +21,11 @@ function cfg = userInputs(cfg)
 
         questions = createQuestionList(cfg);
 
-        %         try
-        responses = askUserGui(questions, responses);
-        %         catch
-        %             responses = askUserCli(questions, responses);
-        %         end
+        try
+            responses = askUserGui(questions, responses);
+        catch
+            responses = askUserCli(questions, responses);
+        end
 
     end
 

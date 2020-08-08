@@ -9,72 +9,75 @@ function cfg = userInputs(cfg)
     %    - the first value set to false will skip asking for the participants
     %    group
     %    - the second value set to false will skip asking for the session
-
+    
     if nargin < 1
-        cfg = [];
+        cfg = struct('debug', []);
     end
+    
     if isempty(cfg.debug)
         cfg.debug.do = false;
     end
-
-    askGrpSess = [true true];
-    if isfield(cfg, 'subject') && ...
-            isfield(cfg.subject, 'askGrpSess') && ...
-            ~isempty(cfg.subject.askGrpSess)
-
-        askGrpSess = cfg.subject.askGrpSess;
-
-    end
-    if numel(askGrpSess) < 2
-        askGrpSess(2) = 1;
-    end
-
-    subjectGrp = '';
-    subjectNb = []; %#ok<*NASGU>
-    sessionNb = [];
-    runNb = [];
+    
+    responses{1,1} = ''; % subjectGrp
+    responses{2,1} = []; % subjectNb
+    responses{3,1} = 1; % runNb
+    responses{4,1} = []; % sessionNb
 
     % When in debug more this function returns some dummy values
     if cfg.debug.do
-        subjectGrp = 'ctrl';
-        subjectNb = 666;
-        runNb = 666;
-        sessionNb = 666;
-
+        
+        responses{1,1} = 'ctrl';
+        responses{2,1} = 666;
+        responses{3,1} = 666;
+        responses{4,1} = 666;
+        
         % Otherwise it prompts the user for some information
     else
 
-        % subject group
-        if askGrpSess(1)
-            subjectGrp = lower(input('Enter subject group (leave empty if none): ', 's'));
-        end
-
-        % the subject number
-        subjectNb = str2double(input('Enter subject number (1-999): ', 's'));
-        subjectNb = checkInput(subjectNb);
-
-        % the session number
-        if  numel(askGrpSess) > 1 && askGrpSess(2)
-            sessionNb = str2double(input('Enter the session (i.e day - 1-999)) number: ', 's'));
-            sessionNb = checkInput(sessionNb);
-        end
-
-        % the run number
-        runNb = str2double(input('Enter the run number (1-999): ', 's'));
-        runNb = checkInput(runNb);
-
+        questions = createQuestionList(cfg);
+        
+        responses = askUserCli(questions);
+        
     end
-
-    cfg.subject.subjectGrp = subjectGrp;
-    cfg.subject.subjectNb = subjectNb;
-    cfg.subject.sessionNb = sessionNb;
-    cfg.subject.runNb = runNb;
-
+    
+    cfg.subject.subjectGrp = responses{1,1};
+    cfg.subject.subjectNb = responses{2,1};
+    cfg.subject.sessionNb = responses{3,1};
+    cfg.subject.runNb = responses{4,1};
+    
 end
 
-function input2check = checkInput(input2check)
-    % this function checks the input to makes sure the user enters a positive integer
-    while isnan(input2check) || fix(input2check) ~= input2check || input2check < 0
-        input2check = str2double(input('Please enter a positive integer: ', 's'));
+
+function responses = askUserCli(questions)
+    % response = askUserCli(questions)
+    %
+    % command line interface to ask questions to user
+    %
+    
+    for iQuestion = 1:size(questions.questionsToAsk, 1)
+        
+        if ~isempty(questions.questionsToAsk{iQuestion,1})
+            
+            responses{iQuestion, 1} = ...
+                input(questions.questionsToAsk{iQuestion,1}, 's'); %#ok<*AGROW>
+            
+            if questions.questionsToAsk{iQuestion,2}
+                responses{iQuestion, 1} = str2double(responses);
+                responses{iQuestion, 1} = checkInput(responses, questions);
+            end
+            
+        end
+        
     end
+    
+end
+
+
+function input2check = checkInput(input2check, questions)
+    % this function checks the input to makes sure the user enters a positive integer
+    
+    while ~isPositiveInteger(input2check)
+        input2check = str2double(input(questions.mustBePositiveInteger, 's'));
+    end
+    
 end

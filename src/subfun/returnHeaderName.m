@@ -7,5 +7,5 @@ function headerName = returnHeaderName(columnName, nbCol, iCol)
     else
         headerName = sprintf('%s_%02.0f', columnName, iCol);
     end
-    
+
 end

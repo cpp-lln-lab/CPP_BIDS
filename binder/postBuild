@@ -1,4 +1,3 @@
 cd ${HOME}
 cd lib/JSONio; mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS; cd ..
-sudo apt-get install tree
 

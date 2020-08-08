@@ -9,28 +9,28 @@ function cfg = userInputs(cfg)
     %    - the first value set to false will skip asking for the participants
     %    group
     %    - the second value set to false will skip asking for the session
-    
+
     if nargin < 1
         cfg = struct('debug', []);
     end
-    
+
     [cfg, responses] = setDefaultResponses(cfg);
-    
+
     if ~cfg.debug.do
-        
+
         questions = createQuestionList(cfg);
-        
-%         try
-            responses = askUserGui(questions, responses);
-%         catch
-%             responses = askUserCli(questions, responses);
-%         end
-        
+
+        %         try
+        responses = askUserGui(questions, responses);
+        %         catch
+        %             responses = askUserCli(questions, responses);
+        %         end
+
     end
-    
-    cfg.subject.subjectGrp = responses{1,1};
-    cfg.subject.subjectNb = responses{2,1};
-    cfg.subject.sessionNb = responses{3,1};
-    cfg.subject.runNb = responses{4,1};
-    
+
+    cfg.subject.subjectGrp = responses{1, 1};
+    cfg.subject.subjectNb = responses{2, 1};
+    cfg.subject.sessionNb = responses{3, 1};
+    cfg.subject.runNb = responses{4, 1};
+
 end

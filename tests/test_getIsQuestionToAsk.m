@@ -7,23 +7,23 @@ function test_suite = test_getIsQuestionToAsk %#ok<*STOUT>
 end
 
 function test_isPositiveIntegerBasic()
-    
-    questions.questionsToAsk = {...
+
+    questions.questionsToAsk = { ...
         [], 1 ; ...
         [], 0 ; ...
         [], 1 ; ...
         [], 0 ; ...
         };
-    
-    responses = {...
+
+    responses = { ...
         '1';
         '1';
         '-1';
         '-1';
         };
-    
+
     isQuestionToAsk = getIsQuestionToAsk(questions, responses);
-    
+
     assertEqual(isQuestionToAsk, [false;false;true;false]);
-    
+
 end

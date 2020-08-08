@@ -9,9 +9,9 @@ end
 function test_isPositiveIntegerBasic()
 
     assertTrue(isPositiveInteger(1));
-    assertFalse(isPositiveInteger(nan()))
-    assertFalse(isPositiveInteger(0.3))
-    assertFalse(isPositiveInteger(-1))
-    assertFalse(isPositiveInteger('1'))
-    
+    assertFalse(isPositiveInteger(nan()));
+    assertFalse(isPositiveInteger(0.3));
+    assertFalse(isPositiveInteger(-1));
+    assertFalse(isPositiveInteger('1'));
+
 end

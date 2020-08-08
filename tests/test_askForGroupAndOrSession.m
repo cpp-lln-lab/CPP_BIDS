@@ -11,42 +11,42 @@ function test_askForGroupAndOrSessionBasic()
     %% set up
     cfg = struct();
     cfg = askForGroupAndOrSession(cfg);
-    
+
     expectedStructure = struct('subject', struct('askGrpSess', [true true]));
-    
-    assertEqual(expectedStructure, cfg)
-    
+
+    assertEqual(expectedStructure, cfg);
+
 end
 
 function test_askForGroupAndOrSessionNoGroup()
 
     cfg.subject.askGrpSess = 0;
     cfg = askForGroupAndOrSession(cfg);
-    
+
     expectedStructure = struct('subject', struct('askGrpSess', [false true]));
-    
-    assertEqual(expectedStructure, cfg)
-    
+
+    assertEqual(expectedStructure, cfg);
+
 end
 
 function test_askForGroupAndOrSessionNoGroupNoSession()
 
     cfg.subject.askGrpSess = [0 0];
     cfg = askForGroupAndOrSession(cfg);
-    
+
     expectedStructure = struct('subject', struct('askGrpSess', [false false]));
-    
-    assertEqual(expectedStructure, cfg)
-    
+
+    assertEqual(expectedStructure, cfg);
+
 end
 
 function test_askForGroupAndOrSessionNoSession()
 
     cfg.subject.askGrpSess = [1 0];
     cfg = askForGroupAndOrSession(cfg);
-    
+
     expectedStructure = struct('subject', struct('askGrpSess', [true false]));
-    
-    assertEqual(expectedStructure, cfg)
-    
+
+    assertEqual(expectedStructure, cfg);
+
 end

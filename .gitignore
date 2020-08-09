@@ -21,6 +21,9 @@ tests/*.tsv*
 # exclude report from check_my_code
 check_my_code_report.txt
 
+# jupyter notebook checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
 
 
 

@@ -55,8 +55,7 @@ sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-2020072915
 ##  2. <a name='Documentation'></a>Documentation
 
 - [Installation](./docs/installation.md)
-- [How to use it](./docs/usage.md)
-- [Jupyter notebooks](./notebooks/README.md)
+- [How to use it: jupyter notebooks](./notebooks)
 - [Functions description](./docs/functions_description.md)
 
 ##  3. <a name='Contributing'></a>Contributing

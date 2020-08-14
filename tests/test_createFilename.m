@@ -12,7 +12,7 @@ function test_createFilenameBasic()
 
     %% set up
 
-    cfg.verbose = false;
+    cfg.verbose = true;
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
     cfg.task.name = 'test task';
@@ -53,7 +53,7 @@ function test_createFilenameMriEyetracker()
 
     %% set up
 
-    cfg.verbose = false;
+    cfg.verbose = true;
     cfg.subject.subjectGrp = 'ctrl';
     cfg.subject.subjectNb = 2;
     cfg.subject.sessionNb = 2;
@@ -100,7 +100,7 @@ function test_createFilenameMriSuffix()
 
     %% set up
 
-    cfg.verbose = false;
+    cfg.verbose = true;
     cfg.subject.subjectGrp = 'ssri';
     cfg.subject.subjectNb = 3;
     cfg.subject.sessionNb = 4;
@@ -146,7 +146,7 @@ function test_createFilenameEeg()
 
     %% set up
 
-    cfg.verbose = false;
+    cfg.verbose = true;
     cfg.subject.subjectGrp = 'blind';
     cfg.subject.subjectNb = 3;
     cfg.subject.sessionNb = 1;

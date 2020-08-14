@@ -215,7 +215,7 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
 
         logFile(iEvent).(namesExtraColumns{iExtraColumn}) = data;
 
-        if any(isnan(data))
+        if ~ischar(data) && any(isnan(data))
             warning('saveEventsFile:missingData', ...
                 'Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
 
@@ -223,7 +223,7 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
                 disp(logFile(iEvent));
             end
 
-        elseif all(isnan(data))
+        elseif ~ischar(data) && all(isnan(data))
             warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
 
             if cfg.verbose

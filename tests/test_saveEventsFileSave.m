@@ -137,7 +137,7 @@ function test_saveEventsFileSaveMissingInfo()
 end
 
 function test_saveEventsFileSaveArraySize()
-
+    
     %% set up
 
     [cfg, logFile] = setUp();

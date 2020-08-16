@@ -20,7 +20,6 @@ function test_checkCfgDefault()
     expectedStructure = orderfields(expectedStructure);
 
     %% test
-    assertEqual(expectedStructure.bids.ieeg, cfg.bids.ieeg);
     assertEqual(expectedStructure, cfg);
 
 end
@@ -116,29 +115,24 @@ function expectedCfgStructure = returnExpectedCfgStructure()
 
     expectedCfgStructure.bids.eeg.TaskName = '';
     expectedCfgStructure.bids.eeg.Instructions = '';
-    expectedCfgStructure.bids.eeg.EEGReference = [];
+    expectedCfgStructure.bids.eeg.EEGReference = '';
     expectedCfgStructure.bids.eeg.SamplingFrequency = [];
-    expectedCfgStructure.bids.eeg.PowerLineFrequency = [];
-    expectedCfgStructure.bids.eeg.DewarPosition = [];
-    expectedCfgStructure.bids.eeg.SoftwareFilters = [];
-    expectedCfgStructure.bids.eeg.DigitizedLandmarks = [];
-    expectedCfgStructure.bids.eeg.DigitizedHeadPoints = [];
+    expectedCfgStructure.bids.eeg.PowerLineFrequency = 50;
+    expectedCfgStructure.bids.eeg.SoftwareFilters = 'n/a';
 
     expectedCfgStructure.bids.ieeg.TaskName = '';
     expectedCfgStructure.bids.ieeg.Instructions = '';
+    expectedCfgStructure.bids.ieeg.iEEGReference = '';
     expectedCfgStructure.bids.ieeg.SamplingFrequency = [];
-    expectedCfgStructure.bids.ieeg.PowerLineFrequency = [];
-    expectedCfgStructure.bids.ieeg.DewarPosition = [];
-    expectedCfgStructure.bids.ieeg.SoftwareFilters = [];
-    expectedCfgStructure.bids.ieeg.DigitizedLandmarks = [];
-    expectedCfgStructure.bids.ieeg.DigitizedHeadPoints = [];
+    expectedCfgStructure.bids.ieeg.PowerLineFrequency = 50;
+    expectedCfgStructure.bids.ieeg.SoftwareFilters = 'n/a';
 
     expectedCfgStructure.bids.meg.TaskName = '';
     expectedCfgStructure.bids.meg.Instructions = '';
     expectedCfgStructure.bids.meg.SamplingFrequency = [];
-    expectedCfgStructure.bids.meg.PowerLineFrequency = [];
+    expectedCfgStructure.bids.meg.PowerLineFrequency = 50;
     expectedCfgStructure.bids.meg.DewarPosition = [];
-    expectedCfgStructure.bids.meg.SoftwareFilters = [];
+    expectedCfgStructure.bids.meg.SoftwareFilters = 'n/a';
     expectedCfgStructure.bids.meg.DigitizedLandmarks = [];
     expectedCfgStructure.bids.meg.DigitizedHeadPoints = [];
 

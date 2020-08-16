@@ -79,17 +79,18 @@ function [cfg, modality, extraInfo] = checkInput(varargin)
         case 2
             cfg = input{1};
             if ischar(input{2})
-                modality = varargin{2};
+                modality = input{2};
             elseif isstruct(input{2})
-                extraInfo = varargin{2};
+                modality = cfg.fileName.modality;
+                extraInfo = input{2};
             else
                 errorCreateJson('wrongInputType');
             end
 
         otherwise
             cfg = input{1};
-            modality = varargin{2};
-            extraInfo = varargin{3};
+            modality = input{2};
+            extraInfo = input{3};
 
     end
 

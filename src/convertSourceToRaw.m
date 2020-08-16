@@ -19,6 +19,9 @@ function convertSourceToRaw(cfg)
     copyfile(fullfile( ...
         fileparts(mfilename('fullpath')), '..', 'manualTests', 'dummyData', 'CHANGES'), ...
         sourceDir);
+    copyfile(fullfile( ...
+        fileparts(mfilename('fullpath')), '..', 'manualTests', 'dummyData', '.bidsignore'), ...
+        sourceDir);
 
     copyfile(sourceDir, rawDir);
 
@@ -35,7 +38,7 @@ function convertSourceToRaw(cfg)
         sess = cellstr(file_utils('List', fullfile(rawDir, subjects{su}), 'dir', '^ses-.*$'));
 
         for se = 1:numel(sess)
-            parseFunc(rawDir, subjects{su}, sess{se});
+            removeAllDateSuffix(rawDir, subjects{su}, sess{se});
         end
 
     end

@@ -23,13 +23,22 @@ function test_transferInfoToBidsTaskname()
     % make sure the file name gets trasnferred where it should
 
     cfg.task.name = 'foo bar';
+    cfg.task.instructions = 'do this';
 
     fieldsToSet = struct();
     fieldsToSet = transferInfoToBids(fieldsToSet, cfg);
 
     expectedStruct.fileName.task = 'fooBar';
     expectedStruct.bids.meg.TaskName = 'foo Bar';
+    expectedStruct.bids.eeg.TaskName = 'foo Bar';
+    expectedStruct.bids.ieeg.TaskName = 'foo Bar';
+    expectedStruct.bids.beh.TaskName = 'foo Bar';
     expectedStruct.bids.mri.TaskName = 'foo Bar';
+    expectedStruct.bids.meg.Instructions = 'do this';
+    expectedStruct.bids.eeg.Instructions = 'do this';
+    expectedStruct.bids.ieeg.Instructions = 'do this';
+    expectedStruct.bids.beh.Instructions = 'do this';
+    expectedStruct.bids.mri.Instructions = 'do this';
 
     assert(isequal(expectedStruct, fieldsToSet));
 

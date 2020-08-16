@@ -1,4 +1,4 @@
-function test_suite = test_createBoldJson %#ok<*STOUT>
+function test_suite = test_createJson %#ok<*STOUT>
     try % assignment of 'localfunctions' is necessary in Matlab >= 2016
         test_functions = localfunctions(); %#ok<*NASGU>
     catch % no problem; early Matlab versions can use initTestSuite fine
@@ -6,7 +6,7 @@ function test_suite = test_createBoldJson %#ok<*STOUT>
     initTestSuite;
 end
 
-function test_createBoldJsonExtra()
+function test_createJsonExtra()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
@@ -29,7 +29,7 @@ function test_createBoldJsonExtra()
 
     extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
 
-    createBoldJson(cfg, extraInfo);
+    createJson(cfg, extraInfo);
 
     %% check content
     fileName = strrep(cfg.fileName.events, '_events', '_bold');

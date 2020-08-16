@@ -1,0 +1,11 @@
+*_beh.*
+*_eeg.*
+*_ieeg.*
+*_meg.*
+
+# *_beh.tsv
+# *_eeg.edf
+# *_ieeg.edf
+# *_meg.fif
+
+# *_bold.nii.gz

@@ -8,7 +8,18 @@ function fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
         [taskName, taskNameValid] = createValidName(cfg.task.name);
         fieldsToSet.fileName.task = taskNameValid;
         fieldsToSet.bids.meg.TaskName = taskName;
+        fieldsToSet.bids.eeg.TaskName = taskName;
+        fieldsToSet.bids.ieeg.TaskName = taskName;
+        fieldsToSet.bids.beh.TaskName = taskName;
         fieldsToSet.bids.mri.TaskName = taskName;
+    end
+
+    if isfield(cfg, 'task') && isfield(cfg.task, 'instructions')
+        fieldsToSet.bids.meg.Instructions = cfg.task.instructions;
+        fieldsToSet.bids.eeg.Instructions = cfg.task.instructions;
+        fieldsToSet.bids.ieeg.Instructions = cfg.task.instructions;
+        fieldsToSet.bids.beh.Instructions = cfg.task.instructions;
+        fieldsToSet.bids.mri.Instructions = cfg.task.instructions;
     end
 
     if isfield(cfg, 'mri') && isfield(cfg.mri, 'repetitionTime')

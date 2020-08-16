@@ -37,9 +37,12 @@ function cfg = checkCFG(cfg)
 
     %% BIDS
 
+    fieldsToSet = behJsonDefaults(fieldsToSet);
     fieldsToSet = datasetDescriptionDefaults(fieldsToSet);
-    fieldsToSet = mriJsonDefaults(fieldsToSet);
+    fieldsToSet = eegJsonDefaults(fieldsToSet);
+    fieldsToSet = ieegJsonDefaults(fieldsToSet);
     fieldsToSet = megJsonDefaults(fieldsToSet);
+    fieldsToSet = mriJsonDefaults(fieldsToSet);
 
     fieldsToSet = transferInfoToBids(fieldsToSet, cfg);
 
@@ -51,14 +54,15 @@ end
 function fieldsToSet = mriDefaults(fieldsToSet)
 
     % for file naming and JSON
-    fieldsToSet.mri.contrastEnhancement = [];
-    fieldsToSet.mri.phaseEncodingDirection = [];
-    fieldsToSet.mri.reconstruction = [];
-    fieldsToSet.mri.echo = [];
-    fieldsToSet.mri.acquisition = [];
-    fieldsToSet.mri.repetitionTime = [];
+    fieldsToSet.suffix.contrastEnhancement = [];
+    fieldsToSet.suffix.phaseEncodingDirection = [];
+    fieldsToSet.suffix.reconstruction = [];
+    fieldsToSet.suffix.echo = [];
+    fieldsToSet.suffix.acquisition = [];
+    fieldsToSet.suffix.repetitionTime = [];
+    fieldsToSet.suffix.recording = [];
 
-    fieldsToSet.mri = orderfields(fieldsToSet.mri);
+    fieldsToSet.suffix = orderfields(fieldsToSet.suffix);
 
 end
 
@@ -133,7 +137,7 @@ function fieldsToSet = mriJsonDefaults(fieldsToSet)
     % REQUIRED Name of the task (for resting state use the "rest" prefix). No two tasks
     % should have the same name. Task label is derived from this field by
     % removing all non alphanumeric ([a-zA-Z0-9]) characters.
-    fieldsToSet.bids.mri.TaskName = [];
+    fieldsToSet.bids.mri.TaskName = '';
 
     % RECOMMENDED Text of the instructions given to participants before the scan.
     % This is especially important in context of resting state fMRI and
@@ -157,14 +161,16 @@ function fieldsToSet = megJsonDefaults(fieldsToSet)
     % REQUIRED Name of the task (for resting state use the "rest" prefix). No two tasks
     % should have the same name. Task label is derived from this field by
     % removing all non alphanumeric ([a-zA-Z0-9]) characters.
-    fieldsToSet.bids.meg.TaskName = [];
+    fieldsToSet.bids.meg.TaskName = '';
+
+    fieldsToSet.bids.meg.Instructions = '';
 
     % REQUIRED Sampling frequency
     fieldsToSet.bids.meg.SamplingFrequency = [];
 
     % REQUIRED Frequency (in Hz) of the power grid at the geographical location of
     % the MEG instrument (i.e. 50 or 60):
-    fieldsToSet.bids.meg.PowerLineFrequency = [];
+    fieldsToSet.bids.meg.PowerLineFrequency = 50;
 
     % REQUIRED Position of the dewar during the MEG scan: "upright", "supine" or
     % "degrees" of angle from vertical: for example on CTF systems,
@@ -176,7 +182,7 @@ function fieldsToSet = megJsonDefaults(fieldsToSet)
     % values: e.g., {"SSS": {"frame": "head", "badlimit": 7}},
     % {"SpatialCompensation": {"GradientOrder": Order of the gradient
     % compensation}}. Write "n/a" if no software filters applied.
-    fieldsToSet.bids.meg.SoftwareFilters = [];
+    fieldsToSet.bids.meg.SoftwareFilters = 'n/a';
 
     % REQUIRED Boolean ("true" or "false") value indicating whether anatomical
     % landmark points (i.e. fiducials) are contained within this recording.
@@ -187,5 +193,54 @@ function fieldsToSet = megJsonDefaults(fieldsToSet)
     fieldsToSet.bids.meg.DigitizedHeadPoints = [];
 
     fieldsToSet.bids.meg = orderfields(fieldsToSet.bids.meg);
+
+end
+
+function fieldsToSet = eegJsonDefaults(fieldsToSet)
+    % for json for EEG data
+
+    fieldsToSet.bids.eeg.TaskName = '';
+
+    fieldsToSet.bids.eeg.Instructions = '';
+
+    fieldsToSet.bids.eeg.EEGReference = '';
+
+    fieldsToSet.bids.eeg.SamplingFrequency = [];
+
+    fieldsToSet.bids.eeg.PowerLineFrequency = 50;
+
+    fieldsToSet.bids.eeg.SoftwareFilters = 'n/a';
+
+    fieldsToSet.bids.eeg = orderfields(fieldsToSet.bids.eeg);
+
+end
+
+function fieldsToSet = ieegJsonDefaults(fieldsToSet)
+    % for json for iEEG data
+
+    fieldsToSet.bids.ieeg.TaskName = '';
+
+    fieldsToSet.bids.ieeg.Instructions = '';
+
+    fieldsToSet.bids.ieeg.iEEGReference = '';
+
+    fieldsToSet.bids.ieeg.SamplingFrequency = [];
+
+    fieldsToSet.bids.ieeg.PowerLineFrequency = 50;
+
+    fieldsToSet.bids.ieeg.SoftwareFilters = 'n/a';
+
+    fieldsToSet.bids.ieeg = orderfields(fieldsToSet.bids.ieeg);
+
+end
+
+function fieldsToSet = behJsonDefaults(fieldsToSet)
+    % for json for BEH data
+
+    fieldsToSet.bids.beh.TaskName = [];
+
+    fieldsToSet.bids.beh.Instructions = [];
+
+    fieldsToSet.bids.ieeg = orderfields(fieldsToSet.bids.beh);
 
 end

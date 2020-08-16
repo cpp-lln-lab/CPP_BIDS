@@ -91,12 +91,13 @@ function expectedCfgStructure = returnExpectedCfgStructure()
 
     expectedCfgStructure.eyeTracker.do = false;
 
-    expectedCfgStructure.mri.contrastEnhancement = [];
-    expectedCfgStructure.mri.phaseEncodingDirection = [];
-    expectedCfgStructure.mri.reconstruction = [];
-    expectedCfgStructure.mri.echo = [];
-    expectedCfgStructure.mri.acquisition = [];
-    expectedCfgStructure.mri.repetitionTime = [];
+    expectedCfgStructure.suffix.contrastEnhancement = [];
+    expectedCfgStructure.suffix.phaseEncodingDirection = [];
+    expectedCfgStructure.suffix.reconstruction = [];
+    expectedCfgStructure.suffix.echo = [];
+    expectedCfgStructure.suffix.acquisition = [];
+    expectedCfgStructure.suffix.repetitionTime = [];
+    expectedCfgStructure.suffix.recording = [];
 
     expectedCfgStructure.bids.mri.RepetitionTime = [];
     expectedCfgStructure.bids.mri.SliceTiming = '';

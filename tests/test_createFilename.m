@@ -107,11 +107,12 @@ function test_createFilenameMriSuffix()
     cfg.eyeTracker.do = false;
     cfg.testingDevice = 'mri';
 
-    cfg.mri.reconstruction = 'fast recon';
-    cfg.mri.contrastEnhancement = 'test';
-    cfg.mri.phaseEncodingDirection = 'y pos';
-    cfg.mri.echo = '1';
-    cfg.mri.acquisition = ' new tYpe';
+    cfg.suffix.recording = 'respi pulse';
+    cfg.suffix.reconstruction = 'fast recon';
+    cfg.suffix.contrastEnhancement = 'test';
+    cfg.suffix.phaseEncodingDirection = 'y pos';
+    cfg.suffix.echo = '1';
+    cfg.suffix.acquisition = ' new tYpe';
 
     cfg = createFilename(cfg);
 
@@ -125,6 +126,11 @@ function test_createFilenameMriSuffix()
         '_acq-newTYpe_ce-test_dir-yPos_rec-fastRecon', ...
         '_run-005_echo-1_events_date-' ...
         cfg.fileName.date '.tsv'];
+    
+    stimFilename = ['sub-ssri003_ses-004_task-rest',  ...
+        '_acq-newTYpe_ce-test_dir-yPos_rec-fastRecon', ...
+        '_run-005_echo-1_recording-respiPulse_stim_date-' ...
+        cfg.fileName.date '.tsv'];
 
     %% tests
     % make sure the func dir is created
@@ -133,6 +139,110 @@ function test_createFilenameMriSuffix()
     % make sure the right filenames are created
     assertEqual(cfg.fileName.base, baseFilename);
     assertEqual(cfg.fileName.events, eventFilename);
+    assertEqual(cfg.fileName.stim, stimFilename);
+
+end
+
+function test_createFilenameBehSuffix()
+
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+    %% set up
+
+    cfg.verbose = true;
+    cfg.subject.subjectGrp = 'ssri';
+    cfg.subject.subjectNb = 2;
+    cfg.subject.runNb = 3;
+    cfg.task.name = 'rest';
+    cfg.dir.output = outputDir;
+
+    cfg.eyeTracker.do = false;
+    cfg.testingDevice = 'pc';
+
+    cfg.suffix.recording = 'respi pulse';
+    cfg.suffix.reconstruction = 'fast recon';
+    cfg.suffix.contrastEnhancement = 'test';
+    cfg.suffix.phaseEncodingDirection = 'y pos';
+    cfg.suffix.echo = '1';
+    cfg.suffix.acquisition = ' new tYpe';
+
+    cfg = createFilename(cfg);
+
+    %% data to test against
+
+    funcDir = fullfile(outputDir, 'source', 'sub-ssri002', 'ses-001', 'beh');
+
+    baseFilename = 'sub-ssri002_ses-001_task-rest';
+
+    eventFilename = ['sub-ssri002_ses-001_task-rest',  ...
+        '_acq-newTYpe', ...
+        '_run-003_events_date-' ...
+        cfg.fileName.date '.tsv'];
+    
+    stimFilename = ['sub-ssri002_ses-001_task-rest',  ...
+        '_acq-newTYpe', ...
+        '_run-003_recording-respiPulse_stim_date-' ...
+        cfg.fileName.date '.tsv'];
+
+    %% tests
+    % make sure the func dir is created
+    assertTrue(exist(funcDir, 'dir') == 7);
+
+    % make sure the right filenames are created
+    assertEqual(cfg.fileName.base, baseFilename);
+    assertEqual(cfg.fileName.events, eventFilename);
+    assertEqual(cfg.fileName.stim, stimFilename);
+    
+
+end
+
+function test_createFilenameEegSuffix()
+
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+    %% set up
+
+    cfg.verbose = true;
+    cfg.subject.subjectNb = 2;
+    cfg.subject.runNb = 3;
+    cfg.task.name = 'rest';
+    cfg.dir.output = outputDir;
+
+    cfg.eyeTracker.do = false;
+    cfg.testingDevice = 'eeg';
+
+    cfg.suffix.recording = 'respi pulse';
+    cfg.suffix.reconstruction = 'fast recon';
+    cfg.suffix.contrastEnhancement = 'test';
+    cfg.suffix.phaseEncodingDirection = 'y pos';
+    cfg.suffix.echo = '1';
+    cfg.suffix.acquisition = ' new tYpe';
+
+    cfg = createFilename(cfg);
+
+    %% data to test against
+
+    funcDir = fullfile(outputDir, 'source', 'sub-002', 'ses-001', 'eeg');
+
+    baseFilename = 'sub-002_ses-001_task-rest';
+
+    eventFilename = ['sub-002_ses-001_task-rest',  ...
+        '_run-003_events_date-' ...
+        cfg.fileName.date '.tsv'];
+    
+    stimFilename = ['sub-002_ses-001_task-rest',  ...
+        '_run-003_recording-respiPulse_stim_date-' ...
+        cfg.fileName.date '.tsv'];
+
+    %% tests
+    % make sure the func dir is created
+    assertTrue(exist(funcDir, 'dir') == 7);
+
+    % make sure the right filenames are created
+    assertEqual(cfg.fileName.base, baseFilename);
+    assertEqual(cfg.fileName.events, eventFilename);
+    assertEqual(cfg.fileName.stim, stimFilename);
+    
 
 end
 

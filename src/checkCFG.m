@@ -51,14 +51,15 @@ end
 function fieldsToSet = mriDefaults(fieldsToSet)
 
     % for file naming and JSON
-    fieldsToSet.mri.contrastEnhancement = [];
-    fieldsToSet.mri.phaseEncodingDirection = [];
-    fieldsToSet.mri.reconstruction = [];
-    fieldsToSet.mri.echo = [];
-    fieldsToSet.mri.acquisition = [];
-    fieldsToSet.mri.repetitionTime = [];
+    fieldsToSet.suffix.contrastEnhancement = [];
+    fieldsToSet.suffix.phaseEncodingDirection = [];
+    fieldsToSet.suffix.reconstruction = [];
+    fieldsToSet.suffix.echo = [];
+    fieldsToSet.suffix.acquisition = [];
+    fieldsToSet.suffix.repetitionTime = [];
+    fieldsToSet.suffix.recording = [];
 
-    fieldsToSet.mri = orderfields(fieldsToSet.mri);
+    fieldsToSet.suffix = orderfields(fieldsToSet.suffix);
 
 end
 

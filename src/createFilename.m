@@ -176,18 +176,18 @@ function cfg = setFilenames(cfg)
                 runSuffix, echoSuffix];
 
         case 'beh'
-            
+
             basename = ...
                 [fileNameBase, ...
                 acqSuffix, ...
                 runSuffix];
-            
+
         otherwise
 
             basename = [fileNameBase, runSuffix];
 
     end
-    
+
     cfg.fileName.events = [basename, '_events_date-' thisDate '.tsv'];
 
     cfg.fileName.stim = [basename, recordingSuffix, '_stim_date-' thisDate '.tsv'];

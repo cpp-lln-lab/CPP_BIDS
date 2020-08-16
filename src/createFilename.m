@@ -90,11 +90,7 @@ function cfg = createDirectories(cfg)
     [~, ~, ~] = mkdir(cfg.dir.output);
     [~, ~, ~] = mkdir(cfg.dir.outputSubject);
     [~, ~, ~] = mkdir(fullfile(cfg.dir.outputSubject, modality));
-
-    if cfg.eyeTracker.do
-        [~, ~, ~] = mkdir(fullfile(cfg.dir.outputSubject, 'eyetracker'));
-    end
-
+    
 end
 
 function cfg = setSuffixes(cfg)
@@ -190,7 +186,7 @@ function cfg = setFilenames(cfg)
     if cfg.eyeTracker.do
         cfg.fileName.eyetracker = ...
             [fileNameBase, acqSuffix, ...
-            runSuffix, '_eyetrack_date-' thisDate '.edf'];
+            runSuffix, '_recording-eyetracking_physio_date-' thisDate '.edf'];
     end
 
 end

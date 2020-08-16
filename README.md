@@ -76,6 +76,13 @@ Feel free to open issues to report a bug and ask for improvements.
 
 Here are the naming templates used.
 
+-   Behavior
+
+`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.tsv`
+`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.json`
+`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.tsv`
+`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.json`
+
 -   BOLD
 
 `sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_ce-<label>][_dir-<label>][_rec-<label>][_run-<index>][_echo-<index>]_<contrast_label>.nii[.gz]`
@@ -87,6 +94,23 @@ Here are the naming templates used.
 -   EEG
 
 `sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.<manufacturer_specific_extension>`
+`sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.json`
+
+<!-- European data format (Each recording consisting of a .edf file)
+
+BrainVision Core Data Format (Each recording consisting of a .vhdr, .vmrk, .eeg file triplet)
+
+The format used by the MATLAB toolbox EEGLAB (Each recording consisting of a .set file with an optional .fdt file)
+
+Biosemi data format (Each recording consisting of a .bdf file) -->
+
+
+EEGReference 	REQUIRED. General description of the reference scheme used and (when applicable) of location of the reference electrode in the raw recordings (e.g., "left mastoid", "Cz", "CMS"). If different channels have a different reference, this field should have a general description and the channel specific reference should be defined in the _channels.tsv file.
+SamplingFrequency 	REQUIRED. Sampling frequency (in Hz) of all the data in the recording, regardless of their type (e.g., 2400).
+PowerLineFrequency 	REQUIRED. Frequency (in Hz) of the power grid at the geographical location of the EEG instrument (i.e., 50 or 60).
+SoftwareFilters 	REQUIRED. A JSON object of temporal software filters applied, or "n/a" if the data is not available. Each key:value pair in the JSON object is a name of the filter and an object in which its parameters are defined as key:value pairs. E.g., {"Anti-aliasing filter": {"half-amplitude cutoff (Hz)": 500, "Roll-off": "6dB/Octave"}}.
+
+
 
 -   MEG
 
@@ -94,7 +118,18 @@ Here are the naming templates used.
 
 -   Eyetracker
 
+current format
+`<matches>_recording-eyetracking_physio.tsv.gz`
+
+future BEP format in a dedicated eyetracker folder
 `sub-<participant_label>[_ses-<label>][_acq-<label>]_task-<task_label>_eyetrack.<manufacturer_specific_extension>`
+
+-   Stim and physio
+
+`<matches>[_recording-<label>]_physio.tsv.gz`
+`<matches>[_recording-<label>]_physio.json`
+`<matches>[_recording-<label>]_stim.tsv.gz`
+`<matches>[_recording-<label>]_stim.json`
 
 ###  3.3. <a name='Contributors'></a>Contributors ✨
 

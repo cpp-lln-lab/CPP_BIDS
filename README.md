@@ -105,12 +105,6 @@ The format used by the MATLAB toolbox EEGLAB (Each recording consisting of a .se
 Biosemi data format (Each recording consisting of a .bdf file) -->
 
 
-EEGReference 	REQUIRED. General description of the reference scheme used and (when applicable) of location of the reference electrode in the raw recordings (e.g., "left mastoid", "Cz", "CMS"). If different channels have a different reference, this field should have a general description and the channel specific reference should be defined in the _channels.tsv file.
-SamplingFrequency 	REQUIRED. Sampling frequency (in Hz) of all the data in the recording, regardless of their type (e.g., 2400).
-PowerLineFrequency 	REQUIRED. Frequency (in Hz) of the power grid at the geographical location of the EEG instrument (i.e., 50 or 60).
-SoftwareFilters 	REQUIRED. A JSON object of temporal software filters applied, or "n/a" if the data is not available. Each key:value pair in the JSON object is a name of the filter and an object in which its parameters are defined as key:value pairs. E.g., {"Anti-aliasing filter": {"half-amplitude cutoff (Hz)": 500, "Roll-off": "6dB/Octave"}}.
-
-
 
 -   MEG
 

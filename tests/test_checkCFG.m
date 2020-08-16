@@ -17,7 +17,10 @@ function test_checkCfgDefault()
     expectedStructure.dir.output = cfg.dir.output;
     expectedStructure.testingDevice = 'pc';
 
+    expectedStructure = orderfields(expectedStructure);
+
     %% test
+    assertEqual(expectedStructure.bids.ieeg, cfg.bids.ieeg);
     assertEqual(expectedStructure, cfg);
 
 end
@@ -62,8 +65,11 @@ function test_checkCfgBasic()
     expectedStructure.fileName.task = 'testTask';
 
     expectedStructure.bids.mri.RepetitionTime = 1.56;
-    expectedStructure.bids.mri.TaskName = 'test Task';
 
+    expectedStructure.bids.mri.TaskName = 'test Task';
+    expectedStructure.bids.beh.TaskName = 'test Task';
+    expectedStructure.bids.ieeg.TaskName = 'test Task';
+    expectedStructure.bids.eeg.TaskName = 'test Task';
     expectedStructure.bids.meg.TaskName = 'test Task';
 
     expectedStructure.bids.datasetDescription.Name = 'dummy';
@@ -99,13 +105,36 @@ function expectedCfgStructure = returnExpectedCfgStructure()
     expectedCfgStructure.suffix.repetitionTime = [];
     expectedCfgStructure.suffix.recording = [];
 
+    expectedCfgStructure.bids.beh.TaskName = '';
+    expectedCfgStructure.bids.beh.Instructions = '';
+
     expectedCfgStructure.bids.mri.RepetitionTime = [];
     expectedCfgStructure.bids.mri.SliceTiming = '';
     expectedCfgStructure.bids.mri.TaskName = '';
     expectedCfgStructure.bids.mri.Instructions = '';
     expectedCfgStructure.bids.mri.TaskDescription = '';
 
+    expectedCfgStructure.bids.eeg.TaskName = '';
+    expectedCfgStructure.bids.eeg.Instructions = '';
+    expectedCfgStructure.bids.eeg.EEGReference = [];
+    expectedCfgStructure.bids.eeg.SamplingFrequency = [];
+    expectedCfgStructure.bids.eeg.PowerLineFrequency = [];
+    expectedCfgStructure.bids.eeg.DewarPosition = [];
+    expectedCfgStructure.bids.eeg.SoftwareFilters = [];
+    expectedCfgStructure.bids.eeg.DigitizedLandmarks = [];
+    expectedCfgStructure.bids.eeg.DigitizedHeadPoints = [];
+
+    expectedCfgStructure.bids.ieeg.TaskName = '';
+    expectedCfgStructure.bids.ieeg.Instructions = '';
+    expectedCfgStructure.bids.ieeg.SamplingFrequency = [];
+    expectedCfgStructure.bids.ieeg.PowerLineFrequency = [];
+    expectedCfgStructure.bids.ieeg.DewarPosition = [];
+    expectedCfgStructure.bids.ieeg.SoftwareFilters = [];
+    expectedCfgStructure.bids.ieeg.DigitizedLandmarks = [];
+    expectedCfgStructure.bids.ieeg.DigitizedHeadPoints = [];
+
     expectedCfgStructure.bids.meg.TaskName = '';
+    expectedCfgStructure.bids.meg.Instructions = '';
     expectedCfgStructure.bids.meg.SamplingFrequency = [];
     expectedCfgStructure.bids.meg.PowerLineFrequency = [];
     expectedCfgStructure.bids.meg.DewarPosition = [];
@@ -122,6 +151,8 @@ function expectedCfgStructure = returnExpectedCfgStructure()
     expectedCfgStructure.bids.datasetDescription.Funding = {''};
     expectedCfgStructure.bids.datasetDescription.ReferencesAndLinks = {''};
     expectedCfgStructure.bids.datasetDescription.DatasetDOI = '';
+
+    expectedCfgStructure.bids = orderfields(expectedCfgStructure.bids);
 
     expectedCfgStructure = orderfields(expectedCfgStructure);
 

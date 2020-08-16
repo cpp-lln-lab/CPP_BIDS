@@ -37,9 +37,12 @@ function cfg = checkCFG(cfg)
 
     %% BIDS
 
+    fieldsToSet = behJsonDefaults(fieldsToSet);
     fieldsToSet = datasetDescriptionDefaults(fieldsToSet);
-    fieldsToSet = mriJsonDefaults(fieldsToSet);
+    fieldsToSet = eegJsonDefaults(fieldsToSet);
+    fieldsToSet = ieegJsonDefaults(fieldsToSet);
     fieldsToSet = megJsonDefaults(fieldsToSet);
+    fieldsToSet = mriJsonDefaults(fieldsToSet);
 
     fieldsToSet = transferInfoToBids(fieldsToSet, cfg);
 
@@ -160,6 +163,8 @@ function fieldsToSet = megJsonDefaults(fieldsToSet)
     % removing all non alphanumeric ([a-zA-Z0-9]) characters.
     fieldsToSet.bids.meg.TaskName = [];
 
+    fieldsToSet.bids.meg.Instructions = [];
+
     % REQUIRED Sampling frequency
     fieldsToSet.bids.meg.SamplingFrequency = [];
 
@@ -188,5 +193,64 @@ function fieldsToSet = megJsonDefaults(fieldsToSet)
     fieldsToSet.bids.meg.DigitizedHeadPoints = [];
 
     fieldsToSet.bids.meg = orderfields(fieldsToSet.bids.meg);
+
+end
+
+function fieldsToSet = eegJsonDefaults(fieldsToSet)
+    % for json for EEG data
+
+    fieldsToSet.bids.eeg.TaskName = [];
+
+    fieldsToSet.bids.eeg.Instructions = [];
+
+    fieldsToSet.bids.eeg.EEGReference = [];
+
+    fieldsToSet.bids.eeg.SamplingFrequency = [];
+
+    fieldsToSet.bids.eeg.PowerLineFrequency = [];
+
+    fieldsToSet.bids.eeg.DewarPosition = [];
+
+    fieldsToSet.bids.eeg.SoftwareFilters = [];
+
+    fieldsToSet.bids.eeg.DigitizedLandmarks = [];
+
+    fieldsToSet.bids.eeg.DigitizedHeadPoints = [];
+
+    fieldsToSet.bids.eeg = orderfields(fieldsToSet.bids.eeg);
+
+end
+
+function fieldsToSet = ieegJsonDefaults(fieldsToSet)
+    % for json for iEEG data
+
+    fieldsToSet.bids.ieeg.TaskName = [];
+
+    fieldsToSet.bids.ieeg.Instructions = [];
+
+    fieldsToSet.bids.ieeg.SamplingFrequency = [];
+
+    fieldsToSet.bids.ieeg.PowerLineFrequency = [];
+
+    fieldsToSet.bids.ieeg.DewarPosition = [];
+
+    fieldsToSet.bids.ieeg.SoftwareFilters = [];
+
+    fieldsToSet.bids.ieeg.DigitizedLandmarks = [];
+
+    fieldsToSet.bids.ieeg.DigitizedHeadPoints = [];
+
+    fieldsToSet.bids.ieeg = orderfields(fieldsToSet.bids.ieeg);
+
+end
+
+function fieldsToSet = behJsonDefaults(fieldsToSet)
+    % for json for BEH data
+
+    fieldsToSet.bids.beh.TaskName = [];
+
+    fieldsToSet.bids.beh.Instructions = [];
+
+    fieldsToSet.bids.ieeg = orderfields(fieldsToSet.bids.beh);
 
 end

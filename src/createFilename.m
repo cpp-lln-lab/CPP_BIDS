@@ -90,7 +90,7 @@ function cfg = createDirectories(cfg)
     [~, ~, ~] = mkdir(cfg.dir.output);
     [~, ~, ~] = mkdir(cfg.dir.outputSubject);
     [~, ~, ~] = mkdir(fullfile(cfg.dir.outputSubject, modality));
-    
+
 end
 
 function cfg = setSuffixes(cfg)

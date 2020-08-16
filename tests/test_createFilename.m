@@ -72,7 +72,7 @@ function test_createFilenameMriEyetracker()
     eventFilename = ['sub-ctrl002_ses-002_task-testTask_run-002_events_date-' ...
         cfg.fileName.date '.tsv'];
 
-    eyetrackerFilename =  [...
+    eyetrackerFilename =  [ ...
         'sub-ctrl002_ses-002_task-testTask_run-002_recording-eyetracking_physio_date-' ...
         cfg.fileName.date '.edf'];
 
@@ -157,8 +157,74 @@ function test_createFilenameEeg()
     %% data to test against
     eegDir = fullfile(outputDir, 'source', 'sub-blind003', 'ses-001', 'eeg');
 
+    eventFilename = ['sub-blind003_ses-001_task-testTask_run-001_events_date-'...
+        cfg.fileName.date '.tsv'];
+
     %% test
     % make sure the func dir is created
     assertTrue(exist(eegDir, 'dir') == 7);
+
+    % make sure the events filename is created
+    assertEqual(cfg.fileName.events, eventFilename);
+
+end
+
+function test_createFilenameIeeg()
+
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+    %% set up
+
+    cfg.verbose = true;
+    cfg.subject.subjectGrp = 'blind';
+    cfg.subject.subjectNb = 3;
+    cfg.subject.sessionNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'test task';
+    cfg.dir.output = outputDir;
+
+    cfg.testingDevice = 'ieeg';
+
+    cfg = createFilename(cfg);
+
+    %% data to test against
+    ieegDir = fullfile(outputDir, 'source', 'sub-blind003', 'ses-001', 'ieeg');
+
+    %% test
+    % make sure the func dir is created
+    assertTrue(exist(ieegDir, 'dir') == 7);
+
+    eventFilename = ['sub-blind003_ses-001_task-testTask_run-001_events_date-'...
+        cfg.fileName.date '.tsv'];
+
+end
+
+function test_createFilenameMeg()
+
+    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+
+    %% set up
+
+    cfg.verbose = true;
+    cfg.subject.subjectGrp = 'blind';
+    cfg.subject.subjectNb = 3;
+    cfg.subject.sessionNb = 1;
+    cfg.subject.runNb = 1;
+    cfg.task.name = 'test task';
+    cfg.dir.output = outputDir;
+
+    cfg.testingDevice = 'meg';
+
+    cfg = createFilename(cfg);
+
+    %% data to test against
+    megDir = fullfile(outputDir, 'source', 'sub-blind003', 'ses-001', 'meg');
+
+    %% test
+    % make sure the func dir is created
+    assertTrue(exist(megDir, 'dir') == 7);
+
+    eventFilename = ['sub-blind003_ses-001_task-testTask_run-001_events_date-'...
+        cfg.fileName.date '.tsv'];
 
 end

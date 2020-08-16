@@ -221,7 +221,7 @@ function fieldsToSet = ieegJsonDefaults(fieldsToSet)
     fieldsToSet.bids.ieeg.TaskName = '';
 
     fieldsToSet.bids.ieeg.Instructions = '';
-    
+
     fieldsToSet.bids.ieeg.iEEGReference = '';
 
     fieldsToSet.bids.ieeg.SamplingFrequency = [];

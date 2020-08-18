@@ -29,11 +29,9 @@ function cfg = checkCFG(cfg)
 
     fieldsToSet.testingDevice = 'pc';
 
-    fieldsToSet.eyeTracker = struct();
+    fieldsToSet = eyetrackerDefaults(fieldsToSet);
 
-    fieldsToSet.eyeTracker.do = false;
-
-    fieldsToSet = mriDefaults(fieldsToSet);
+    fieldsToSet = setSuffixes(fieldsToSet);
 
     %% BIDS
 
@@ -51,7 +49,7 @@ function cfg = checkCFG(cfg)
 
 end
 
-function fieldsToSet = mriDefaults(fieldsToSet)
+function fieldsToSet = setSuffixes(fieldsToSet)
 
     % for file naming and JSON
     fieldsToSet.suffix.contrastEnhancement = [];
@@ -243,4 +241,22 @@ function fieldsToSet = behJsonDefaults(fieldsToSet)
 
     fieldsToSet.bids.ieeg = orderfields(fieldsToSet.bids.beh);
 
+end
+
+function fieldsToSet = eyetrackerDefaults(fieldsToSet)
+    
+    fieldsToSet.eyeTracker.do = false;
+    fieldsToSet.eyeTracker.SamplingFrequency = [];
+    fieldsToSet.eyeTracker.PupilPositionType = '';
+    fieldsToSet.eyeTracker.RawSamples =  [];
+    fieldsToSet.eyeTracker.Manufacturer = '';
+    fieldsToSet.eyeTracker.ManufacturersModelName = '';
+    fieldsToSet.eyeTracker.SoftwareVersions = '';
+    fieldsToSet.eyeTracker.CalibrationType = '';
+    fieldsToSet.eyeTracker.CalibrationPosition = '';    
+    fieldsToSet.eyeTracker.CalibrationDistance = '';
+    fieldsToSet.eyeTracker.MaximalCalibrationError = [];
+    fieldsToSet.eyeTracker.AverageCalibrationError = [];
+    fieldsToSet.eyeTracker.RawDataFilters = {};
+        
 end

@@ -17,6 +17,8 @@ function test_checkCfgDefault()
     expectedStructure.dir.output = cfg.dir.output;
     expectedStructure.testingDevice = 'pc';
 
+    expectedStructure = orderfields(expectedStructure);
+
     %% test
     assertEqual(expectedStructure, cfg);
 
@@ -62,8 +64,11 @@ function test_checkCfgBasic()
     expectedStructure.fileName.task = 'testTask';
 
     expectedStructure.bids.mri.RepetitionTime = 1.56;
-    expectedStructure.bids.mri.TaskName = 'test Task';
 
+    expectedStructure.bids.mri.TaskName = 'test Task';
+    expectedStructure.bids.beh.TaskName = 'test Task';
+    expectedStructure.bids.ieeg.TaskName = 'test Task';
+    expectedStructure.bids.eeg.TaskName = 'test Task';
     expectedStructure.bids.meg.TaskName = 'test Task';
 
     expectedStructure.bids.datasetDescription.Name = 'dummy';
@@ -91,12 +96,16 @@ function expectedCfgStructure = returnExpectedCfgStructure()
 
     expectedCfgStructure.eyeTracker.do = false;
 
-    expectedCfgStructure.mri.contrastEnhancement = [];
-    expectedCfgStructure.mri.phaseEncodingDirection = [];
-    expectedCfgStructure.mri.reconstruction = [];
-    expectedCfgStructure.mri.echo = [];
-    expectedCfgStructure.mri.acquisition = [];
-    expectedCfgStructure.mri.repetitionTime = [];
+    expectedCfgStructure.suffix.contrastEnhancement = [];
+    expectedCfgStructure.suffix.phaseEncodingDirection = [];
+    expectedCfgStructure.suffix.reconstruction = [];
+    expectedCfgStructure.suffix.echo = [];
+    expectedCfgStructure.suffix.acquisition = [];
+    expectedCfgStructure.suffix.repetitionTime = [];
+    expectedCfgStructure.suffix.recording = [];
+
+    expectedCfgStructure.bids.beh.TaskName = '';
+    expectedCfgStructure.bids.beh.Instructions = '';
 
     expectedCfgStructure.bids.mri.RepetitionTime = [];
     expectedCfgStructure.bids.mri.SliceTiming = '';
@@ -104,11 +113,26 @@ function expectedCfgStructure = returnExpectedCfgStructure()
     expectedCfgStructure.bids.mri.Instructions = '';
     expectedCfgStructure.bids.mri.TaskDescription = '';
 
+    expectedCfgStructure.bids.eeg.TaskName = '';
+    expectedCfgStructure.bids.eeg.Instructions = '';
+    expectedCfgStructure.bids.eeg.EEGReference = '';
+    expectedCfgStructure.bids.eeg.SamplingFrequency = [];
+    expectedCfgStructure.bids.eeg.PowerLineFrequency = 50;
+    expectedCfgStructure.bids.eeg.SoftwareFilters = 'n/a';
+
+    expectedCfgStructure.bids.ieeg.TaskName = '';
+    expectedCfgStructure.bids.ieeg.Instructions = '';
+    expectedCfgStructure.bids.ieeg.iEEGReference = '';
+    expectedCfgStructure.bids.ieeg.SamplingFrequency = [];
+    expectedCfgStructure.bids.ieeg.PowerLineFrequency = 50;
+    expectedCfgStructure.bids.ieeg.SoftwareFilters = 'n/a';
+
     expectedCfgStructure.bids.meg.TaskName = '';
+    expectedCfgStructure.bids.meg.Instructions = '';
     expectedCfgStructure.bids.meg.SamplingFrequency = [];
-    expectedCfgStructure.bids.meg.PowerLineFrequency = [];
+    expectedCfgStructure.bids.meg.PowerLineFrequency = 50;
     expectedCfgStructure.bids.meg.DewarPosition = [];
-    expectedCfgStructure.bids.meg.SoftwareFilters = [];
+    expectedCfgStructure.bids.meg.SoftwareFilters = 'n/a';
     expectedCfgStructure.bids.meg.DigitizedLandmarks = [];
     expectedCfgStructure.bids.meg.DigitizedHeadPoints = [];
 
@@ -121,6 +145,8 @@ function expectedCfgStructure = returnExpectedCfgStructure()
     expectedCfgStructure.bids.datasetDescription.Funding = {''};
     expectedCfgStructure.bids.datasetDescription.ReferencesAndLinks = {''};
     expectedCfgStructure.bids.datasetDescription.DatasetDOI = '';
+
+    expectedCfgStructure.bids = orderfields(expectedCfgStructure.bids);
 
     expectedCfgStructure = orderfields(expectedCfgStructure);
 

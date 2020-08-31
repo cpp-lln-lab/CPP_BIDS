@@ -91,10 +91,6 @@ function cfg = createDirectories(cfg)
     [~, ~, ~] = mkdir(cfg.dir.outputSubject);
     [~, ~, ~] = mkdir(fullfile(cfg.dir.outputSubject, modality));
 
-    if cfg.eyeTracker.do
-        [~, ~, ~] = mkdir(fullfile(cfg.dir.outputSubject, 'eyetracker'));
-    end
-
 end
 
 function cfg = setSuffixes(cfg)
@@ -109,6 +105,7 @@ function cfg = setSuffixes(cfg)
         'echo', ...
         'phaseEncodingDirection', ...
         'reconstruction', ...
+        'recording', ...
         };
 
     targetFields = { ...
@@ -117,21 +114,22 @@ function cfg = setSuffixes(cfg)
         'echo', ...
         'dir', ...
         'rec', ...
+        'recording', ...
         };
 
     for iField = 1:numel(fields2Check)
 
-        if isempty (cfg.mri.(fields2Check{iField})) %#ok<*GFLD>
+        if isempty (cfg.suffix.(fields2Check{iField})) %#ok<*GFLD>
 
-            cfg.fileName.suffix.mri.(fields2Check{iField}) = ''; %#ok<*SFLD>
+            cfg.fileName.suffix.(fields2Check{iField}) = ''; %#ok<*SFLD>
 
         else
 
             % upper camelCase and remove invalid characters
-            thisField = getfield(cfg.mri, fields2Check{iField});
+            thisField = getfield(cfg.suffix, fields2Check{iField});
             [~, validFieldName] = createValidName(thisField);
 
-            cfg.fileName.suffix.mri.(fields2Check{iField}) = ...
+            cfg.fileName.suffix.(fields2Check{iField}) = ...
                 ['_' targetFields{iField} '-' validFieldName];
 
         end
@@ -148,11 +146,12 @@ function cfg = setFilenames(cfg)
     pattern = cfg.fileName.pattern;
 
     runSuffix = cfg.fileName.suffix.run;
-    acqSuffix = cfg.fileName.suffix.mri.acquisition ;
-    ceSuffix = cfg.fileName.suffix.mri.contrastEnhancement ;
-    dirSuffix = cfg.fileName.suffix.mri.phaseEncodingDirection ;
-    recSuffix = cfg.fileName.suffix.mri.reconstruction ;
-    echoSuffix = cfg.fileName.suffix.mri.echo;
+    acqSuffix = cfg.fileName.suffix.acquisition ;
+    ceSuffix = cfg.fileName.suffix.contrastEnhancement ;
+    dirSuffix = cfg.fileName.suffix.phaseEncodingDirection ;
+    recSuffix = cfg.fileName.suffix.reconstruction ;
+    echoSuffix = cfg.fileName.suffix.echo;
+    recordingSuffix = cfg.fileName.suffix.recording;
 
     thisDate = cfg.fileName.date;
 
@@ -171,26 +170,31 @@ function cfg = setFilenames(cfg)
 
         case 'func'
 
-            cfg.fileName.events = ...
-                [fileNameBase, ...
+            basename = [fileNameBase, ...
                 acqSuffix, ceSuffix, ...
                 dirSuffix, recSuffix, ...
-                runSuffix, echoSuffix, ...
-                '_events_date-' thisDate '.tsv'];
+                runSuffix, echoSuffix];
+
+        case 'beh'
+
+            basename = ...
+                [fileNameBase, ...
+                acqSuffix, ...
+                runSuffix];
 
         otherwise
 
-            cfg.fileName.events = ...
-                [fileNameBase, runSuffix, '_events_date-' thisDate '.tsv'];
+            basename = [fileNameBase, runSuffix];
 
     end
 
-    cfg.fileName.stim = strrep(cfg.fileName.events, 'events', 'stim');
+    cfg.fileName.events = [basename, '_events_date-' thisDate '.tsv'];
+
+    cfg.fileName.stim = [basename, recordingSuffix, '_stim_date-' thisDate '.tsv'];
 
     if cfg.eyeTracker.do
         cfg.fileName.eyetracker = ...
-            [fileNameBase, acqSuffix, ...
-            runSuffix, '_eyetrack_date-' thisDate '.edf'];
+            [basename, '_recording-eyetracking_physio_date-' thisDate '.edf'];
     end
 
 end

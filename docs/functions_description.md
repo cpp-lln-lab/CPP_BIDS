@@ -5,8 +5,8 @@
 * 2. [createFilename](#createFilename)
 * 3. [saveEventsFile](#saveEventsFile)
 * 4. [checkCFG](#checkCFG)
-* 5. [CFG content](#CFGcontent)
-* 6. [createBoldJson](#createBoldJson)
+	* 4.1. [CFG content](#CFGcontent)
+* 5. [createBoldJson](#createBoldJson)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -57,7 +57,7 @@ If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped.
 
 Check that we have all the fields that we need in the experiment parameters.
 
-##  5. <a name='CFGcontent'></a>CFG content
+###  4.1. <a name='CFGcontent'></a>CFG content
 
 ```matlab
 % The following can be modified by users but their effect might
@@ -123,7 +123,7 @@ cfg.fileName.datasetDescription
 
 ```
 
-##  6. <a name='createBoldJson'></a>createBoldJson
+##  5. <a name='createBoldJson'></a>createBoldJson
 
 ```
 createBoldJson(cfg)

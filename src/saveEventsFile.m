@@ -87,7 +87,7 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
             checklLogFile('checkID', logFile);
             checklLogFile('type&size', logFile);
 
-            logFile = saveToLogFile(logFile);
+            logFile = saveToLogFile(logFile, cfg);
 
         case 'close'
 
@@ -108,7 +108,7 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
 
 end
 
-function logFile = checklLogFile(action, logFile, iEvent)
+function logFile = checklLogFile(action, logFile, iEvent, cfg)
 
     switch action
 
@@ -137,7 +137,7 @@ function logFile = checklLogFile(action, logFile, iEvent)
                 end
             end
 
-            logFile = checkExtracolumns(logFile, iEvent);
+            logFile = checkExtracolumns(logFile, iEvent, cfg);
 
     end
 
@@ -192,7 +192,7 @@ function printHeaderExtraColumns(logFile)
 
 end
 
-function logFile = checkExtracolumns(logFile, iEvent)
+function logFile = checkExtracolumns(logFile, iEvent, cfg)
     % loops through the extra columns
     % if the field we are looking for does not exist or is empty in the
     % action logFile structure we will write a n/a
@@ -215,12 +215,20 @@ function logFile = checkExtracolumns(logFile, iEvent)
 
         logFile(iEvent).(namesExtraColumns{iExtraColumn}) = data;
 
-        if any(isnan(data))
-            warning('Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
-            disp(logFile(iEvent));
-        elseif  all(isnan(data))
+        if ~ischar(data) && any(isnan(data))
+            warning('saveEventsFile:missingData', ...
+                'Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
+
+            if cfg.verbose
+                disp(logFile(iEvent));
+            end
+
+        elseif ~ischar(data) && all(isnan(data))
             warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
-            disp(logFile(iEvent));
+
+            if cfg.verbose
+                disp(logFile(iEvent));
+            end
         end
 
     end
@@ -258,30 +266,34 @@ function data = nanPadding(data, expectedLength)
         padding = expectedLength - max(size(data));
         data(end + 1:end + padding) = nan(1, padding);
     elseif ~isempty(expectedLength) && isnumeric(data) && max(size(data)) > expectedLength
-        warning('A field for this event is longer than expected. Truncating the extra values.');
+        warning('saveEventsFile:arrayTooLong', ...
+            'A field for this event is longer than expected. Truncating the extra values.');
         data = data(1:expectedLength);
     end
 
 end
 
-function logFile = saveToLogFile(logFile)
+function logFile = saveToLogFile(logFile, cfg)
 
     % appends to the logfile all the data stored in the structure
     % first with the standard BIDS data and then any extra things
     for iEvent = 1:size(logFile, 1)
 
-        logFile = checklLogFile('fields', logFile, iEvent);
+        logFile = checklLogFile('fields', logFile, iEvent, cfg);
 
         onset = logFile(iEvent).onset;
         duration = logFile(iEvent).duration;
         trial_type = logFile(iEvent).trial_type;
 
-        if isnan(onset) || ischar(onset) || any(isempty({onset trial_type})) || ...
-                strcmp(trial_type, 'n/a')
+        % we skip events with onset or duration that are empty, nan or char
+        if any(cell2mat(cellfun(@isnan, {onset duration}, 'UniformOutput', false))) || ...
+                any(cellfun(@ischar, {onset duration})) || ...
+                any(isempty({onset duration}))
 
-            warning('\nSkipping saving this event.\n onset: %f \n trial_type: %s\n', ...
+            warning('saveEventsFile:emptyEvent', ...
+                '\nSkipping saving this event.\n onset: %s \n duration: %s\n', ...
                 onset, ...
-                trial_type);
+                duration);
 
         else
 

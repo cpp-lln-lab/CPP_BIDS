@@ -22,6 +22,7 @@ function test_makeRawDataset()
     cfg.subject.runNb = 1;
 
     cfg.task.name = 'testtask';
+    cfg.task.instructions = 'do this';
 
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
@@ -30,7 +31,7 @@ function test_makeRawDataset()
     cfg = createFilename(cfg);
 
     extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
-    createBoldJson(cfg, extraInfo);
+    createJson(cfg, extraInfo);
 
     createDatasetDescription(cfg);
 
@@ -82,14 +83,6 @@ function test_makeRawDataset()
     saveEventsFile('save', cfg, stimLogFile);
     saveEventsFile('close', cfg, stimLogFile);
 
-    % add dummy functional data
-    funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'func');
-    boldFilename = 'sub-001_ses-001_task-testtask_run-001_bold.nii.gz';
-
-    copyfile( ...
-        fullfile('dummyData', 'dummyData.nii.gz'), ...
-        fullfile(funcDir, boldFilename));
-
     %% MRI bold rest data and fancy suffixes
     clear cfg;
 
@@ -97,33 +90,157 @@ function test_makeRawDataset()
 
     cfg.testingDevice = 'mri';
 
-    cfg.subject.subjectNb = 2;
-    cfg.subject.sessionNb = 3;
-    cfg.subject.runNb = 4;
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
 
     % deal with MRI suffixes
-    cfg.mri.reconstruction = 'fast recon';
-    cfg.mri.contrastEnhancement = 'test';
-    cfg.mri.phaseEncodingDirection = 'y pos';
-    cfg.mri.echo = '1';
-    cfg.mri.acquisition = ' new tYpe';
+    cfg.suffix.reconstruction = 'fast recon';
+    cfg.suffix.contrastEnhancement = 'test';
+    cfg.suffix.phaseEncodingDirection = 'y pos';
+    cfg.suffix.echo = '1';
+    cfg.suffix.acquisition = ' new tYpe';
+
     cfg.mri.repetitionTime = 1.56;
 
     cfg.task.name = 'rest';
 
     cfg = createFilename(cfg);
 
-    createBoldJson(cfg);
+    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+    createJson(cfg, extraInfo);
 
-    %% add dummy functional data
-    funcDir = fullfile(cfg.dir.output, 'source', 'sub-002', 'ses-003', 'func');
-    boldFilename = ['sub-002_ses-003_task-rest',  ...
-        '_acq-newTYpe_ce-test_dir-yPos_rec-fastRecon', ...
-        '_run-004_echo-1_bold.nii.gz'];
+    %% EEG data and fancy suffixes
+    clear cfg;
+
+    cfg.dir.output = outputDir;
+
+    cfg.testingDevice = 'eeg';
+
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+
+    cfg.task.name = 'target practice';
+    cfg.task.instructions = 'do this';
+
+    cfg.bids.eeg.EEGReference = 'Cz';
+    cfg.bids.eeg.SamplingFrequency = 2400;
+    cfg.bids.eeg.PowerLineFrequency = 50;
+    cfg.bids.eeg.SoftwareFilters = 'n/a';
+
+    cfg = createFilename(cfg);
+
+    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+    createJson(cfg, extraInfo);
+
+    %% iEEG data and fancy suffixes
+    clear cfg;
+
+    cfg.dir.output = outputDir;
+
+    cfg.testingDevice = 'ieeg';
+
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+
+    cfg.task.name = 'implanted target practice';
+    cfg.task.instructions = 'do this';
+
+    cfg.bids.ieeg.iEEGReference = 'Cz';
+    cfg.bids.ieeg.SamplingFrequency = 2400;
+    cfg.bids.ieeg.PowerLineFrequency = 50;
+    cfg.bids.ieeg.SoftwareFilters = 'n/a';
+
+    cfg = createFilename(cfg);
+
+    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+    createJson(cfg, extraInfo);
+
+    %% MEG data and fancy suffixes
+    clear cfg;
+
+    cfg.dir.output = outputDir;
+
+    cfg.testingDevice = 'meg';
+
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+
+    cfg.task.name = 'magnetic target practice';
+    cfg.task.instructions = 'do this';
+
+    cfg.bids.meg.SamplingFrequency = 2400;
+    cfg.bids.meg.PowerLineFrequency = 60;
+    cfg.bids.meg.DewarPosition = 'upright';
+    cfg.bids.meg.SoftwareFilters = 'n/a';
+    cfg.bids.meg.DigitizedLandmarks = false;
+    cfg.bids.meg.DigitizedHeadPoints = false;
+
+    cfg = createFilename(cfg);
+
+    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+    createJson(cfg, extraInfo);
+
+    %% beh data and fancy suffixes
+    clear cfg;
+
+    cfg.dir.output = outputDir;
+
+    cfg.testingDevice = 'pc';
+
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+
+    cfg.task.name = 'easy target practice';
+    cfg.task.instructions = 'do this';
+
+    cfg = createFilename(cfg);
+
+    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+    createJson(cfg, extraInfo);
+
+    %% add dummy data
+    subjectDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001');
+    funcDir = fullfile(subjectDir, 'func');
+
+    boldFilename = 'sub-001_ses-001_task-testtask_run-001_bold.nii.gz';
 
     copyfile( ...
         fullfile('dummyData', 'dummyData.nii.gz'), ...
         fullfile(funcDir, boldFilename));
+
+    boldFilename = ['sub-001_ses-001_task-rest',  ...
+        '_acq-newTYpe_ce-test_dir-yPos_rec-fastRecon', ...
+        '_run-001_echo-1_bold.nii.gz'];
+
+    copyfile( ...
+        fullfile('dummyData', 'dummyData.nii.gz'), ...
+        fullfile(funcDir, boldFilename));
+
+    eegDir = fullfile(subjectDir, 'eeg');
+    megDir = fullfile(subjectDir, 'meg');
+    ieegDir = fullfile(subjectDir, 'ieeg');
+    behDir = fullfile(subjectDir, 'beh');
+
+    eegFilename = 'sub-001_ses-001_task-targetPractice_run-001_eeg.edf';
+    megFilename = 'sub-001_ses-001_task-magneticTargetPractice_run-001_meg.fif';
+    ieegFilename = 'sub-001_ses-001_task-implantedTargetPractice_run-001_ieeg.edf';
+    behFilename = 'sub-001_ses-001_task-easyTargetPractice_run-001_beh.tsv';
+
+    copyfile( ...
+        fullfile('dummyData', 'dummyData.nii.gz'), ...
+        fullfile(eegDir, eegFilename));
+
+    copyfile( ...
+        fullfile('dummyData', 'dummyData.nii.gz'), ...
+        fullfile(megDir, megFilename));
+
+    copyfile( ...
+        fullfile('dummyData', 'dummyData.nii.gz'), ...
+        fullfile(ieegDir, ieegFilename));
+
+    copyfile( ...
+        fullfile('dummyData', 'dummyData.nii.gz'), ...
+        fullfile(behDir, behFilename));
 
     %% actually do the conversion of the source data thus created
     clear;

@@ -7,6 +7,8 @@ function test_suite = test_utils %#ok<*STOUT>
 end
 
 function test_utilsBasic()
+    
+    cfg.verbose = true;
 
     printCreditsCppBids();
 

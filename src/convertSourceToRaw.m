@@ -10,7 +10,7 @@ function convertSourceToRaw(cfg)
     % Only covers func folder at the moment
 
     sourceDir = fullfile(cfg.dir.output, 'source');
-    rawDir = fullfile(cfg.dir.output, 'rawdata');
+    rawDir = fullfile(cfg.dir.output, 'raw');
 
     % add dummy README and CHANGE file
     copyfile(fullfile( ...

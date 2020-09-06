@@ -1,7 +1,11 @@
 function printCreditsCppBids(cfg)
 
-    version = fileread(fullfile(fileparts(mfilename('fullpath')), ...
-        '..', '..', 'version.txt'));
+    try
+        version = fileread(fullfile(fileparts(mfilename('fullpath')), ...
+            '..', '..', 'version.txt'));
+    catch
+        version = 'v1.0.0';
+    end
 
     verbose = true;
     if ~isempty(cfg) && isfield(cfg, 'verbose') && ~isempty(cfg.verbose)

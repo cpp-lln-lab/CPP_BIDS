@@ -1,6 +1,6 @@
 function printCreditsCppBids(cfg)
-    
-    version = fileread(fullfile(fileparts(mfilename('fullpath')),...
+
+    version = fileread(fullfile(fileparts(mfilename('fullpath')), ...
         '..', '..', 'version.txt'));
 
     verbose = true;

@@ -44,7 +44,7 @@ before_script:
 jobs:
   include:
     - name: "BIDS validator: create and check dataset"
-      script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/rawdata/ --ignoreNiftiHeaders
+      script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders
     - name: "miss_hit: checking code quality"
       script: mh_metric . --ci
     - name: "miss_hit: checking code style"

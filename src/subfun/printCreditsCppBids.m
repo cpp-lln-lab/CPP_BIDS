@@ -1,13 +1,18 @@
 function printCreditsCppBids(cfg)
 
+    try
+        version = fileread(fullfile(fileparts(mfilename('fullpath')), ...
+            '..', '..', 'version.txt'));
+    catch
+        version = 'v1.0.0';
+    end
+
     verbose = true;
     if ~isempty(cfg) && isfield(cfg, 'verbose') && ~isempty(cfg.verbose)
         verbose = cfg.verbose;
     end
 
     if verbose
-
-        version = '0.0.1';
 
         contributors = { ...
             'Rémi Gau', ...

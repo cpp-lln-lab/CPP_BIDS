@@ -21,10 +21,18 @@ function cfg = userInputs(cfg)
 
         questions = createQuestionList(cfg);
 
-        try
-            responses = askUserGui(questions, responses);
-        catch
+        if cfg.useGUI
+
+            try
+                responses = askUserGui(questions, responses);
+            catch
+                responses = askUserCli(questions, responses);
+            end
+
+        else
+
             responses = askUserCli(questions, responses);
+
         end
 
     end

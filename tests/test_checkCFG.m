@@ -89,6 +89,8 @@ function expectedCfgStructure = returnExpectedCfgStructure()
     expectedCfgStructure.subject.askGrpSess = [true true];
 
     expectedCfgStructure.verbose = 0;
+    
+    expectedCfgStructure.useGUI = false;
 
     expectedCfgStructure.fileName.task = '';
     expectedCfgStructure.fileName.zeroPadding = 3;

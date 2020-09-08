@@ -17,7 +17,7 @@ function cfg = userInputs(cfg)
 
     [cfg, responses] = setDefaultResponses(cfg);
 
-    if ~cfg.debug.do
+    if ~cfg.debug.do && cfg.useGUI
 
         questions = createQuestionList(cfg);
 

@@ -125,6 +125,10 @@ future BEP format in a dedicated eyetracker folder
 `<matches>[_recording-<label>]_stim.tsv.gz`
 `<matches>[_recording-<label>]_stim.json`
 
+### change log
+
+ <!-- 93b4c584bf22883a3c4f8b9031b70e381deef272 -->
+
 ###  3.3. <a name='Contributors'></a>Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

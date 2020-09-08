@@ -14,6 +14,8 @@ function cfg = checkCFG(cfg)
 
     fieldsToSet.verbose = false;
 
+    fieldsToSet.useGUI = false;
+
     fieldsToSet.fileName.task = '';
     fieldsToSet.fileName.zeroPadding = 3;
     fieldsToSet.fileName.dateFormat = 'yyyymmddHHMM';

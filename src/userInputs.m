@@ -14,7 +14,7 @@ function cfg = userInputs(cfg)
     if nargin < 1
         cfg = struct('debug', []);
     end
-    
+
     cfg = checkCFG(cfg);
 
     [cfg, responses] = setDefaultResponses(cfg);

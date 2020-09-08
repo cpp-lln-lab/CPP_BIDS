@@ -15,6 +15,8 @@ function cfg = userInputs(cfg)
         cfg = struct('debug', []);
     end
 
+    cfg = checkCFG(cfg);
+
     [cfg, responses] = setDefaultResponses(cfg);
 
     if ~cfg.debug.do

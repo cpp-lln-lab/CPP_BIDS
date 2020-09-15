@@ -12,7 +12,7 @@ function cfg = checkCFG(cfg)
 
     %% list the defaults to set
 
-    fieldsToSet.verbose = false;
+    fieldsToSet.verbose = 0;
 
     fieldsToSet.useGUI = false;
 

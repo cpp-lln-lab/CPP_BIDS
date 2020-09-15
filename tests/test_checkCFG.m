@@ -29,7 +29,7 @@ function test_checkCfgBasic()
     %% set up
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    cfg.verbose = false;
+    cfg.verbose = 0;
 
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;

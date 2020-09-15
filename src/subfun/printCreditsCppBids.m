@@ -44,7 +44,7 @@ function printCreditsCppBids(cfg)
         end
         fprintf('\b\n\n');
 
-        fprintf('Please cite using the following DOI: \n %s\n\n', DOI_URL)
+        fprintf('Please cite using the following DOI: \n %s\n\n', DOI_URL);
 
         fprintf('For bug report, suggestions or contributions see: \n %s\n\n', repoURL);
 

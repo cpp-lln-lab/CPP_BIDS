@@ -201,7 +201,7 @@ end
 
 function talkToMe(cfg)
 
-    if cfg.verbose
+    if cfg.verbose > 0
 
         fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
             fullfile(cfg.dir.outputSubject, cfg.fileName.modality));

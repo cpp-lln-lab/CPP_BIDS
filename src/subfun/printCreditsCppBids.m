@@ -7,19 +7,19 @@ function printCreditsCppBids(cfg)
         version = 'v1.0.0';
     end
 
-    verbose = true;
+    verbose = 2;
     if ~isempty(cfg) && isfield(cfg, 'verbose') && ~isempty(cfg.verbose)
         verbose = cfg.verbose;
     end
 
-    if verbose
+    if verbose > 1
 
         contributors = { ...
             'Rémi Gau', ...
             'Marco Barilari', ...
             'Ceren Battal'};
 
-        % DOI_URL = 'https://doi.org/10.5281/zenodo.3554331.';
+        DOI_URL = 'https://doi.org/10.5281/zenodo.4007674';
 
         repoURL = 'https://github.com/cpp-lln-lab/CPP_BIDS';
 
@@ -44,7 +44,7 @@ function printCreditsCppBids(cfg)
         end
         fprintf('\b\n\n');
 
-        % fprintf('Please cite using the following DOI: \n %s\n\n', DOI_URL)
+        fprintf('Please cite using the following DOI: \n %s\n\n', DOI_URL)
 
         fprintf('For bug report, suggestions or contributions see: \n %s\n\n', repoURL);
 

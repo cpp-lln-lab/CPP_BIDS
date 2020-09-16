@@ -105,7 +105,7 @@ function cfg = setSuffixes(cfg)
         'echo', ...
         'phaseEncodingDirection', ...
         'reconstruction', ...
-        'recording', ...
+        'recording' ...
         };
 
     targetFields = { ...
@@ -114,7 +114,7 @@ function cfg = setSuffixes(cfg)
         'echo', ...
         'dir', ...
         'rec', ...
-        'recording', ...
+        'recording' ...
         };
 
     for iField = 1:numel(fields2Check)
@@ -146,10 +146,10 @@ function cfg = setFilenames(cfg)
     pattern = cfg.fileName.pattern;
 
     runSuffix = cfg.fileName.suffix.run;
-    acqSuffix = cfg.fileName.suffix.acquisition ;
-    ceSuffix = cfg.fileName.suffix.contrastEnhancement ;
-    dirSuffix = cfg.fileName.suffix.phaseEncodingDirection ;
-    recSuffix = cfg.fileName.suffix.reconstruction ;
+    acqSuffix = cfg.fileName.suffix.acquisition;
+    ceSuffix = cfg.fileName.suffix.contrastEnhancement;
+    dirSuffix = cfg.fileName.suffix.phaseEncodingDirection;
+    recSuffix = cfg.fileName.suffix.reconstruction;
     echoSuffix = cfg.fileName.suffix.echo;
     recordingSuffix = cfg.fileName.suffix.recording;
 
@@ -201,7 +201,7 @@ end
 
 function talkToMe(cfg)
 
-    if cfg.verbose
+    if cfg.verbose > 0
 
         fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
             fullfile(cfg.dir.outputSubject, cfg.fileName.modality));

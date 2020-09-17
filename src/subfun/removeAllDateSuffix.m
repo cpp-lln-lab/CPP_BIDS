@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function removeAllDateSuffix(rawDir, subjName, sesName)
     % removeAllDateSuffix(rawDir, subjName, sesName)
     %

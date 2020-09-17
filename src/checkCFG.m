@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function cfg = checkCFG(cfg)
     % cfg = checkCFG(cfg)
     %

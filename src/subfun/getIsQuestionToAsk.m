@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function isQuestionToAsk = getIsQuestionToAsk(questions, responses)
 
     isQuestionToAsk = cell2mat(questions.questionsToAsk(:, 2));

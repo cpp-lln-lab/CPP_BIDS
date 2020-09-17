@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function headerName = returnHeaderName(columnName, nbCol, iCol)
     % headerName = returnHeaderName(columnName, nbCol, iCol)
     %

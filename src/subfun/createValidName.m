@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function [name, nameValid] = createValidName(name)
     % [taskName, taskNameValid] = createTaskName(taskName)
     %

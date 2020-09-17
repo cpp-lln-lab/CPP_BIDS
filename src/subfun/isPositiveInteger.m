@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function trueOrFalse = isPositiveInteger(input2check)
     % trueOrFalse = isPositiveInteger(input2check)
     %

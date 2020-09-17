@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function logFile = initializeExtraColumns(logFile)
     % logFile = initializeExtraColumns(logFile)
     %    initialize the fields for the extra columns

@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
     % fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
     %

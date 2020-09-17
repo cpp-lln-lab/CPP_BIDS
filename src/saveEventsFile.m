@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function [logFile] = saveEventsFile(action, cfg, logFile)
     % [logFile] = saveEventsFile(action, cfg, logFile)
     %

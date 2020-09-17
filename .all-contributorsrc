@@ -13,7 +13,10 @@
       "contributions": [
         "code",
         "design",
-        "doc"
+        "doc",
+        "userTesting",
+        "ideas",
+        "bug"
       ]
     },
     {
@@ -44,5 +47,5 @@
   "projectOwner": "cpp-lln-lab",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": false
 }

@@ -41,7 +41,14 @@
       "contributions": [
         "code",
         "design",
-        "doc"
+        "doc",
+        "bug",
+        "userTesting",
+        "ideas",
+        "infra",
+        "maintenance",
+        "test",
+        "question"
       ]
     }
   ],

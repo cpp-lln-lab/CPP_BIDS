@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function responses = askUserGui(questions, responses)
 
     % boolean for which question should be asked

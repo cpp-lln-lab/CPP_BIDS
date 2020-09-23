@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function checkCppBidsDependencies(cfg)
     % checkCppBidsDependencies()
     %
@@ -12,7 +14,7 @@ function checkCppBidsDependencies(cfg)
 
     elseif isempty(GITHUB_WORKSPACE)  % local
 
-        pth = fullfile(fileparts(mfilename('fullpath')), '..');
+        pth = fullfile(fileparts(mfilename('fullpath')), '..', '..');
         checkSubmodule(fullfile(pth, 'lib', 'JSONio'));
         checkSubmodule(fullfile(pth, 'lib', 'bids-matlab'));
 

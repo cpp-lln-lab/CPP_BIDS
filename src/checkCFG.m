@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function cfg = checkCFG(cfg)
     % cfg = checkCFG(cfg)
     %
@@ -12,7 +14,9 @@ function cfg = checkCFG(cfg)
 
     %% list the defaults to set
 
-    fieldsToSet.verbose = false;
+    fieldsToSet.verbose = 0;
+
+    fieldsToSet.useGUI = false;
 
     fieldsToSet.fileName.task = '';
     fieldsToSet.fileName.zeroPadding = 3;

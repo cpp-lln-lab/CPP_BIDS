@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function nbCol = returnNbColumns(logFile, nameExtraColumn)
     % nbCol = returnNbColumns(logFile, nameExtraColumn)
     %

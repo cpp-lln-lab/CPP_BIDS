@@ -22,7 +22,7 @@ function logFile = initializeExtraColumns(logFile)
         for iExtraColumn = 1:nbExtraColumns
             extraColumnName = logFile(1).extraColumns{iExtraColumn};
             tmp.(extraColumnName) = struct( ...
-                'length', 1);
+                                           'length', 1);
             tmp.(extraColumnName) = setDefaultFields(tmp.(extraColumnName), fieldsToSet);
         end
 
@@ -35,8 +35,8 @@ function logFile = initializeExtraColumns(logFile)
 
         logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}) = ...
             setDefaultFields( ...
-            logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}), ...
-            fieldsToSet);
+                             logFile(1).extraColumns.(namesExtraColumns{iExtraColumn}), ...
+                             fieldsToSet);
 
     end
 

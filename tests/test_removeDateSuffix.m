@@ -23,14 +23,14 @@ function test_removeDateSuffixBasic()
     stimNameZipped = 'test2_stim_date-202008050730.tsv.gz';
 
     filesToProcess = { ...
-        boldName;
-        boldName2;
-        boldName3;
-        jsonName;
-        eventsName;
-        stimName;
-        stimNameZipped;
-        };
+                      boldName
+                      boldName2
+                      boldName3
+                      jsonName
+                      eventsName
+                      stimName
+                      stimNameZipped
+                     };
 
     % create new files for new tests
     for iFile = 1:numel(filesToProcess)

@@ -37,7 +37,7 @@ function test_createDataDictionaryBasic()
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
 
     jsonFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
-        cfg.fileName.date '.json'];
+                    cfg.fileName.date '.json'];
 
     % test
     assertTrue(exist(fullfile(funcDir, jsonFilename), 'file') == 2);
@@ -47,7 +47,7 @@ function test_createDataDictionaryBasic()
 
     % data to test against
     expectedStruct = bids.util.jsondecode( ...
-        fullfile(pwd, 'testData', 'eventsDataDictionary.json'));
+                                          fullfile(pwd, 'testData', 'eventsDataDictionary.json'));
 
     % test
     assertTrue(isequal(expectedStruct, actualStruct));

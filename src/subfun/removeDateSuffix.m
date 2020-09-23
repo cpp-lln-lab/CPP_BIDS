@@ -25,7 +25,7 @@ function removeDateSuffix(filenames, subjectPath)
         % remove suffix file if there was one
         if ~strcmp(filenames{i}, [parts{1} ext])
             movefile(fullfile(subjectPath, filenames{i}), ...
-                fullfile(subjectPath, [parts{1} ext]));
+                     fullfile(subjectPath, [parts{1} ext]));
         end
 
     end

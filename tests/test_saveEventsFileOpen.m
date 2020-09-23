@@ -38,6 +38,7 @@ function test_saveEventsFileOpenBasic()
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);
+    assert(exist(fullfile(funcDir, strrep(eventFilename, '.tsv', '.json')), 'file') == 2);
 
     FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, 3), 'Delimiter', '\t', 'EndOfLine', '\n');
@@ -82,6 +83,7 @@ function test_saveEventsFileOpenStimfile()
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);
+    assert(exist(fullfile(funcDir, strrep(eventFilename, '.tsv', '.json')), 'file') == 2);
 
     FID = fopen(fullfile(funcDir, eventFilename), 'r');
     C = textscan(FID, repmat('%s', 1, 3), 'Delimiter', '\t', 'EndOfLine', '\n');

@@ -4,7 +4,7 @@ function printCreditsCppBids(cfg)
 
     try
         version = fileread(fullfile(fileparts(mfilename('fullpath')), ...
-            '..', '..', 'version.txt'));
+                                    '..', '..', 'version.txt'));
     catch
         version = 'v1.0.0';
     end
@@ -17,9 +17,9 @@ function printCreditsCppBids(cfg)
     if verbose > 1
 
         contributors = { ...
-            'Rémi Gau', ...
-            'Marco Barilari', ...
-            'Ceren Battal'};
+                        'Rémi Gau', ...
+                        'Marco Barilari', ...
+                        'Ceren Battal'};
 
         DOI_URL = 'https://doi.org/10.5281/zenodo.4007674';
 

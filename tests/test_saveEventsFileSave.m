@@ -187,10 +187,10 @@ function test_saveEventsFileSaveErrors()
     logFile = struct();
 
     assertExceptionThrown(@()saveEventsFile('error', cfg, logFile), ...
-        'saveEventsFile:unknownActionType');
+                          'saveEventsFile:unknownActionType');
 
     assertExceptionThrown(@()saveEventsFile('save', cfg, logFile), ...
-        'saveEventsFile:missingFileID');
+                          'saveEventsFile:missingFileID');
 
     [cfg, logFile] = setUp();
 
@@ -203,7 +203,7 @@ function test_saveEventsFileSaveErrors()
     logFile(end, end).LHL24 = rand(1, 10);
 
     assertExceptionThrown(@()saveEventsFile('save', cfg, logFile), ...
-        'saveEventsFile:wrongLogSize');
+                          'saveEventsFile:wrongLogSize');
 
 end
 

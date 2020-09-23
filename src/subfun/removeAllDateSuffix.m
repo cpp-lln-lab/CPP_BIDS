@@ -14,23 +14,23 @@ function removeAllDateSuffix(rawDir, subjName, sesName)
 
             % do events
             filenames = file_utils('List', subjectPath, ...
-                sprintf('^%s.*_task-.*_events_date-.*$', subjName));
+                                   sprintf('^%s.*_task-.*_events_date-.*$', subjName));
 
             removeDateSuffix(filenames, subjectPath);
 
             for iLabel = 1:numel(labels)
                 filenames = file_utils('List', subjectPath, ...
-                    sprintf('^%s.*_task-.*_%s_date-.*$', subjName, labels{iLabel}));
+                                       sprintf('^%s.*_task-.*_%s_date-.*$', subjName, labels{iLabel}));
 
                 removeDateSuffix(filenames, subjectPath);
             end
 
             % do stim
             filenames = file_utils('List', subjectPath, ...
-                sprintf('^%s.*_task-.*_stim_date-.*tsv$', subjName));
+                                   sprintf('^%s.*_task-.*_stim_date-.*tsv$', subjName));
             compressFiles(filenames, subjectPath);
             filenames = file_utils('List', subjectPath, ...
-                sprintf('^%s.*_task-.*_stim_date-.*tsv.gz$', subjName));
+                                   sprintf('^%s.*_task-.*_stim_date-.*tsv.gz$', subjName));
             removeDateSuffix(filenames, subjectPath);
 
         end

@@ -34,8 +34,6 @@ before_install:
   - travis_retry sudo apt-get -y install npm
   # Install BIDS-Validator
   - sudo npm install -g bids-validator
-  # Install miss_hit linter
-  - pip3 install miss_hit
 
 install:
   # make octave file the JSONio submodule
@@ -53,11 +51,6 @@ jobs:
 
     - name: "BIDS validator: create and check dataset"
       script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders
-
-    - name: "miss_hit: checking code quality"
-      script: mh_metric . --ci
-    - name: "miss_hit: checking code style"
-      script: mh_style .
 
     - name: "Check markdown"
       language: node_js

@@ -12,6 +12,13 @@ python:
 
 cache:
   apt: true # only works with Pro version
+  directories:
+  - node_modules # NPM packages for the remark markdown linter
+
+branches:
+  only:  # only run the CI for those branches 
+  - master
+  - dev
 
 env:
   global: # Define environment variables for bash
@@ -43,9 +50,26 @@ before_script:
 
 jobs:
   include:
-    - name: "BIDS validator: create and check dataset"
+    # BIDS validation
+    - stage: "BIDS validator"
+      name: "BIDS validator: create and check dataset"
       script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders
-    - name: "miss_hit: checking code quality"
+
+    # naming the Tests stage
+    - stage: "miss_hit"    
+      name: "miss_hit: checking code quality"
       script: mh_metric . --ci
+    
     - name: "miss_hit: checking code style"
       script: mh_style .
+
+    # naming the Linter stage
+    - stage: Markdown linter
+      name: "Check markdown"
+      language: node_js
+      node_js:
+        - "10"
+      before_script:
+        - npm install `cat npm-requirements.txt`
+      script:
+        - remark . --frail

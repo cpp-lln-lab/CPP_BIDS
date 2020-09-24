@@ -50,22 +50,16 @@ before_script:
 
 jobs:
   include:
-    # BIDS validation
-    - stage: "BIDS validator"
-      name: "BIDS validator: create and check dataset"
+
+    - name: "BIDS validator: create and check dataset"
       script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders
 
-    # naming the Tests stage
-    - stage: "miss_hit"    
-      name: "miss_hit: checking code quality"
+    - name: "miss_hit: checking code quality"
       script: mh_metric . --ci
-    
     - name: "miss_hit: checking code style"
       script: mh_style .
 
-    # naming the Linter stage
-    - stage: Markdown linter
-      name: "Check markdown"
+    - name: "Check markdown"
       language: node_js
       node_js:
         - "10"

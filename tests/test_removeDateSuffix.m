@@ -21,6 +21,7 @@ function test_removeDateSuffixBasic()
     eventsName = 'test_events_date-202008050730.tsv';
     stimName = 'test_stim_date-202008050730.tsv';
     stimNameZipped = 'test2_stim_date-202008050730.tsv.gz';
+    stimJsonName = 'test_stim_date-202008050730.json';
 
     filesToProcess = { ...
                       boldName
@@ -30,6 +31,7 @@ function test_removeDateSuffixBasic()
                       eventsName
                       stimName
                       stimNameZipped
+                      stimJsonName
                      };
 
     % create new files for new tests
@@ -48,6 +50,7 @@ function test_removeDateSuffixBasic()
     expectedEventsName = 'test_events.tsv';
     expectedStimName = 'test_stim.tsv';
     expectedStimNameZipped = 'test2_stim.tsv.gz';
+    expectedStimJson = 'test_stim.json';
 
     removeDateSuffix(filenames, outputDir);
 
@@ -61,6 +64,7 @@ function test_removeDateSuffixBasic()
     assertEqual(exist(fullfile(outputDir, expectedStimNameZipped), 'file'), 2);
     assertEqual(exist(fullfile(outputDir, expectedBoldName2), 'file'), 2);
     assertEqual(exist(fullfile(outputDir, expectedBoldName), 'file'), 2);
+    assertEqual(exist(fullfile(outputDir, expectedStimJson), 'file'), 2);
 
     % clean up
     delete('*.nii*');

@@ -28,6 +28,10 @@ function removeAllDateSuffix(rawDir, subjName, sesName)
 
             % do stim
             filenames = file_utils('List', subjectPath, ...
+                                   sprintf('^%s.*_task-.*_stim_date-.*json$', subjName));
+            removeDateSuffix(filenames, subjectPath);
+
+            filenames = file_utils('List', subjectPath, ...
                                    sprintf('^%s.*_task-.*_stim_date-.*tsv$', subjName));
             compressFiles(filenames, subjectPath);
             filenames = file_utils('List', subjectPath, ...

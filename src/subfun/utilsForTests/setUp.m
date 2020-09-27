@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function [cfg, logFile] = setUp()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');

@@ -65,7 +65,12 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     end
 
     % Convert the structure to dataset
-    outputFiltered = struct2dataset(output);
+    try
+        outputFiltered = struct2dataset(output);
+    catch
+        % dataset not yet supported by octave
+        outputFiltered = output;
+    end
 
     if saveOutputTsv
 

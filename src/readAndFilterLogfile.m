@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
     % outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
     %
@@ -18,31 +20,31 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %
     %  - outputFiltered: dataset with only the specified content, to see it in the command window
     %    use display(outputFiltered)
-    
+
     % Create tag to add to output file in case you want to save it
     outputFilterTag = ['_filteredBy-' columnName '_' filterBy '.tsv'];
-    
+
     % Checke if input is cfg or the file path and assign the output filename for later saving
     if ischar(varargin{1})
-        
+
         tsvFile = varargin{1};
-        
+
     elseif isstruct(varargin{1})
-        
+
         tsvFile = fullfile(varargin{1}.dir.outputSubject, ...
-            varargin{1}.fileName.modality, ...
-            varargin{1}.fileName.events);
-        
+                           varargin{1}.fileName.modality, ...
+                           varargin{1}.fileName.events);
+
     end
-    
+
     % Create output file name
     outputFileName = strrep(tsvFile, '.tsv', outputFilterTag);
-    
+
     % Check if the file exists
     if ~exist(tsvFile, 'file')
         error([newline 'Input file does not exist: %s'], tsvFile);
     end
-    
+
     try
         % Read the the tsv file and store each column in a field of `output` structure
         output = bids.util.tsvread(tsvFile);
@@ -52,25 +54,23 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
         % Read the the tsv file and store each column in a field of `output` structure
         output = bids.util.tsvread(tsvFile);
     end
-    
+
     % Get the index of the target contentent to filter and display
     filterIdx = strncmp(output.(columnName), filterBy, length(filterBy));
-    
+
     % apply the filter
-    listFields = fieldnames(output);      
+    listFields = fieldnames(output);
     for iField = 1:numel(listFields)
         output.(listFields{iField})(~filterIdx) = [];
     end
-    
+
     % Convert the structure to dataset
     outputFiltered = struct2dataset(output);
-    
+
     if saveOutputTsv
 
         bids.util.tsvwrite(outputFileName, output);
-        
+
     end
-    
+
 end
-
-

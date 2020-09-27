@@ -207,7 +207,6 @@ function test_saveEventsFileSaveErrors()
 
 end
 
-
 function content = getFileContent(cfg, logFile)
 
     % check the extra columns of the header and some of the content

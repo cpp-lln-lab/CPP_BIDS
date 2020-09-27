@@ -9,7 +9,7 @@ function createDataDictionary(cfg, logFile)
 
     opts.Indent = '    ';
 
-    fileName = strrep(logFile.filename, '.tsv', '.json');
+    fileName = strrep(logFile(1).filename, '.tsv', '.json');
 
     fileName = fullfile( ...
                         cfg.dir.outputSubject, ...

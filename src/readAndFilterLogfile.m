@@ -1,11 +1,8 @@
 function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
-    % outputFiltered = readOutputFilter(filterHeader, filterContent, varargin)
+    % outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
     %
     % It will display in the command window the content of the `output.tsv' filtered by one element
     % of a target column.
-    %
-    % DEPENDENCIES:
-    %  - bids_matlab (from CPP_BIDS)
     %
     % INPUT:
     %
@@ -21,66 +18,59 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %
     %  - outputFiltered: dataset with only the specified content, to see it in the command window
     %    use display(outputFiltered)
-
+    
     % Create tag to add to output file in case you want to save it
     outputFilterTag = ['_filteredBy-' columnName '_' filterBy '.tsv'];
-
+    
     % Checke if input is cfg or the file path and assign the output filename for later saving
     if ischar(varargin{1})
-
+        
         tsvFile = varargin{1};
-
-        % Divide path and file name
-        fileSepPos = find(tsvFile == filesep, 1, 'last');
-        path1 = tsvFile(1:fileSepPos - 1);
-        path2 = tsvFile(fileSepPos + 1:end - 4);
-
-        % Create output file name
-        outputFileName = fullfile(path1, ...
-                                  [path2 ...
-                                   outputFilterTag]);
-
+        
     elseif isstruct(varargin{1})
-
+        
         tsvFile = fullfile(varargin{1}.dir.outputSubject, ...
-                           varargin{1}.fileName.modality, ...
-                           varargin{1}.fileName.events);
-
-        % Create output file name
-        outputFileName = fullfile(varargin{1}.dir.outputSubject, ...
-                                  varargin{1}.fileName.modality, ...
-                                  [varargin{1}.fileName.events(1:end - 4) ...
-                                   outputFilterTag]);
+            varargin{1}.fileName.modality, ...
+            varargin{1}.fileName.events);
+        
     end
-
+    
+    % Create output file name
+    outputFileName = strrep(tsvFile, '.tsv', outputFilterTag);
+    
     % Check if the file exists
     if ~exist(tsvFile, 'file')
-        error([newline 'Input file does not exist']);
+        error([newline 'Input file does not exist: %s'], tsvFile);
     end
-
+    
     try
         % Read the the tsv file and store each column in a field of `output` structure
         output = bids.util.tsvread(tsvFile);
     catch
         % Add the 'bids-matlab' in case is not in the path
-        addpath(genpath(fullfile(pwd, '../lib')));
+        addpath(genpath(fullfile(pwd, '..', 'lib')));
         % Read the the tsv file and store each column in a field of `output` structure
         output = bids.util.tsvread(tsvFile);
     end
-
+    
     % Get the index of the target contentent to filter and display
-    filterIdx = find(strncmp(output.(columnName), filterBy, length(filterBy)));
-
+    filterIdx = strncmp(output.(columnName), filterBy, length(filterBy));
+    
+    % apply the filter
+    listFields = fieldnames(output);      
+    for iField = 1:numel(listFields)
+        output.(listFields{iField})(~filterIdx) = [];
+    end
+    
     % Convert the structure to dataset
-    outputDataset = struct2dataset(output);
-
-    % Get the dataset with the content of intereset
-    outputFiltered = outputDataset(filterIdx, :);
-
+    outputFiltered = struct2dataset(output);
+    
     if saveOutputTsv
 
         bids.util.tsvwrite(outputFileName, output);
-
+        
     end
-
+    
 end
+
+

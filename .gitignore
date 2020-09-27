@@ -7,12 +7,13 @@
 
 # exclude content of logfiles folders
 *output*
-*.tsv
 *.mat
 
 # exclude temp files from tests and coverage
 *test_code_report.txt
 *coverage*
+
+*filteredBy*
 
 tests/*.nii*
 tests/*.json*

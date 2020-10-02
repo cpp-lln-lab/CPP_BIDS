@@ -219,14 +219,14 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
             warning('saveEventsFile:missingData', ...
                 'Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
 
-            if cfg.verbose
+            if cfg.verbose > 1
                 disp(logFile(iEvent));
             end
 
         elseif ~ischar(data) && all(isnan(data))
             warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
 
-            if cfg.verbose
+            if cfg.verbose > 1
                 disp(logFile(iEvent));
             end
         end
@@ -297,11 +297,11 @@ function logFile = saveToLogFile(logFile, cfg)
 
         else
 
-            printData(logFile(1).fileID, onset);
-            printData(logFile(1).fileID, duration);
-            printData(logFile(1).fileID, trial_type);
+            printData(logFile(1).fileID, onset, cfg);
+            printData(logFile(1).fileID, duration, cfg);
+            printData(logFile(1).fileID, trial_type, cfg);
 
-            printExtraColumns(logFile, iEvent);
+            printExtraColumns(logFile, iEvent, cfg);
 
             fprintf(logFile(1).fileID, '\n');
             fprintf(1, '\n');
@@ -311,7 +311,7 @@ function logFile = saveToLogFile(logFile, cfg)
 
 end
 
-function printExtraColumns(logFile, iEvent)
+function printExtraColumns(logFile, iEvent, cfg)
     % loops through the extra columns and print them
 
     namesExtraColumns = returnNamesExtraColumns(logFile);
@@ -320,26 +320,32 @@ function printExtraColumns(logFile, iEvent)
 
         data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
 
-        printData(logFile(1).fileID, data);
+        printData(logFile(1).fileID, data, cfg);
 
     end
 
 end
 
-function printData(output, data)
+function printData(output, data, cfg)
     % write char
     % for numeric data we replace any nan by n/a
     if ischar(data)
         fprintf(output, '%s\t', data);
-        fprintf(1, '%s\t', data);
+        if cfg.verbose > 0
+            fprintf(1, '%s\t', data);
+        end
     else
         for i = 1:numel(data)
             if isnan(data(i))
                 fprintf(output, '%s\t', 'n/a');
-                fprintf(1, '%s\t', 'n/a');
+                if cfg.verbose > 0
+                    fprintf(1, '%s\t', 'n/a');
+                end
             else
                 fprintf(output, '%f\t', data(i));
-                fprintf(1, '%f\t', data(i));
+                if cfg.verbose > 0
+                    fprintf(1, '%f\t', data(i));
+                end
             end
         end
     end
@@ -384,7 +390,7 @@ end
 
 function talkToMe(cfg, logFile)
 
-    if cfg.verbose
+    if cfg.verbose > 0
 
         fprintf(1, '\nData were saved in this file:\n\n%s\n\n', ...
             fullfile( ...

@@ -12,7 +12,7 @@ function checkCppBidsDependencies(cfg)
 
     elseif isempty(GITHUB_WORKSPACE)  % local
 
-        pth = fullfile(fileparts(mfilename('fullpath')), '..');
+        pth = fullfile(fileparts(mfilename('fullpath')), '..', '..');
         checkSubmodule(fullfile(pth, 'lib', 'JSONio'));
         checkSubmodule(fullfile(pth, 'lib', 'bids-matlab'));
 

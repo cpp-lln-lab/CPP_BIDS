@@ -68,13 +68,14 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     try
         outputFiltered = struct2dataset(output);
     catch
-        % dataset not yet supported by octave
+        %dataset not yet supported by octave
         outputFiltered = output;
     end
 
     if saveOutputTsv
-
-        bids.util.tsvwrite(outputFileName, output);
+        % convert back to struc to save in .tsv 
+        outputFiltered = dataset2struct(outputFiltered);
+        bids.util.tsvwrite(outputFileName, outputFiltered);
 
     end
 

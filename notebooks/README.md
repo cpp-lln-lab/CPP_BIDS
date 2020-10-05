@@ -1,9 +1,11 @@
 # README
 
-1. Make sure that you have Octave installed. 
+1. Make sure that you have Octave installed.
 2. If you have Conda/Jupyter/pip installed, go to step 4.
+Check if Conda is installed properly by typing `conda list` into your terminal
 3. Download the [Anaconda Installer](https://www.anaconda.com/products/individual) and install it.
-4. Install [Octave kernel](https://pypi.org/project/octave-kernel/): 
+If using miniconda, run `conda install jupyter` to download and install the Jupyter Notebook package.
+4. Install [Octave kernel](https://pypi.org/project/octave-kernel/):
    ```
    pip install octave_kernel
    ```

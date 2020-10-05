@@ -13,7 +13,10 @@
       "contributions": [
         "code",
         "design",
-        "doc"
+        "doc",
+        "userTesting",
+        "ideas",
+        "bug"
       ]
     },
     {
@@ -24,7 +27,10 @@
       "contributions": [
         "code",
         "design",
-        "doc"
+        "doc",
+        "userTesting",
+        "ideas",
+        "bug"
       ]
     },
     {
@@ -35,7 +41,14 @@
       "contributions": [
         "code",
         "design",
-        "doc"
+        "doc",
+        "bug",
+        "userTesting",
+        "ideas",
+        "infra",
+        "maintenance",
+        "test",
+        "question"
       ]
     }
   ],
@@ -44,5 +57,5 @@
   "projectOwner": "cpp-lln-lab",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": false
 }

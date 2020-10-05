@@ -21,9 +21,9 @@ function cfg = checkCFG(cfg)
     fieldsToSet.fileName.dateFormat = 'yyyymmddHHMM';
 
     fieldsToSet.dir.output = fullfile( ...
-        fileparts(mfilename('fullpath')), ...
-        '..', ...
-        'output');
+                                      fileparts(mfilename('fullpath')), ...
+                                      '..', ...
+                                      'output');
 
     fieldsToSet.subject.askGrpSess = [true true];
     fieldsToSet.subject.sessionNb = 1; % in case no session was provided
@@ -246,7 +246,7 @@ function fieldsToSet = behJsonDefaults(fieldsToSet)
 end
 
 function fieldsToSet = eyetrackerDefaults(fieldsToSet)
-    
+
     fieldsToSet.eyeTracker.do = false;
     fieldsToSet.eyeTracker.SamplingFrequency = [];
     fieldsToSet.eyeTracker.PupilPositionType = '';
@@ -255,10 +255,10 @@ function fieldsToSet = eyetrackerDefaults(fieldsToSet)
     fieldsToSet.eyeTracker.ManufacturersModelName = '';
     fieldsToSet.eyeTracker.SoftwareVersions = '';
     fieldsToSet.eyeTracker.CalibrationType = 'HV5';
-    fieldsToSet.eyeTracker.CalibrationPosition = '';    
+    fieldsToSet.eyeTracker.CalibrationPosition = '';
     fieldsToSet.eyeTracker.CalibrationDistance = '';
     fieldsToSet.eyeTracker.MaximalCalibrationError = [];
     fieldsToSet.eyeTracker.AverageCalibrationError = [];
     fieldsToSet.eyeTracker.RawDataFilters = {};
-  
+
 end

@@ -2,16 +2,12 @@
 
 function [cfg, logFile] = setUp()
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
-
     cfg.verbose = true;
 
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
 
     cfg.task.name = 'testtask';
-
-    cfg.dir.output = outputDir;
 
     cfg.testingDevice = 'mri';
 

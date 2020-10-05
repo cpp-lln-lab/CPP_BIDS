@@ -9,7 +9,7 @@ end
 function test_readAndFilterLogfileBasic()
 
     %% set up
-
+    cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
     [cfg, logFile] = setUp();
 
     % create the events file and header
@@ -24,6 +24,20 @@ function test_readAndFilterLogfileBasic()
     logFile(end, 1).LHL24 = 1:12;
 
     logFile(2, 1).onset = 2;
+    logFile(end, 1).trial_type = 'motion_down';
+    logFile(end, 1).duration = 3;
+    logFile(end, 1).Speed = 2;
+    logFile(end, 1).is_Fixation = true;
+    logFile(end, 1).LHL24 = 2:13;
+    
+    logFile(3, 1).onset = 2;
+    logFile(end, 1).trial_type = 'motion_up';
+    logFile(end, 1).duration = 3;
+    logFile(end, 1).Speed = 2;
+    logFile(end, 1).is_Fixation = true;
+    logFile(end, 1).LHL24 = 1:12;
+    
+    logFile(4, 1).onset = 2;
     logFile(end, 1).trial_type = 'motion_down';
     logFile(end, 1).duration = 3;
     logFile(end, 1).Speed = 2;
@@ -48,8 +62,11 @@ function test_readAndFilterLogfileBasic()
     assertEqual(exist(expectedFile, 'file'), 2);
 
     content = bids.util.tsvread(expectedFile);
+    
+    assertEqual(size(content.trial_type), [2, 1]);
 
     assertEqual(content.trial_type{1}, 'motion_down');
+    assertEqual(content.trial_type{2}, 'motion_down');
 
 end
 

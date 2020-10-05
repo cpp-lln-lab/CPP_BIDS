@@ -254,11 +254,11 @@ function fieldsToSet = eyetrackerDefaults(fieldsToSet)
     fieldsToSet.eyeTracker.Manufacturer = '';
     fieldsToSet.eyeTracker.ManufacturersModelName = '';
     fieldsToSet.eyeTracker.SoftwareVersions = '';
-    fieldsToSet.eyeTracker.CalibrationType = '';
+    fieldsToSet.eyeTracker.CalibrationType = 'HV5';
     fieldsToSet.eyeTracker.CalibrationPosition = '';    
     fieldsToSet.eyeTracker.CalibrationDistance = '';
     fieldsToSet.eyeTracker.MaximalCalibrationError = [];
     fieldsToSet.eyeTracker.AverageCalibrationError = [];
     fieldsToSet.eyeTracker.RawDataFilters = {};
-        
+  
 end

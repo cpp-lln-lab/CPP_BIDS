@@ -147,6 +147,20 @@ function expectedCfgStructure = returnExpectedCfgStructure()
     expectedCfgStructure.bids.datasetDescription.Funding = {''};
     expectedCfgStructure.bids.datasetDescription.ReferencesAndLinks = {''};
     expectedCfgStructure.bids.datasetDescription.DatasetDOI = '';
+    
+    expectedCfgStructure.eyeTracker.do = false;
+    expectedCfgStructure.eyeTracker.SamplingFrequency = [];
+    expectedCfgStructure.eyeTracker.PupilPositionType = '';
+    expectedCfgStructure.eyeTracker.RawSamples =  [];
+    expectedCfgStructure.eyeTracker.Manufacturer = '';
+    expectedCfgStructure.eyeTracker.ManufacturersModelName = '';
+    expectedCfgStructure.eyeTracker.SoftwareVersions = '';
+    expectedCfgStructure.eyeTracker.CalibrationType = 'HV5';
+    expectedCfgStructure.eyeTracker.CalibrationPosition = '';    
+    expectedCfgStructure.eyeTracker.CalibrationDistance = '';
+    expectedCfgStructure.eyeTracker.MaximalCalibrationError = [];
+    expectedCfgStructure.eyeTracker.AverageCalibrationError = [];
+    expectedCfgStructure.eyeTracker.RawDataFilters = {};
 
     expectedCfgStructure.bids = orderfields(expectedCfgStructure.bids);
 

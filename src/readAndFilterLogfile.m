@@ -63,7 +63,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     for iField = 1:numel(listFields)
         output.(listFields{iField})(~filterIdx) = [];
     end
-    
+
     output = convertStruct(output);
 
     % Convert the structure to dataset
@@ -86,16 +86,16 @@ function structure = convertStruct(structure)
     % changes the structure
     %
     % from struct.field(i,1) to struct(i,1).field(1)
-    
+
     fieldsList = fieldnames(structure);
     tmp = struct();
-    
+
     for iField = 1:numel(fieldsList)
         for i = 1:numel(structure.(fieldsList{iField}))
-            tmp(i,1).(fieldsList{iField}) =  structure.(fieldsList{iField})(i,1);
+            tmp(i, 1).(fieldsList{iField}) =  structure.(fieldsList{iField})(i, 1);
         end
     end
-    
+
     structure = tmp;
-    
+
 end

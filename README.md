@@ -73,7 +73,7 @@ sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-2020072915
 
 -   [Installation](./docs/installation.md)
 -   [How to use it: jupyter notebooks](./notebooks)
--   [Functions description](./docs/functions_description.md)
+-   [Functions description](./docs/functions-description.md)
 
 ## Contributing
 

@@ -23,7 +23,7 @@ function test_createJsonFunc()
     funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'func');
 
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_bold_date-' ...
-        cfg.fileName.date '.json'];
+                     cfg.fileName.date '.json'];
 
     %% test
     assertTrue(exist(fullfile(funcDir, eventFilename), 'file') == 2);
@@ -47,7 +47,7 @@ function test_createJsonBeh()
     funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'beh');
 
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_beh_date-' ...
-        cfg.fileName.date '.json'];
+                     cfg.fileName.date '.json'];
 
     %% test
     assertTrue(exist(fullfile(funcDir, eventFilename), 'file') == 2);
@@ -71,7 +71,7 @@ function test_createJsonEeg()
     funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'eeg');
 
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_eeg_date-' ...
-        cfg.fileName.date '.json'];
+                     cfg.fileName.date '.json'];
 
     %% test
     assertTrue(exist(fullfile(funcDir, eventFilename), 'file') == 2);
@@ -95,7 +95,7 @@ function test_createJsonMeg()
     funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'meg');
 
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_meg_date-' ...
-        cfg.fileName.date '.json'];
+                     cfg.fileName.date '.json'];
 
     %% test
     assertTrue(exist(fullfile(funcDir, eventFilename), 'file') == 2);
@@ -119,7 +119,7 @@ function test_createJsonIeeg()
     funcDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'ieeg');
 
     eventFilename = ['sub-001_ses-001_task-testtask_run-001_ieeg_date-' ...
-        cfg.fileName.date '.json'];
+                     cfg.fileName.date '.json'];
 
     %% test
     assertTrue(exist(fullfile(funcDir, eventFilename), 'file') == 2);

@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function structure = setDefaultFields(structure, fieldsToSet)
     % structure = setDefaultFields(structure, fieldsToSet)
     %
@@ -20,9 +22,9 @@ function structure = setDefaultFields(structure, fieldsToSet)
         else
 
             structure = setFieldToIfNotPresent( ...
-                structure, ...
-                names{i}, ...
-                thisField);
+                                               structure, ...
+                                               names{i}, ...
+                                               thisField);
         end
 
     end

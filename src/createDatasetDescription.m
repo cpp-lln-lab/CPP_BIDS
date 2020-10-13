@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function createDatasetDescription(cfg)
     % createDatasetDescription(cfg)
     %
@@ -7,8 +9,8 @@ function createDatasetDescription(cfg)
     opts.Indent = '    ';
 
     fileName = fullfile( ...
-        cfg.dir.output, 'source', ...
-        'dataset_description.json');
+                        cfg.dir.output, 'source', ...
+                        'dataset_description.json');
 
     jsonContent = cfg.bids.datasetDescription;
 

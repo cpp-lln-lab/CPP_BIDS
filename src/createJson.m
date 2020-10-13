@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function createJson(varargin)
     % createBoldJson(cfg, varargin)
     %
@@ -37,9 +39,9 @@ function createJson(varargin)
     fileName = strrep(fileName, '.tsv', '.json');
 
     fileName = fullfile( ...
-        cfg.dir.outputSubject, ...
-        modality, ...
-        fileName);
+                        cfg.dir.outputSubject, ...
+                        modality, ...
+                        fileName);
 
     %% add content of extraInfo to the JSON content
 
@@ -113,11 +115,12 @@ function errorCreateJson(identifier, varargin)
 
         case 'wrongInputType'
             errorStruct.message = ['The second input must be a string (modality)' ...
-                'or a structure (extraInfo)'];
+                                   'or a structure (extraInfo)'];
         case 'wrongModalityInput'
             errorStruct.message = sprintf(['The given modality is not valid: %s.\n', ...
-                'Only the following string are accepted: beh, func, eeg, ieeg, meg'], ...
-                varargin{1});
+                                           'Only the following string are accepted: ' ...
+                                           'beh, func, eeg, ieeg, meg'], ...
+                                          varargin{1});
 
     end
 

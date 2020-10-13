@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function cfg = checkCFG(cfg)
     % cfg = checkCFG(cfg)
     %
@@ -21,9 +23,9 @@ function cfg = checkCFG(cfg)
     fieldsToSet.fileName.dateFormat = 'yyyymmddHHMM';
 
     fieldsToSet.dir.output = fullfile( ...
-        fileparts(mfilename('fullpath')), ...
-        '..', ...
-        'output');
+                                      fileparts(mfilename('fullpath')), ...
+                                      '..', ...
+                                      'output');
 
     fieldsToSet.subject.askGrpSess = [true true];
     fieldsToSet.subject.sessionNb = 1; % in case no session was provided
@@ -31,11 +33,9 @@ function cfg = checkCFG(cfg)
 
     fieldsToSet.testingDevice = 'pc';
 
-    fieldsToSet.eyeTracker = struct();
+    fieldsToSet = eyetrackerDefaults(fieldsToSet);
 
-    fieldsToSet.eyeTracker.do = false;
-
-    fieldsToSet = mriDefaults(fieldsToSet);
+    fieldsToSet = setSuffixes(fieldsToSet);
 
     %% BIDS
 
@@ -53,7 +53,7 @@ function cfg = checkCFG(cfg)
 
 end
 
-function fieldsToSet = mriDefaults(fieldsToSet)
+function fieldsToSet = setSuffixes(fieldsToSet)
 
     % for file naming and JSON
     fieldsToSet.suffix.contrastEnhancement = [];
@@ -244,5 +244,23 @@ function fieldsToSet = behJsonDefaults(fieldsToSet)
     fieldsToSet.bids.beh.Instructions = [];
 
     fieldsToSet.bids.ieeg = orderfields(fieldsToSet.bids.beh);
+
+end
+
+function fieldsToSet = eyetrackerDefaults(fieldsToSet)
+
+    fieldsToSet.eyeTracker.do = false;
+    fieldsToSet.eyeTracker.SamplingFrequency = [];
+    fieldsToSet.eyeTracker.PupilPositionType = '';
+    fieldsToSet.eyeTracker.RawSamples =  [];
+    fieldsToSet.eyeTracker.Manufacturer = '';
+    fieldsToSet.eyeTracker.ManufacturersModelName = '';
+    fieldsToSet.eyeTracker.SoftwareVersions = '';
+    fieldsToSet.eyeTracker.CalibrationType = 'HV5';
+    fieldsToSet.eyeTracker.CalibrationPosition = '';
+    fieldsToSet.eyeTracker.CalibrationDistance = '';
+    fieldsToSet.eyeTracker.MaximalCalibrationError = [];
+    fieldsToSet.eyeTracker.AverageCalibrationError = [];
+    fieldsToSet.eyeTracker.RawDataFilters = {};
 
 end

@@ -1,3 +1,5 @@
+<!-- lint disable -->
+
 **Try it**
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cpp-lln-lab/CPP_BIDS/master?filepath=notebooks%2Fbasic_usage.ipynb)
@@ -17,34 +19,34 @@
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 
----
+* * *
 
 # CPP_BIDS
 
-<!-- vscode-markdown-toc -->
+<!-- TOC -->
 
--   1. [Output format](#Outputformat)
-    -   1.1. [Modality agnostic aspect](#Modalityagnosticaspect)
--   2. [Documentation](#Documentation)
--   3. [Contributing](#Contributing)
-    -   3.1. [Guidestyle](#Guidestyle)
-    -   3.2. [BIDS naming convention](#BIDSnamingconvention)
-    -   3.3. [Contributors ✨](#Contributors)
+-   [CPP_BIDS](#cpp_bids)
+-   [Output format](#output-format)
+    -   [Modality agnostic aspect](#modality-agnostic-aspect)
+-   [Documentation](#documentation)
+-   [Contributing](#contributing)
+    -   [Guidestyle](#guidestyle)
+    -   [BIDS naming convention](#bids-naming-convention)
+    -   [Change log](#change-log)
+    -   [Contributors ✨](#contributors-)
 
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+<!-- /TOC -->
+
+<!-- lint enable -->
 
 A set of function for matlab and octave to create
 [BIDS-compatible](https://bids-specification.readthedocs.io/en/stable/) folder
 structure and filenames for the output of behavioral, EEG, fMRI, eyetracking
 studies.
 
-## 1. <a name='Outputformat'></a>Output format
+## Output format
 
-### 1.1. <a name='Modalityagnosticaspect'></a>Modality agnostic aspect
+### Modality agnostic aspect
 
 Subjects, session and run number labels will be numbers with zero padding up to
 3 values (e.g subject 1 will become `sub-001`).
@@ -63,31 +65,33 @@ data set BIDS compliant. See `convertSourceToRaw.m` for more details.
 
 For example:
 
-```
+```bash
 sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-202007291536.tsv
 ```
 
-## 2. <a name='Documentation'></a>Documentation
+## Documentation
 
 -   [Installation](./docs/installation.md)
 -   [How to use it: jupyter notebooks](./notebooks)
 -   [Functions description](./docs/functions_description.md)
 
-## 3. <a name='Contributing'></a>Contributing
+## Contributing
 
 Feel free to open issues to report a bug and ask for improvements.
 
-### 3.1. <a name='Guidestyle'></a>Guidestyle
+### Guidestyle
 
 -   We use camelCase.
+
 -   We keep the McCabe complexity as reported by the
     [check_my_code function](https://github.com/Remi-Gau/check_my_code)
     below 15.
+
 -   We use the
     [MISS_HIT linter](https://florianschanda.github.io/miss_hit/style_checker.html)
     to automatically fix some linting issues.
 
-### 3.2. <a name='BIDSnamingconvention'></a>BIDS naming convention
+### BIDS naming convention
 
 Here are the naming templates used.
 
@@ -137,18 +141,21 @@ future BEP format in a dedicated eyetracker folder
 `<matches>[_recording-<label>]_stim.tsv.gz`
 `<matches>[_recording-<label>]_stim.json`
 
-### change log
+### Change log
 
  <!-- 93b4c584bf22883a3c4f8b9031b70e381deef272 -->
 
-### 3.3. <a name='Contributors'></a>Contributors ✨
+### Contributors ✨
 
 Thanks goes to these wonderful people
 ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
+
 <table>
   <tr>
     <td align="center"><a href="https://github.com/CerenB"><img src="https://avatars1.githubusercontent.com/u/10451654?v=4" width="100px;" alt=""/><br /><sub><b>CerenB</b></sub></a><br /><a href="https://github.com/cpp-lln-lab/CPP_BIDS/commits?author=CerenB" title="Code">💻</a> <a href="#design-CerenB" title="Design">🎨</a> <a href="https://github.com/cpp-lln-lab/CPP_BIDS/commits?author=CerenB" title="Documentation">📖</a> <a href="#userTesting-CerenB" title="User Testing">📓</a> <a href="#ideas-CerenB" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/cpp-lln-lab/CPP_BIDS/issues?q=author%3ACerenB" title="Bug reports">🐛</a></td>
@@ -158,6 +165,7 @@ Thanks goes to these wonderful people
 </table>
 
 <!-- markdownlint-enable -->
+
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->

@@ -37,11 +37,7 @@ function createJson(varargin)
     end
 
     fileName = strrep(fileName, '.tsv', '.json');
-
-    fileName = fullfile( ...
-                        cfg.dir.outputSubject, ...
-                        modality, ...
-                        fileName);
+    fullFilename = getFullFilename(fileName, cfg);
 
     %% add content of extraInfo to the JSON content
 
@@ -52,7 +48,7 @@ function createJson(varargin)
 
     %% save
     opts.Indent = '    ';
-    bids.util.jsonencode(fileName, jsonContent, opts);
+    bids.util.jsonencode(fullFilename, jsonContent, opts);
 
 end
 

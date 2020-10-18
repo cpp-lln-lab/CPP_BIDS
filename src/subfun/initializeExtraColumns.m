@@ -12,6 +12,7 @@ function logFile = initializeExtraColumns(logFile)
     fieldsToSet.bids.Description = '';
     fieldsToSet.bids.Levels = '';
     fieldsToSet.bids.TermURL = '';
+    fieldsToSet.bids.Units = '';
 
     % convert the cell of column name into a structure
     if iscell(logFile(1).extraColumns)

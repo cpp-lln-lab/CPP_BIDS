@@ -19,6 +19,7 @@ jobs:
 
     - name: Make jsonread for octave
       run: |
+        sudo apt-get -y -qq update
         sudo apt-get -y install octave 
         sudo apt-get -y install liboctave-dev
         cd lib/JSONio

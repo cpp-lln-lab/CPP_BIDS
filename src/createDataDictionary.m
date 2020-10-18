@@ -36,7 +36,7 @@ function jsonContent = setJsonContent(fullFilename, logFile)
                                             'Units', 's') ...
                         );
 
-    if contains(fullFilename, '_stim')
+    if ismember('_stim', fullFilename)
         
         samplingFrequency = nan;
         startTime = nan;
@@ -63,7 +63,7 @@ function jsonContent = setJsonContent(fullFilename, logFile)
 
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
 
-            if contains(fullFilename, '_stim')
+            if ismember('_stim', fullFilename)
 
                 jsonContent.Columns{end + 1} = headerName;
 

@@ -66,7 +66,6 @@ function test_createDataDictionaryBasic()
 
 end
 
-
 function test_createDataDictionaryStim()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
@@ -85,11 +84,11 @@ function test_createDataDictionaryStim()
     cfg.testingDevice = 'mri';
 
     cfg = createFilename(cfg);
-    
+
     stimLogFile.extraColumns.Speed.length = 1;
     stimLogFile.extraColumns.LHL24.length = 3;
     stimLogFile.extraColumns.is_Fixation.length = 1;
-    
+
     stimLogFile.SamplingFrequency = 100;
     stimLogFile.StartTime = 0;
 
@@ -118,6 +117,5 @@ function test_createDataDictionaryStim()
     % jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
     % test_createDataDictionary>test_createDataDictionaryBasic:48
     %   (/github/workspace/tests/test_createDataDictionary.m)
-
 
 end

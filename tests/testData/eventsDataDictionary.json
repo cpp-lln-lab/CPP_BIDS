@@ -1,7 +1,7 @@
 {
     "onset": {
         "Description": "time elapsed since experiment start",
-        "Unit": "s"
+        "Units": "s"
     },
     "trial_type": {
         "Description": "types of trial",
@@ -9,30 +9,34 @@
     },
     "duration": {
         "Description": "duration of the event or the block",
-        "Unit": "s"
+        "Units": "s"
     },
     "Speed": {
         "LongName": "",
         "Description": "",
         "Levels": "",
-        "TermURL": ""
+        "TermURL": "",
+        "Units": ""
     },
     "LHL24_01": {
         "LongName": "",
         "Description": "",
         "Levels": "",
-        "TermURL": ""
+        "TermURL": "",
+        "Units": ""
     },
     "LHL24_02": {
         "LongName": "",
         "Description": "",
         "Levels": "",
-        "TermURL": ""
+        "TermURL": "",
+        "Units": ""
     },
     "LHL24_03": {
         "LongName": "",
         "Description": "",
         "Levels": "",
-        "TermURL": ""
+        "TermURL": "",
+        "Units": ""
     }
 }

@@ -28,6 +28,8 @@ function test_createDataDictionaryBasic()
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
     logFile = saveEventsFile('init', cfg, logFile);
+    
+    logFile = saveEventsFile('open', cfg, logFile);
 
     createDataDictionary(cfg, logFile);
 

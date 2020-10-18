@@ -74,10 +74,10 @@ function test_makeRawDataset()
     stimLogFile.extraColumns.Speed.length = 1;
     stimLogFile.extraColumns.LHL24.length = 3;
     stimLogFile.extraColumns.is_Fixation.length = 1;
-    
+
     stimLogFile.SamplingFrequency = 100;
     stimLogFile.StartTime = 0;
-    
+
     stimLogFile = saveEventsFile('open_stim', cfg, stimLogFile);
     for i = 1:100
         stimLogFile(i, 1).onset = cfg.mri.repetitionTime * i;

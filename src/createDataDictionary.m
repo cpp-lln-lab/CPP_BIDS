@@ -37,15 +37,15 @@ function jsonContent = setJsonContent(fullFilename, logFile)
                         );
 
     if ismember('_stim', fullFilename)
-        
+
         samplingFrequency = nan;
         startTime = nan;
-        
+
         if isfield(logFile, 'SamplingFrequency')
-        samplingFrequency = logFile(1).SamplingFrequency;
+            samplingFrequency = logFile(1).SamplingFrequency;
         end
         if isfield(logFile, 'StartTime')
-        startTime = logFile(1).StartTime;
+            startTime = logFile(1).StartTime;
         end
 
         jsonContent = struct( ...

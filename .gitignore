@@ -26,5 +26,9 @@ check_my_code_report.txt
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
+# ignore node js files
+node_modules/*
+package-lock.json
+
 
 

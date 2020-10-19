@@ -101,23 +101,31 @@ Here are the naming templates used.
 
 -   Behavior
 
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.tsv`
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.json`
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.tsv`
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.json`
+```
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.tsv
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.json
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.tsv
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.json
+```
 
 -   BOLD
 
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_ce-<label>][_dir-<label>][_rec-<label>][_run-<index>][_echo-<index>]_<contrast_label>.nii[.gz]`
+```
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_ce-<label>][_dir-<label>][_rec-<label>][_run-<index>][_echo-<index>]_<contrast_label>.nii[.gz]
+```
 
 -   iEEG
 
-`sub-<label>[_ses-<label>]_task-<task_label>[_run-<index>]_ieeg.json`
+```
+sub-<label>[_ses-<label>]_task-<task_label>[_run-<index>]_ieeg.json
+```
 
 -   EEG
 
-`sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.<manufacturer_specific_extension>`
-`sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.json`
+```
+sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.<manufacturer_specific_extension>
+sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.json
+```
 
 <!-- European data format (Each recording consisting of a .edf file)
 
@@ -136,14 +144,19 @@ Biosemi data format (Each recording consisting of a .bdf file) -->
 current format `<matches>_recording-eyetracking_physio.tsv.gz`
 
 future BEP format in a dedicated eyetracker folder
-`sub-<participant_label>[_ses-<label>][_acq-<label>]_task-<task_label>_eyetrack.<manufacturer_specific_extension>`
+
+```
+sub-<participant_label>[_ses-<label>][_acq-<label>]_task-<task_label>_eyetrack.<manufacturer_specific_extension>
+```
 
 -   Stim and physio
 
-`<matches>[_recording-<label>]_physio.tsv.gz`
-`<matches>[_recording-<label>]_physio.json`
-`<matches>[_recording-<label>]_stim.tsv.gz`
-`<matches>[_recording-<label>]_stim.json`
+```
+<matches>[_recording-<label>]_physio.tsv.gz
+<matches>[_recording-<label>]_physio.json
+<matches>[_recording-<label>]_stim.tsv.gz
+<matches>[_recording-<label>]_stim.json
+```
 
 ### Change log
 

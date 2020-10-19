@@ -82,7 +82,7 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
 
             logFile(1).filename = cfg.fileName.stim;
 
-            logFile = initializeFile(cfg, logFile);
+            logFile = initializeStimFile(cfg, logFile);
 
         case 'save'
 
@@ -147,6 +147,22 @@ end
 
 function logFile = initializeFile(cfg, logFile)
 
+    logFile = initializeStimFile(cfg, logFile);
+
+    % print the basic BIDS columns
+    fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+    fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+
+    printHeaderExtraColumns(logFile);
+
+    % next line so we start printing at the right place
+    fprintf(logFile(1).fileID, '\n');
+    fprintf(1, '\n');
+
+end
+
+function logFile = initializeStimFile(cfg, logFile)
+
     logFile = initializeExtraColumns(logFile);
 
     createDataDictionary(cfg, logFile);
@@ -159,16 +175,6 @@ function logFile = initializeFile(cfg, logFile)
                                        cfg.fileName.modality, ...
                                        logFile.filename), ...
                               'w');
-
-    % print the basic BIDS columns
-    fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
-    fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
-
-    printHeaderExtraColumns(logFile);
-
-    % next line so we start printing at the right place
-    fprintf(logFile(1).fileID, '\n');
-    fprintf(1, '\n');
 
 end
 

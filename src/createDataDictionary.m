@@ -20,28 +20,14 @@ function createDataDictionary(cfg, logFile)
     jsonContent = setJsonContent(fullFilename, logFile);
 
     opts.Indent = '    ';
+    
     bids.util.jsonencode(fullFilename, jsonContent, opts);
 
 end
 
 function jsonContent = setJsonContent(fullFilename, logFile)
 
-    % transfer content of extra fields to json content
-    namesExtraColumns = returnNamesExtraColumns(logFile);
-
-    % default content for events file that will be overriddent if we are dealing
-    % with a stim file
-    jsonContent = struct( ...
-                         'onset', struct( ...
-                                         'Description', 'time elapsed since experiment start', ...
-                                         'Units', 's'), ...
-                         'trial_type', struct( ...
-                                              'Description', 'types of trial', ...
-                                              'Levels', ''), ...
-                         'duration', struct( ...
-                                            'Description', 'duration of the event', ...
-                                            'Units', 's') ...
-                        );
+    
 
     if ismember('_stim', fullFilename)
 
@@ -60,8 +46,16 @@ function jsonContent = setJsonContent(fullFilename, logFile)
                              'StartTime',  startTime, ...
                              'Columns', []);
 
+    else
+    
+        % add holy trininty columns to the json content
+        jsonContent = logFile.columns; 
+    
     end
-
+    
+    % transfer content of extra fields to json content
+    namesExtraColumns = returnNamesExtraColumns(logFile);
+    
     for iExtraColumn = 1:numel(namesExtraColumns)
 
         nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});

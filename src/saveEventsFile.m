@@ -88,19 +88,20 @@ function logFile = saveEventsFile(action, cfg, logFile)
 
         case 'init'
 
-            logFile = initializeExtraColumns(logFile);
-
-        case 'open'
-
             logFile(1).filename = cfg.fileName.events;
 
             logFile = initializeFile(cfg, logFile);
-
-        case 'open_stim'
+            
+        case 'init_stim'
 
             logFile(1).filename = cfg.fileName.stim;
 
             logFile = initializeStimFile(cfg, logFile);
+
+        case 'open'
+
+            logFile = openFile(cfg, logFile);
+
 
         case 'save'
 
@@ -164,8 +165,49 @@ function logFile = checklLogFile(action, logFile, iEvent, cfg)
 end
 
 function logFile = initializeFile(cfg, logFile)
+% This function creates the bids field structure for json files for the
+% three basic bids event columns, and for all requested extra columns. 
+%
+% Note that subfields (e.g. unit, levels etc. can be changed by the user 
+% before calling openFile.  
+
+    % initialize holy trinity (onset, trial_type, duration) columns
+    logFile(1).columns = struct( ...
+                         'onset', struct( ...
+                                         'Description', 'time elapsed since experiment start', ...
+                                         'Unit', 's'), ...
+                         'trial_type', struct( ...
+                                              'Description', 'types of trial', ...
+                                              'Levels', ''), ...
+                         'duration', struct( ...
+                                            'Description', 'duration of the event or the block', ...
+                                            'Unit', 's') ...
+                        );   
+
 
     logFile = initializeStimFile(cfg, logFile);
+
+
+end
+
+function logFile = initializeStimFile(cfg, logFile)
+
+    logFile = initializeExtraColumns(logFile);
+
+end
+
+function logFile = openFile(cfg, logFile)
+
+    createDataDictionary(cfg, logFile);
+
+    % Initialize txt logfiles and empty fields for the standard BIDS
+    %  event file
+    logFile(1).fileID = fopen( ...
+                              fullfile( ...
+                                       cfg.dir.outputSubject, ...
+                                       cfg.fileName.modality, ...
+                                       logFile.filename), ...
+                              'w');
 
     % print the basic BIDS columns
     fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
@@ -179,22 +221,6 @@ function logFile = initializeFile(cfg, logFile)
 
 end
 
-function logFile = initializeStimFile(cfg, logFile)
-
-    logFile = initializeExtraColumns(logFile);
-
-    createDataDictionary(cfg, logFile);
-
-    % Initialize txt logfiles and empty fields for the standard BIDS
-    %  event file
-    logFile(1).fileID = fopen( ...
-                              fullfile( ...
-                                       cfg.dir.outputSubject, ...
-                                       cfg.fileName.modality, ...
-                                       logFile.filename), ...
-                              'w');
-
-end
 
 function printHeaderExtraColumns(logFile)
     % print any extra column specified by the user

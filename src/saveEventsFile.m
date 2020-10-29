@@ -88,12 +88,18 @@ function logFile = saveEventsFile(action, cfg, logFile)
 
         case 'init'
 
+            % flag to indicate that this will be an _events file
+            logFile.isStim = 0; 
+
             logFile(1).filename = cfg.fileName.events;
 
             logFile = initializeFile(cfg, logFile);
             
         case 'init_stim'
 
+            % flag to indicate that this will be an _stim file
+            logFile.isStim = 1; 
+    
             logFile(1).filename = cfg.fileName.stim;
 
             logFile = initializeStimFile(cfg, logFile);
@@ -185,13 +191,12 @@ function logFile = initializeFile(cfg, logFile)
                         );   
 
 
-    logFile = initializeStimFile(cfg, logFile);
-
+    logFile = initializeExtraColumns(logFile);
 
 end
 
 function logFile = initializeStimFile(cfg, logFile)
-
+    
     logFile = initializeExtraColumns(logFile);
 
 end
@@ -201,7 +206,7 @@ function logFile = openFile(cfg, logFile)
     createDataDictionary(cfg, logFile);
 
     % Initialize txt logfiles and empty fields for the standard BIDS
-    %  event file
+    % event file
     logFile(1).fileID = fopen( ...
                               fullfile( ...
                                        cfg.dir.outputSubject, ...
@@ -209,18 +214,23 @@ function logFile = openFile(cfg, logFile)
                                        logFile.filename), ...
                               'w');
 
-    % print the basic BIDS columns
-    fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
-    fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+    if logFile(1,1).isStim == 0 
+        % print the basic BIDS columns
+        fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+        fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
 
-    printHeaderExtraColumns(logFile);
+        printHeaderExtraColumns(logFile);
 
-    % next line so we start printing at the right place
-    fprintf(logFile(1).fileID, '\n');
-    fprintf(1, '\n');
+        % next line so we start printing at the right place
+        fprintf(logFile(1).fileID, '\n');
+        fprintf(1, '\n');
+        
+    elseif logFile(1,1).isStim == 1 
+        % don't print column headers for _stim.tsv
+        
+    end
 
 end
-
 
 function printHeaderExtraColumns(logFile)
     % print any extra column specified by the user
@@ -249,7 +259,7 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
     % if the field we are looking for does not exist or is empty in the
     % action logFile structure we will write a n/a
     % otherwise we write its content
-
+    
     namesExtraColumns = returnNamesExtraColumns(logFile);
 
     for iExtraColumn = 1:numel(namesExtraColumns)
@@ -277,7 +287,7 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
 
         elseif ~ischar(data) && all(isnan(data))
             warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
-
+            
             if cfg.verbose > 1
                 disp(logFile(iEvent));
             end
@@ -333,32 +343,55 @@ function logFile = saveToLogFile(logFile, cfg)
 
         logFile = checklLogFile('fields', logFile, iEvent, cfg);
 
-        onset = logFile(iEvent).onset;
-        duration = logFile(iEvent).duration;
-        trial_type = logFile(iEvent).trial_type;
+        % if this is _events file, we skip events with onset or duration 
+        % that are empty, nan or char. 
+        if logFile(1,1).isStim==0 
+            
+            onset = logFile(iEvent).onset;
+            duration = logFile(iEvent).duration;
+            trial_type = logFile(iEvent).trial_type;
 
-        % we skip events with onset or duration that are empty, nan or char
-        if any(cell2mat(cellfun(@isnan, {onset duration}, 'UniformOutput', false))) || ...
-                any(cellfun(@ischar, {onset duration})) || ...
-                any(isempty({onset duration}))
+            if any(cell2mat(cellfun(@isnan, {onset duration}, 'UniformOutput', false))) || ...
+               any(cellfun(@ischar, {onset duration})) || ...
+               any(isempty({onset duration})) 
 
-            warning('saveEventsFile:emptyEvent', ...
-                    '\nSkipping saving this event.\n onset: %s \n duration: %s\n', ...
-                    onset, ...
-                    duration);
+                warning('saveEventsFile:emptyEvent', ...
+                        '\nSkipping saving this event.\n onset: %s \n duration: %s\n', ...
+                        onset, ...
+                        duration);
+            else
+                printData(logFile(1).fileID, onset, cfg);
+                printData(logFile(1).fileID, duration, cfg);
+                printData(logFile(1).fileID, trial_type, cfg);
+                
+                printExtraColumns(logFile, iEvent, cfg);
 
-        else
+                fprintf(logFile(1).fileID, '\n');
+                fprintf(1, '\n');
 
-            printData(logFile(1).fileID, onset, cfg);
-            printData(logFile(1).fileID, duration, cfg);
-            printData(logFile(1).fileID, trial_type, cfg);
+            end
+            
+        % if this is _stim file, we skip missing events (i.e. events where 
+        % all extra columns have NO values)
+        elseif logFile(1,1).isStim==1
+            
+            skipEvent = false; 
+            namesExtraColumns = returnNamesExtraColumns(logFile);
+            for iExtraColumn = 1:numel(namesExtraColumns)
+                data = logFile(iEvent).(namesExtraColumns{iExtraColumn}); 
+                if isempty(data) || isnan(data) || ( ischar(data) && strcmp(data,'n/a') )
+                    skipEvent = true; 
+                end
+            end
+            if ~skipEvent
+                printExtraColumns(logFile, iEvent, cfg);
 
-            printExtraColumns(logFile, iEvent, cfg);
-
-            fprintf(logFile(1).fileID, '\n');
-            fprintf(1, '\n');
-
+                fprintf(logFile(1).fileID, '\n');
+                fprintf(1, '\n');
+            end
+            
         end
+        
     end
 
 end
@@ -408,7 +441,11 @@ function logFile = resetLogFileVar(logFile)
 
     logFile(2:end) = [];
 
-    namesColumns = {'onset', 'duration', 'trial_type'};
+    if logFile(1,1).isStim == 0 
+        namesColumns = {'onset', 'duration', 'trial_type'};
+    elseif logFile(1,1).isStim == 1 
+        namesColumns = {};
+    end
     namesExtraColumns = returnNamesExtraColumns(logFile);
     namesColumns = cat(2, namesColumns, namesExtraColumns');
 

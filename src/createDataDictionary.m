@@ -27,8 +27,14 @@ end
 
 function jsonContent = setJsonContent(fullFilename, logFile)
 
-    if logFile.isStim == 1
+    % add default _event file fields to the json content
+    if ~logFile.isStim
+        
+        jsonContent = logFile.columns; 
 
+    % write json fields if this is a _stim file
+    elseif logFile.isStim
+        
         samplingFrequency = nan;
         startTime = nan;
 
@@ -43,14 +49,8 @@ function jsonContent = setJsonContent(fullFilename, logFile)
                              'SamplingFrequency', samplingFrequency, ...
                              'StartTime',  startTime, ...
                              'Columns', []);
-
-    elseif logFile.isStim == 1
-    
-        % add holy trininty columns to the json content
-        jsonContent = logFile.columns; 
-    
     end
-    
+        
     % transfer content of extra fields to json content
     namesExtraColumns = returnNamesExtraColumns(logFile);
     
@@ -62,10 +62,8 @@ function jsonContent = setJsonContent(fullFilename, logFile)
 
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
 
-            if ismember('_stim', fullFilename)
-
+            if logFile.isStim
                 jsonContent.Columns{end + 1} = headerName;
-
             end
 
             jsonContent.(headerName) = ...

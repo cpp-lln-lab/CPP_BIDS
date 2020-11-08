@@ -30,4 +30,11 @@ check_my_code_report.txt
 node_modules/*
 package-lock.json
 
+# visual studio code stuff
+.vscode
 
+# virtual env
+cpp_bids/*
+
+# documentation
+docs/build/*

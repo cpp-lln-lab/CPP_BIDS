@@ -1,7 +1,7 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function [logFile] = saveEventsFile(action, cfg, logFile)
-    % 
+    %
     % Function to save output files for events that will be BIDS compliant.
     %
     % USAGE::
@@ -17,7 +17,7 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
     % INPUTS
     %
     % logFile:
-    % 
+    %
     % When you want to save your data ``logFile`` contains the data you want to save.
     % The ``logFile`` variable that contains the n events you want to save must be a nx1 structure.
     % Each field will be saved in a separate column.
@@ -38,14 +38,14 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
     %
     % action:
     %
-    % - ``'open'`` will create the file ID and return it in ``logFile.fileID`` using the information in
-    %   the ``cfg`` structure. This file ID is then reused when calling that function
-    %   to save data into this file.
+    % - ``'open'`` will create the file ID and return it in ``logFile.fileID`` using
+    %   the information in the ``cfg`` structure.
+    %   This file ID is then reused when calling that function to save data into this file.
     %   This creates the header with the obligatory ``'onset'``, ``'duration'`` required
     %   by BIDS and other columns can be specified in varargin.
     %
-    % example:: 
-    % 
+    % example::
+    %
     %   logFile = saveEventsFile('open', cfg, [], 'direction', 'speed', 'target');
     %
     %

@@ -4,8 +4,8 @@ function createJson(varargin)
     %
     % Creates the side car JSON file for a run.
     %
-    % For JSON sidecars for bold files,  this will only contain the minimum BIDS 
-    % requirement and will likey be less complete than the info you could from 
+    % For JSON sidecars for bold files,  this will only contain the minimum BIDS
+    % requirement and will likey be less complete than the info you could from
     % a proper BIDS conversion.
     %
     % USAGE::
@@ -13,9 +13,9 @@ function createJson(varargin)
     %   createJson(cfg [, modality] [, extraInfo])
     %   createJson(cfg [, extraInfo])
     %
-    % :param cfg: Configuration. See ``checkCFG()``. 
+    % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
-    % :param modality: can be any of the following ``'beh'``, ``'func'``, ``'eeg'``, 
+    % :param modality: can be any of the following ``'beh'``, ``'func'``, ``'eeg'``,
     %                  ``'ieeg'``, ``'meg'``) to specify which JSON to save. If it is not
     %                  provided it will read from ``cfg.fileName.modality``.
     % :type modality: string

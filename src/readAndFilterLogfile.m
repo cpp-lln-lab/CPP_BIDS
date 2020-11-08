@@ -2,8 +2,8 @@
 
 function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
     %
-    % It will display in the command window the content of the ``output.tsv`` filtered by one element
-    % of a target column.
+    % It will display in the command window the content of the ``output.tsv``
+    % filtered by one element of a target column.
     %
     % USAGE::
     %
@@ -15,8 +15,8 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %                    (for example for ``trigger`` will be ``trial type``)
     % :type columnName: string
     % :param filterBy: the content of the column you want to filter out. It can take just
-    %                  part of the content name (for example, if you want to display the triggers 
-    %                  and you have ``trigger_motion`` and ``trigger_static``, 
+    %                  part of the content name (for example, if you want to display the triggers
+    %                  and you have ``trigger_motion`` and ``trigger_static``,
     %                  ``trigger`` as input will do)
     % :type filterBy: string
     % :param saveOutputTsv: flag to save output on file
@@ -27,11 +27,11 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %             of the TSV file to read will be infered from there.
     % :type cfg: structure
     %
-    % :returns: 
+    % :returns:
     %
-    %           :outputFiltered: dataset with only the specified content, to see it 
+    %           :outputFiltered: dataset with only the specified content, to see it
     %                            in the command window use ``display(outputFiltered)``.
-    %           
+    %
 
     % Create tag to add to output file in case you want to save it
     outputFilterTag = ['_filteredBy-' columnName '_' filterBy '.tsv'];

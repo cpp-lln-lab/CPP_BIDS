@@ -10,15 +10,15 @@ function cfg = userInputs(cfg)
     %
     %   cfg = userInputs([cfg])
     %
-    % :param cfg: Configuration. See ``checkCFG()``. 
+    % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
     %
-    % :returns: 
+    % :returns:
     %
-    %           :cfg: (structure) Configuration update with the name of info about the 
+    %           :cfg: (structure) Configuration update with the name of info about the
     %                 participants.
     %
-    % Behavior of this functions depends on ``cfg.subject.askGrpSess`` 
+    % Behavior of this functions depends on ``cfg.subject.askGrpSess``
     % a 1 X 2 array of booleans (default is ``[true true]``):
     %
     % - the first value set to ``false`` will skip asking for the participants group

@@ -10,7 +10,7 @@ function fullFilename = getFullFilename(fileName, cfg)
     %
     % :param fileName:
     % :type fileName: string
-    % :param cfg: Configuration. See ``checkCFG()``. 
+    % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
     %
 

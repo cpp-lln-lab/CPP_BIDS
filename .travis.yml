@@ -12,8 +12,6 @@ node_js:
 
 cache:
   apt: true # only works with Pro version
-  directories:
-  - node_modules # NPM packages for the remark markdown linter
 
 branches:
   only:  # only run the CI for those branches 

@@ -1,17 +1,29 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function cfg = userInputs(cfg)
-    % cfg = userInputs(cfg)
     %
     % Get subject, run and session number and make sure they are
     % positive integer values.
-    % Will do ii with a graphic interface if possible.
+    % Can do a graphic user interface if ``cfg.useGUI`` is set to ``true``
     %
-    % expParameters.subject.askGrpSess
-    % a 1 X 2 array of booleans (default is [true true] ):
-    %    - the first value set to false will skip asking for the participants
-    %    group
-    %    - the second value set to false will skip asking for the session
+    % USAGE::
+    %
+    %   cfg = userInputs([cfg])
+    %
+    % :param cfg: Configuration. See ``checkCFG()``.
+    % :type cfg: structure
+    %
+    % :returns:
+    %
+    %           :cfg: (structure) Configuration update with the name of info about the
+    %                 participants.
+    %
+    % Behavior of this functions depends on ``cfg.subject.askGrpSess``
+    % a 1 X 2 array of booleans (default is ``[true true]``):
+    %
+    % - the first value set to ``false`` will skip asking for the participants group
+    % - the second value set to ``false`` will skip asking for the session
+    %
 
     if nargin < 1
         cfg = struct('debug', []);

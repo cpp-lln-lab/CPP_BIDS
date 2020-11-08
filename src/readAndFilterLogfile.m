@@ -1,25 +1,37 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
-    % outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
     %
-    % It will display in the command window the content of the `output.tsv' filtered by one element
-    % of a target column.
+    % It will display in the command window the content of the ``output.tsv``
+    % filtered by one element of a target column.
     %
-    % INPUT:
+    % USAGE::
     %
-    %  - columnName: string, the header of the column where the content of insterest is stored
-    %    (e.g., for 'trigger' will be 'trial type')
-    %  - filterBy: string, the content of the column you want to filter out. It can take just
-    %    part of the content name (e.g., you want to display the triggers and you have
-    %    'trigger_motion' and 'trigger_static', 'trigger' as input will do)
-    %  - saveOutputTsv: boolean to save the filtered ouput
-    %  - varargin: either cfg (to display the last run output) or the file path as string
+    %   outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, tsvFile)
     %
-    % OUTPUT:
+    %   outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, cfg)
     %
-    %  - outputFiltered: dataset with only the specified content, to see it in the command window
-    %    use display(outputFiltered)
+    % :param columnName: the header of the column where the content of interest is stored
+    %                    (for example for ``trigger`` will be ``trial type``)
+    % :type columnName: string
+    % :param filterBy: the content of the column you want to filter out. It can take just
+    %                  part of the content name (for example, if you want to display the triggers
+    %                  and you have ``trigger_motion`` and ``trigger_static``,
+    %                  ``trigger`` as input will do)
+    % :type filterBy: string
+    % :param saveOutputTsv: flag to save output on file
+    % :type saveOutputTsv: boolean
+    % :param tsvFile: TSV file to filter
+    % :type tsvFile: string
+    % :param cfg: Configuration. See ``checkCFG()``. If ``cfg`` is given as input the name
+    %             of the TSV file to read will be infered from there.
+    % :type cfg: structure
+    %
+    % :returns:
+    %
+    %           :outputFiltered: dataset with only the specified content, to see it
+    %                            in the command window use ``display(outputFiltered)``.
+    %
 
     % Create tag to add to output file in case you want to save it
     outputFilterTag = ['_filteredBy-' columnName '_' filterBy '.tsv'];

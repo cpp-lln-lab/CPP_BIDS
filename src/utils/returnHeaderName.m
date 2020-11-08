@@ -1,6 +1,6 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
-function createDatasetDescription(cfg)
+function headerName = returnHeaderName(columnName, nbCol, iCol)
     %
     % Short description of what the function does goes here.
     %
@@ -20,19 +20,13 @@ function createDatasetDescription(cfg)
     % :returns: - :argout1: (type) (dimension)
     %           - :argout2: (type) (dimension)
     %
-    % createDatasetDescription(cfg)
+    % headerName = returnHeaderName(columnName, nbCol, iCol)
     %
-    % creates the datasetDescription.json file that goes in the root of a BIDS
-    % dataset
 
-    opts.Indent = '    ';
-
-    fileName = fullfile( ...
-                        cfg.dir.output, 'source', ...
-                        'dataset_description.json');
-
-    jsonContent = cfg.bids.datasetDescription;
-
-    bids.util.jsonencode(fileName, jsonContent, opts);
+    if nbCol == 1
+        headerName = sprintf('%s', columnName);
+    else
+        headerName = sprintf('%s_%02.0f', columnName, iCol);
+    end
 
 end

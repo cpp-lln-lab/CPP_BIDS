@@ -1,6 +1,6 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
-function createDatasetDescription(cfg)
+function [cfg, responses] = setDefaultResponses(cfg)
     %
     % Short description of what the function does goes here.
     %
@@ -20,19 +20,27 @@ function createDatasetDescription(cfg)
     % :returns: - :argout1: (type) (dimension)
     %           - :argout2: (type) (dimension)
     %
-    % createDatasetDescription(cfg)
-    %
-    % creates the datasetDescription.json file that goes in the root of a BIDS
-    % dataset
 
-    opts.Indent = '    ';
+    if nargin < 1
+        cfg = struct('debug', []);
+    end
 
-    fileName = fullfile( ...
-                        cfg.dir.output, 'source', ...
-                        'dataset_description.json');
+    if ~isfield(cfg, 'debug') || isempty(cfg.debug)
+        cfg.debug.do = false;
+    end
 
-    jsonContent = cfg.bids.datasetDescription;
+    responses{1, 1} = ''; % subjectGrp
+    responses{2, 1} = ''; % subjectNb
+    responses{3, 1} = 1; % session
+    responses{4, 1} = ''; % run
 
-    bids.util.jsonencode(fileName, jsonContent, opts);
+    if cfg.debug.do
+
+        responses{1, 1} = 'ctrl';
+        responses{2, 1} = 666;
+        responses{3, 1} = 666;
+        responses{4, 1} = 666;
+
+    end
 
 end

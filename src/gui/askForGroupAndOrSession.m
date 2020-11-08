@@ -1,6 +1,6 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
-function createDatasetDescription(cfg)
+function cfg = askForGroupAndOrSession(cfg)
     %
     % Short description of what the function does goes here.
     %
@@ -20,19 +20,21 @@ function createDatasetDescription(cfg)
     % :returns: - :argout1: (type) (dimension)
     %           - :argout2: (type) (dimension)
     %
-    % createDatasetDescription(cfg)
-    %
-    % creates the datasetDescription.json file that goes in the root of a BIDS
-    % dataset
 
-    opts.Indent = '    ';
+    askGrpSess = [true true];
 
-    fileName = fullfile( ...
-                        cfg.dir.output, 'source', ...
-                        'dataset_description.json');
+    if isfield(cfg, 'subject') && ...
+            isfield(cfg.subject, 'askGrpSess') && ...
+            ~isempty(cfg.subject.askGrpSess)
 
-    jsonContent = cfg.bids.datasetDescription;
+        askGrpSess = cfg.subject.askGrpSess;
 
-    bids.util.jsonencode(fileName, jsonContent, opts);
+    end
+
+    if numel(askGrpSess) < 2
+        askGrpSess(2) = 1;
+    end
+
+    cfg.subject.askGrpSess = askGrpSess;
 
 end

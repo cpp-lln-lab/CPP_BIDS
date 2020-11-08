@@ -1,6 +1,6 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
-function createDatasetDescription(cfg)
+function nbCol = returnNbColumns(logFile, nameExtraColumn)
     %
     % Short description of what the function does goes here.
     %
@@ -20,19 +20,14 @@ function createDatasetDescription(cfg)
     % :returns: - :argout1: (type) (dimension)
     %           - :argout2: (type) (dimension)
     %
-    % createDatasetDescription(cfg)
+    % nbCol = returnNbColumns(logFile, nameExtraColumn)
     %
-    % creates the datasetDescription.json file that goes in the root of a BIDS
-    % dataset
 
-    opts.Indent = '    ';
+    thisExtraColumn = logFile(1).extraColumns.(nameExtraColumn);
 
-    fileName = fullfile( ...
-                        cfg.dir.output, 'source', ...
-                        'dataset_description.json');
+    nbCol = 1;
 
-    jsonContent = cfg.bids.datasetDescription;
-
-    bids.util.jsonencode(fileName, jsonContent, opts);
-
+    if isfield(thisExtraColumn, 'length')
+        nbCol = thisExtraColumn.length;
+    end
 end

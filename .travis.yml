@@ -3,7 +3,7 @@
 # have set it up to run continuous integration on this this repo
 
 # Linux distribution (bionic beaver)
-dist: bionic
+dist: focal
 
 # Language and version
 language: node_js

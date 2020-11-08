@@ -1,10 +1,18 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function trueOrFalse = isPositiveInteger(input2check)
-    % trueOrFalse = isPositiveInteger(input2check)
-    %
-    % works on column vector of values
-    %
+  %
+  % 
+  %
+  % USAGE::
+  %
+  %   trueOrFalse = isPositiveInteger(input2check)
+  %
+  % :param input2check:
+  % :type input2check: column vector
+  %
+  % :returns: :trueOrFalse: (boolean)
+  %           
 
     trueOrFalse = ~any([ ...
                         ~isnumeric(input2check), ...

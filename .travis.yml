@@ -10,9 +10,6 @@ language: node_js
 node_js:
   - "11"
 
-cache:
-  apt: true # only works with Pro version
-
 branches:
   only:  # only run the CI for those branches 
   - master

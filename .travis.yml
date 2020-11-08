@@ -8,7 +8,7 @@ dist: bionic
 # Language and version
 language: node_js
 node_js:
-  - "10"
+  - "11"
 
 cache:
   apt: true # only works with Pro version

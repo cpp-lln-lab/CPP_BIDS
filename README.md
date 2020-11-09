@@ -23,7 +23,7 @@
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 
-* * *
+---
 
 # CPP_BIDS
 
@@ -82,6 +82,13 @@ sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-2020072915
 ## Contributing
 
 Feel free to open issues to report a bug and ask for improvements.
+
+If you want to contribute, have a look at our
+[contributing guidelines](https://github.com/cpp-lln-lab/.github/blob/main/CONTRIBUTING.md)
+that are meant to guide you and help you get started. If something is not clear
+or you get stuck: it is more likely we did not do good enough a job at
+explaining things. So do not hesitate to open an issue, just to ask for
+clarification.
 
 ### Guidestyle
 

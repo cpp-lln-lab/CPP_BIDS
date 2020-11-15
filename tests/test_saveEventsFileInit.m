@@ -15,15 +15,25 @@ function test_saveEventsFileInitBasic()
     % make sure the dependencies are there
     checkCFG(cfg);
 
-    [logFile] = saveEventsFile('init');
+    [logFile] = saveEventsFile('init',cfg);
 
     %% data to test against
     expectedStrcut(1).filename = '';
     expectedStrcut(1).extraColumns = [];
-
+    expectedStrcut(1).isStim = false; 
+    
+    expectedStrcut(1).columns.onset.Description = 'time elapsed since experiment start';  
+    expectedStrcut(1).columns.onset.Units = 's';  
+    
+    expectedStrcut(1).columns.trial_type.Description = 'types of trial';  
+    expectedStrcut(1).columns.trial_type.Levels = '';  
+    
+    expectedStrcut(1).columns.duration.Description = 'duration of the event or the block';  
+    expectedStrcut(1).columns.duration.Units = 's';  
+    
     %% test
-    assertEqual(expectedStrcut, logFile);
-
+    assertTrue(isequal(expectedStrcut, logFile));
+    
 end
 
 function test_saveEventsFileInitExtraColumns()
@@ -39,6 +49,7 @@ function test_saveEventsFileInitExtraColumns()
     [logFile] = saveEventsFile('init', cfg, logFile);
 
     %% data to test against
+    expectedStrcut = saveEventsFile('init',cfg);
     expectedStrcut(1).extraColumns.Speed.length = 1;
     expectedStrcut(1).extraColumns.Speed.bids.LongName = '';
     expectedStrcut(1).extraColumns.Speed.bids.Description = '';
@@ -65,6 +76,7 @@ function test_saveEventsFileInitExtraColumnsArray()
     [logFile] = saveEventsFile('init', cfg, logFile);
 
     %% data to test against
+    expectedStrcut = saveEventsFile('init',cfg);
     expectedStrcut(1).extraColumns.Speed.length = 1;
     expectedStrcut(1).extraColumns.Speed.bids.LongName = '';
     expectedStrcut(1).extraColumns.Speed.bids.Description = '';

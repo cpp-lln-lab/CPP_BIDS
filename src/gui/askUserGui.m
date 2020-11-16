@@ -3,7 +3,7 @@
 function responses = askUserGui(questions, responses)
     %
     % It shows the questions to ask in in a GUI interface and checks, when it is necessary, if the
-    % given input by the user is an integer. If the input is not an integer, it keeps showing the
+    % given input by the user is a positive integer. If not, it keeps showing the
     % GUI interface.
     %
     % USAGE::

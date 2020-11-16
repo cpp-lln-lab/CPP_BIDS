@@ -13,7 +13,7 @@ function [cfg, responses] = setDefaultResponses(cfg)
     %
     % :returns: - :responses: (cell) It contains the response set by default
     %           - :cfg: (structure) Configuration update with ``cfg.debug.do`` set to false if not
-    %             set by the user.
+    %                   set by the user.
     %
 
     if nargin < 1

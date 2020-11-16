@@ -21,11 +21,11 @@ function cfg = createFilename(cfg)
     %
     % The behavior of this function depends on:
     %   - ``cfg.testingDevice``:
-    %     - set to ``pc`` (dummy try) or ``beh`` can work for behavioral experiment.
-    %     - set on ``mri`` for fMRI experiment.
-    %     - set on ``eeg`` or ``ieeg`` can work for electro encephalography or
-    %       intracranial eeg
-    %     - set on ``meg`` can work for magneto encephalography
+    %       + set to ``pc`` (dummy try) or ``beh`` can work for behavioral experiment.
+    %       + set on ``mri`` for fMRI experiment.
+    %       + set on ``eeg`` or ``ieeg`` can work for electro encephalography or intracranial eeg
+    %       + set on ``meg`` can work for magneto encephalography
+    %
     %   - ``cfg.eyeTracker.do`` set to ``true``, can work for simple eyetracking data.
     %
     % See ``test_createFilename`` in the ``tests`` folder for more details on how to use it.

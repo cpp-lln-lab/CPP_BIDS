@@ -13,8 +13,9 @@ function nbCol = returnNbColumns(logFile, nameExtraColumn)
     % :param nameExtraColumn: An entry of ``logFile.extraColumns``
     % :type nameExtraColumn: string
     %
-    % :returns: - :nbCol: (integer) The number of columns associated to one entry of the extra
-    %             column list.
+    % :returns: 
+    %           - :nbCol: (integer) The number of columns associated to one entry of the extra
+    %                     column list.
     %
 
     thisExtraColumn = logFile(1).extraColumns.(nameExtraColumn);

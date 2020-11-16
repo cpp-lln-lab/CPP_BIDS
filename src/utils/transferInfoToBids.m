@@ -2,28 +2,26 @@
 
 function fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
     %
-    % Short description of what the function does goes here.
+    % Transfers any info that might have been provided
+    % by the user in ``cfg`` to the relevant field of ``fieldsToSet``
+    % for its reuse later for BIDS filenames or JSON.
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param fieldsToSet: List of the fields to set. See ``checkCFG()``.
+    % :type fieldsToSet: structure
+    % :param cfg: The configuration variable where the user has predefined some fields.
+    %             See ``checkCFG()``.
+    % :type cfg: structure
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
+    % :returns: :fieldsToSet: Updated list of the fields to set.
     %
-    % fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
+    % This can be used for example to make sure that the repetition time set
+    % manually in ``cfg.mri.repetitionTime`` or in ``cfg.task.name``
+    % will be passed to the correct field in right fields of ``cfg.bids``.
     %
-    % transfer any info that might have been provided by the user to the
-    % relevant field for its reuse for BIDS filenames or JSON later
 
     if isfield(cfg, 'task') && isfield(cfg.task, 'name')
         [taskName, taskNameValid] = createValidName(cfg.task.name);

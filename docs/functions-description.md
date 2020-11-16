@@ -5,41 +5,13 @@
 <!-- TOC -->
 
 -   [functions description](#functions-description)
-    -   [userInputs](#userinputs)
     -   [createFilename](#createfilename)
     -   [saveEventsFile](#saveeventsfile)
-    -   [checkCFG](#checkcfg)
-        -   [CFG content](#cfg-content)
     -   [createBoldJson](#createboldjson)
 
 <!-- /TOC -->
 
 <!-- lint enable -->
-
-## userInputs
-
-Get subject, run and session number and make sure they are positive integer
-values.
-
-By default this will return `cfg.subject.session = 1` even if you asked it to
-omit enquiring about sessions. This means that the folder tree will always
-include a session folder.
-
-```matlab
-[cfg] = userInputs(cfg)
-```
-
-If you use it with `cfg.subject.askGrpSess = [0 0]`, it won't ask you about
-group or session.
-
-If you use it with `cfg.subject.askGrpSess = [1]`, it will only ask you about
-group
-
-If you use it with `cfg.subject.askGrpSess = [0 1]`, it will only ask you about
-session
-
-If you use it with `cfg.subject.askGrpSess = [1 1]`, it will ask you about both.
-This is the default behavior.
 
 ## createFilename
 
@@ -63,76 +35,6 @@ Function to save output files for events that will be BIDS compliant.
 
 If the user DOES NOT provide `onset`, `trial_type`, this events will be skipped.
 `duration` will be set to `n/a` if no value is provided.
-
-## checkCFG
-
-Check that we have all the fields that we need in the experiment parameters.
-
-### CFG content
-
-```matlab
-% The following can be modified by users but their effect might
-% only be effective after running checkCFG
-
-cfg.verbose = 0;
-
-cfg.subject.subjectGrp = '';
-cfg.subject.sessionNb = 1;
-cfg.subject.askGrpSess = [true true];
-
-% BOLD MRI details
-% some of those will be transferred to the correct fields in cfg.bids by checkCFG
-cfg.mri.repetitionTime = [];
-cfg.mri.contrastEnhancement = [];
-cfg.mri.phaseEncodingDirection = [];
-cfg.mri.reconstruction = [];
-cfg.mri.echo = [];
-cfg.mri.acquisition = [];
-
-cfg.fileName.task = '';
-cfg.fileName.zeroPadding = 3; % amount of 0 padding the subject, session, run number
-
-cfg.eyeTracker.do = false;
-
-% content of the json side-car file for bold data
-cfg.bids.mri.RepetitionTime = [];
-cfg.bids.mri.SliceTiming = '';
-cfg.bids.mri.TaskName = '';
-cfg.bids.mri.Instructions = '';
-cfg.bids.mri.TaskDescription = '';
-
-% content of the json side-car file for MEG
-cfg.bids.meg.TaskName = '';
-cfg.bids.meg.SamplingFrequency = [];
-cfg.bids.meg.PowerLineFrequency = [];
-cfg.bids.meg.DewarPosition = [];
-cfg.bids.meg.SoftwareFilters = [];
-cfg.bids.meg.DigitizedLandmarks = [];
-cfg.bids.meg.DigitizedHeadPoints = [];
-
-% content of the datasetDescription.json file
-cfg.bids.datasetDescription.Name = '';
-cfg.bids.datasetDescription.BIDSVersion =  '';
-cfg.bids.datasetDescription.License = '';
-cfg.bids.datasetDescription.Authors = {''};
-cfg.bids.datasetDescription.Acknowledgements = '';
-cfg.bids.datasetDescription.HowToAcknowledge = '';
-cfg.bids.datasetDescription.Funding = {''};
-cfg.bids.datasetDescription.ReferencesAndLinks = {''};
-cfg.bids.datasetDescription.DatasetDOI = '';
-
-
-%% Should not be modified by users
-% many of those fields are set up by checkCFG and you might get output that is not BIDS valid if you touch those
-cfg.fileName.dateFormat = 'yyyymmddHHMM'; % actual date of the experiment that is appended to the filename
-cfg.fileName.modality
-cgf.fileName.suffix.mri
-cgf.fileName.suffix.meg
-cfg.fileName.stim
-cfg.fileName.events
-cfg.fileName.datasetDescription
-
-```
 
 ## createBoldJson
 

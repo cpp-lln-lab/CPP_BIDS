@@ -2,7 +2,7 @@
 
 function responses = askUserCli(questions, responses)
     %
-    % It shows the questions to ask in the commnad window and checks, when it is necessary, if the
+    % It shows the questions to ask in the command window and checks, when it is necessary, if the
     % given input by the user is an integer.
     %
     % USAGE::

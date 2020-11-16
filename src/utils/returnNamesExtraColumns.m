@@ -2,25 +2,17 @@
 
 function [namesExtraColumns] = returnNamesExtraColumns(logFile)
     %
-    % Short description of what the function does goes here.
+    % It returns the extra columns name(s), in ``cfg.extraColumns``,  as header to add to the
+    % ``event`` file
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   [namesExtraColumns] = returnNamesExtraColumns(logFile)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param logFile: It contains all the information to be saved in the event/stim file
+    % :type logFile: structure
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
-    %
-    % [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
+    % :returns: - :namesExtraColumns: (cell) (nx1)
     %
 
     namesExtraColumns = [];

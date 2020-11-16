@@ -8,10 +8,10 @@ function logFile = initializeExtraColumns(logFile)
     %
     %   logFile = initializeExtraColumns(logFile)
     %
-    % :param logFile:
+    % :param logFile: It contains what to save in the experiment outputs.
     % :type logFile: structure
     %
-    % :returns: :logFile: (structure) (dimension)
+    % :returns: :logFile: (structure) ``logfile`` updated with extra columns.
     %
     % Example::
     %

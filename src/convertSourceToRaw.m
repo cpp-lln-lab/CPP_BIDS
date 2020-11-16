@@ -2,33 +2,22 @@
 
 function convertSourceToRaw(cfg)
     %
-    % Short description of what the function does goes here.
+    % Function attempts to convert a source dataset created with CPP_BIDS into a valid
+    % BIDS data set.
+    %
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   convertSourceToRaw(cfg)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param cfg: cfg structure is needed only for providing the path in ``cfg.dir.output``.
+    % :type cfg: structure
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
-    %
-    % convertSourceToRaw(cfg)
-    %
-    % attempts to convert a source dataset created with CPP_BIDS into a valid
-    % BIDS data set.
-    % - creates dummy README and CHANGE file
-    % - copy source dir to raw dir
-    % - remove the date suffix (_date-YYYYMMDDHHMM) from the files where it is present
-    %
-    % Only covers func folder at the moment
+    % :output:
+    %          - :creates: a dummy README and CHANGE file
+    %          - :copies: ``source`` directory to ``raw`` directory
+    %          - :removes: the date suffix ``_date-*`` from the files where it is present
+    %          - :zips: the ``_stim.tsv`` files.
 
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'raw');

@@ -103,7 +103,6 @@ function expectedCfgStructure = returnExpectedCfgStructure()
     expectedCfgStructure.suffix.reconstruction = [];
     expectedCfgStructure.suffix.echo = [];
     expectedCfgStructure.suffix.acquisition = [];
-    expectedCfgStructure.suffix.repetitionTime = [];
     expectedCfgStructure.suffix.recording = [];
 
     expectedCfgStructure.bids.beh.TaskName = '';

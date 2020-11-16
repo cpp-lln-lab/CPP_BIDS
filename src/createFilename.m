@@ -1,20 +1,34 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function cfg = createFilename(cfg)
-    % cfg = createFilename(cfg)
     %
-    % create the BIDS compliant directories and fileNames for the behavioral output
+    % It creates the BIDS compliant directories and fileNames for the behavioral output
     % for this subject / session / run using the information from cfg and expParameters.
-    % Will also create the right fileName for the eyetracking data file.
+    % Will also create the right fileName for the eyetracking data file. For the moment the date of
+    % acquisition is appended to the fileName.
     %
-    % For the moment the date of acquisition is appended to the fileName
+    % USAGE::
     %
-    % can work for behavioral experiment if cfg.device is set to 'PC'
-    % can work for fMRI experiment if cfg.device is set to 'scanner'
-    % can work for simple eyetracking data if cfg.eyeTracker.do is set to 1
+    %   [cfg] = createFilename(cfg)
     %
+    % :param cfg: Configuration. See ``checkCFG()``.
+    % :type cfg: structure
     %
-    % See test_createFilename in the test folder for more details on how to use it.
+    % :returns:
+    %
+    %           :cfg: (structure) Configuration update with the name of info about the
+    %                 participants.
+    %
+    % The behavior of this function depends on:
+    %   - ``cfg.testingDevice``:
+    %       + set to ``pc`` (dummy try) or ``beh`` can work for behavioral experiment.
+    %       + set on ``mri`` for fMRI experiment.
+    %       + set on ``eeg`` or ``ieeg`` can work for electro encephalography or intracranial eeg
+    %       + set on ``meg`` can work for magneto encephalography
+    %
+    %   - ``cfg.eyeTracker.do`` set to ``true``, can work for simple eyetracking data.
+    %
+    % See ``test_createFilename`` in the ``tests`` folder for more details on how to use it.
 
     cfg = checkCFG(cfg);
 

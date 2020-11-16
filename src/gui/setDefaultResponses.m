@@ -2,23 +2,18 @@
 
 function [cfg, responses] = setDefaultResponses(cfg)
     %
-    % Short description of what the function does goes here.
+    % It sets default responses to for all the entries regarding subject group and for
+    % session and run number. The defaults are choosen depending on ``cfg.debug.do``.
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   [cfg, responses] = setDefaultResponses(cfg)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param cfg: Configuration. See ``checkCFG()``.
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
+    % :returns: - :responses: (cell) It contains the response set by default
+    %           - :cfg: (structure) Configuration update with ``cfg.debug.do`` set to false if not
+    %                   set by the user.
     %
 
     if nargin < 1

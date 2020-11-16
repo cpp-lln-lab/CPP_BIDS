@@ -2,28 +2,18 @@
 
 function createDatasetDescription(cfg)
     %
-    % Short description of what the function does goes here.
+    % It creates ``dataset_description.json`` and writes in every entry contained in
+    % ``cfg.bids.datasetDescription``. The file should go in the root of a BIDS dataset.
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   createDatasetDescription(cfg)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param cfg: Configuration. See ``checkCFG()``.
+    % :type cfg: structure
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
+    % :output: - :``dataset_description.json``: (jsonfile)
     %
-    % createDatasetDescription(cfg)
-    %
-    % creates the datasetDescription.json file that goes in the root of a BIDS
-    % dataset
 
     opts.Indent = '    ';
 

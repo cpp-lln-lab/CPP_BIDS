@@ -2,27 +2,20 @@
 
 function responses = askUserCli(questions, responses)
     %
-    % Short description of what the function does goes here.
+    % It shows the questions to ask in the command window and checks, when it is necessary, if the
+    % given input by the user is an integer.
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   [responses] = askUserCli(questions, responses)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param questions: It contains the questions list to ask and if the response given to one
+    %                   question must be checked to be a positive integer.
+    % :type questions: structure
+    % :param responses: It contains the responses set by default.
+    % :type responses: cell
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
-    %
-    % response = askUserCli(questions)
-    %
-    % command line interface to ask questions to user
+    % :returns: - :responses: (cell) Response updated with the user inputs.
     %
 
     for iQuestion = 1:size(questions.questionsToAsk, 1)

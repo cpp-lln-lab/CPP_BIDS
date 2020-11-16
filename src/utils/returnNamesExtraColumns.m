@@ -1,6 +1,6 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
-function [namesExtraColumns, logfile] = returnNamesExtraColumns(logFile)
+function [namesExtraColumns] = returnNamesExtraColumns(logFile)
     %
     % It returns the extra columns name(s), in ``cfg.extraColumns``,  as header to add to the
     % ``event`` file

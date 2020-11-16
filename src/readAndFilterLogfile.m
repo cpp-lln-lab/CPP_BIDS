@@ -19,7 +19,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %                  and you have ``trigger_motion`` and ``trigger_static``,
     %                  ``trigger`` as input will do)
     % :type filterBy: string
-    % :param saveOutputTsv: flag to save output on file
+    % :param saveOutputTsv: flag to save the filtered output on a tsv file
     % :type saveOutputTsv: boolean
     % :param tsvFile: TSV file to filter
     % :type tsvFile: string
@@ -29,8 +29,8 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %
     % :returns:
     %
-    %           :outputFiltered: dataset with only the specified content, to see it
-    %                            in the command window use ``display(outputFiltered)``.
+    %           - :outputFiltered: dataset with only the specified content, to see it
+    %                              in the command window use ``display(outputFiltered)``.
     %
 
     % Create tag to add to output file in case you want to save it

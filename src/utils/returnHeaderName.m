@@ -2,7 +2,7 @@
 
 function headerName = returnHeaderName(columnName, nbCol, iCol)
     %
-    % It return one by one the column name to be used as a header in a fresh opened event file
+    % It returns one by one the column name to be used as a header in a recently opened event file
     %
     % USAGE::
     %

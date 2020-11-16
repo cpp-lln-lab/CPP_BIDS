@@ -54,12 +54,12 @@ function cfg = checkCFG(cfg)
 
     %% BIDS
 
-    fieldsToSet = behJsonDefaults(fieldsToSet);
     fieldsToSet = datasetDescriptionDefaults(fieldsToSet);
+    fieldsToSet = behJsonDefaults(fieldsToSet);
+    fieldsToSet = mriJsonDefaults(fieldsToSet);
     fieldsToSet = eegJsonDefaults(fieldsToSet);
     fieldsToSet = ieegJsonDefaults(fieldsToSet);
     fieldsToSet = megJsonDefaults(fieldsToSet);
-    fieldsToSet = mriJsonDefaults(fieldsToSet);
 
     fieldsToSet = transferInfoToBids(fieldsToSet, cfg);
 
@@ -123,6 +123,17 @@ function fieldsToSet = datasetDescriptionDefaults(fieldsToSet)
 
     % sort fields alphabetically
     fieldsToSet.bids.datasetDescription = orderfields(fieldsToSet.bids.datasetDescription);
+
+end
+
+function fieldsToSet = behJsonDefaults(fieldsToSet)
+    % for json for BEH data
+
+    fieldsToSet.bids.beh.TaskName = [];
+
+    fieldsToSet.bids.beh.Instructions = [];
+
+    fieldsToSet.bids.beh = orderfields(fieldsToSet.bids.beh);
 
 end
 
@@ -248,17 +259,6 @@ function fieldsToSet = ieegJsonDefaults(fieldsToSet)
     fieldsToSet.bids.ieeg.SoftwareFilters = 'n/a';
 
     fieldsToSet.bids.ieeg = orderfields(fieldsToSet.bids.ieeg);
-
-end
-
-function fieldsToSet = behJsonDefaults(fieldsToSet)
-    % for json for BEH data
-
-    fieldsToSet.bids.beh.TaskName = [];
-
-    fieldsToSet.bids.beh.Instructions = [];
-
-    fieldsToSet.bids.ieeg = orderfields(fieldsToSet.bids.beh);
 
 end
 

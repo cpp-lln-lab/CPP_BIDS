@@ -2,7 +2,7 @@
 
 function [cfg, responses] = setDefaultResponses(cfg)
     %
-    % It sets default responses to for all the entries regarding subject group and nb and for
+    % It sets default responses to for all the entries regarding subject group and for
     % session and run number. The defaults are choosen depending on ``cfg.debug.do``.
     %
     % USAGE::

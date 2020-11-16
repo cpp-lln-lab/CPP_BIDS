@@ -48,36 +48,11 @@ A set of function for matlab and octave to create
 structure and filenames for the output of behavioral, EEG, fMRI, eyetracking
 studies.
 
-## Output format
-
-### Modality agnostic aspect
-
-Subjects, session and run number labels will be numbers with zero padding up to
-3 values (e.g subject 1 will become `sub-001`).
-
-A session folder will ALWAYS be created even if not requested (default will be
-`ses-001`).
-
-Task labels will be printed in camelCase in the filenames.
-
-Time stamps are added directly in the filename by adding a suffix
-`_date-YYYYMMDDHHMM` which makes the file name non-BIDS compliant. This was
-added to prevent overwriting files in case a certain run needs to be done a
-second time because of a crash (Some of us are paranoid about keeping even
-cancelled runs during my experiments). This suffix should be removed to make the
-data set BIDS compliant. See `convertSourceToRaw.m` for more details.
-
-For example:
-
-```bash
-sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-202007291536.tsv
-```
-
 ## Documentation
 
 -   [Installation](./docs/installation.md)
 -   [How to use it: jupyter notebooks](./notebooks)
--   [Functions description](./docs/functions-description.md)
+-   [General documentation](https://cpp-bids.readthedocs.io/en/dev/index.html)
 
 ## Contributing
 
@@ -90,7 +65,7 @@ or you get stuck: it is more likely we did not do good enough a job at
 explaining things. So do not hesitate to open an issue, just to ask for
 clarification.
 
-### Guidestyle
+### Style guide
 
 -   We use camelCase.
 

@@ -26,8 +26,9 @@ function createJson(varargin)
     %                   a valid BIDS dataset.
     % :type extraInfo: structure
     %
-    % :output: - :``*.json``: (jsonfile) The file name corresponds to the run + suffix depending on
-    %             the arguments passed in.
+    % :output:
+    %          - :``*.json``: (jsonfile) The file name corresponds to the run + suffix depending
+    %                         on the arguments passed in.
     %
     % .. TODO:
     %

@@ -9,7 +9,6 @@ that can be used to deal with ``userInputs()``.
 .. automodule:: src.gui 
 
 .. autofunction:: askForGroupAndOrSession
-.. autofunction:: askUserCli
 .. autofunction:: askUserGui
 .. autofunction:: createQuestionList
 .. autofunction:: getIsQuestionToAsk

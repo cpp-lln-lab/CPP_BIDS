@@ -2,25 +2,20 @@
 
 function headerName = returnHeaderName(columnName, nbCol, iCol)
     %
-    % Short description of what the function does goes here.
+    % It returns one by one the column name to be used as a header in a recently opened event file
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   headerName = returnHeaderName(columnName, nbCol, iCol)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param columnName: The column name to print
+    % :type columnName: string
+    % :param nbCol: It is the number of columns associated to one entry of the extra column list
+    % :type nbCol: integer
+    % :param iCol: Index of the columns associated to one entry of the extra column list
+    % :type iCol: integer
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
-    %
-    % headerName = returnHeaderName(columnName, nbCol, iCol)
+    % :returns: - :headerName: (string) return the extra column name to be used as header
     %
 
     if nbCol == 1

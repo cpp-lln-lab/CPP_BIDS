@@ -9,8 +9,8 @@ end
 function test_readAndFilterLogfileBasic()
 
     %% set up
-    cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
     [cfg, logFile] = setUp();
+    cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);

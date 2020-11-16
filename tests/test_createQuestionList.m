@@ -23,7 +23,6 @@ function test_createQuestionListBasic()
 
 end
 
-
 function test_createQuestionListRestricted()
 
     %% set up

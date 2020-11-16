@@ -1,0 +1,46 @@
+{
+    "SamplingFrequency": 100,
+    "StartTime": 0,
+    "Columns": [
+        "Speed",
+        "LHL24_01",
+        "LHL24_02",
+        "LHL24_03",
+        "is_Fixation"
+    ],
+    "Speed": {
+        "Description": "",
+        "Levels": "",
+        "LongName": "",
+        "TermURL": "",
+        "Units": ""
+    },
+    "LHL24_01": {
+        "Description": "",
+        "Levels": "",
+        "LongName": "",
+        "TermURL": "",
+        "Units": ""
+    },
+    "LHL24_02": {
+        "Description": "",
+        "Levels": "",
+        "LongName": "",
+        "TermURL": "",
+        "Units": ""
+    },
+    "LHL24_03": {
+        "Description": "",
+        "Levels": "",
+        "LongName": "",
+        "TermURL": "",
+        "Units": ""
+    },
+    "is_Fixation": {
+        "Description": "",
+        "Levels": "",
+        "LongName": "",
+        "TermURL": "",
+        "Units": ""
+    }
+}

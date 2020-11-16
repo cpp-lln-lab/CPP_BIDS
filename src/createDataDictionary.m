@@ -17,33 +17,23 @@ function createDataDictionary(cfg, logFile)
     fileName = strrep(logFile(1).filename, '.tsv', '.json');
     fullFilename = getFullFilename(fileName, cfg);
 
-    jsonContent = setJsonContent(fullFilename, logFile);
+    jsonContent = setJsonContent(logFile);
 
     opts.Indent = '    ';
+
     bids.util.jsonencode(fullFilename, jsonContent, opts);
 
 end
 
-function jsonContent = setJsonContent(fullFilename, logFile)
+function jsonContent = setJsonContent(logFile)
 
-    % transfer content of extra fields to json content
-    namesExtraColumns = returnNamesExtraColumns(logFile);
+    % regular _events file: add default _event file fields to the json content
+    if ~isfield(logFile, 'isStim') || isempty(logFile.isStim) || ~logFile.isStim
 
-    % default content for events file that will be overriddent if we are dealing
-    % with a stim file
-    jsonContent = struct( ...
-                         'onset', struct( ...
-                                         'Description', 'time elapsed since experiment start', ...
-                                         'Units', 's'), ...
-                         'trial_type', struct( ...
-                                              'Description', 'types of trial', ...
-                                              'Levels', ''), ...
-                         'duration', struct( ...
-                                            'Description', 'duration of the event', ...
-                                            'Units', 's') ...
-                        );
+        jsonContent = logFile.columns;
 
-    if ismember('_stim', fullFilename)
+        % _stim file: write stim-specific fields to the json content
+    elseif logFile.isStim
 
         samplingFrequency = nan;
         startTime = nan;
@@ -59,8 +49,10 @@ function jsonContent = setJsonContent(fullFilename, logFile)
                              'SamplingFrequency', samplingFrequency, ...
                              'StartTime',  startTime, ...
                              'Columns', []);
-
     end
+
+    % transfer content of extra fields to json content
+    namesExtraColumns = returnNamesExtraColumns(logFile);
 
     for iExtraColumn = 1:numel(namesExtraColumns)
 
@@ -70,10 +62,8 @@ function jsonContent = setJsonContent(fullFilename, logFile)
 
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
 
-            if ismember('_stim', fullFilename)
-
+            if isfield(logFile, 'isStim') && ~isempty(logFile.isStim) && logFile.isStim
                 jsonContent.Columns{end + 1} = headerName;
-
             end
 
             jsonContent.(headerName) = ...

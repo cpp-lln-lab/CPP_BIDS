@@ -2,20 +2,19 @@
 
 function isQuestionToAsk = getIsQuestionToAsk(questions, responses)
     %
-    % Short description of what the function does goes here.
+    % While using the GUI interface to input the experiment information, it flags any question that
+    % will be presented in the GUI. If a response is not valid (e.g. is not an integer) it will keep
+    % flagging it as a 'question to ask' and represent the GUI.
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   isQuestionToAsk = getIsQuestionToAsk(questions, responses)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param questions: It contains the questions list to ask and if the response given to one
+    %                   question must be checked to be an integer.
+    % :type questions: structure
+    % :param responses: It contains the responses set by default or as input by the user
+    % :type responses: cell
     %
     % :returns: - :argout1: (type) (dimension)
     %           - :argout2: (type) (dimension)

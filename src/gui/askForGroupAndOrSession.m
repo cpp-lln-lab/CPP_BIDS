@@ -2,24 +2,19 @@
 
 function cfg = askForGroupAndOrSession(cfg)
     %
-    % Short description of what the function does goes here.
+    % It checks ``cfg`` if ``group`` and ``session`` are recquired in ``cfg.subject.askGrpSess`` by
+    % the user. If not specified, it will add these as ``true`` by default.
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   [cfg] = askForGroupAndOrSession(cfg)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param cfg: Configuration. See ``checkCFG()``.
+    % :type cfg: structure
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
-    %
+    % :returns:
+    %           :cfg: (structure) Configuration update with the instructions if to ask for ``group``
+    %                 and ``session``.
 
     askGrpSess = [true true];
 

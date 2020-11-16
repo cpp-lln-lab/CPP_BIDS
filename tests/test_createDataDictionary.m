@@ -25,8 +25,8 @@ function test_createDataDictionaryBasic()
 
     cfg = createFilename(cfg);
 
-    logFile.extraColumns = {'Speed','LHL24'}; 
-    
+    logFile.extraColumns = {'Speed', 'LHL24'};
+
     logFile = saveEventsFile('init', cfg, logFile);
 
     logFile.extraColumns.Speed.length = 1;
@@ -59,9 +59,9 @@ function test_createDataDictionaryBasic()
     % data to test against
     expectedStruct = bids.util.jsondecode( ...
                                           fullfile( ...
-                                            pwd, ...
-                                            'testData', ...
-                                            'eventsDataDictionary.json'));
+                                                   pwd, ...
+                                                   'testData', ...
+                                                   'eventsDataDictionary.json'));
 
     % test
     assertTrue(isequal(expectedStruct, actualStruct));
@@ -87,8 +87,8 @@ function test_createDataDictionaryStim()
 
     cfg = createFilename(cfg);
 
-    stimLogFile.extraColumns = {'Speed','LHL24','is_Fixation'}; 
-    
+    stimLogFile.extraColumns = {'Speed', 'LHL24', 'is_Fixation'};
+
     stimLogFile = saveEventsFile('init_stim', cfg, stimLogFile);
 
     stimLogFile.extraColumns.Speed.length = 1;
@@ -119,15 +119,15 @@ function test_createDataDictionaryStim()
     % jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
     % test_createDataDictionary>test_createDataDictionaryBasic:48
     %   (/github/workspace/tests/test_createDataDictionary.m)
-    
+
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
 
     % data to test against
     expectedStruct = bids.util.jsondecode( ...
                                           fullfile( ...
-                                            pwd, ...
-                                            'testData', ...
-                                            'stimDataDictionary.json'));
+                                                   pwd, ...
+                                                   'testData', ...
+                                                   'stimDataDictionary.json'));
 
     % test
     assertTrue(isequal(expectedStruct, actualStruct));

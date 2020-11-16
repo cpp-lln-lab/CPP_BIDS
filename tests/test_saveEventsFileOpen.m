@@ -24,7 +24,7 @@ function test_saveEventsFileOpenBasic()
     cfg.testingDevice = 'mri';
 
     cfg = createFilename(cfg);
-    
+
     logFile = saveEventsFile('init', cfg);
 
     % create the events file and header

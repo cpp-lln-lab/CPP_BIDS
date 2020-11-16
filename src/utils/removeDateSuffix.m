@@ -2,27 +2,21 @@
 
 function removeDateSuffix(filenames, subjectPath)
     %
-    % Short description of what the function does goes here.
+    % Function removes the date suffix in a given filename(s)
+    % Function will look for regular expression in filenames with ``_date-``
+
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   removeDateSuffix(filenames, subjectPath)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param filenames: File names with _date- suffix
+    % :type filenames: string
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
+    % :param subjectPath: Location/path of the files
+    % :type subjectPath: string
     %
-    % removeDateSuffix(filenames, subjectPath)
-    %
-    %
+    % :output: - files are renamed by removing '_date-*' suffix
 
     if isempty(filenames)
         filenames = {};

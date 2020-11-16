@@ -2,7 +2,7 @@
 
 function cfg = createFilename(cfg)
     %
-    % It create the BIDS compliant directories and fileNames for the behavioral output
+    % It creates the BIDS compliant directories and fileNames for the behavioral output
     % for this subject / session / run using the information from cfg and expParameters.
     % Will also create the right fileName for the eyetracking data file. For the moment the date of
     % acquisition is appended to the fileName.

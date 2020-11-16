@@ -2,7 +2,7 @@
 
 function printCreditsCppBids(cfg)
     %
-    % It will print the credits of this repo. Depending on the level of verbosit set in
+    % It will print the credits of this repo. Depending on the level of verbosity set in
     % ``cfg.verbose`` (default is 2 if not set), it will print the graphic and general information.
     %
     % USAGE::

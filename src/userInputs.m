@@ -23,7 +23,6 @@ function cfg = userInputs(cfg)
     %
     % - the first value set to ``false`` will skip asking for the participants group
     % - the second value set to ``false`` will skip asking for the session
-    %
 
     if nargin < 1
         cfg = struct('debug', []);

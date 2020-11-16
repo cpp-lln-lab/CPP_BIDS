@@ -2,29 +2,18 @@
 
 function createDataDictionary(cfg, logFile)
     %
-    % Short description of what the function does goes here.
+    % It creates the data dictionary to be associated with a _events.tsv file. It will create empty
+    % fields that you can then fill in manually in the JSON file.
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   createDataDictionary(cfg, logFile)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
-    %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
-    %
-    % createDataDictionary(cfg, logFile)
-    %
-    % creates the data dictionary to be associated with a _events.tsv file
-    % will create empty field that you can then fill in manually in the JSON
-    % file
+    % :param cfg: Configuration. See ``checkCFG()``.
+    % :type cfg: structure
+    % :param logFile: Contains the data you want to save.
+    % :type logFile: structure
+
 
     fileName = strrep(logFile(1).filename, '.tsv', '.json');
     fullFilename = getFullFilename(fileName, cfg);

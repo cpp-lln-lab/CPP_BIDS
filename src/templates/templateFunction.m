@@ -1,6 +1,6 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
-function createDatasetDescription(cfg)
+function [argout1, argout2] = templateFunction(argin1, argin2, argin3)
     %
     % Short description of what the function does goes here.
     %
@@ -20,19 +20,11 @@ function createDatasetDescription(cfg)
     % :returns: - :argout1: (type) (dimension)
     %           - :argout2: (type) (dimension)
     %
-    % createDatasetDescription(cfg)
+    % .. todo:
     %
-    % creates the datasetDescription.json file that goes in the root of a BIDS
-    % dataset
+    %    - item 1
+    %    - item 2
 
-    opts.Indent = '    ';
-
-    fileName = fullfile( ...
-                        cfg.dir.output, 'source', ...
-                        'dataset_description.json');
-
-    jsonContent = cfg.bids.datasetDescription;
-
-    bids.util.jsonencode(fileName, jsonContent, opts);
+    % The code goes below
 
 end

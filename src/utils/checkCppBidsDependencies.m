@@ -1,7 +1,12 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function checkCppBidsDependencies(cfg)
-    % checkCppBidsDependencies()
+    %
+    % Adds dependencies to the matlab path and make sure we got all of them/
+    %
+    % USAGE::
+    %
+    %   checkCppBidsDependencies(cfg)
     %
 
     GITHUB_WORKSPACE = getenv('GITHUB_WORKSPACE');

@@ -1,6 +1,6 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
-function createDatasetDescription(cfg)
+function isQuestionToAsk = getIsQuestionToAsk(questions, responses)
     %
     % Short description of what the function does goes here.
     %
@@ -20,19 +20,12 @@ function createDatasetDescription(cfg)
     % :returns: - :argout1: (type) (dimension)
     %           - :argout2: (type) (dimension)
     %
-    % createDatasetDescription(cfg)
-    %
-    % creates the datasetDescription.json file that goes in the root of a BIDS
-    % dataset
 
-    opts.Indent = '    ';
-
-    fileName = fullfile( ...
-                        cfg.dir.output, 'source', ...
-                        'dataset_description.json');
-
-    jsonContent = cfg.bids.datasetDescription;
-
-    bids.util.jsonencode(fileName, jsonContent, opts);
+    isQuestionToAsk = cell2mat(questions.questionsToAsk(:, 2));
+    for j = 1:size(isQuestionToAsk, 1)
+        input2check = str2double(responses{j});
+        isQuestionToAsk(j, 2) = ~isPositiveInteger(input2check);
+    end
+    isQuestionToAsk = all(isQuestionToAsk, 2);
 
 end

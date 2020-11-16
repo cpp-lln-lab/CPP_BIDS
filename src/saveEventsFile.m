@@ -1,58 +1,68 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function [logFile] = saveEventsFile(action, cfg, logFile)
-    % [logFile] = saveEventsFile(action, cfg, logFile)
     %
     % Function to save output files for events that will be BIDS compliant.
     %
-    % USAGE
+    % USAGE::
     %
-    % [logFile] = saveEventsFile('init', [cfg], logFile)
-    % [logFile] = saveEventsFile('open', [cfg], logFile)
-    % [logFile] = saveEventsFile('open_stim', [cfg], logFile)
-    % [logFile] = saveEventsFile('save', [cfg], logFile)
-    % [logFile] = saveEventsFile('close', cfg, logFile)
+    %   [logFile] = saveEventsFile(action, cfg, logFile)
+    %
+    %   logFile] = saveEventsFile('init', [cfg], logFile)
+    %   logFile] = saveEventsFile('open', [cfg], logFile)
+    %   logFile] = saveEventsFile('open_stim', [cfg], logFile)
+    %   logFile] = saveEventsFile('save', [cfg], logFile)
+    %   logFile] = saveEventsFile('close', cfg, logFile)
     %
     % INPUTS
     %
     % logFile:
-    %   When you want to save your data logFile contains the data you want to save.
-    % The logFile variable that contains the n events you want to % save must be a nx1 structure.
+    %
+    % When you want to save your data ``logFile`` contains the data you want to save.
+    % The ``logFile`` variable that contains the n events you want to save must be a nx1 structure.
     % Each field will be saved in a separate column.
     %
-    % example:
-    % logFile(1,1).onset = 2;
-    % logFile(1,1).trial_type = 'motion_up';
-    % logFile(1,1).duration = 1;
-    % logFile(1,1).speed = 2;
-    % logFile(1,1).is_fixation = true;
+    % example::
     %
-    % logFile(2,1).onset = 3;
-    % logFile(2,1).trial_type = 'static';
-    % logFile(2,1).duration = 4;
-    % logFile(2,1).is_fixation = 3;
+    %   logFile(1,1).onset = 2;
+    %   logFile(1,1).trial_type = 'motion_up';
+    %   logFile(1,1).duration = 1;
+    %   logFile(1,1).speed = 2;
+    %   logFile(1,1).is_fixation = true;
+    %
+    %   logFile(2,1).onset = 3;
+    %   logFile(2,1).trial_type = 'static';
+    %   logFile(2,1).duration = 4;
+    %   logFile(2,1).is_fixation = 3;
     %
     %
     % action:
-    %  - 'open': will create the file ID and return it in logFile.fileID using the information in
-    % the expParameters structure. This file ID is then reused when calling that function
-    % to save data into this file.
-    % This creates the header with the obligatory 'onset', 'trial_type', 'duration' required
-    % by BIDS and other columns can be specified in varargin.
     %
-    % example : logFile = saveEventsFile('open', cfg, [], 'direction', 'speed', 'target');
+    % - ``'open'`` will create the file ID and return it in ``logFile.fileID`` using
+    %   the information in the ``cfg`` structure.
+    %   This file ID is then reused when calling that function to save data into this file.
+    %   This creates the header with the obligatory ``'onset'``, ``'duration'`` required
+    %   by BIDS and other columns can be specified in varargin.
     %
-    %  - 'save': will save the data contained in logfile by using the file ID logFile.fileID;
-    % logfile must then contain:
-    %     - logFile.onset
-    %     - logFile.trial_type
-    %     - logFile.duration
+    % example::
+    %
+    %   logFile = saveEventsFile('open', cfg, [], 'direction', 'speed', 'target');
+    %
+    %
+    % - ``'save'`` will save the data contained in logfile by using the file ID ``logFile.fileID``;
+    %   logfile must then contain:
+    %
+    %                           - logFile.onset
+    %                           - logFile.trial_type
+    %                           - logFile.duration
+    %
     % The name of any extra column whose content must be saved should be listed in varargin.
     %
-    %  - 'close': closes the file with file ID logFile.fileID. If expParameters.verbose is set
-    % to true then this will tell you where the file is located.
+    % - ``'close'`` closes the file with file ID ``logFile.fileID``. If ``cfg.verbose`` is set
+    %   to true then this will tell you where the file is located.
     %
-    % See test_saveEventsFile in the test folder for more details on how to use it.
+    % See ``tests/test_saveEventsFile()`` for more details on how to use it.
+    %
 
     if nargin < 1
         error('Missing action input');
@@ -82,7 +92,7 @@ function [logFile] = saveEventsFile(action, cfg, logFile)
 
             logFile(1).filename = cfg.fileName.stim;
 
-            logFile = initializeFile(cfg, logFile);
+            logFile = initializeStimFile(cfg, logFile);
 
         case 'save'
 
@@ -147,6 +157,22 @@ end
 
 function logFile = initializeFile(cfg, logFile)
 
+    logFile = initializeStimFile(cfg, logFile);
+
+    % print the basic BIDS columns
+    fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+    fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+
+    printHeaderExtraColumns(logFile);
+
+    % next line so we start printing at the right place
+    fprintf(logFile(1).fileID, '\n');
+    fprintf(1, '\n');
+
+end
+
+function logFile = initializeStimFile(cfg, logFile)
+
     logFile = initializeExtraColumns(logFile);
 
     createDataDictionary(cfg, logFile);
@@ -159,16 +185,6 @@ function logFile = initializeFile(cfg, logFile)
                                        cfg.fileName.modality, ...
                                        logFile.filename), ...
                               'w');
-
-    % print the basic BIDS columns
-    fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
-    fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
-
-    printHeaderExtraColumns(logFile);
-
-    % next line so we start printing at the right place
-    fprintf(logFile(1).fileID, '\n');
-    fprintf(1, '\n');
 
 end
 

@@ -4,6 +4,10 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cpp-lln-lab/CPP_BIDS/master?filepath=notebooks%2Fbasic_usage.ipynb)
 
+**Cite it**
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4007674.svg)](https://doi.org/10.5281/zenodo.4007674)
+
 **Unit tests and coverage**
 
 [![](https://img.shields.io/badge/Octave-CI-blue?logo=Octave&logoColor=white)](https://github.com/cpp-lln-lab/CPP_BIDS/actions)
@@ -19,7 +23,7 @@
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 
-* * *
+---
 
 # CPP_BIDS
 
@@ -79,6 +83,13 @@ sub-090/ses-003/sub-090_ses-003_task-auditoryTask_run-023_events_date-2020072915
 
 Feel free to open issues to report a bug and ask for improvements.
 
+If you want to contribute, have a look at our
+[contributing guidelines](https://github.com/cpp-lln-lab/.github/blob/main/CONTRIBUTING.md)
+that are meant to guide you and help you get started. If something is not clear
+or you get stuck: it is more likely we did not do good enough a job at
+explaining things. So do not hesitate to open an issue, just to ask for
+clarification.
+
 ### Guidestyle
 
 -   We use camelCase.
@@ -97,23 +108,31 @@ Here are the naming templates used.
 
 -   Behavior
 
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.tsv`
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.json`
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.tsv`
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.json`
+```
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.tsv
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.json
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.tsv
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.json
+```
 
 -   BOLD
 
-`sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_ce-<label>][_dir-<label>][_rec-<label>][_run-<index>][_echo-<index>]_<contrast_label>.nii[.gz]`
+```
+sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_ce-<label>][_dir-<label>][_rec-<label>][_run-<index>][_echo-<index>]_<contrast_label>.nii[.gz]
+```
 
 -   iEEG
 
-`sub-<label>[_ses-<label>]_task-<task_label>[_run-<index>]_ieeg.json`
+```
+sub-<label>[_ses-<label>]_task-<task_label>[_run-<index>]_ieeg.json
+```
 
 -   EEG
 
-`sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.<manufacturer_specific_extension>`
-`sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.json`
+```
+sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.<manufacturer_specific_extension>
+sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.json
+```
 
 <!-- European data format (Each recording consisting of a .edf file)
 
@@ -132,14 +151,19 @@ Biosemi data format (Each recording consisting of a .bdf file) -->
 current format `<matches>_recording-eyetracking_physio.tsv.gz`
 
 future BEP format in a dedicated eyetracker folder
-`sub-<participant_label>[_ses-<label>][_acq-<label>]_task-<task_label>_eyetrack.<manufacturer_specific_extension>`
+
+```
+sub-<participant_label>[_ses-<label>][_acq-<label>]_task-<task_label>_eyetrack.<manufacturer_specific_extension>
+```
 
 -   Stim and physio
 
-`<matches>[_recording-<label>]_physio.tsv.gz`
-`<matches>[_recording-<label>]_physio.json`
-`<matches>[_recording-<label>]_stim.tsv.gz`
-`<matches>[_recording-<label>]_stim.json`
+```
+<matches>[_recording-<label>]_physio.tsv.gz
+<matches>[_recording-<label>]_physio.json
+<matches>[_recording-<label>]_stim.tsv.gz
+<matches>[_recording-<label>]_stim.json
+```
 
 ### Change log
 

@@ -11,10 +11,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/checkout@v2
       with:
         submodules: true
         fetch-depth: 1
+
+    - name: Make jsonread for octave
+      run: |
+        sudo apt-get -y -qq update
+        sudo apt-get -y install octave 
+        sudo apt-get -y install liboctave-dev
+        cd lib/JSONio
+        mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS
+      # cd ../..
+
     - name: MOxUnit Action
       uses: joergbrech/moxunit-action@v1.1
       with:
@@ -22,6 +33,7 @@ jobs:
         src: src
         with_coverage: true
         cover_xml_file: coverage.xml
+
     - name: Code coverage
       uses: codecov/codecov-action@v1
       with:

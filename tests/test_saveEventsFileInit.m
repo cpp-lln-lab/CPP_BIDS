@@ -44,6 +44,7 @@ function test_saveEventsFileInitExtraColumns()
     expectedStrcut(1).extraColumns.Speed.bids.Description = '';
     expectedStrcut(1).extraColumns.Speed.bids.Levels = '';
     expectedStrcut(1).extraColumns.Speed.bids.TermURL = '';
+    expectedStrcut(1).extraColumns.Speed.bids.Units = '';
 
     %% test
     assertEqual(expectedStrcut, logFile);
@@ -69,11 +70,13 @@ function test_saveEventsFileInitExtraColumnsArray()
     expectedStrcut(1).extraColumns.Speed.bids.Description = '';
     expectedStrcut(1).extraColumns.Speed.bids.Levels = '';
     expectedStrcut(1).extraColumns.Speed.bids.TermURL = '';
+    expectedStrcut(1).extraColumns.Speed.bids.Units = '';
     expectedStrcut(1).extraColumns.LHL24.length = 3;
     expectedStrcut(1).extraColumns.LHL24.bids.LongName = '';
     expectedStrcut(1).extraColumns.LHL24.bids.Description = '';
     expectedStrcut(1).extraColumns.LHL24.bids.Levels = '';
     expectedStrcut(1).extraColumns.LHL24.bids.TermURL = '';
+    expectedStrcut(1).extraColumns.LHL24.bids.Units = '';
 
     %% test
     assertEqual(expectedStrcut, logFile);

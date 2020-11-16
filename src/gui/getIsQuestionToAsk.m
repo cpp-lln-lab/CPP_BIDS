@@ -11,7 +11,7 @@ function isQuestionToAsk = getIsQuestionToAsk(questions, responses)
     %   isQuestionToAsk = getIsQuestionToAsk(questions, responses)
     %
     % :param questions: It contains the questions list to ask and if the response given to one
-    %                   question must be checked to be an integer number.
+    %                   question must be checked to be an integer.
     % :type questions: structure
     % :param responses: It contains the responses set by default or as input by the user
     % :type responses: cell

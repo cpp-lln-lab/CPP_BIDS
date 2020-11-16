@@ -1,6 +1,6 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
-function [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile)
+function [namesExtraColumns] = returnNamesExtraColumns(logFile)
     %
     % Short description of what the function does goes here.
     %

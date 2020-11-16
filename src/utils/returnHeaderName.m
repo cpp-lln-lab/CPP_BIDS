@@ -6,7 +6,7 @@ function headerName = returnHeaderName(columnName, nbCol, iCol)
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   headerName = returnHeaderName(columnName, nbCol, iCol)
     %
     % :param columnName: The column name to print
     % :type columnName: string

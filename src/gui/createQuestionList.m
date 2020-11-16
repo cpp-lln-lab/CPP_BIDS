@@ -14,7 +14,7 @@ function questions = createQuestionList(cfg)
     %
     % :returns:
     %           :questions: (structure) It contains the questions list to ask and if the response
-    %                       given to one question must be checked to be an integer number.
+    %                       given to one question must be checked to be a positive integer.
     %
 
     cfg = askForGroupAndOrSession(cfg);

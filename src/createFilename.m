@@ -26,7 +26,7 @@ function cfg = createFilename(cfg)
     %     - set on ``eeg`` or ``ieeg`` can work for electro encephalography or
     %       intracranial eeg
     %     - set on ``meg`` can work for magneto encephalography
-    %   - ``cfg.eyeTracker.do`` set to 1, can work for simple eyetracking data.
+    %   - ``cfg.eyeTracker.do`` set to ``true``, can work for simple eyetracking data.
     %
     % See ``test_createFilename`` in the test folder for more details on how to use it.
 

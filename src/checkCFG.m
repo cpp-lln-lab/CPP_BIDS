@@ -10,24 +10,177 @@ function cfg = checkCFG(cfg)
     %
     %   cfg = checkCFG([cfg])
     %
-    % :param cfg: Lorem ipsum dolor sit amet,
-    %             consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type cfg: type
+    % :param cfg: The configuration variable to check.
+    % :type cfg: structure
     %
     % :returns: :cfg: (structure)
     %           
     % This function reuses a lot of code and comment from the BIDS starter kit:
+    %
     % https://github.com/bids-standard/bids-starter-kit/tree/master/matlabCode
     %
-
+    % **Fields descriptions**:
+    %  The following section describes the main fields set by ``checkCFG()`` with 
+    %  their associated default value.
+    %
+    %   - ``cfg.testingDevice = 'pc'``
+    %     set the way the experiment is run and the different options match the imaging
+    %     modality:
+    %
+    %     - ``pc`` is for behavioral test
+    %     - ``mri`` is for fMRI
+    %     - ``eeg`` is for EEG...
+    %
+    %   - ``cfg.verbose = 0`` 
+    %     sets how talkative the code will be. Possible values range from ``0`` to ``2``. 
+    %
+    %   - ``cfg.useGUI = false``
+    %     sets whether a graphic interface should be used for the ``userInputs()``
+    %     to query about group name, as well as for session, subject and run number.
+    %
+    %   - ``cfg.dir.output``
+    %     sets where the data will be saved.
+    %
+    %   Filename options:
+    %     Sets options that will help in creating the filenames.
+    %
+    %     - ``cfg.fileName.task = ''``
+    %       sets the name to be given to the task
+    %     - ``cfg.fileName.zeroPadding = 3`` 
+    %       sets tha amount of 0 padding the subject, session and run number.
+    %     - ``cfg.fileName.dateFormat = 'yyyymmddHHMM'``
+    %       sets the format of the date and time stamp that will be appended to all files.
+    %    
+    %     The following fields can be used to specify certain of the labels that are used
+    %     to specify certain of the acquisition conditions of certain experemental runs
+    %     in a BIDS data set. These are mostly for MRI and, if set, will be ignored 
+    %     for most other modalities. See ``tests/test_createFilename()`` for details on how
+    %     to use these.
+    %
+    %     - ``cfg.suffix.contrastEnhancement = []``
+    %     - ``cfg.suffix.phaseEncodingDirection = []``
+    %     - ``cfg.suffix.reconstruction = []``
+    %     - ``cfg.suffix.echo = []``
+    %     - ``cfg.suffix.acquisition = []``
+    %     - ``cfg.suffix.recording = []``
+    %  
+    %   Group and session options:  
+    %     All the fields of ``cfg.subject`` can be set using the ``userInputs()`` function
+    %     but can also be set "manually" directly into the ``cfg`` structure.
+    %
+    %     - ``cfg.subject.subjectGrp = ''`` 
+    %       is set to empty in case no group was provided.
+    %     - ``cfg.subject.sessionNb = 1`` 
+    %       always sets to 1 in case no session was provided.
+    %     - ``cfg.subject.askGrpSess = [true true]`` 
+    %       means that ``userInputs()`` will always ask for group and session by default.
+    %
+    %   Eyetracker options:
+    %     Those options are mostly work in progress at the moment but should allow to
+    %     track the some of the metadata regarding eyetracking data acquisition.
+    %
+    %     - ``cfg.eyeTracker.do = false``
+    %     - ``cfg.eyeTracker.SamplingFrequency = []``
+    %     - ``cfg.eyeTracker.PupilPositionType = ''``
+    %     - ``cfg.eyeTracker.RawSamples =  []``
+    %     - ``cfg.eyeTracker.Manufacturer = ''``
+    %     - ``cfg.eyeTracker.ManufacturersModelName = ''``
+    %     - ``cfg.eyeTracker.SoftwareVersions = ''``
+    %     - ``cfg.eyeTracker.CalibrationType = 'HV5'``
+    %     - ``cfg.eyeTracker.CalibrationPosition = ''``
+    %     - ``cfg.eyeTracker.CalibrationDistance = ''``
+    %     - ``cfg.eyeTracker.MaximalCalibrationError = []``
+    %     - ``cfg.eyeTracker.AverageCalibrationError = []``
+    %     - ``cfg.eyeTracker.RawDataFilters = {}``
+    %
+    % ``cfg.bids``:
+    %  ``checkCFG()`` will also initialize ``cfg.bids`` that
+    %  contains any information related to a BIDS data set and that will end up in
+    %  in one of the JSON "sidecar" files containing the metadata of your
+    %  experiment. 
+    %
+    %  If the content of some fields of ``cfg`` has been set before running ``checkCFG()``,
+    %  that content might be copied into the relevant field in ``cfg.bids``. For example,
+    %  if you have set the field ``cfg.mri.repetitionTime``, then when you run ``checkCFG()``,
+    %  its content will also be copied into ``cfg.bids.mri.RepetitionTime``.
+    %
+    %  ``cfg.bids`` is further sub-divided into several fields for the different 
+    %  "imaging modalities".
+    %
+    %  - ``cfg.bids.datasetDescription`` will be there for all type of experiments
+    %  - ``cfg.bids.beh`` is for purely behavioral experiment with no associated imaging
+    %  - ``cfg.bids.mri`` is for fMRI experiments
+    %  - ``cfg.bids.eeg`` is for EEG experiments
+    %  - ``cfg.bids.meg`` is for MEG experiments
+    %  - ``cfg.bids.ieeg`` is for iEEG experiments
+    %
+    %  The content of each of those subfields matches the different "keys" one can find 
+    %  in the JSON file for each modality. The content of those different keys is detailed 
+    %  in the code of ``checkCFG()``, 
+    %  but a more extensive and updated descriptions will be found in the 
+    %  BIDS specifications themselves.  
+    %
+    %  https://bids-specification.readthedocs.io/en/stable/
+    %  
+    %  For the content of the ``datasetDescription.json`` files::
+    %
+    %    cfg.bids.datasetDescription.Name = '';
+    %    cfg.bids.datasetDescription.BIDSVersion =  '';
+    %    cfg.bids.datasetDescription.License = '';
+    %    cfg.bids.datasetDescription.Authors = {''};
+    %    cfg.bids.datasetDescription.Acknowledgements = '';
+    %    cfg.bids.datasetDescription.HowToAcknowledge = '';
+    %    cfg.bids.datasetDescription.Funding = {''};
+    %    cfg.bids.datasetDescription.ReferencesAndLinks = {''};
+    %    cfg.bids.datasetDescription.DatasetDOI = '';
+    %
+    %  For the content of the JSON files for behavioral data::
+    %
+    %    cfg.bids.beh.TaskName = [];
+    %    cfg.bids.beh.Instructions = [];
+    %
+    %  For the content of the JSON files for fMRI data::
+    %
+    %    cfg.bids.mri.TaskName = '';
+    %    cfg.bids.mri.Instructions = '';
+    %    cfg.bids.mri.RepetitionTime = [];
+    %    cfg.bids.mri.SliceTiming = '';
+    %    cfg.bids.mri.TaskDescription = '';
+    %  
+    %  For the content of the JSON files for EEG::
+    %
+    %    cfg.bids.eeg.TaskName = '';
+    %    cfg.bids.eeg.Instructions = '';
+    %    cfg.bids.eeg.EEGReference = '';
+    %    cfg.bids.eeg.SamplingFrequency = [];
+    %    cfg.bids.eeg.PowerLineFrequency = 50;
+    %    cfg.bids.eeg.SoftwareFilters = 'n/a';
+    %   
+    %  For the content of the JSON files for iEEG::
+    %
+    %    cfg.bids.ieeg.TaskName = '';
+    %    cfg.bids.ieeg.Instructions = '';
+    %    cfg.bids.ieeg.iEEGReference = '';
+    %    cfg.bids.ieeg.SamplingFrequency = [];
+    %    cfg.bids.ieeg.PowerLineFrequency = 50;
+    %    cfg.bids.ieeg.SoftwareFilters = 'n/a';
+    %
+    %  For the content of the JSON files for MEG::
+    %
+    %    cfg.bids.meg.TaskName = '';
+    %    cfg.bids.meg.Instructions = '';
+    %    cfg.bids.meg.SamplingFrequency = [];
+    %    cfg.bids.meg.PowerLineFrequency = [];
+    %    cfg.bids.meg.DewarPosition = [];
+    %    cfg.bids.meg.SoftwareFilters = [];
+    %    cfg.bids.meg.DigitizedLandmarks = [];
+    %    cfg.bids.meg.DigitizedHeadPoints = [];
 
     if nargin < 1 || isempty(cfg)
         cfg = struct();
     end
 
     checkCppBidsDependencies(cfg);
-
-    %% list the defaults to set
 
     fieldsToSet.verbose = 0;
 

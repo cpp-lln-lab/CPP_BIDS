@@ -5,7 +5,6 @@ function convertSourceToRaw(cfg)
     % Function attempts to convert a source dataset created with CPP_BIDS into a valid
     % BIDS data set.
     %
-    % Only covers func folder at the moment
     %
     % USAGE::
     %

@@ -2,7 +2,7 @@
 
 function questions = createQuestionList(cfg)
     %
-    % It creates a list if degault questions to ask to the users regarding the subj ID, the run nb,
+    % It creates a list of default questions to ask the users regarding the subj ID, the run number,
     % the group ID (if recquired by user) and session nb (if recquired by user).
     %
     % USAGE::

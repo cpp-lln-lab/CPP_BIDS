@@ -49,7 +49,7 @@ function questions = createQuestionList(cfg)
         questions.questionsToAsk{3, 1} = questions.session;
         questions.questionsToAsk{3, 2} = true;
     else
-        questions.questionsToAsk{3, 2} = flase;
+        questions.questionsToAsk{3, 2} = false;
     end
 
     % the run number

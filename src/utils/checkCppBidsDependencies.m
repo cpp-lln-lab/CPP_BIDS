@@ -2,7 +2,7 @@
 
 function checkCppBidsDependencies(cfg)
     %
-    % Adds dependencies to the matlab path and make sure we got all of them.
+    % Adds dependencies to the Matlab / Octave path and make sure we got all of them.
     %
     % USAGE::
     %

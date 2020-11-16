@@ -10,14 +10,14 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
     % :param action: Defines the operation to do. The different possibilities are
     %                ``'init'``, ``'open'``, ``'open_stim'``, ``'save'`` or ``'close'``.
-    %                For more information on each case see below. 
+    %                For more information on each case see below.
     % :type action: string
     % :param cfg: Configuration variable. See ``checkCFG()``.
     % :type cfg: structure
     % :param logFile: (n x 1) The ``logFile`` variable that contains the n events
     %                 you want to save must be a nx1 structure.
     % :type logFile: structure
-    %  
+    %
     % .. todo:
     %    - more details about how to structure the logFile variable
     %
@@ -51,8 +51,8 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
     %       logFile = saveEventsFile('open', cfg, logFile);
     %
-    %   - ``'save'`` will save the data contained in logfile by using the file ID ``logFile.fileID``;
-    %     logfile must then contain:
+    %   - ``'save'`` will save the data contained in logfile by using the file ID
+    %     ``logFile.fileID``; logfile must then contain:
     %
     %     - logFile.onset
     %     - logFile.trial_type
@@ -62,9 +62,10 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
     %       logFile = saveEventsFile('open', cfg, logFile);
     %
-    %   - ``'close'`` closes the file with file ID ``logFile.fileID``. If ``cfg.verbose`` is superior
-    %     to ``1`` then this will tell you where the file is located.
-    % 
+    %   - ``'close'`` closes the file with file ID ``logFile.fileID``.
+    %     If ``cfg.verbose`` is superior to ``1`` then this will tell you
+    %     where the file is located.
+    %
     %     Example::
     %
     %       logFile = saveEventsFile('close', cfg, logFile)

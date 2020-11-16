@@ -8,8 +8,7 @@ function [name, nameValid] = createValidName(name)
     %
     %   [taskName, taskNameValid] = createTaskName(taskName)
     %
-    % :param taskName: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
+    % :param taskName: Name given to the task. Can be any string including spaces and special characters.
     % :type taskName: string
     %
     % :returns:

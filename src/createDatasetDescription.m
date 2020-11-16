@@ -3,7 +3,7 @@
 function createDatasetDescription(cfg)
     %
     % It creates ``dataset_description.json`` and writes in every entry contained in
-    % ``cfg.bids.datasetDescription``. The file should goes in the root of a BIDS dataset.
+    % ``cfg.bids.datasetDescription``. The file should go in the root of a BIDS dataset.
     %
     % USAGE::
     %

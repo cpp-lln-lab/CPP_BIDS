@@ -29,8 +29,8 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %
     % :returns:
     %
-    %           - :outputFiltered: dataset with only the specified content, to see it
-    %                              in the command window use ``display(outputFiltered)``.
+    %           :outputFiltered: dataset with only the specified content, to see it
+    %                            in the command window use ``display(outputFiltered)``.
     %
 
     % Create tag to add to output file in case you want to save it

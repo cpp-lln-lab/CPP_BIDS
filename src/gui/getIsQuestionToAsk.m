@@ -4,7 +4,7 @@ function isQuestionToAsk = getIsQuestionToAsk(questions, responses)
     %
     % While using the GUI interface to input the experiment information, it flags any question that
     % will be presented in the GUI. If a response is not valid (e.g. is not an integer) it will keep
-    % flagging it as a 'questio to ask' and represent the GUI.
+    % flagging it as a 'question to ask' and represent the GUI.
     %
     % USAGE::
     %

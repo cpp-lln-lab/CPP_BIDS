@@ -19,6 +19,7 @@ function removeAllDateSuffix(rawDir, subjName, sesName)
     % :type sesName: string
 
     % :output: - files are renamed by removing 'yyyymmddHHMM' date suffix
+    %         and _stim files are zipped
 
     labels = {'func', 'bold', 'eeg', 'ieeg', 'meg', 'beh'};
 

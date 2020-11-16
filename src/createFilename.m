@@ -28,7 +28,7 @@ function cfg = createFilename(cfg)
     %     - set on ``meg`` can work for magneto encephalography
     %   - ``cfg.eyeTracker.do`` set to ``true``, can work for simple eyetracking data.
     %
-    % See ``test_createFilename`` in the test folder for more details on how to use it.
+    % See ``test_createFilename`` in the ``tests`` folder for more details on how to use it.
 
     cfg = checkCFG(cfg);
 

@@ -2,28 +2,24 @@
 
 function cfg = checkCFG(cfg)
     %
-    % Short description of what the function does goes here.
+    % Check the fields of the configuration structure ``cfg``. If a required field is 
+    % missing the default value will be assigned to that field. If this field already
+    % exists then the existing value will not be replaced. 
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   cfg = checkCFG([cfg])
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param cfg: Lorem ipsum dolor sit amet,
+    %             consectetur adipiscing elit. Ut congue nec est ac lacinia.
+    % :type cfg: type
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
+    % :returns: :cfg: (structure)
+    %           
+    % This function reuses a lot of code and comment from the BIDS starter kit:
+    % https://github.com/bids-standard/bids-starter-kit/tree/master/matlabCode
     %
-    % cfg = checkCFG(cfg)
-    %
-    % check that we have all the fields that we need in the experiment parameters
-    % reuses a lot of code from the BIDS starter kit
+
 
     if nargin < 1 || isempty(cfg)
         cfg = struct();

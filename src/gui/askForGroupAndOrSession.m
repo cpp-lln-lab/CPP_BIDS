@@ -3,7 +3,7 @@
 function cfg = askForGroupAndOrSession(cfg)
     %
     % It checks ``cfg`` if ``group`` and ``session`` are recquired in ``cfg.subject.askGrpSess`` by
-    % the user. If not specified, it will add these as ``true`` by defautl.
+    % the user. If not specified, it will add these as ``true`` by default.
     %
     % USAGE::
     %

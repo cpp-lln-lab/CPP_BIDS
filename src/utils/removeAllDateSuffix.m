@@ -9,7 +9,7 @@ function removeAllDateSuffix(rawDir, subjName, sesName)
     %
     %   removeAllDateSuffix(rawDir, subjName, sesName)
     %
-    % :param rawDir: obligatory argument. 
+    % :param rawDir: Raw folder directory.
     % :type rawDir: string
     % 	    
     % :param subjName: Some of the options can be ``sub-001`` or ``sub-pilot001``.

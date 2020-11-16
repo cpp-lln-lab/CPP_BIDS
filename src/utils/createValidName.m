@@ -8,7 +8,8 @@ function [name, nameValid] = createValidName(name)
     %
     %   [taskName, taskNameValid] = createTaskName(taskName)
     %
-    % :param taskName: Name given to the task. Can be any string including spaces and special characters.
+    % :param taskName: Name given to the task. Can be any string including spaces
+    %                  and special characters.
     % :type taskName: string
     %
     % :returns:

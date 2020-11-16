@@ -1,7 +1,8 @@
-Contributing
-************
+How to contribute to this project
+*********************************
 
-How to contribute to this project. 
+For more details please check the `contributing guidelines  <https://github.com/cpp-lln-lab/.github/blob/main/CONTRIBUTING.md>`_
+on the CPP lab's Github organization.
 
 
 Function templates

@@ -4,7 +4,7 @@
 
 ```bash
 virtualenv -p python3 cpp_bids
-source cpp_spm/bin/activate
+source cpp_bids/bin/activate
 
 pip install -r requirements.txt
 ```

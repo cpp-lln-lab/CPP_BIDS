@@ -7,7 +7,6 @@ List of functions in the ``src`` folder.
 
 .. automodule:: src 
 
-.. autofunction:: checkCFG
 .. autofunction:: convertSourceToRaw
 .. autofunction:: createDataDictionary
 .. autofunction:: createDatasetDescription

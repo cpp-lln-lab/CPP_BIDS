@@ -19,4 +19,4 @@ List of functions in the ``utils`` folder.
 .. autofunction:: returnNamesExtraColumns
 .. autofunction:: returnNbColumns
 .. autofunction:: setDefaultFields
-.. autofunction:: transferInfoToBids
+

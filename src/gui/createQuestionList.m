@@ -36,7 +36,7 @@ function questions = createQuestionList(cfg)
     if cfg.subject.askGrpSess(1)
         questions.questionsToAsk{1, 1} = questions.group;
         questions.questionsToAsk{1, 2} = false;
-      else
+    else
         questions.questionsToAsk{1, 2} = false;
     end
 
@@ -48,7 +48,7 @@ function questions = createQuestionList(cfg)
     if  cfg.subject.askGrpSess(2)
         questions.questionsToAsk{3, 1} = questions.session;
         questions.questionsToAsk{3, 2} = true;
-      else
+    else
         questions.questionsToAsk{3, 2} = flase;
     end
 

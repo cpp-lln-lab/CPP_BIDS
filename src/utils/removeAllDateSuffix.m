@@ -2,26 +2,25 @@
 
 function removeAllDateSuffix(rawDir, subjName, sesName)
     %
-    % Short description of what the function does goes here.
+    % Function removes the date suffix in the _events and _stim (.tsv and .json) 
+    % files in given raw, session and subject folder. And zips the _stim files.
     %
     % USAGE::
     %
-    %   [argout1, argout2] = templateFunction(argin1, [argin2 == default,] [argin3])
+    %   removeAllDateSuffix(rawDir, subjName, sesName)
     %
-    % :param argin1: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
-    %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: type
-    % :param argin2: optional argument and its default value. And some of the
-    %               options can be shown in litteral like ``this`` or ``that``.
-    % :type argin2: string
-    % :param argin3: (dimension) optional argument
-    % :type argin3: integer
+    % :param rawDir: obligatory argument. 
+    % :type rawDir: string
+    % 	    
+    % :param subjName: Some of the options can be ``sub-001`` or ``sub-pilot001``.
+    % :type subjName: string
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
-    %
-    % removeAllDateSuffix(rawDir, subjName, sesName)
-    %
+    % :param sesName: Some of the options can be ``ses-001`` or ``ses-003``.
+    % :type sesName: string
+    
+    % :output: - files are renamed by removing 'yyyymmddHHMM' date suffix
+
+
 
     labels = {'func', 'bold', 'eeg', 'ieeg', 'meg', 'beh'};
 

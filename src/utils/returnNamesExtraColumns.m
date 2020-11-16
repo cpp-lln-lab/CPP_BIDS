@@ -2,7 +2,7 @@
 
 function [namesExtraColumns, logfile] = returnNamesExtraColumns(logFile)
     %
-    % It returns the extra colums name(s), in ``cfg.extraColumns``,  as header to add to the
+    % It returns the extra columns name(s), in ``cfg.extraColumns``,  as header to add to the
     % ``event`` file
     %
     % USAGE::

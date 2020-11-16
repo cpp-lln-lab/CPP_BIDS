@@ -16,7 +16,7 @@ function removeDateSuffix(filenames, subjectPath)
     % :param subjectPath: Location/path of the files
     % :type subjectPath: string
     %
-    % :output: - files are renamed by removing '_date-yyyymmddHHMM' suffix
+    % :output: - files are renamed by removing '_date-*' suffix
 
     if isempty(filenames)
         filenames = {};

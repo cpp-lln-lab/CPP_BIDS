@@ -14,7 +14,6 @@ function createDataDictionary(cfg, logFile)
     % :param logFile: Contains the data you want to save.
     % :type logFile: structure
 
-
     fileName = strrep(logFile(1).filename, '.tsv', '.json');
     fullFilename = getFullFilename(fileName, cfg);
 

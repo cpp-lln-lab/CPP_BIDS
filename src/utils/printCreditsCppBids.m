@@ -10,7 +10,7 @@ function printCreditsCppBids(cfg)
     %   printCreditsCppBids(cfg)
     %
     % :param cfg: Configuration. See ``checkCFG()``.
-    % :type argin1: structure
+    % :type cfg: structure
     %
 
     try

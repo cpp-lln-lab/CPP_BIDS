@@ -33,7 +33,7 @@ before_install:
   - travis_retry sudo apt-get -y install nodejs
   - travis_retry sudo apt-get -y install npm
   # Install BIDS-Validator
-  - sudo npm install -g bids-validator
+  - sudo npm install -g bids-validator@1.5.4
 
 install:
   # make octave file the JSONio submodule
@@ -56,4 +56,7 @@ jobs:
       before_script:
         - npm install `cat npm-requirements.txt`
       script:
-        - remark . --frail
+        - remark README.md --frail
+        - remark ./notebooks/ --frail
+        - remark ./tests/ --frail
+        - remark ./docs/ --frail

@@ -76,7 +76,6 @@ function fieldsToSet = setSuffixes(fieldsToSet)
     fieldsToSet.suffix.reconstruction = [];
     fieldsToSet.suffix.echo = [];
     fieldsToSet.suffix.acquisition = [];
-    fieldsToSet.suffix.repetitionTime = [];
     fieldsToSet.suffix.recording = [];
 
     fieldsToSet.suffix = orderfields(fieldsToSet.suffix);

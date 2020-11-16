@@ -382,7 +382,7 @@ function logFile = saveToLogFile(logFile, cfg)
             isValid = ones(1, numel(namesExtraColumns));
             for iExtraColumn = 1:numel(namesExtraColumns)
                 data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
-                if isempty(data) || isnan(data) || (ischar(data) && strcmp(data, 'n/a'))
+                if isempty(data) || all(isnan(data)) || (ischar(data) && strcmp(data, 'n/a'))
                     isValid(iExtraColumn) = 0;
                 end
             end

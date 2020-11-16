@@ -12,7 +12,7 @@ function headerName = returnHeaderName(columnName, nbCol, iCol)
     % :type columnName: string
     % :param nbCol: It is the number of columns associated to one entry of the extra column list
     % :type nbCol: integer
-    % :param iCol: index of the columns associated to one entry of the extra column list
+    % :param iCol: Index of the columns associated to one entry of the extra column list
     % :type iCol: integer
     %
     % :returns: - :headerName: (string) return the extra column name to be used as header

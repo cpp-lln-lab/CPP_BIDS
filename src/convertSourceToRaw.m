@@ -15,12 +15,11 @@ function convertSourceToRaw(cfg)
     %           ``cfg.dir.output``
     % :type cfg: structure
     %
-    % :output: 
+    % :output:
     % - creates dummy README and CHANGE file
     % - copy source dir to raw dir
     % - remove the date suffix (_date-*) from the files where it is present
     % - zips the _stim files.
-
 
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'raw');

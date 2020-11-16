@@ -7,7 +7,7 @@ function responses = askUserCli(questions, responses)
     %
     % USAGE::
     %
-    %   responses = askUserCli(questions, responses)
+    %   [responses] = askUserCli(questions, responses)
     %
     % :param questions: It contains the questions list to ask and if the response given to one
     %                   question must be checked to be an integer number.

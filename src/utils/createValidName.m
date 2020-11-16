@@ -10,7 +10,7 @@ function [name, nameValid] = createValidName(name)
     %
     % :param taskName: (dimension) obligatory argument. Lorem ipsum dolor sit amet,
     %                consectetur adipiscing elit. Ut congue nec est ac lacinia.
-    % :type argin1: string
+    % :type taskName: string
     %
     % :returns:
     %           :name: (string) returns the input with an upper case for first letter

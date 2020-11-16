@@ -10,7 +10,7 @@ function responses = askUserCli(questions, responses)
     %   [responses] = askUserCli(questions, responses)
     %
     % :param questions: It contains the questions list to ask and if the response given to one
-    %                   question must be checked to be an integer number.
+    %                   question must be checked to be a positive integer.
     % :type questions: structure
     % :param responses: It contains the responses set by default.
     % :type responses: cell

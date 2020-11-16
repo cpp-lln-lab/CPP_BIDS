@@ -191,7 +191,7 @@ end
 function printHeaderExtraColumns(logFile)
     % print any extra column specified by the user
 
-    [namesExtraColumns, logFile] = returnNamesExtraColumns(logFile);
+    [namesExtraColumns] = returnNamesExtraColumns(logFile);
 
     for iExtraColumn = 1:numel(namesExtraColumns)
 

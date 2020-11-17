@@ -16,20 +16,22 @@ function checkCppBidsDependencies(cfg)
     if strcmp(GITHUB_WORKSPACE, '/github/workspace')
 
         pth = GITHUB_WORKSPACE;
-        addpath(fullfile(pth, 'lib', 'JSONio'));
-        addpath(fullfile(pth, 'lib', 'bids-matlab'));
+        addpath(genpath(fullfile(pth, 'lib')));
 
     elseif isempty(GITHUB_WORKSPACE)  % local
 
         pth = fullfile(fileparts(mfilename('fullpath')), '..', '..');
+        addpath(fullfile(pth, 'lib', 'utils'));
+        
+        pth = fullfile(fileparts(mfilename('fullpath')), '..', '..');
+        pth = abspath(pth);
+        
         checkSubmodule(fullfile(pth, 'lib', 'JSONio'));
         checkSubmodule(fullfile(pth, 'lib', 'bids-matlab'));
 
-        addpath(fullfile(pth, 'src', 'subfun'));
+        addpath(genpath(fullfile(pth, 'src')));
 
     end
-
-    addpath(fullfile(pth, 'lib', 'utils'));
 
     printCreditsCppBids(cfg);
 

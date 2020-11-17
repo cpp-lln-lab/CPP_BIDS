@@ -23,8 +23,10 @@ tests/*.tsv*
 check_my_code_report.txt
 
 # jupyter notebook checkpoints
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
+notebooks/.ipynb_checkpoints/*
+notebooks/source/*
+notebooks/output/*
+notebooks/new_experiment/*
 
 # ignore node js files
 node_modules/*

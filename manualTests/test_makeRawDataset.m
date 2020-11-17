@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function test_makeRawDataset()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');

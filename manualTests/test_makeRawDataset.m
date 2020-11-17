@@ -23,9 +23,9 @@ function test_makeRawDataset()
 
     cfg.task.name = 'testtask';
     cfg.task.instructions = 'do this';
-    
+
     cfg.verbosity = 0;
-    
+
     cfg = createFilename(cfg);
 
     logFile.extraColumns.Speed.length = 1;
@@ -33,7 +33,7 @@ function test_makeRawDataset()
     logFile.extraColumns.is_Fixation.length = 1;
 
     logFile = saveEventsFile('init', cfg, logFile);
-    
+
     extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
     createJson(cfg, extraInfo);
 

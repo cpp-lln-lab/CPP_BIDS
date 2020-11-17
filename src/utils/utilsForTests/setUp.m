@@ -2,7 +2,7 @@
 
 function [cfg, logFile] = setUp()
 
-    cfg.verbose = true;
+    cfg.verbose = 2;
 
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;

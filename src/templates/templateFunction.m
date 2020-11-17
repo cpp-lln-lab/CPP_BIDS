@@ -17,8 +17,13 @@ function [argout1, argout2] = templateFunction(argin1, argin2, argin3)
     % :param argin3: (dimension) optional argument
     % :type argin3: integer
     %
-    % :returns: - :argout1: (type) (dimension)
-    %           - :argout2: (type) (dimension)
+    % :returns:
+    %           :argout1: (type) (dimension)
+    %           :argout2: (type) (dimension)
+    %
+    % :output:
+    %           :file created: description
+    %           :other file created: description
     %
     % .. todo:
     %

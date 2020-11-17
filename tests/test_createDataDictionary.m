@@ -8,7 +8,7 @@ end
 
 function test_createDataDictionaryBasic()
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
     %% set up
 
@@ -59,7 +59,7 @@ function test_createDataDictionaryBasic()
     % data to test against
     expectedStruct = bids.util.jsondecode( ...
                                           fullfile( ...
-                                                   pwd, ...
+                                                   pwd, '..', 'tests', ...
                                                    'testData', ...
                                                    'eventsDataDictionary.json'));
 
@@ -70,7 +70,7 @@ end
 
 function test_createDataDictionaryStim()
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
     %% set up
 
@@ -125,7 +125,7 @@ function test_createDataDictionaryStim()
     % data to test against
     expectedStruct = bids.util.jsondecode( ...
                                           fullfile( ...
-                                                   pwd, ...
+                                                   pwd, '..', 'tests', ...
                                                    'testData', ...
                                                    'stimDataDictionary.json'));
 

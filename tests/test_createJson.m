@@ -126,6 +126,50 @@ function test_createJsonIeeg()
 
 end
 
+function test_createJsonExtra()
+
+    outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
+
+    %% set up
+
+    cfg.verbose = false;
+
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+
+    cfg.task.name = 'testtask';
+
+    cfg.dir.output = outputDir;
+
+    cfg.testingDevice = 'mri';
+
+    cfg = createFilename(cfg);
+
+    logFile = saveEventsFile('init', cfg); %#ok<*NASGU>
+
+    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+
+    createJson(cfg, extraInfo);
+
+    %% check content
+    fileName = strrep(cfg.fileName.events, '_events', '_bold');
+    fileName = strrep(fileName, '.tsv', '.json');
+
+    actualStruct = bids.util.jsondecode(fullfile( ...
+                                                 cfg.dir.outputSubject, ...
+                                                 cfg.fileName.modality, ...
+                                                 fileName));
+
+    % data to test against
+    expectedStruct = bids.util.jsondecode( ...
+                                          fullfile(pwd, '..', 'tests', 'testData', 'extra_bold.json'));
+
+    % test
+    assertEqual(expectedStruct, actualStruct);
+
+end
+
+
 function cfg = setUp()
 
     cfg.verbose = false;

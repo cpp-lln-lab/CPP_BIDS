@@ -8,7 +8,7 @@ end
 
 function test_createDatasetDescriptionBasic()
 
-    outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
     %% set up
 

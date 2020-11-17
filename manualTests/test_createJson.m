@@ -42,7 +42,7 @@ function test_createJsonExtra()
 
     % data to test against
     expectedStruct = bids.util.jsondecode( ...
-                                          fullfile(pwd, 'testData', 'extra_bold.json'));
+                                          fullfile(pwd, '..', 'tests', 'testData', 'extra_bold.json'));
 
     % test
     assertEqual(expectedStruct, actualStruct);

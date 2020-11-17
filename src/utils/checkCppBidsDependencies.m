@@ -16,8 +16,7 @@ function checkCppBidsDependencies(cfg)
     if strcmp(GITHUB_WORKSPACE, '/github/workspace')
 
         pth = GITHUB_WORKSPACE;
-        addpath(fullfile(pth, 'lib', 'JSONio'));
-        addpath(fullfile(pth, 'lib', 'bids-matlab'));
+        addpath(genpath(fullfile(pth, 'lib')));
 
     elseif isempty(GITHUB_WORKSPACE)  % local
 

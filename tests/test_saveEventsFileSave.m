@@ -52,7 +52,7 @@ function test_saveEventsFileSaveSkipEmptyEvents()
 
     [cfg, logFile] = setUp();
 
-    cfg.verbose = false;
+    cfg.verbose = 1;
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);
@@ -144,7 +144,7 @@ function test_saveEventsFileSaveArraySize()
 
     [cfg, logFile] = setUp();
 
-    cfg.verbose = false;
+    cfg.verbose = 1;
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);

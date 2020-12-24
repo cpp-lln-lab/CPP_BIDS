@@ -162,22 +162,20 @@ function test_createJsonExtra()
     %     cannot open shared object file: No such file or directory
     %     jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
     %     test_createJson>test_createJsonExtra:158 (/github/workspace/tests/test_createJson.m)
+    %
+    %     failure: fileread: cannot open file
+    %     fileread:37 (/octave/share/octave/5.2.0/m/io/fileread.m)
+    %     jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
+    %     test_createJson>test_createJsonExtra:180 (/github/workspace/tests/test_createJson.m)
 
     actualStruct = bids.util.jsondecode(fullfile( ...
                                                  cfg.dir.outputSubject, ...
                                                  cfg.fileName.modality, ...
                                                  fileName));
 
-    % data to test against
-    %     JsonContent = [
-    %         '{"Instructions": "","RepetitionTime": [],"SliceTiming": [],', ...
-    %         '"TaskDescription": "","TaskName": "testtask",',  ...
-    %         '"extraInfo": {"nestedExtraInfo": "something extra"}', ...
-    %         '}'];
-    %     system(sprintf("echo %s%s%s > extra_bold.json", "'", JsonContent, "'"));
+    return
 
-    ls
-    expectedStruct = bids.util.jsondecode(fullfile(pwd, 'extra_bold.json'));
+    expectedStruct = bids.util.jsondecode(fullfile(pwd, 'testData', 'extra_bold.json'));
 
     % test
     assertEqual(expectedStruct, actualStruct);

@@ -545,9 +545,3 @@ function warningSaveEventsFile(cfg, identifier, warningMessage)
 
     end
 end
-
-function talkToMe(cfg, message)
-    if cfg.verbose > 0
-        fprintf(1, message);
-    end
-end

@@ -73,7 +73,7 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
 
     if nargin < 2
-        errorSaveEventsFile('missingArgument')
+        errorSaveEventsFile('missingArgument');
     end
 
     if nargin < 3 || isempty(logFile)
@@ -129,10 +129,10 @@ function logFile = saveEventsFile(action, cfg, logFile)
             fclose(logFile(1).fileID);
 
             message = sprintf('\nData were saved in this file:\n\n%s\n\n', ...
-                fullfile( ...
-                         cfg.dir.outputSubject, ...
-                         cfg.fileName.modality, ...
-                         logFile.filename));
+                              fullfile( ...
+                                       cfg.dir.outputSubject, ...
+                                       cfg.fileName.modality, ...
+                                       logFile.filename));
             talkToMe(cfg, message);
 
         otherwise
@@ -267,8 +267,8 @@ end
 
 function logFile = checkExtracolumns(logFile, iEvent, cfg)
     % loops through the extra columns
-    % if the field we are looking for does not exist or is empty in the
-    % action logFile structure we will write a n/a
+    % if the field we are looking for does not exist or is empty in the action logFile structure
+    % we will write a n/a
     % otherwise we write its content
 
     namesExtraColumns = returnNamesExtraColumns(logFile);
@@ -343,20 +343,21 @@ function data = nanPadding(cfg, data, expectedLength)
         expectedLength = [];
     end
 
-    if ~isempty(expectedLength) && isnumeric(data) 
-        
+    if ~isempty(expectedLength) && isnumeric(data)
+
         if max(size(data)) < expectedLength
-            
+
             padding = expectedLength - max(size(data));
             data(end + 1:end + padding) = nan(1, padding);
-        
+
         elseif max(size(data)) > expectedLength
-            
-            warningMessage = 'A field for this event is longer than expected. Truncating extra values.';
+
+            warningMessage = ['A field for this event is longer than expected.', ...
+                              'Truncating extra values.'];
             warningSaveEventsFile(cfg, 'arrayTooLong', warningMessage);
 
             data = data(1:expectedLength);
-        
+
         end
     end
 
@@ -402,14 +403,14 @@ function logFile = saveToLogFile(logFile, cfg)
 
             namesExtraColumns = returnNamesExtraColumns(logFile);
             isValid = ones(1, numel(namesExtraColumns));
-            
+
             for iExtraColumn = 1:numel(namesExtraColumns)
                 data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
                 if isempty(data) || all(isnan(data)) || (ischar(data) && strcmp(data, 'n/a'))
                     isValid(iExtraColumn) = 0;
                 end
             end
-            
+
             if all(~isValid)
                 skipEvent = true;
 
@@ -468,13 +469,13 @@ function printData(output, data, cfg)
     % write char
     % for numeric data we replace any nan by n/a
     if ischar(data)
-        
+
         content = sprintf('%s\t', data);
         fprintf(output, content);
         talkToMe(cfg, content);
-        
+
     else
-        
+
         for i = 1:numel(data)
             if isnan(data(i))
                 content = sprintf('%s\t', 'n/a');
@@ -485,7 +486,7 @@ function printData(output, data, cfg)
             fprintf(output, content);
             talkToMe(cfg, content);
         end
-        
+
     end
 end
 
@@ -516,8 +517,8 @@ function errorSaveEventsFile(identifier)
     switch identifier
         case 'missingArgument'
             errorStruct.message = ['Missing arguments. Please specify <action input> ', ...
-               'and <cfg file> as the first two arguments'];
-            
+                                   'and <cfg file> as the first two arguments'];
+
         case 'unknownActionType'
             errorStruct.message = 'unknown action for saveEventsFile';
 

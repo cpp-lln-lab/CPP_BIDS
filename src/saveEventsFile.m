@@ -468,24 +468,24 @@ function printData(output, data, cfg)
     % write char
     % for numeric data we replace any nan by n/a
     if ischar(data)
-        fprintf(output, '%s\t', data);
-        if cfg.verbose > 0
-            fprintf(1, '%s\t', data);
-        end
+        
+        content = sprintf('%s\t', data);
+        fprintf(output, content);
+        talkToMe(cfg, content);
+        
     else
+        
         for i = 1:numel(data)
             if isnan(data(i))
-                fprintf(output, '%s\t', 'n/a');
-                if cfg.verbose > 0
-                    fprintf(1, '%s\t', 'n/a');
-                end
+                content = sprintf('%s\t', 'n/a');
             else
-                fprintf(output, '%f\t', data(i));
-                if cfg.verbose > 0
-                    fprintf(1, '%f\t', data(i));
-                end
+                content = sprintf('%f\t', data(i));
+
             end
+            fprintf(output, content);
+            talkToMe(cfg, content);
         end
+        
     end
 end
 

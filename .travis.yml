@@ -46,12 +46,3 @@ jobs:
 
     - name: "BIDS validator: create and check dataset"
       script: octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders
-
-    - name: "Check markdown"
-      before_script:
-        - npm install `cat npm-requirements.txt`
-      script:
-        - remark README.md --frail
-        - remark ./notebooks/ --frail
-        - remark ./tests/ --frail
-        - remark ./docs/ --frail

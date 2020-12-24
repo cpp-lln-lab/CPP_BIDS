@@ -165,7 +165,7 @@ function test_saveEventsFileSaveArraySize()
     logFile(end, 1).duration = 3;
     logFile(end, 1).LHL24 = rand(1, 15);
 
-    assertWarning(@()saveEventsFile('save', cfg, logFile), 'saveEventsFile:arrayTooLong');
+    assertWarning(@()saveEventsFile('save', cfg, logFile), 'nanPadding:arrayTooLong');
 
     saveEventsFile('save', cfg, logFile);
 

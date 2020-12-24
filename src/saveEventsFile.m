@@ -284,20 +284,28 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
 
         logFile(iEvent).(namesExtraColumns{iExtraColumn}) = data;
 
-        if ~ischar(data) && any(isnan(data)) && cfg.verbose > 0
-            warning('saveEventsFile:missingData', ...
-                    'Missing some %s data for this event.', namesExtraColumns{iExtraColumn});
+        if ~ischar(data) && cfg.verbose > 0
+
+            warningMessage = [];
+
+            if any(isnan(data))
+                warningMessage = sprintf( ...
+                                         'Missing some %s data for this event.', ...
+                                         namesExtraColumns{iExtraColumn});
+
+            elseif all(isnan(data))
+                warningMessage = sprintf( ...
+                                         'Missing %s data for this event.', ...
+                                         namesExtraColumns{iExtraColumn});
+
+            end
+
+            warningSaveEventsFile('missingData', warningMessage);
 
             if cfg.verbose > 1
                 disp(logFile(iEvent));
             end
 
-        elseif ~ischar(data) && all(isnan(data)) && cfg.verbose > 0
-            warning('Missing %s data for this event.', namesExtraColumns{iExtraColumn});
-
-            if cfg.verbose > 1
-                disp(logFile(iEvent));
-            end
         end
 
     end
@@ -505,6 +513,21 @@ function errorSaveEventsFile(identifier)
 
     errorStruct.identifier = ['saveEventsFile:' identifier];
     error(errorStruct);
+end
+
+function warningSaveEventsFile(identifier, warningMessage)
+
+    if nargin == 2 && ~isempty(identifier) && ~isempty(warningMessage)
+
+        switch identifier
+            case ''
+
+        end
+
+        warningMessageID = ['saveEventsFile:' identifier];
+        warning(warningMessageID, warningMessage);
+
+    end
 end
 
 function talkToMe(cfg, logFile)

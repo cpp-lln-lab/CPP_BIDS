@@ -157,8 +157,6 @@ function test_createJsonExtra()
     fileName = strrep(cfg.fileName.events, '_events', '_bold');
     fileName = strrep(fileName, '.tsv', '.json');
 
-    return
-
     % TODO fix error in CI
     %     failure: /github/workspace/lib/JSONio/jsonread.mex: failed to load: liboctinterp.so.4:
     %     cannot open shared object file: No such file or directory

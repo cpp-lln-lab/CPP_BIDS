@@ -49,8 +49,6 @@ function test_createDataDictionaryBasic()
 
     %% check content
 
-    return
-
     % TODO fix error in CI
     % failure: /github/workspace/lib/JSONio/jsonread.mex: failed to load:
     %    liboctinterp.so.4: cannot open shared object file: No such file or directory
@@ -116,8 +114,6 @@ function test_createDataDictionaryStim()
     assertTrue(exist(fullfile(funcDir, jsonFilename), 'file') == 2);
 
     %% check content
-
-    return
 
     % TODO fix error in CI
     % failure: /github/workspace/lib/JSONio/jsonread.mex: failed to load:

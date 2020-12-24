@@ -73,8 +73,7 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
 
     if nargin < 2
-        error(['Missing arguments. Please specify <action input> ', ...
-               'and <cfg file> as the first two arguments']);
+        errorSaveEventsFile('missingArgument')
     end
 
     if nargin < 3 || isempty(logFile)
@@ -508,6 +507,10 @@ end
 function errorSaveEventsFile(identifier)
 
     switch identifier
+        case 'missingArgument'
+            errorStruct.message = ['Missing arguments. Please specify <action input> ', ...
+               'and <cfg file> as the first two arguments'];
+            
         case 'unknownActionType'
             errorStruct.message = 'unknown action for saveEventsFile';
 

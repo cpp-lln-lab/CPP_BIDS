@@ -57,13 +57,18 @@ function test_createDataDictionaryBasic()
     % jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
     % test_createDataDictionary>test_createDataDictionaryBasic:48
     %   (/github/workspace/tests/test_createDataDictionary.m)
+    %
+    %     failure: fileread: cannot open file
+    %     fileread:37 (/octave/share/octave/5.2.0/m/io/fileread.m)
+    %     jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
+    %     test_createDataDictionary>test_createDataDictionaryBasic:62
 
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
 
     % data to test against
     expectedStruct = bids.util.jsondecode( ...
                                           fullfile( ...
-                                                   pwd, '..', 'tests', ...
+                                                   pwd, ...
                                                    'testData', ...
                                                    'eventsDataDictionary.json'));
 
@@ -125,6 +130,11 @@ function test_createDataDictionaryStim()
     % jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
     % test_createDataDictionary>test_createDataDictionaryBasic:48
     %   (/github/workspace/tests/test_createDataDictionary.m)
+    %
+    %     failure: fileread: cannot open file
+    %     fileread:37 (/octave/share/octave/5.2.0/m/io/fileread.m)
+    %     jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
+    %     test_createDataDictionary>test_createDataDictionaryStim:128
 
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
 
@@ -132,8 +142,6 @@ function test_createDataDictionaryStim()
     expectedStruct = bids.util.jsondecode( ...
                                           fullfile( ...
                                                    pwd, ...
-                                                   '..', ...
-                                                   'tests', ...
                                                    'testData', ...
                                                    'stimDataDictionary.json'));
 

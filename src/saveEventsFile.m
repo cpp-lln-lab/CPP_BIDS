@@ -285,7 +285,7 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
                                          namesExtraColumns{iExtraColumn});
 
             end
-            warningSaveEventsFile(cfg, 'missingData', warningMessage);
+            throwWarning(cfg, 'saveEventsFile:missingData', warningMessage);
 
             if cfg.verbose > 1
                 disp(logFile(iEvent));
@@ -293,50 +293,6 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
 
         end
 
-    end
-
-end
-
-function data = checkInput(data)
-    % check the data to write
-    % default will be 'n/a' for chars and NaN for numeric data
-    % for numeric data that don't have the expected length, it will be padded with NaNs
-    if islogical(data) && data
-        data = 'true';
-    elseif islogical(data) && ~data
-        data = 'false';
-    end
-
-    if ischar(data) && isempty(data) || strcmp(data, ' ')
-        data = 'n/a';
-    elseif isempty(data)
-        % important to not set this to n/a as we still need to check if this
-        % numeric valur has the right length and needs to be nan padded
-        data = nan;
-    end
-
-end
-
-function data = nanPadding(cfg, data, expectedLength)
-
-    if nargin < 2
-        expectedLength = [];
-    end
-
-    if ~isempty(expectedLength) && isnumeric(data)
-
-        if max(size(data)) < expectedLength
-            padding = expectedLength - max(size(data));
-            data(end + 1:end + padding) = nan(1, padding);
-
-        elseif max(size(data)) > expectedLength
-            warningMessage = ['A field for this event is longer than expected.', ...
-                              'Truncating extra values.'];
-            warningSaveEventsFile(cfg, 'arrayTooLong', warningMessage);
-
-            data = data(1:expectedLength);
-
-        end
     end
 
 end
@@ -367,7 +323,7 @@ function logFile = saveToLogFile(logFile, cfg)
 
                 skipEvent = true;
 
-                warningMessageID = 'emptyEvent';
+                warningMessageID = 'saveEventsFile:emptyEvent';
                 warningMessage = sprintf(['Skipping saving this event. \n '...
                                           'onset: %s \n duration: %s \n'], ...
                                          onset, ...
@@ -391,21 +347,21 @@ function logFile = saveToLogFile(logFile, cfg)
             if all(~isValid)
                 skipEvent = true;
 
-                warningMessageID = 'emptyEvent';
+                warningMessageID = 'saveEventsFile:emptyEvent';
                 warningMessage = sprintf(['Skipping saving this event. \n', ...
                                           'No values defined. \n']);
 
             elseif any(~isValid)
                 skipEvent = false;
 
-                warningMessageID = 'missingData';
+                warningMessageID = 'saveEventsFile:missingData';
                 warningMessage = sprintf('Missing some %s data for this event. \n', ...
                                          namesExtraColumns{find(isValid)});
             end
         end
 
         % now save the event to log file (if not skipping)
-        warningSaveEventsFile(cfg, warningMessageID, warningMessage);
+        throwWarning(cfg, warningMessageID, warningMessage);
 
         printToFile(cfg, logFile, skipEvent, iEvent);
 
@@ -503,15 +459,4 @@ function errorSaveEventsFile(identifier)
     errorStruct.identifier = ['saveEventsFile:' identifier];
     error(errorStruct);
 
-end
-
-function warningSaveEventsFile(cfg, identifier, warningMessage)
-    if cfg.verbose > 0 && ...
-            nargin == 3 && ...
-            ~isempty(identifier) && ...
-            ~isempty(warningMessage)
-
-        warningMessageID = ['saveEventsFile:' identifier];
-        warning(warningMessageID, warningMessage);
-    end
 end

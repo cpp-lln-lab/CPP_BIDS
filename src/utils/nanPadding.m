@@ -1,9 +1,15 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function data = nanPadding(cfg, data, expectedLength)
-
+    %
     % For numeric data that don't have the expected length, it will be padded
     % with NaNs. If the vector is too long it will be truncated
+    %
+    % USAGE::
+    %
+    %  data = nanPadding(cfg, data, expectedLength)
+    %
+    %
 
     if nargin < 2
         expectedLength = [];

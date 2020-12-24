@@ -279,11 +279,11 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
 
         data = checkInput(data);
 
-        data = nanPadding(data, nbCol);
+        data = nanPadding(cfg, data, nbCol);
 
         logFile(iEvent).(namesExtraColumns{iExtraColumn}) = data;
 
-        if ~ischar(data) && cfg.verbose > 0
+        if ~ischar(data)
 
             warningMessage = [];
 
@@ -299,7 +299,7 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
 
             end
 
-            warningSaveEventsFile('missingData', warningMessage);
+            warningSaveEventsFile(cfg, 'missingData', warningMessage);
 
             if cfg.verbose > 1
                 disp(logFile(iEvent));
@@ -332,7 +332,7 @@ function data = checkInput(data)
 
 end
 
-function data = nanPadding(data, expectedLength)
+function data = nanPadding(cfg, data, expectedLength)
 
     if nargin < 2
         expectedLength = [];
@@ -348,7 +348,7 @@ function data = nanPadding(data, expectedLength)
         elseif max(size(data)) > expectedLength
             
             warningMessage = 'A field for this event is longer than expected. Truncating extra values.';
-            warningSaveEventsFile('arrayTooLong', warningMessage);
+            warningSaveEventsFile(cfg, 'arrayTooLong', warningMessage);
 
             data = data(1:expectedLength);
         
@@ -367,6 +367,8 @@ function logFile = saveToLogFile(logFile, cfg)
 
         % check if this event should be skipped
         skipEvent = false;
+        warningMessageID = [];
+        warningMessage = [];
 
         % if this is _events file, we skip events with onset or duration
         % that are empty, nan or char.
@@ -382,7 +384,7 @@ function logFile = saveToLogFile(logFile, cfg)
 
                 skipEvent = true;
 
-                warningMessageID = 'saveEventsFile:emptyEvent';
+                warningMessageID = 'emptyEvent';
                 warningMessage = sprintf(['Skipping saving this event. \n '...
                                           'onset: %s \n duration: %s \n'], ...
                                          onset, ...
@@ -395,33 +397,33 @@ function logFile = saveToLogFile(logFile, cfg)
 
             namesExtraColumns = returnNamesExtraColumns(logFile);
             isValid = ones(1, numel(namesExtraColumns));
+            
             for iExtraColumn = 1:numel(namesExtraColumns)
                 data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
                 if isempty(data) || all(isnan(data)) || (ischar(data) && strcmp(data, 'n/a'))
                     isValid(iExtraColumn) = 0;
                 end
             end
+            
             if all(~isValid)
                 skipEvent = true;
 
-                warningMessageID = 'saveEventsFile:emptyEvent';
+                warningMessageID = 'emptyEvent';
                 warningMessage = sprintf(['Skipping saving this event. \n', ...
                                           'No values defined. \n']);
             elseif any(~isValid)
                 skipEvent = false;
 
-                warningMessageID = 'saveEventsFile:missingData';
+                warningMessageID = 'missingData';
                 warningMessage = sprintf('Missing some %s data for this event. \n', ...
                                          namesExtraColumns{find(isValid)});
             end
         end
 
         % now save the event to log file (if not skipping)
-        if skipEvent && cfg.verbose > 0
+        warningSaveEventsFile(cfg, warningMessageID, warningMessage);
 
-            warning(warningMessageID, warningMessage);
-
-        else
+        if ~skipEvent
 
             if ~logFile(1).isStim
 
@@ -526,14 +528,12 @@ function errorSaveEventsFile(identifier)
     error(errorStruct);
 end
 
-function warningSaveEventsFile(identifier, warningMessage)
+function warningSaveEventsFile(cfg, identifier, warningMessage)
 
-    if nargin == 2 && ~isempty(identifier) && ~isempty(warningMessage)
-
-        switch identifier
-            case ''
-
-        end
+    if cfg.verbose > 0 && ...
+            nargin == 3 && ...
+            ~isempty(identifier) && ...
+            ~isempty(warningMessage)
 
         warningMessageID = ['saveEventsFile:' identifier];
         warning(warningMessageID, warningMessage);

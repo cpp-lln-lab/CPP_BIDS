@@ -22,10 +22,10 @@ function checkCppBidsDependencies(cfg)
 
         pth = fullfile(fileparts(mfilename('fullpath')), '..', '..');
         addpath(fullfile(pth, 'lib', 'utils'));
-        
+
         pth = fullfile(fileparts(mfilename('fullpath')), '..', '..');
         pth = abspath(pth);
-        
+
         checkSubmodule(fullfile(pth, 'lib', 'JSONio'));
         checkSubmodule(fullfile(pth, 'lib', 'bids-matlab'));
 

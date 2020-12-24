@@ -382,7 +382,6 @@ function logFile = saveToLogFile(logFile, cfg)
 
             onset = logFile(iEvent).onset;
             duration = logFile(iEvent).duration;
-            trial_type = logFile(iEvent).trial_type;
 
             if any(cell2mat(cellfun(@isnan, {onset duration}, 'UniformOutput', false))) || ...
                any(cellfun(@ischar, {onset duration})) || ...
@@ -429,25 +428,28 @@ function logFile = saveToLogFile(logFile, cfg)
         % now save the event to log file (if not skipping)
         warningSaveEventsFile(cfg, warningMessageID, warningMessage);
 
-        if ~skipEvent
-
-            if ~logFile(1).isStim
-
-                printData(logFile(1).fileID, onset, cfg);
-                printData(logFile(1).fileID, duration, cfg);
-                printData(logFile(1).fileID, trial_type, cfg);
-
-            end
-
-            printExtraColumns(logFile, iEvent, cfg);
-
-            fprintf(logFile(1).fileID, '\n');
-            fprintf(1, '\n');
-
-        end
+        printToFile(cfg, logFile, skipEvent, iEvent);
 
     end
 
+end
+
+function printToFile(cfg, logFile, skipEvent, iEvent)
+
+    if ~skipEvent
+
+        if ~logFile(1).isStim
+            printData(logFile(1).fileID, logFile(iEvent).onset, cfg);
+            printData(logFile(1).fileID, logFile(iEvent).duration, cfg);
+            printData(logFile(1).fileID, logFile(iEvent).trial_type, cfg);
+        end
+
+        printExtraColumns(logFile, iEvent, cfg);
+
+        fprintf(logFile(1).fileID, '\n');
+        fprintf(1, '\n');
+
+    end
 end
 
 function printExtraColumns(logFile, iEvent, cfg)

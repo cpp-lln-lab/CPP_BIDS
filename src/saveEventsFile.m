@@ -339,13 +339,21 @@ function data = nanPadding(data, expectedLength)
         expectedLength = [];
     end
 
-    if ~isempty(expectedLength) && isnumeric(data) && max(size(data)) < expectedLength
-        padding = expectedLength - max(size(data));
-        data(end + 1:end + padding) = nan(1, padding);
-    elseif ~isempty(expectedLength) && isnumeric(data) && max(size(data)) > expectedLength
-        warning('saveEventsFile:arrayTooLong', ...
-                'A field for this event is longer than expected. Truncating the extra values.');
-        data = data(1:expectedLength);
+    if ~isempty(expectedLength) && isnumeric(data) 
+        
+        if max(size(data)) < expectedLength
+            
+            padding = expectedLength - max(size(data));
+            data(end + 1:end + padding) = nan(1, padding);
+        
+        elseif max(size(data)) > expectedLength
+            
+            warningMessage = 'A field for this event is longer than expected. Truncating extra values.';
+            warningSaveEventsFile('arrayTooLong', warningMessage);
+
+            data = data(1:expectedLength);
+        
+        end
     end
 
 end

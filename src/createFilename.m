@@ -47,7 +47,20 @@ function cfg = createFilename(cfg)
 
     cfg = setFilenames(cfg);
 
-    talkToMe(cfg);
+    talkToMe(cfg, sprintf('\nData will be saved in this directory:\n\t%s\n', ...
+                          fullfile(cfg.dir.outputSubject, cfg.fileName.modality)));
+
+    talkToMe(cfg, sprintf('\nData will be saved in this file:\n\t%s\n', cfg.fileName.events));
+
+    if cfg.eyeTracker.do
+
+        talkToMe(cfg, sprintf('\nEyetracking data will be saved in this directory:\n\t%s\n', ...
+                              fullfile(cfg.dir.outputSubject, 'eyetracker')));
+
+        talkToMe(cfg, sprintf('\nEyetracking data will be saved in this file:\n\t%s\n', ...
+                              cfg.fileName.eyetracker));
+
+    end
 
     cfg = orderfields(cfg);
     cfg.fileName = orderfields(cfg.fileName);
@@ -211,30 +224,6 @@ function cfg = setFilenames(cfg)
     if cfg.eyeTracker.do
         cfg.fileName.eyetracker = ...
             [basename, '_recording-eyetracking_physio_date-' thisDate '.edf'];
-    end
-
-end
-
-function talkToMe(cfg)
-
-    if cfg.verbose > 0
-
-        fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
-                fullfile(cfg.dir.outputSubject, cfg.fileName.modality));
-
-        fprintf(1, '\nData will be saved in this file:\n\t%s\n', ...
-                cfg.fileName.events);
-
-        if cfg.eyeTracker.do
-
-            fprintf(1, '\nEyetracking data will be saved in this directory:\n\t%s\n', ...
-                    fullfile(cfg.dir.outputSubject, 'eyetracker'));
-
-            fprintf(1, '\nEyetracking data will be saved in this file:\n\t%s\n', ...
-                    cfg.fileName.eyetracker);
-
-        end
-
     end
 
 end

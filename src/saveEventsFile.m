@@ -128,7 +128,12 @@ function logFile = saveEventsFile(action, cfg, logFile)
             % close txt log file
             fclose(logFile(1).fileID);
 
-            talkToMe(cfg, logFile);
+            message = sprintf('\nData were saved in this file:\n\n%s\n\n', ...
+                fullfile( ...
+                         cfg.dir.outputSubject, ...
+                         cfg.fileName.modality, ...
+                         logFile.filename));
+            talkToMe(cfg, message);
 
         otherwise
 
@@ -541,16 +546,8 @@ function warningSaveEventsFile(cfg, identifier, warningMessage)
     end
 end
 
-function talkToMe(cfg, logFile)
-
+function talkToMe(cfg, message)
     if cfg.verbose > 0
-
-        fprintf(1, '\nData were saved in this file:\n\n%s\n\n', ...
-                fullfile( ...
-                         cfg.dir.outputSubject, ...
-                         cfg.fileName.modality, ...
-                         logFile.filename));
-
+        fprintf(1, message);
     end
-
 end

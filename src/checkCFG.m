@@ -354,7 +354,7 @@ function fieldsToSet = megJsonDefaults(fieldsToSet)
 
     % REQUIRED Position of the dewar during the MEG scan: "upright", "supine" or
     % "degrees" of angle from vertical: for example on CTF systems,
-    % upright=15°, supine = 90°:
+    % upright=15 deg, supine = 90 deg:
     fieldsToSet.bids.meg.DewarPosition = [];
 
     % REQUIRED List of temporal and/or spatial software filters applied, or ideally

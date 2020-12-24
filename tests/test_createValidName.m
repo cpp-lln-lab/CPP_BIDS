@@ -12,7 +12,7 @@ function test_createTaskNameRemoveInvalidCharacters()
 
     %% set up
 
-    taskName = '&|@#-_(§!{})[]ù%£+/=:;.?,\<> visual task';
+    taskName = '&|@#-_(!{})[]%+/=:;.?,\<> visual task';
 
     [~, taskNameValid] = createValidName(taskName);
 

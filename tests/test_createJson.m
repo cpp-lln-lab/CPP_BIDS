@@ -169,14 +169,14 @@ function test_createJsonExtra()
                                                  fileName));
 
     % data to test against
-%     JsonContent = [
-%         '{"Instructions": "","RepetitionTime": [],"SliceTiming": [],', ...
-%         '"TaskDescription": "","TaskName": "testtask",',  ...
-%         '"extraInfo": {"nestedExtraInfo": "something extra"}', ...
-%         '}'];
-%     system(sprintf("echo %s%s%s > extra_bold.json", "'", JsonContent, "'"));
-    
-    
+    %     JsonContent = [
+    %         '{"Instructions": "","RepetitionTime": [],"SliceTiming": [],', ...
+    %         '"TaskDescription": "","TaskName": "testtask",',  ...
+    %         '"extraInfo": {"nestedExtraInfo": "something extra"}', ...
+    %         '}'];
+    %     system(sprintf("echo %s%s%s > extra_bold.json", "'", JsonContent, "'"));
+
+    ls
     expectedStruct = bids.util.jsondecode(fullfile(pwd, 'extra_bold.json'));
 
     % test

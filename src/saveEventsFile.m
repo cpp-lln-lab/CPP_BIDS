@@ -83,7 +83,6 @@ function logFile = saveEventsFile(action, cfg, logFile)
     switch action
 
         case 'init'
-
             % flag to indicate that this will be an _events file
             logFile(1).isStim = false;
 
@@ -97,7 +96,6 @@ function logFile = saveEventsFile(action, cfg, logFile)
             logFile = initializeFile(logFile);
 
         case 'init_stim'
-
             % flag to indicate that this will be an _stim file
             logFile(1).isStim = true;
 
@@ -111,18 +109,15 @@ function logFile = saveEventsFile(action, cfg, logFile)
             logFile = initializeStimFile(logFile);
 
         case 'open'
-
             logFile = openFile(cfg, logFile);
 
         case 'save'
-
             checklLogFile('checkID', logFile);
             checklLogFile('type&size', logFile);
 
             logFile = saveToLogFile(logFile, cfg);
 
         case 'close'
-
             checklLogFile('checkID', logFile);
 
             % close txt log file
@@ -136,7 +131,6 @@ function logFile = saveEventsFile(action, cfg, logFile)
             talkToMe(cfg, message);
 
         otherwise
-
             errorSaveEventsFile('unknownActionType');
 
     end
@@ -150,24 +144,20 @@ function logFile = checklLogFile(action, logFile, iEvent, cfg)
     switch action
 
         case 'init'
-
             logFile = struct('filename', [], 'extraColumns', cell(1));
             logFile(1).filename = '';
 
         case 'checkID'
-
             if ~isfield(logFile(1), 'fileID') || isempty(logFile(1).fileID)
                 errorSaveEventsFile('missingFileID');
             end
 
         case 'type&size'
-
             if ~isstruct(logFile) || size(logFile, 2) > 1
                 errorSaveEventsFile('wrongLogSize');
             end
 
         case 'fields'
-
             for iFields = {'onset', 'trial_type', 'duration'}
                 if ~isfield(logFile, iFields) || isempty(logFile(iEvent).(iFields{1}))
                     logFile(iEvent).(iFields{1}) = nan;
@@ -207,9 +197,7 @@ function logFile = initializeFile(logFile)
 end
 
 function logFile = initializeStimFile(logFile)
-
     logFile = initializeExtraColumns(logFile);
-
 end
 
 function logFile = openFile(cfg, logFile)
@@ -247,18 +235,14 @@ function printHeaderExtraColumns(logFile)
     % print any extra column specified by the user
 
     [namesExtraColumns] = returnNamesExtraColumns(logFile);
-
     for iExtraColumn = 1:numel(namesExtraColumns)
 
         nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
 
         for iCol = 1:nbCol
-
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
-
             fprintf(logFile(1).fileID, '\t%s', headerName);
             fprintf(1, '\t%s', headerName);
-
         end
 
     end
@@ -272,7 +256,6 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
     % otherwise we write its content
 
     namesExtraColumns = returnNamesExtraColumns(logFile);
-
     for iExtraColumn = 1:numel(namesExtraColumns)
 
         nbCol = returnNbColumns(logFile, namesExtraColumns{iExtraColumn});
@@ -291,7 +274,6 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
         if ~ischar(data)
 
             warningMessage = [];
-
             if any(isnan(data))
                 warningMessage = sprintf( ...
                                          'Missing some %s data for this event.', ...
@@ -303,7 +285,6 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
                                          namesExtraColumns{iExtraColumn});
 
             end
-
             warningSaveEventsFile(cfg, 'missingData', warningMessage);
 
             if cfg.verbose > 1
@@ -320,7 +301,6 @@ function data = checkInput(data)
     % check the data to write
     % default will be 'n/a' for chars and NaN for numeric data
     % for numeric data that don't have the expected length, it will be padded with NaNs
-
     if islogical(data) && data
         data = 'true';
     elseif islogical(data) && ~data
@@ -346,12 +326,10 @@ function data = nanPadding(cfg, data, expectedLength)
     if ~isempty(expectedLength) && isnumeric(data)
 
         if max(size(data)) < expectedLength
-
             padding = expectedLength - max(size(data));
             data(end + 1:end + padding) = nan(1, padding);
 
         elseif max(size(data)) > expectedLength
-
             warningMessage = ['A field for this event is longer than expected.', ...
                               'Truncating extra values.'];
             warningSaveEventsFile(cfg, 'arrayTooLong', warningMessage);
@@ -416,6 +394,7 @@ function logFile = saveToLogFile(logFile, cfg)
                 warningMessageID = 'emptyEvent';
                 warningMessage = sprintf(['Skipping saving this event. \n', ...
                                           'No values defined. \n']);
+
             elseif any(~isValid)
                 skipEvent = false;
 
@@ -454,36 +433,27 @@ end
 
 function printExtraColumns(logFile, iEvent, cfg)
     % loops through the extra columns and print them
-
     namesExtraColumns = returnNamesExtraColumns(logFile);
-
     for iExtraColumn = 1:numel(namesExtraColumns)
-
         data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
-
         printData(logFile(1).fileID, data, cfg);
-
     end
-
 end
 
 function printData(output, data, cfg)
     % write char
     % for numeric data we replace any nan by n/a
     if ischar(data)
-
         content = sprintf('%s\t', data);
         fprintf(output, content);
         talkToMe(cfg, content);
 
     else
-
         for i = 1:numel(data)
             if isnan(data(i))
                 content = sprintf('%s\t', 'n/a');
             else
                 content = sprintf('%f\t', data(i));
-
             end
             fprintf(output, content);
             talkToMe(cfg, content);
@@ -505,11 +475,9 @@ function logFile = resetLogFileVar(logFile)
     namesColumns = cat(2, namesColumns, namesExtraColumns');
 
     for iColumn = 1:numel(namesColumns)
-
         if isfield(logFile, namesColumns{iColumn})
             logFile = rmfield(logFile, namesColumns{iColumn});
         end
-
     end
 
 end
@@ -534,10 +502,10 @@ function errorSaveEventsFile(identifier)
 
     errorStruct.identifier = ['saveEventsFile:' identifier];
     error(errorStruct);
+
 end
 
 function warningSaveEventsFile(cfg, identifier, warningMessage)
-
     if cfg.verbose > 0 && ...
             nargin == 3 && ...
             ~isempty(identifier) && ...
@@ -545,6 +513,5 @@ function warningSaveEventsFile(cfg, identifier, warningMessage)
 
         warningMessageID = ['saveEventsFile:' identifier];
         warning(warningMessageID, warningMessage);
-
     end
 end

@@ -24,7 +24,7 @@ function cfg = checkCFG(cfg)
     %  their associated default value.
     %
     %   - ``cfg.testingDevice = 'pc'``
-    %     set the way the experiment is run and the different options match the imaging
+    %     sets the way the experiment is run and the different options match the imaging
     %     modality:
     %
     %     - ``pc`` is for behavioral test
@@ -34,6 +34,12 @@ function cfg = checkCFG(cfg)
     %   - ``cfg.verbose = 0``
     %     sets how talkative the code will be. Possible values range from ``0`` to ``2``.
     %
+    %     - ``0``: "I don't want to hear anything from CPP_BIDS."
+    %     - ``1``: "I want to get my warnings."
+    %     - ``2``: "Tell me everything!"
+    %
+    %     For implementation see ``utils/talkToMe`` and ``utils/throwWarning``.
+    %
     %   - ``cfg.useGUI = false``
     %     sets whether a graphic interface should be used for the ``userInputs()``
     %     to query about group name, as well as for session, subject and run number.
@@ -42,7 +48,7 @@ function cfg = checkCFG(cfg)
     %     sets where the data will be saved.
     %
     %   Filename options:
-    %     Sets options that will help in creating the filenames.
+    %     sets options that will help in creating the filenames.
     %
     %     - ``cfg.fileName.task = ''``
     %       sets the name to be given to the task

@@ -37,8 +37,8 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %     logFile = saveEventsFile('init_stim', cfg, logFile)
     %     logFile = saveEventsFile('open', cfg, logFile)
     %     logFile = saveEventsFile('save', cfg, logFile)
-    % 
-    %   - ``'init'`` and ``'init_stim'`` are used for events and stimuli tsv files respectively. 
+    %
+    %   - ``'init'`` and ``'init_stim'`` are used for events and stimuli tsv files respectively.
     %     This initializes the extra columns to be save.
     %
     %   - ``'open'`` will create the file ID and return it in ``logFile.fileID`` using
@@ -52,14 +52,14 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %       logFile = saveEventsFile('open', cfg, logFile);
     %
     %   - ``'save'`` will save the data contained in logfile by using the file ID
-    %     ``logFile.fileID``. 
+    %     ``logFile.fileID``.
     %     If saving a stimulus file then the only the fields of ``logFile.extraColumns``
     %     will be saved.
     %     For regular _events.tsv files, then ``logFile`` must then contain:
     %
     %     - logFile.onset
     %     - logFile.duration
-    %       
+    %
     %     Otherwise it will be skipped.
     %
     %     Example::

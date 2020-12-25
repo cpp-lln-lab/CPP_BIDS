@@ -7,7 +7,7 @@ function cfg = createFilename(cfg)
     %
     % The folder tree will always include a session folder.
     %
-    % Will also create the right fileName for the eyetracking data file. 
+    % Will also create the right fileName for the eyetracking data file.
     % For the moment the date of acquisition is appended to the fileName.
     %
     % USAGE::

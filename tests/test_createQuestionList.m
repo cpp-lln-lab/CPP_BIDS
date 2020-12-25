@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function test_suite = test_createQuestionList %#ok<*STOUT>
     try % assignment of 'localfunctions' is necessary in Matlab >= 2016
         test_functions = localfunctions(); %#ok<*NASGU>
@@ -19,6 +21,24 @@ function test_createQuestionListBasic()
                     'Enter the session number (i.e day ; 1-999): ', true
                     'Enter the run number (1-999): ', true};
 
-    assertEqual(expectedCell(3, 1), questions.questionsToAsk(3, 1));
+    assertEqual(expectedCell, questions.questionsToAsk);
+
+end
+
+function test_createQuestionListRestricted()
+
+    %% set up
+    cfg = struct();
+    cfg.subject.askGrpSess = [false false];
+
+    questions = createQuestionList(cfg);
+
+    expectedCell = { ...
+                    [], false
+                    'Enter subject number (1-999): ', true
+                    [], false
+                    'Enter the run number (1-999): ', true};
+
+    assertEqual(expectedCell, questions.questionsToAsk);
 
 end

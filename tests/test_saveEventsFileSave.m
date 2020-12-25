@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function test_suite = test_saveEventsFileSave %#ok<*STOUT>
     try % assignment of 'localfunctions' is necessary in Matlab >= 2016
         test_functions = localfunctions(); %#ok<*NASGU>
@@ -44,13 +46,70 @@ function test_saveEventsFileSaveBasic()
 
 end
 
+function test_saveEventsFileSaveStim()
+
+    %% set up
+
+    cfg.verbose = 2;
+
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+
+    cfg.task.name = 'testtask';
+
+    cfg.testingDevice = 'mri';
+
+    cfg = createFilename(cfg);
+
+    logFile.extraColumns = {'Speed', 'LHL24', 'is_Fixation'};
+
+    logFile = saveEventsFile('init_stim', cfg, logFile);
+
+    logFile.extraColumns.Speed.length = 1;
+    logFile.extraColumns.LHL24.length = 3;
+    logFile.extraColumns.is_Fixation.length = 1;
+
+    % create the events file and header
+    logFile = saveEventsFile('open', cfg, logFile);
+
+    % ROW 2: normal events : all info is there
+    logFile(1, 1).onset = 2;
+    logFile(end, 1).trial_type = 'motion_up';
+    logFile(end, 1).duration = 3;
+    logFile(end, 1).Speed = 2;
+    logFile(end, 1).LHL24 = 1:3;
+    logFile(end, 1).is_Fixation = true;
+
+    logFile = saveEventsFile('save', cfg, logFile);
+
+    % close the file
+    saveEventsFile('close', cfg, logFile);
+
+    % check the extra columns of the header and some of the content
+    nbExtraCol = ...
+        logFile(1).extraColumns.Speed.length + ...
+        logFile(1).extraColumns.LHL24.length + ...
+        logFile(1).extraColumns.is_Fixation.length;
+
+    funcDir = fullfile(cfg.dir.outputSubject, cfg.fileName.modality);
+
+    FID = fopen(fullfile(funcDir, logFile.filename), 'r');
+    content = textscan(FID, repmat('%s', 1, nbExtraCol), 'Delimiter', '\t', 'EndOfLine', '\n');
+
+    % event 1/ ROW 2: check that values are entered correctly
+    assertEqual(content{1}{1}, sprintf('%f', 2));
+    assertEqual(content{4}{1}, sprintf('%f', 3));
+    assertEqual(content{5}{1}, 'true');
+
+end
+
 function test_saveEventsFileSaveSkipEmptyEvents()
 
     %% set up
 
     [cfg, logFile] = setUp();
 
-    cfg.verbose = false;
+    cfg.verbose = 1;
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);
@@ -142,7 +201,7 @@ function test_saveEventsFileSaveArraySize()
 
     [cfg, logFile] = setUp();
 
-    cfg.verbose = false;
+    cfg.verbose = 1;
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);
@@ -163,7 +222,7 @@ function test_saveEventsFileSaveArraySize()
     logFile(end, 1).duration = 3;
     logFile(end, 1).LHL24 = rand(1, 15);
 
-    assertWarning(@()saveEventsFile('save', cfg, logFile), 'saveEventsFile:arrayTooLong');
+    assertWarning(@()saveEventsFile('save', cfg, logFile), 'nanPadding:arrayTooLong');
 
     saveEventsFile('save', cfg, logFile);
 

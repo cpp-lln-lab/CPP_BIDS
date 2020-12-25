@@ -23,8 +23,20 @@ tests/*.tsv*
 check_my_code_report.txt
 
 # jupyter notebook checkpoints
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
+notebooks/.ipynb_checkpoints/*
+notebooks/source/*
+notebooks/output/*
+notebooks/new_experiment/*
 
+# ignore node js files
+node_modules/*
+package-lock.json
 
+# visual studio code stuff
+.vscode
 
+# virtual env
+cpp_bids/*
+
+# documentation
+docs/build/*

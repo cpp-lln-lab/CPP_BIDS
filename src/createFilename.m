@@ -1,20 +1,39 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function cfg = createFilename(cfg)
-    % cfg = createFilename(cfg)
     %
-    % create the BIDS compliant directories and fileNames for the behavioral output
-    % for this subject / session / run using the information from cfg and expParameters.
+    % It creates the BIDS compliant directories and fileNames for the behavioral output
+    % for this subject / session / run using the information from cfg.
+    %
+    % The folder tree will always include a session folder.
+    %
     % Will also create the right fileName for the eyetracking data file.
+    % For the moment the date of acquisition is appended to the fileName.
     %
-    % For the moment the date of acquisition is appended to the fileName
+    % USAGE::
     %
-    % can work for behavioral experiment if cfg.device is set to 'PC'
-    % can work for fMRI experiment if cfg.device is set to 'scanner'
-    % can work for simple eyetracking data if cfg.eyeTracker.do is set to 1
+    %   [cfg] = createFilename(cfg)
     %
+    % :param cfg: Configuration. See ``checkCFG()``.
+    % :type cfg: structure
     %
-    % See test_createFilename in the test folder for more details on how to use it.
+    % :returns:
+    %
+    %           :cfg: (structure) Configuration update with the name of info about the
+    %                 participants.
+    %
+    % The behavior of this function depends on:
+    %
+    %   - ``cfg.testingDevice``:
+    %
+    %       + set to ``pc`` (dummy try) or ``beh`` can work for behavioral experiment.
+    %       + set on ``mri`` for fMRI experiment.
+    %       + set on ``eeg`` or ``ieeg`` can work for electro encephalography or intracranial eeg
+    %       + set on ``meg`` can work for magneto encephalography
+    %
+    %   - ``cfg.eyeTracker.do`` set to ``true``, can work for simple eyetracking data.
+    %
+    % See ``test_createFilename`` in the ``tests`` folder for more details on how to use it.
 
     cfg = checkCFG(cfg);
 
@@ -33,7 +52,20 @@ function cfg = createFilename(cfg)
 
     cfg = setFilenames(cfg);
 
-    talkToMe(cfg);
+    talkToMe(cfg, sprintf('\nData will be saved in this directory:\n\t%s\n', ...
+                          fullfile(cfg.dir.outputSubject, cfg.fileName.modality)));
+
+    talkToMe(cfg, sprintf('\nData will be saved in this file:\n\t%s\n', cfg.fileName.events));
+
+    if cfg.eyeTracker.do
+
+        talkToMe(cfg, sprintf('\nEyetracking data will be saved in this directory:\n\t%s\n', ...
+                              fullfile(cfg.dir.outputSubject, 'eyetracker')));
+
+        talkToMe(cfg, sprintf('\nEyetracking data will be saved in this file:\n\t%s\n', ...
+                              cfg.fileName.eyetracker));
+
+    end
 
     cfg = orderfields(cfg);
     cfg.fileName = orderfields(cfg.fileName);
@@ -197,30 +229,6 @@ function cfg = setFilenames(cfg)
     if cfg.eyeTracker.do
         cfg.fileName.eyetracker = ...
             [basename, '_recording-eyetracking_physio_date-' thisDate '.edf'];
-    end
-
-end
-
-function talkToMe(cfg)
-
-    if cfg.verbose > 0
-
-        fprintf(1, '\nData will be saved in this directory:\n\t%s\n', ...
-                fullfile(cfg.dir.outputSubject, cfg.fileName.modality));
-
-        fprintf(1, '\nData will be saved in this file:\n\t%s\n', ...
-                cfg.fileName.events);
-
-        if cfg.eyeTracker.do
-
-            fprintf(1, '\nEyetracking data will be saved in this directory:\n\t%s\n', ...
-                    fullfile(cfg.dir.outputSubject, 'eyetracker'));
-
-            fprintf(1, '\nEyetracking data will be saved in this file:\n\t%s\n', ...
-                    cfg.fileName.eyetracker);
-
-        end
-
     end
 
 end

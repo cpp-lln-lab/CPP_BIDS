@@ -1,10 +1,19 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function createDatasetDescription(cfg)
-    % createDatasetDescription(cfg)
     %
-    % creates the datasetDescription.json file that goes in the root of a BIDS
-    % dataset
+    % It creates ``dataset_description.json`` and writes in every entry contained in
+    % ``cfg.bids.datasetDescription``. The file should go in the root of a BIDS dataset.
+    %
+    % USAGE::
+    %
+    %   createDatasetDescription(cfg)
+    %
+    % :param cfg: Configuration. See ``checkCFG()``.
+    % :type cfg: structure
+    %
+    % :output: - :``dataset_description.json``: (jsonfile)
+    %
 
     opts.Indent = '    ';
 

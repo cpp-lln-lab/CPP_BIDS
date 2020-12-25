@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function test_suite = test_saveEventsFileOpenMultiColumn %#ok<*STOUT>
     try % assignment of 'localfunctions' is necessary in Matlab >= 2016
         test_functions = localfunctions(); %#ok<*NASGU>
@@ -25,11 +27,15 @@ function test_saveEventsFileOpenMultiColumnCheckHeader()
 
     cfg = createFilename(cfg);
 
-    % define the extra columns: here we specify how many columns we want for
-    % each variable
+    % define the extra columns names
+    logFile.extraColumns = {'Speed', 'LHL24', 'is_Fixation'};
+
+    % initalize logfile
+    logFile = saveEventsFile('init', cfg, logFile);
+
+    % extra columns: here we specify how many columns we want for each variable
     logFile.extraColumns.Speed.length = 1; % will set 1 columns with name Speed
     logFile.extraColumns.LHL24.length = 12; % will set 12 columns with names LHL24-01, LHL24-02, ...
-    logFile.extraColumns.is_Fixation = []; % will set 1 columns with name is_Fixation
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);

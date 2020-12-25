@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function test_makeRawDataset()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
@@ -24,11 +26,15 @@ function test_makeRawDataset()
     cfg.task.name = 'testtask';
     cfg.task.instructions = 'do this';
 
+    cfg.verbosity = 0;
+
+    cfg = createFilename(cfg);
+
     logFile.extraColumns.Speed.length = 1;
     logFile.extraColumns.LHL24.length = 3;
     logFile.extraColumns.is_Fixation.length = 1;
 
-    cfg = createFilename(cfg);
+    logFile = saveEventsFile('init', cfg, logFile);
 
     extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
     createJson(cfg, extraInfo);
@@ -71,14 +77,22 @@ function test_makeRawDataset()
     saveEventsFile('close', cfg, logFile);
 
     % add dummy stim data
-    stimLogFile = saveEventsFile('open_stim', cfg, logFile);
+    stimLogFile.extraColumns.Speed.length = 1;
+    stimLogFile.extraColumns.LHL24.length = 1;
+    stimLogFile.extraColumns.is_Fixation.length = 1;
+
+    stimLogFile.SamplingFrequency = cfg.mri.repetitionTime;
+    stimLogFile.StartTime = 0;
+
+    stimLogFile = saveEventsFile('init_stim', cfg, stimLogFile);
+    stimLogFile = saveEventsFile('open', cfg, stimLogFile);
     for i = 1:100
         stimLogFile(i, 1).onset = cfg.mri.repetitionTime * i;
         stimLogFile(i, 1).trial_type = 'test';
         stimLogFile(i, 1).duration = 1;
         stimLogFile(i, 1).Speed = rand(1);
         stimLogFile(i, 1).is_Fixation = rand > 0.5;
-        stimLogFile(i, 1).LHL24 = randn(1, 3);
+        stimLogFile(i, 1).LHL24 = randn();
     end
     saveEventsFile('save', cfg, stimLogFile);
     saveEventsFile('close', cfg, stimLogFile);

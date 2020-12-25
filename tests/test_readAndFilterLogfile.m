@@ -1,3 +1,5 @@
+% (C) Copyright 2020 CPP_BIDS developers
+
 function test_suite = test_readAndFilterLogfile %#ok<*STOUT>
     try % assignment of 'localfunctions' is necessary in Matlab >= 2016
         test_functions = localfunctions(); %#ok<*NASGU>
@@ -9,8 +11,8 @@ end
 function test_readAndFilterLogfileBasic()
 
     %% set up
-    cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
     [cfg, logFile] = setUp();
+    cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);

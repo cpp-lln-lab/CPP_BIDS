@@ -1,15 +1,23 @@
 % (C) Copyright 2020 CPP_BIDS developers
 
 function convertSourceToRaw(cfg)
-    % convertSourceToRaw(cfg)
     %
-    % attempts to convert a source dataset created with CPP_BIDS into a valid
+    % Function attempts to convert a source dataset created with CPP_BIDS into a valid
     % BIDS data set.
-    % - creates dummy README and CHANGE file
-    % - copy source dir to raw dir
-    % - remove the date suffix (_date-YYYYMMDDHHMM) from the files where it is present
     %
-    % Only covers func folder at the moment
+    %
+    % USAGE::
+    %
+    %   convertSourceToRaw(cfg)
+    %
+    % :param cfg: cfg structure is needed only for providing the path in ``cfg.dir.output``.
+    % :type cfg: structure
+    %
+    % :output:
+    %          - :creates: a dummy README and CHANGE file
+    %          - :copies: ``source`` directory to ``raw`` directory
+    %          - :removes: the date suffix ``_date-*`` from the files where it is present
+    %          - :zips: the ``_stim.tsv`` files.
 
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'raw');

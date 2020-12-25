@@ -9,7 +9,7 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %   [logFile] = saveEventsFile(action, cfg, logFile)
     %
     % :param action: Defines the operation to do. The different possibilities are
-    %                ``'init'``, ``'open'``, ``'open_stim'``, ``'save'`` or ``'close'``.
+    %                ``'init'``, ``'init_stim'``, ``'open'``, ``'save'`` or ``'close'``.
     %                For more information on each case see below.
     % :type action: string
     % :param cfg: Configuration variable. See ``checkCFG()``.
@@ -31,15 +31,15 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
     % Actions:
     %
-    %   .. todo:
-    %      wait for updates on the API of this function to finish updating
-    %
     %   Example::
     %
-    %     logFile = saveEventsFile('init', [cfg], logFile)
-    %     logFile = saveEventsFile('open', [cfg], logFile)
-    %     logFile = saveEventsFile('open_stim', [cfg], logFile)
-    %     logFile = saveEventsFile('save', [cfg], logFile)
+    %     logFile = saveEventsFile('init', cfg, logFile)
+    %     logFile = saveEventsFile('init_stim', cfg, logFile)
+    %     logFile = saveEventsFile('open', cfg, logFile)
+    %     logFile = saveEventsFile('save', cfg, logFile)
+    % 
+    %   - ``'init'`` and ``'init_stim'`` are used for events and stimuli tsv files respectively. 
+    %     This initializes the extra columns to be save.
     %
     %   - ``'open'`` will create the file ID and return it in ``logFile.fileID`` using
     %     the information in the ``cfg`` structure.
@@ -52,15 +52,19 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %       logFile = saveEventsFile('open', cfg, logFile);
     %
     %   - ``'save'`` will save the data contained in logfile by using the file ID
-    %     ``logFile.fileID``; logfile must then contain:
+    %     ``logFile.fileID``. 
+    %     If saving a stimulus file then the only the fields of ``logFile.extraColumns``
+    %     will be saved.
+    %     For regular _events.tsv files, then ``logFile`` must then contain:
     %
     %     - logFile.onset
-    %     - logFile.trial_type
     %     - logFile.duration
+    %       
+    %     Otherwise it will be skipped.
     %
     %     Example::
     %
-    %       logFile = saveEventsFile('open', cfg, logFile);
+    %       logFile = saveEventsFile('save', cfg, logFile);
     %
     %   - ``'close'`` closes the file with file ID ``logFile.fileID``.
     %     If ``cfg.verbose`` is superior to ``1`` then this will tell you

@@ -4,7 +4,7 @@ function createJson(varargin)
     %
     % Creates the side car JSON file for a run.
     %
-    % For JSON sidecars for bold files,  this will only contain the minimum BIDS
+    % For JSON sidecars for bold files, this will only contain the minimum BIDS
     % requirement and will likey be less complete than the info you could from
     % a proper BIDS conversion.
     %

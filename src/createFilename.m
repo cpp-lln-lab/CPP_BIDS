@@ -3,9 +3,12 @@
 function cfg = createFilename(cfg)
     %
     % It creates the BIDS compliant directories and fileNames for the behavioral output
-    % for this subject / session / run using the information from cfg and expParameters.
-    % Will also create the right fileName for the eyetracking data file. For the moment the date of
-    % acquisition is appended to the fileName.
+    % for this subject / session / run using the information from cfg.
+    %
+    % The folder tree will always include a session folder.
+    %
+    % Will also create the right fileName for the eyetracking data file. 
+    % For the moment the date of acquisition is appended to the fileName.
     %
     % USAGE::
     %
@@ -20,7 +23,9 @@ function cfg = createFilename(cfg)
     %                 participants.
     %
     % The behavior of this function depends on:
+    %
     %   - ``cfg.testingDevice``:
+    %
     %       + set to ``pc`` (dummy try) or ``beh`` can work for behavioral experiment.
     %       + set on ``mri`` for fMRI experiment.
     %       + set on ``eeg`` or ``ieeg`` can work for electro encephalography or intracranial eeg

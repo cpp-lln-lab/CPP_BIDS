@@ -14,19 +14,22 @@
 
 <!-- lint enable -->
 
+## Use the CPP templates for PsychToolBox experiments
+
+The easiest way to use this repository is to create a new repository by using
+the
+[template PTB experiment repository](https://github.com/cpp-lln-lab/template_PTB_experiment):
+this creates a new repository on your github account with all the basic folders,
+files and submodules (including CPP_BIDS) already set up. You only have to then
+clone the repository and you are good to go.
+
 ## Download with git
 
 ```bash
 cd fullpath_to_directory_where_to_install
 
-# use git to download the code
-git clone https://github.com/cpp-lln-lab/CPP_BIDS.git
-
-# move into the folder you have just created
-cd CPP_BIDS
-
-# add the src folder to the matlab path and save the path
-matlab -nojvm -nosplash -r "addpath(fullfile(pwd, 'src')); savepath ();"
+# use git to download the code and the submodules
+git clone --recurse-submodules https://github.com/cpp-lln-lab/CPP_BIDS.git
 ```
 
 Then get the latest commit:
@@ -53,12 +56,6 @@ cd fullpath_to_directory_where_to_install
 
 # use git to download the code
 git submodule add https://github.com/cpp-lln-lab/CPP_BIDS.git
-
-# move into the folder you have just created
-cd CPP_BIDS
-
-# add the src folder to the matlab path and save the path
-matlab -nojvm -nosplash -r "addpath(fullfile(pwd, 'src'))"
 ```
 
 To get the latest commit you then need to update the submodule with the
@@ -83,7 +80,7 @@ git clone https://github.com/user_name/myExperiment.git
 # go into the directory
 cd myExperiment
 
-# initialize and get the content of the first level of submodules  (e.g. CPP_PTB and CPP_BIDS)
+# initialize and get the content of the first level of submodules
 git submodule init
 git submodule update
 
@@ -93,6 +90,8 @@ git submodule foreach --recursive 'git submodule update'
 ```
 
 ## Direct download
+
+NOT RECOMMENDED.
 
 Download the code. Unzip. And add to the matlab path.
 

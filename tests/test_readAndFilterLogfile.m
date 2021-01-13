@@ -76,7 +76,7 @@ function test_readAndFilterLogfileFromFile()
 
     %% set up
 
-    inputFile = fullfile(fileparts(mfilename('fullpath')), 'dummyData', ...
+    inputFile = fullfile(fileparts(mfilename('fullpath')), 'testData', ...
                          'sub-blind01_ses-01_task-vislocalizer_events.tsv');
 
     % filter file

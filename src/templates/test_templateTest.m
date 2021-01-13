@@ -23,7 +23,9 @@ function test_templateTestBasic()
     % expectedOuput = X;
 
     % assertEqual(actualOupout, expectedOuput)
-
+    % assertTrue( );
+    % assertFalse( );
+    
     %% clean up (delete temporary files that were created)
 
 end

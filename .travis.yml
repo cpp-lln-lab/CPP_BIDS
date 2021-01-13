@@ -39,7 +39,7 @@ before_script:
   # Add to src functions to path
   - octave $OCTFLAGS --eval "addpath(genpath(fullfile(pwd, 'src'))); savepath ();"
   # Change current directory
-  - cd manualTests
+  - cd tests/manualTests
 
 jobs:
   include:

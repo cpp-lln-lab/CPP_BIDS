@@ -214,7 +214,7 @@ function test_makeRawDataset()
 
     %% add dummy data
     templateFolder = fullfile(fileparts(mfilename('fullpath')), '..', '..', 'templates');
-    
+
     subjectDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001');
     funcDir = fullfile(subjectDir, 'func');
 

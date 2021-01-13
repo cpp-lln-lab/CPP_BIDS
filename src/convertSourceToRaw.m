@@ -24,13 +24,13 @@ function convertSourceToRaw(cfg)
 
     % add dummy README and CHANGE file
     templateFolder = fullfile(fileparts(mfilename('fullpath')), '..', 'templates');
-    
+
     copyfile(fullfile(templateFolder, 'README'), ...
-                      sourceDir);
+             sourceDir);
     copyfile(fullfile(templateFolder, 'CHANGES'), ...
-                      sourceDir);
+             sourceDir);
     copyfile(fullfile(templateFolder, '.bidsignore'), ...
-                      sourceDir);
+             sourceDir);
 
     copyfile(sourceDir, rawDir);
 

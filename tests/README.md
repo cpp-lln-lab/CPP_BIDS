@@ -24,6 +24,11 @@ You can use the function template to write more tests.
 
 It is in the [`src/templates` folder](../src/templates)
 
+## Manual tests
+
+This is the folder where we keep tests that can not be run in continuous
+integration even as simple "smoke tests".
+
 <!-- ## code coverage
 
 A lot of what follows does not really work locally because of needing to add the right

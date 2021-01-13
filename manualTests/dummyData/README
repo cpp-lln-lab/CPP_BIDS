@@ -1,5 +1,8 @@
 # README
 
+(template copied from the BIDS starter kit: 
+https://github.com/bids-standard/bids-starter-kit)
+
 The README is usually the starting point for researchers using your data
 and serves as a guidepost for users of your data. A clear and informative
 README makes your data much more usable.

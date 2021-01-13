@@ -31,7 +31,8 @@ jobs:
       uses: joergbrech/moxunit-action@v1.1
       with:
         tests: tests
-        src: src tests/utils
+        src: src 
+        ext: tests/utils
         with_coverage: true
         cover_xml_file: coverage.xml
 

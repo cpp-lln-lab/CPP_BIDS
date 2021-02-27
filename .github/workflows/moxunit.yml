@@ -25,7 +25,6 @@ jobs:
         sudo apt-get -y install liboctave-dev
         cd lib/JSONio
         mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS
-      # cd ../..
 
     - name: MOxUnit Action
       uses: joergbrech/moxunit-action@master

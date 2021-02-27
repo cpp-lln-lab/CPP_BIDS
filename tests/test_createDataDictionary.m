@@ -81,6 +81,9 @@ function test_createDataDictionaryStim()
 
     outputDir = fullfile(fileparts(mfilename('fullpath')), 'output');
 
+    delete(fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func', '*.json'));
+    delete(fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func', '*.tsv'));
+
     %% set up
 
     cfg.verbose = false;

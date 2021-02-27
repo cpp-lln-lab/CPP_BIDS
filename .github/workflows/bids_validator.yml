@@ -1,4 +1,4 @@
-name: MOxUnit
+name: BIDS validator
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
 
     - uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
         submodules: true
         fetch-depth: 1
 
-    - name: Make jsonread for octave and update path
+    - name: Make jsonread for octave
       run: |
         sudo apt-get -y -qq update
         sudo apt-get -y install octave 
@@ -28,8 +28,11 @@ jobs:
         cd lib/JSONio
         mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS
         cd ..
-        octave $OCTFLAGS --eval "addpath (pwd); savepath ();"
-        octave $OCTFLAGS --eval "addpath(genpath(fullfile(pwd, 'src'))); savepath ();"
+
+    - name: Update octave path
+      run: |
+        octave $OCTFLAGS --eval "addpath(genpath(fullfile(pwd, 'lib'))); savepath();"
+        octave $OCTFLAGS --eval "addpath(genpath(fullfile(pwd, 'src'))); savepath();" 
 
     - name: Install BIDS validator
       run: |

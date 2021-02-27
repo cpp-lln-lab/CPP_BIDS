@@ -28,7 +28,7 @@ before_install:
   - travis_retry sudo apt-get -y install nodejs
   - travis_retry sudo apt-get -y install npm
   # Install BIDS-Validator
-  - sudo npm install -g bids-validator@1.5.7
+  - sudo npm install -g bids-validator@1.6.2
 
 install:
   # make octave file the JSONio submodule

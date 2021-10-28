@@ -5,7 +5,7 @@ on:
     branches:
       - master
   pull_request:
-    branches: 'master'
+    branches: ['master']
 
 env:
   OCTFLAGS: --no-gui --no-window-system --silent

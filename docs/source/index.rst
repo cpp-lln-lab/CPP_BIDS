@@ -38,11 +38,11 @@ A session folder will ALWAYS be created even if not requested (default will be `
 Task labels will be printed in ``camelCase`` in the filenames.
 
 Time stamps are added directly in the filename by adding a suffix
-``_date-*`` (default format is ``YYYYMMDDHHMM``) which makes the file name non-BIDS compliant. 
-This was added to prevent overwriting files in case a certain run needs to be done 
-a second time because of a crash. 
-Some of us are paranoid about keeping even cancelled runs during my experiments. 
-This suffix should be removed to make the data set BIDS compliant. 
+``_date-*`` (default format is ``YYYYMMDDHHMM``) which makes the file name non-BIDS compliant.
+This was added to prevent overwriting files in case a certain run needs to be done
+a second time because of a crash.
+Some of us are paranoid about keeping even cancelled runs during my experiments.
+This suffix should be removed to make the data set BIDS compliant.
 See ``convertSourceToRaw()`` for more details.
 
 For example::

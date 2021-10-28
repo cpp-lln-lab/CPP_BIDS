@@ -46,6 +46,54 @@ function test_saveEventsFileSaveBasic()
 
 end
 
+function test_saveEventsFileSaveNoExtraTab()
+
+    cfg.verbose = 2;
+
+    cfg.subject.subjectNb = 1;
+    cfg.subject.runNb = 1;
+
+    cfg.task.name = 'testtask';
+
+    cfg = createFilename(cfg);
+
+    logFile.extraColumns.Speed.length = 1;
+    logFile.extraColumns.LHL24.length = 3;
+    logFile.extraColumns.is_Fixation.length = 1;
+
+    logFile = saveEventsFile('init', cfg, logFile);
+    logFile = saveEventsFile('open', cfg, logFile);
+
+    %     logFile.onset = 2;
+    %     logFile.duration = 3;
+
+    % ROW 2: normal events : all info is there
+    logFile(1, 1).onset = 2;
+    logFile(end, 1).trial_type = 'MotionUp';
+    logFile(end, 1).duration = 3;
+    logFile(end, 1).Speed = 2;
+    logFile(end, 1).is_Fixation = true;
+    logFile(end, 1).LHL24 = 1:3;
+
+    logFile = saveEventsFile('save', cfg, logFile);
+
+    saveEventsFile('close', cfg, logFile);
+
+    funcDir = fullfile(cfg.dir.outputSubject, cfg.fileName.modality);
+    eventFilename = cfg.fileName.events;
+
+    %         FID = fopen(fullfile(funcDir, eventFilename), 'r');
+    %         content = fread(FID, 900, 'uint8=>char')
+
+    FID = fopen(fullfile(funcDir, eventFilename), 'r');
+    content = fread(FID, 900);
+    tab = 9;
+    eol = 10;
+    assert(content(end) == 10);
+    assert(content(end - 1) ~= 9);
+
+end
+
 function test_saveEventsFileSaveStim()
 
     %% set up

@@ -2,6 +2,6 @@ Sphinx
 sphinxcontrib-matlabdomain
 sphinxcontrib-napoleon
 sphinx_rtd_theme
-miss_hit==0.9.15
+miss_hit==0.9.29
 notebook
 octave_kernel

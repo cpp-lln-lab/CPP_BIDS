@@ -6,7 +6,7 @@ on:
       - master
       - dev
   pull_request:
-    branches: '*'
+    branches: ['*']
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
     - name: Make jsonread for octave
       run: |
         sudo apt-get -y -qq update
-        sudo apt-get -y install octave 
+        sudo apt-get -y install octave
         sudo apt-get -y install liboctave-dev
         cd lib/JSONio
         mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS
@@ -30,7 +30,7 @@ jobs:
       uses: joergbrech/moxunit-action@master
       with:
         tests: tests # files or directories containing the MOxUnit test cases
-        src: src # directories to be added to the Octave search path before running the tests. 
+        src: src # directories to be added to the Octave search path before running the tests.
         ext: tests/utils # External resources to add to the search put (excluded from coverage)
         # data: # Directory for test data
         with_coverage: true

@@ -378,9 +378,9 @@ function printToFile(cfg, logFile, skipEvent, iEvent)
     if ~skipEvent
 
         if ~logFile(1).isStim
-            printData(logFile(1).fileID, logFile(iEvent).onset, cfg);
-            printData(logFile(1).fileID, logFile(iEvent).duration, cfg);
-            printData(logFile(1).fileID, logFile(iEvent).trial_type, cfg);
+            printData(logFile(1).fileID, logFile(iEvent).onset, cfg, true);
+            printData(logFile(1).fileID, logFile(iEvent).duration, cfg, true);
+            printData(logFile(1).fileID, logFile(iEvent).trial_type, cfg, false);
         end
 
         printExtraColumns(logFile, iEvent, cfg);
@@ -394,26 +394,41 @@ end
 function printExtraColumns(logFile, iEvent, cfg)
     % loops through the extra columns and print them
     namesExtraColumns = returnNamesExtraColumns(logFile);
+    if ~logFile(1).isStim && numel(namesExtraColumns) > 0
+        fprintf(logFile(1).fileID, '\t');
+        talkToMe(cfg, '\t');
+    end
+    addTab = true;
     for iExtraColumn = 1:numel(namesExtraColumns)
         data = logFile(iEvent).(namesExtraColumns{iExtraColumn});
-        printData(logFile(1).fileID, data, cfg);
+        if iExtraColumn == numel(namesExtraColumns)
+            addTab = false;
+        end
+        printData(logFile(1).fileID, data, cfg, addTab);
     end
 end
 
-function printData(output, data, cfg)
+function printData(output, data, cfg, addTab)
     % write char
     % for numeric data we replace any nan by n/a
+
+    if addTab
+        separator = '\t';
+    else
+        separator = '';
+    end
+
     if ischar(data)
-        content = sprintf('%s\t', data);
+        content = sprintf('%s%s', data, separator);
         fprintf(output, content);
         talkToMe(cfg, content);
 
     else
         for i = 1:numel(data)
             if isnan(data(i))
-                content = sprintf('%s\t', 'n/a');
+                content = sprintf('%s%s', 'n/a', separator);
             else
-                content = sprintf('%f\t', data(i));
+                content = sprintf('%f%s', data(i), separator);
             end
             fprintf(output, content);
             talkToMe(cfg, content);

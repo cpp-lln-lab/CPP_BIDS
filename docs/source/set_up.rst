@@ -23,8 +23,8 @@ Group, subject, session and run
 ===============================
 
 You can use the ``userInputs()`` function to easily set the group name as well as
-the subject, session and run number. You can ask the function to not bother you with 
-group and session 
+the subject, session and run number. You can ask the function to not bother you with
+group and session
 
 
 .. todo:

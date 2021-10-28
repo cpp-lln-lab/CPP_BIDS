@@ -1,7 +1,7 @@
 Utility functions
 *****************
-  
-List of functions in the ``utils`` folder.  
+
+List of functions in the ``utils`` folder.
 
 ----
 
@@ -22,6 +22,6 @@ List of functions in the ``utils`` folder.
 .. autofunction:: returnNbColumns
 .. autofunction:: setDefaultFields
 
-.. automodule:: src.gui 
+.. automodule:: src.gui
 
 .. autofunction:: askUserCli

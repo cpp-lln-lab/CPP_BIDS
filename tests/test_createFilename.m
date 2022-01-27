@@ -279,9 +279,6 @@ end
 
 function cfg = setUp()
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
-    cfg.verbose = true;
-    cfg.subject.subjectNb = 1;
-    cfg.subject.runNb = 1;
-    cfg.task.name = 'test task';
+    cfg = globalTestSetUp();
     cfg.dir.output = outputDir;
 end

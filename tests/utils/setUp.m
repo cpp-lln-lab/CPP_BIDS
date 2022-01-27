@@ -1,13 +1,8 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function [cfg, logFile] = setUp()
 
-    cfg.verbose = 0;
+    % (C) Copyright 2020 CPP_BIDS developers
 
-    cfg.subject.subjectNb = 1;
-    cfg.subject.runNb = 1;
-
-    cfg.task.name = 'testtask';
+    cfg = globalTestSetUp();
 
     cfg.testingDevice = 'mri';
 

@@ -22,7 +22,7 @@ function data = nanPadding(cfg, data, expectedLength)
             data(end + 1:end + padding) = nan(1, padding);
 
         elseif max(size(data)) > expectedLength
-            warningMessage = ['A field for this event is longer than expected.', ...
+            warningMessage = ['A field for this event is longer than expected. ', ...
                               'Truncating extra values.'];
             throwWarning(cfg, 'nanPadding:arrayTooLong', warningMessage);
 

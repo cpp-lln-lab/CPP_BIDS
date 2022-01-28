@@ -14,7 +14,7 @@ function removeDateSuffix(filenames, subjectPath)
     % :param subjectPath: Location/path of the files
     % :type subjectPath: string
     %
-    % :output: - files are renamed by removing '_date-*' suffix
+    % :output: - files are renamed by removing ``'_date-*'`` suffix
     %
     % (C) Copyright 2020 CPP_BIDS developers
 

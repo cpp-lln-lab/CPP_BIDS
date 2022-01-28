@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function cfg = checkCFG(cfg)
     %
     % Check the fields of the configuration structure ``cfg``. If a required field is
@@ -181,6 +179,8 @@ function cfg = checkCFG(cfg)
     %    cfg.bids.meg.SoftwareFilters = [];
     %    cfg.bids.meg.DigitizedLandmarks = [];
     %    cfg.bids.meg.DigitizedHeadPoints = [];
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 1 || isempty(cfg)
         cfg = struct();

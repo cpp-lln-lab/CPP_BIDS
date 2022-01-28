@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function trueOrFalse = isPositiveInteger(input2check)
     %
     % It checks whether the input is a positive integer and report it as ``true`` or ``false``
@@ -13,6 +11,7 @@ function trueOrFalse = isPositiveInteger(input2check)
     %
     % :returns: :trueOrFalse: (boolean)
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     trueOrFalse = ~any([ ...
                         ~isnumeric(input2check), ...

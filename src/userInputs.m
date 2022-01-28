@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function cfg = userInputs(cfg)
     %
     % Get subject, run and session number and make sure they are
@@ -23,6 +21,8 @@ function cfg = userInputs(cfg)
     %
     % - the first value set to ``false`` will skip asking for the participants group
     % - the second value set to ``false`` will skip asking for the session
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 1
         cfg = struct('debug', []);

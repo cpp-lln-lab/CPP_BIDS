@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function convertSourceToRaw(cfg)
     %
     % Function attempts to convert a source dataset created with CPP_BIDS into a valid
@@ -18,6 +16,8 @@ function convertSourceToRaw(cfg)
     %          - :copies: ``source`` directory to ``raw`` directory
     %          - :removes: the date suffix ``_date-*`` from the files where it is present
     %          - :zips: the ``_stim.tsv`` files.
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'raw');

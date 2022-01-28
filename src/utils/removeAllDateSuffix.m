@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function removeAllDateSuffix(rawDir, subjName, sesName)
     %
     % Function removes the date suffix in the _events and _stim (.tsv and .json)
@@ -18,6 +16,8 @@ function removeAllDateSuffix(rawDir, subjName, sesName)
     %
     % :param sesName: Some of the options can be ``ses-001`` or ``ses-003``.
     % :type sesName: string
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     % :output: - files are renamed by removing '_date-*' suffix
     %         and _stim files are zipped

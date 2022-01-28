@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function [name, nameValid] = createValidName(name)
     %
     % Creates a BIDS valid name: for the task in file names.
@@ -21,14 +19,8 @@ function [name, nameValid] = createValidName(name)
     % should have the same name. Task label is derived from this field by
     % removing all non alphanumeric ([a-zA-Z0-9]) characters.
     %
-    % Example:
-    % % taskName = 'foo bar';
-    % % [taskName, taskNameValid] = createValidName(taskName);
-    % % disp(taskName),
-    % % || 'foo Bar'
-    % % disp(taskNameValid)
-    % % || 'fooBar'
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     % camel case: upper case for first letter for all words but the first one
     spaceIdx = regexp(name, '[a-zA-Z0-9]*', 'start');

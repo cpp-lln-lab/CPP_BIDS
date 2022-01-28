@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
     %
     % It will display in the command window the content of the ``output.tsv``
@@ -32,6 +30,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %           :outputFiltered: dataset with only the specified content, to see it
     %                            in the command window use ``display(outputFiltered)``.
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     % Create tag to add to output file in case you want to save it
     outputFilterTag = ['_filteredBy-' columnName '_' filterBy '.tsv'];

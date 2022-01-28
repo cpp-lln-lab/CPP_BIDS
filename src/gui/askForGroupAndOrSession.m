@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function cfg = askForGroupAndOrSession(cfg)
     %
     % It checks ``cfg`` if ``group`` and ``session`` are recquired in ``cfg.subject.askGrpSess`` by
@@ -15,6 +13,8 @@ function cfg = askForGroupAndOrSession(cfg)
     % :returns:
     %           :cfg: (structure) Configuration update with the instructions if to ask for ``group``
     %                 and ``session``.
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     askGrpSess = [true true];
 

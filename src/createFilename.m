@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function cfg = createFilename(cfg)
     %
     % It creates the BIDS compliant directories and fileNames for the behavioral output
@@ -34,6 +32,8 @@ function cfg = createFilename(cfg)
     %   - ``cfg.eyeTracker.do`` set to ``true``, can work for simple eyetracking data.
     %
     % See ``test_createFilename`` in the ``tests`` folder for more details on how to use it.
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     cfg = checkCFG(cfg);
 

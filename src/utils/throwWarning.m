@@ -1,5 +1,9 @@
 function throwWarning(cfg, identifier, warningMessage)
     %
+    % USAGE::
+    %
+    %   throwWarning(cfg, identifier, warningMessage)
+    %
     % (C) Copyright 2020 CPP_BIDS developers
 
     if cfg.verbose > 0 && ...
@@ -9,4 +13,5 @@ function throwWarning(cfg, identifier, warningMessage)
 
         warning(identifier, warningMessage);
     end
+
 end

@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function logFile = saveEventsFile(action, cfg, logFile)
     %
     % Function to save output files for events that will be BIDS compliant.
@@ -74,7 +72,7 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
     %       logFile = saveEventsFile('close', cfg, logFile)
     %
-    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 2
         errorSaveEventsFile('missingArgument');

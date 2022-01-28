@@ -8,7 +8,7 @@ function test_suite = test_createFilename %#ok<*STOUT>
     initTestSuite;
 end
 
-function test_createFilenameBasic()
+function test_createFilename_basic()
 
     %% set up
 
@@ -19,11 +19,9 @@ function test_createFilenameBasic()
     %% data to test against
     behDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'beh');
 
-    eventFilename = ['sub-001_ses-001_task-testTask_run-001_events_date-'...
-                     cfg.fileName.date '.tsv'];
+    eventFilename = ['sub-001_ses-001_task-testTask_run-001_date-' cfg.fileName.date '_events.tsv'];
 
-    stimFilename =  ['sub-001_ses-001_task-testTask_run-001_stim_date-'...
-                     cfg.fileName.date '.tsv'];
+    stimFilename =  ['sub-001_ses-001_task-testTask_run-001_date-' cfg.fileName.date '_stim.tsv'];
 
     %% test
 
@@ -38,7 +36,7 @@ function test_createFilenameBasic()
 
 end
 
-function test_createFilenameMriEyetracker()
+function test_createFilename_mri_eyetracker()
 
     %% set up
 
@@ -57,12 +55,12 @@ function test_createFilenameMriEyetracker()
 
     baseFilename = 'sub-001_ses-001_task-testTask';
 
-    eventFilename = [baseFilename '_run-001_events_date-' ...
-                     cfg.fileName.date '.tsv'];
+    eventFilename = [baseFilename '_run-001_date-' ...
+                     cfg.fileName.date '_events.tsv'];
 
     eyetrackerFilename =  [ ...
-                           baseFilename '_run-001_recording-eyetracking_physio_date-' ...
-                           cfg.fileName.date '.edf'];
+                           baseFilename '_run-001_recording-eyetracking_date-' ...
+                           cfg.fileName.date '_physio.edf'];
 
     %% tests
     % make sure the func dir is created
@@ -78,7 +76,7 @@ function test_createFilenameMriEyetracker()
 
 end
 
-function test_createFilenameMriSuffix()
+function test_createFilename_mri_suffix()
 
     %% set up
 
@@ -87,11 +85,11 @@ function test_createFilenameMriSuffix()
     cfg.testingDevice = 'mri';
 
     cfg.suffix.recording = 'respi pulse';
-    cfg.suffix.reconstruction = 'fast recon';
-    cfg.suffix.contrastEnhancement = 'test';
-    cfg.suffix.phaseEncodingDirection = 'y pos';
+    cfg.suffix.rec = 'fast recon';
+    cfg.suffix.ce = 'test';
+    cfg.suffix.dir = 'y pos';
     cfg.suffix.echo = '1';
-    cfg.suffix.acquisition = ' new tYpe';
+    cfg.suffix.acq = ' new tYpe';
 
     cfg = createFilename(cfg);
 
@@ -103,13 +101,13 @@ function test_createFilenameMriSuffix()
 
     eventFilename = ['sub-001_ses-001_task-testTask',  ...
                      '_acq-newTYpe_ce-test_dir-yPos_rec-fastRecon', ...
-                     '_run-001_echo-1_events_date-' ...
-                     cfg.fileName.date '.tsv'];
+                     '_run-001_echo-1_date-' ...
+                     cfg.fileName.date '_events.tsv'];
 
     stimFilename = ['sub-001_ses-001_task-testTask',  ...
                     '_acq-newTYpe_ce-test_dir-yPos_rec-fastRecon', ...
-                    '_run-001_echo-1_recording-respiPulse_stim_date-' ...
-                    cfg.fileName.date '.tsv'];
+                    '_run-001_echo-1_recording-respiPulse_date-' ...
+                    cfg.fileName.date '_stim.tsv'];
 
     %% tests
     % make sure the func dir is created
@@ -122,7 +120,7 @@ function test_createFilenameMriSuffix()
 
 end
 
-function test_createFilenameBehSuffix()
+function test_createFilename_beh_suffix()
 
     %% set up
 
@@ -131,11 +129,11 @@ function test_createFilenameBehSuffix()
     cfg.testingDevice = 'pc';
 
     cfg.suffix.recording = 'respi pulse';
-    cfg.suffix.reconstruction = 'fast recon';
-    cfg.suffix.contrastEnhancement = 'test';
-    cfg.suffix.phaseEncodingDirection = 'y pos';
+    cfg.suffix.rec = 'fast recon';
+    cfg.suffix.ce = 'test';
+    cfg.suffix.dir = 'y pos';
     cfg.suffix.echo = '1';
-    cfg.suffix.acquisition = ' new tYpe';
+    cfg.suffix.acq = ' new tYpe';
 
     cfg = createFilename(cfg);
 
@@ -147,13 +145,13 @@ function test_createFilenameBehSuffix()
 
     eventFilename = ['sub-001_ses-001_task-testTask',  ...
                      '_acq-newTYpe', ...
-                     '_run-001_events_date-' ...
-                     cfg.fileName.date '.tsv'];
+                     '_run-001_date-' ...
+                     cfg.fileName.date '_events.tsv'];
 
     stimFilename = ['sub-001_ses-001_task-testTask',  ...
                     '_acq-newTYpe', ...
-                    '_run-001_recording-respiPulse_stim_date-' ...
-                    cfg.fileName.date '.tsv'];
+                    '_run-001_recording-respiPulse_date-' ...
+                    cfg.fileName.date '_stim.tsv'];
 
     %% tests
     % make sure the func dir is created
@@ -166,7 +164,7 @@ function test_createFilenameBehSuffix()
 
 end
 
-function test_createFilenameEegSuffix()
+function test_createFilename_eeg_suffix()
 
     %% set up
 
@@ -175,11 +173,11 @@ function test_createFilenameEegSuffix()
     cfg.testingDevice = 'eeg';
 
     cfg.suffix.recording = 'respi pulse';
-    cfg.suffix.reconstruction = 'fast recon';
-    cfg.suffix.contrastEnhancement = 'test';
-    cfg.suffix.phaseEncodingDirection = 'y pos';
+    cfg.suffix.rec = 'fast recon';
+    cfg.suffix.ce = 'test';
+    cfg.suffix.dir = 'y pos';
     cfg.suffix.echo = '1';
-    cfg.suffix.acquisition = ' new tYpe';
+    cfg.suffix.acq = ' new tYpe';
 
     cfg = createFilename(cfg);
 
@@ -190,12 +188,12 @@ function test_createFilenameEegSuffix()
     baseFilename = 'sub-001_ses-001_task-testTask';
 
     eventFilename = ['sub-001_ses-001_task-testTask',  ...
-                     '_run-001_events_date-' ...
-                     cfg.fileName.date '.tsv'];
+                     '_run-001_date-' ...
+                     cfg.fileName.date '_events.tsv'];
 
     stimFilename = ['sub-001_ses-001_task-testTask',  ...
-                    '_run-001_recording-respiPulse_stim_date-' ...
-                    cfg.fileName.date '.tsv'];
+                    '_run-001_recording-respiPulse_date-' ...
+                    cfg.fileName.date '_stim.tsv'];
 
     %% tests
     % make sure the func dir is created
@@ -208,7 +206,7 @@ function test_createFilenameEegSuffix()
 
 end
 
-function test_createFilenameEeg()
+function test_createFilename_eeg()
 
     %% set up
 
@@ -221,8 +219,7 @@ function test_createFilenameEeg()
     %% data to test against
     eegDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001', 'eeg');
 
-    eventFilename = ['sub-001_ses-001_task-testTask_run-001_events_date-'...
-                     cfg.fileName.date '.tsv'];
+    eventFilename = ['sub-001_ses-001_task-testTask_run-001_date-' cfg.fileName.date '_events.tsv'];
 
     %% test
     % make sure the func dir is created
@@ -233,7 +230,7 @@ function test_createFilenameEeg()
 
 end
 
-function test_createFilenameIeeg()
+function test_createFilename_ieeg()
 
     %% set up
 
@@ -250,12 +247,11 @@ function test_createFilenameIeeg()
     % make sure the func dir is created
     assertTrue(exist(ieegDir, 'dir') == 7);
 
-    eventFilename = ['sub-001_ses-001_task-testTask_run-001_events_date-'...
-                     cfg.fileName.date '.tsv'];
+    eventFilename = ['sub-001_ses-001_task-testTask_run-001_date-' cfg.fileName.date '_events.tsv'];
 
 end
 
-function test_createFilenameMeg()
+function test_createFilename_meg()
 
     %% set up
 

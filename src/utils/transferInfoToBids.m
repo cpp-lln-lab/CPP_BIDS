@@ -23,8 +23,8 @@ function fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
     % (C) Copyright 2020 CPP_BIDS developers
 
     if isfield(cfg, 'task') && isfield(cfg.task, 'name')
-        [taskName, taskNameValid] = createValidName(cfg.task.name);
-        fieldsToSet.fileName.task = taskNameValid;
+        taskName = bids.internal.camel_case(cfg.task.name);
+        fieldsToSet.fileName.task = taskName;
         fieldsToSet.bids.meg.TaskName = taskName;
         fieldsToSet.bids.eeg.TaskName = taskName;
         fieldsToSet.bids.ieeg.TaskName = taskName;

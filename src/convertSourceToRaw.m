@@ -35,7 +35,7 @@ function convertSourceToRaw(cfg)
     copyfile(sourceDir, rawDir);
 
     % list subjects
-    subjects = cellstr(file_utils('List', rawDir, 'dir', '^sub-.*$'));
+    subjects = cellstr(bids.internal.file_utils('List', rawDir, 'dir', '^sub-.*$'));
 
     if isequal(subjects, {''})
         error('No subjects found in BIDS directory.');
@@ -44,7 +44,11 @@ function convertSourceToRaw(cfg)
     % go through the subject files and parses them to remove the date suffix
     for su = 1:numel(subjects)
 
-        sess = cellstr(file_utils('List', fullfile(rawDir, subjects{su}), 'dir', '^ses-.*$'));
+        sess = cellstr(bids.internal.file_utils('List', ...
+                                                fullfile(rawDir, ...
+                                                         subjects{su}), ...
+                                                'dir', ...
+                                                '^ses-.*$'));
 
         for se = 1:numel(sess)
             removeAllDateSuffix(rawDir, subjects{su}, sess{se});

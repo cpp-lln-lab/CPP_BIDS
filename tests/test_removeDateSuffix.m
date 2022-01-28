@@ -42,7 +42,7 @@ function test_removeDateSuffixBasic()
     end
 
     %% do stuff
-    filenames = file_utils('List', outputDir, '^test.*$');
+    filenames = bids.internal.file_utils('List', outputDir, '^test.*$');
 
     %% expected data
     expectedBoldName = 'test_bold.nii.gz';

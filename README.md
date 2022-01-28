@@ -1,47 +1,20 @@
-<!-- lint disable -->
-
-**Try it**
-
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cpp-lln-lab/CPP_BIDS/master?filepath=notebooks%2Fbasic_usage.ipynb)
-
-**Documentation**
-
 [![Documentation Status: stable](https://readthedocs.org/projects/cpp-bids/badge/?version=stable)](https://cpp-bids.readthedocs.io/en/stable/?badge=stable)
-
-**Cite it**
-
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4007674.svg)](https://doi.org/10.5281/zenodo.4007674)
-
-**Unit tests and coverage**
-
 [![](https://img.shields.io/badge/Octave-CI-blue?logo=Octave&logoColor=white)](https://github.com/cpp-lln-lab/CPP_BIDS/actions)
 ![](https://github.com/cpp-lln-lab/CPP_BIDS/workflows/CI/badge.svg)
-
 [![codecov](https://codecov.io/gh/cpp-lln-lab/CPP_BIDS/branch/master/graph/badge.svg)](https://codecov.io/gh/cpp-lln-lab/CPP_BIDS)
-
-**Contributors**
-
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-
----
 
 # CPP_BIDS
 
-<!-- TOC -->
-
--   [CPP_BIDS](#cpp_bids)
--   [Output format](#output-format)
-    -   [Modality agnostic aspect](#modality-agnostic-aspect)
--   [Documentation](#documentation)
--   [Contributing](#contributing)
-    -   [Guidestyle](#guidestyle)
-    -   [BIDS naming convention](#bids-naming-convention)
-    -   [Change log](#change-log)
-    -   [Contributors ✨](#contributors-)
-
-<!-- /TOC -->
-
-<!-- lint enable -->
+- [CPP_BIDS](#cpp_bids)
+  - [Documentation](#documentation)
+  - [Contributing](#contributing)
+    - [Style guide](#style-guide)
+    - [BIDS naming convention](#bids-naming-convention)
+    - [Change log](#change-log)
+    - [Contributors ✨](#contributors-)
 
 A set of function for matlab and octave to create
 [BIDS-compatible](https://bids-specification.readthedocs.io/en/stable/) folder

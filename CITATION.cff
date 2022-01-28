@@ -11,7 +11,7 @@ message: "If you use this software, please cite it as below."
 repository-code: "https://github.com/cpp-lln-lab/CPP_BIDS"
 
 identifiers:
-  - description: This is the collection of archived snapshots of all releases of CPP SPM
+  - description: This is the collection of archived snapshots of all releases of CPP BIDS
     type: doi
     value: "10.5281/zenodo.4007674"
 

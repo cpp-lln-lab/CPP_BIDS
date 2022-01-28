@@ -8,11 +8,6 @@
 
 # CPP_BIDS
 
-- [CPP_BIDS](#cpp_bids)
-  - [Documentation](#documentation)
-  - [Contributing](#contributing)
-    - [Contributors ✨](#contributors-)
-
 A set of function for matlab and octave to create
 [BIDS-compatible](https://bids-specification.readthedocs.io/en/stable/) folder
 structure and filenames for the output of behavioral, EEG, fMRI, eyetracking

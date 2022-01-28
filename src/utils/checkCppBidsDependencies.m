@@ -43,7 +43,6 @@ function checkCppBidsDependencies(cfg)
 
     end
 
-
 end
 
 function checkSubmodule(pth)
@@ -51,8 +50,8 @@ function checkSubmodule(pth)
     % and ask user to update submodules.
     if numel(dir(pth)) <= 2 % Means that the external is empty
         error(['Git submodules are not cloned!', ...
-            'Try this in your terminal:', ...
-            ' git submodule update --recursive ']);
+               'Try this in your terminal:', ...
+               ' git submodule update --recursive ']);
     else
         addpath(pth);
     end

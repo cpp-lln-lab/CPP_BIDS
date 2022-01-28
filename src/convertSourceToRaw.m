@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function convertSourceToRaw(cfg)
     %
     % Function attempts to convert a source dataset created with CPP_BIDS into a valid
@@ -18,6 +16,8 @@ function convertSourceToRaw(cfg)
     %          - :copies: ``source`` directory to ``raw`` directory
     %          - :removes: the date suffix ``_date-*`` from the files where it is present
     %          - :zips: the ``_stim.tsv`` files.
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'raw');
@@ -35,7 +35,7 @@ function convertSourceToRaw(cfg)
     copyfile(sourceDir, rawDir);
 
     % list subjects
-    subjects = cellstr(file_utils('List', rawDir, 'dir', '^sub-.*$'));
+    subjects = cellstr(bids.internal.file_utils('List', rawDir, 'dir', '^sub-.*$'));
 
     if isequal(subjects, {''})
         error('No subjects found in BIDS directory.');
@@ -44,7 +44,11 @@ function convertSourceToRaw(cfg)
     % go through the subject files and parses them to remove the date suffix
     for su = 1:numel(subjects)
 
-        sess = cellstr(file_utils('List', fullfile(rawDir, subjects{su}), 'dir', '^ses-.*$'));
+        sess = cellstr(bids.internal.file_utils('List', ...
+                                                fullfile(rawDir, ...
+                                                         subjects{su}), ...
+                                                'dir', ...
+                                                '^ses-.*$'));
 
         for se = 1:numel(sess)
             removeAllDateSuffix(rawDir, subjects{su}, sess{se});

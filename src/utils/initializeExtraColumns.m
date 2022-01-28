@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function logFile = initializeExtraColumns(logFile)
     %
     % Initialize the fields for the extra columns
@@ -19,6 +17,7 @@ function logFile = initializeExtraColumns(logFile)
     %   logFile = initializeExtraColumns(logFile)
     %
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     fieldsToSet.length = 1;
     fieldsToSet.bids.LongName = '';

@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function responses = askUserCli(questions, responses)
     %
     % It shows the questions to ask in the command window and checks, when it is necessary, if the
@@ -17,6 +15,7 @@ function responses = askUserCli(questions, responses)
     %
     % :returns: - :responses: (cell) Response updated with the user inputs.
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     for iQuestion = 1:size(questions.questionsToAsk, 1)
 

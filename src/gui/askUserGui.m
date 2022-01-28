@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function responses = askUserGui(questions, responses)
     %
     % It shows the questions to ask in in a GUI interface and checks, when it is necessary, if the
@@ -18,6 +16,7 @@ function responses = askUserGui(questions, responses)
     %
     % :returns: - :responses: (cell) Response updated with the user inputs.
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     % boolean for which question should be asked
     isQuestionToAsk = ~cellfun('isempty', questions.questionsToAsk(:, 1));

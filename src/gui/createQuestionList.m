@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function questions = createQuestionList(cfg)
     %
     % It creates a list of default questions to ask the users regarding the subj ID, the run number,
@@ -16,6 +14,7 @@ function questions = createQuestionList(cfg)
     %           :questions: (structure) It contains the questions list to ask and if the response
     %                       given to one question must be checked to be a positive integer.
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     cfg = askForGroupAndOrSession(cfg);
 

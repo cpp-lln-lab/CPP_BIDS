@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function removeAllDateSuffix(rawDir, subjName, sesName)
     %
     % Function removes the date suffix in the _events and _stim (.tsv and .json)
@@ -18,6 +16,8 @@ function removeAllDateSuffix(rawDir, subjName, sesName)
     %
     % :param sesName: Some of the options can be ``ses-001`` or ``ses-003``.
     % :type sesName: string
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     % :output: - files are renamed by removing '_date-*' suffix
     %         and _stim files are zipped
@@ -31,29 +31,33 @@ function removeAllDateSuffix(rawDir, subjName, sesName)
         if exist(subjectPath, 'dir')
 
             % do events
-            filenames = file_utils('List', subjectPath, ...
-                                   sprintf('^%s.*_task-.*_events_date-.*$', subjName));
+            filenames = bids.internal.file_utils('List', subjectPath, ...
+                                                 sprintf('^%s.*_task-.*_events_date-.*$', ...
+                                                         subjName));
 
             removeDateSuffix(filenames, subjectPath);
 
             for iLabel = 1:numel(labels)
-                filenames = file_utils('List', subjectPath, ...
-                                       sprintf('^%s.*_task-.*_%s_date-.*$', ...
-                                               subjName, labels{iLabel}));
+                filenames = bids.internal.file_utils('List', subjectPath, ...
+                                                     sprintf('^%s.*_task-.*_%s_date-.*$', ...
+                                                             subjName, labels{iLabel}));
 
                 removeDateSuffix(filenames, subjectPath);
             end
 
             % do stim
-            filenames = file_utils('List', subjectPath, ...
-                                   sprintf('^%s.*_task-.*_stim_date-.*json$', subjName));
+            filenames = bids.internal.file_utils('List', subjectPath, ...
+                                                 sprintf('^%s.*_task-.*_stim_date-.*json$', ...
+                                                         subjName));
             removeDateSuffix(filenames, subjectPath);
 
-            filenames = file_utils('List', subjectPath, ...
-                                   sprintf('^%s.*_task-.*_stim_date-.*tsv$', subjName));
+            filenames = bids.internal.file_utils('List', subjectPath, ...
+                                                 sprintf('^%s.*_task-.*_stim_date-.*tsv$', ...
+                                                         subjName));
             compressFiles(filenames, subjectPath);
-            filenames = file_utils('List', subjectPath, ...
-                                   sprintf('^%s.*_task-.*_stim_date-.*tsv.gz$', subjName));
+            filenames = bids.internal.file_utils('List', subjectPath, ...
+                                                 sprintf('^%s.*_task-.*_stim_date-.*tsv.gz$', ...
+                                                         subjName));
             removeDateSuffix(filenames, subjectPath);
 
         end

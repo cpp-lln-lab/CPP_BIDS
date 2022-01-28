@@ -42,7 +42,7 @@ function test_removeDateSuffixBasic()
     end
 
     %% do stuff
-    filenames = file_utils('List', outputDir, '^test.*$');
+    filenames = bids.internal.file_utils('List', outputDir, '^test.*$');
 
     %% expected data
     expectedBoldName = 'test_bold.nii.gz';
@@ -57,10 +57,8 @@ function test_removeDateSuffixBasic()
     removeDateSuffix(filenames, outputDir);
 
     %% test
-    fprintf(1, fullfile(outputDir, expectedBoldName3));
     assertEqual(exist(fullfile(outputDir, expectedBoldName3), 'file'), 2);
     assertEqual(exist(fullfile(outputDir, expectedJsonName), 'file'), 2);
-    fprintf(1, fullfile(outputDir, expectedEventsName));
     assertEqual(exist(fullfile(outputDir, expectedEventsName), 'file'), 2);
     assertEqual(exist(fullfile(outputDir, expectedStimName), 'file'), 2);
     assertEqual(exist(fullfile(outputDir, expectedStimNameZipped), 'file'), 2);

@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function createJson(varargin)
     %
     % Creates the side car JSON file for a run.
@@ -34,6 +32,7 @@ function createJson(varargin)
     %
     %    - use input parser for this one
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     [cfg, modality, extraInfo] = checkInput(varargin);
 

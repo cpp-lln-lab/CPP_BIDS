@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, varargin)
     %
     % It will display in the command window the content of the ``output.tsv``
@@ -32,6 +30,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %           :outputFiltered: dataset with only the specified content, to see it
     %                            in the command window use ``display(outputFiltered)``.
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     % Create tag to add to output file in case you want to save it
     outputFilterTag = ['_filteredBy-' columnName '_' filterBy '.tsv'];
@@ -76,38 +75,12 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
         output.(listFields{iField})(~filterIdx) = [];
     end
 
-    output = convertStruct(output);
-
-    % Convert the structure to dataset
-    try
-        outputFiltered = struct2dataset(output);
-    catch
-        % dataset not yet supported by octave
-        outputFiltered = output;
-    end
+    outputFiltered = output;
 
     if saveOutputTsv
 
         bids.util.tsvwrite(outputFileName, output);
 
     end
-
-end
-
-function structure = convertStruct(structure)
-    % changes the structure
-    %
-    % from struct.field(i,1) to struct(i,1).field(1)
-
-    fieldsList = fieldnames(structure);
-    tmp = struct();
-
-    for iField = 1:numel(fieldsList)
-        for i = 1:numel(structure.(fieldsList{iField}))
-            tmp(i, 1).(fieldsList{iField}) =  structure.(fieldsList{iField})(i, 1);
-        end
-    end
-
-    structure = tmp;
 
 end

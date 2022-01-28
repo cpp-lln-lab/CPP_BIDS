@@ -1,10 +1,8 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function removeDateSuffix(filenames, subjectPath)
     %
     % Function removes the date suffix in a given filename(s)
     % Function will look for regular expression in filenames with ``_date-``
-
+    %
     %
     % USAGE::
     %
@@ -16,7 +14,9 @@ function removeDateSuffix(filenames, subjectPath)
     % :param subjectPath: Location/path of the files
     % :type subjectPath: string
     %
-    % :output: - files are renamed by removing '_date-*' suffix
+    % :output: - files are renamed by removing ``'_date-*'`` suffix
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if isempty(filenames)
         filenames = {};

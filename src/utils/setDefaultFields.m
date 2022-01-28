@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function structure = setDefaultFields(structure, fieldsToSet)
     %
     % Recursively loop through the fields of a structure and sets a default value if
@@ -16,6 +14,7 @@ function structure = setDefaultFields(structure, fieldsToSet)
     %
     % :returns: :structure: (structure)
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     fieldsToSet = orderfields(fieldsToSet);
 

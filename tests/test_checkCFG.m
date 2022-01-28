@@ -22,7 +22,7 @@ function test_checkCfgDefault()
     expectedStructure = orderfields(expectedStructure);
 
     %% test
-    assertEqual(expectedStructure, cfg);
+    assertEqual(cfg, expectedStructure);
 
 end
 
@@ -55,32 +55,48 @@ function test_checkCfgBasic()
     expectedStructure.subject.subjectNb = 1;
     expectedStructure.subject.runNb = 1;
 
+    assertEqual(cfg.subject, expectedStructure.subject);
+
     expectedStructure.dir.output = outputDir;
+
+    assertEqual(cfg.dir, cfg.dir);
 
     expectedStructure.task.name = 'test task';
 
+    assertEqual(cfg.task, expectedStructure.task);
+
     expectedStructure.testingDevice = 'mri';
+
+    assertEqual(cfg.testingDevice, expectedStructure.testingDevice);
 
     expectedStructure.mri.repetitionTime = 1.56;
 
+    assertEqual(cfg.mri, expectedStructure.mri);
+
     expectedStructure.fileName.task = 'testTask';
+
+    assertEqual(cfg.fileName, expectedStructure.fileName);
 
     expectedStructure.bids.mri.RepetitionTime = 1.56;
 
-    expectedStructure.bids.mri.TaskName = 'test Task';
-    expectedStructure.bids.beh.TaskName = 'test Task';
-    expectedStructure.bids.ieeg.TaskName = 'test Task';
-    expectedStructure.bids.eeg.TaskName = 'test Task';
-    expectedStructure.bids.meg.TaskName = 'test Task';
+    expectedStructure.bids.mri.TaskName = 'testTask';
+    expectedStructure.bids.beh.TaskName = 'testTask';
+    expectedStructure.bids.ieeg.TaskName = 'testTask';
+    expectedStructure.bids.eeg.TaskName = 'testTask';
+    expectedStructure.bids.meg.TaskName = 'testTask';
 
     expectedStructure.bids.datasetDescription.Name = 'dummy';
     expectedStructure.bids.datasetDescription.BIDSVersion =  '1.0.0';
     expectedStructure.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
 
+    assertEqual(cfg.bids.datasetDescription, expectedStructure.bids.datasetDescription);
+    assertEqual(cfg.bids.mri, expectedStructure.bids.mri);
+    assertEqual(cfg.bids, expectedStructure.bids);
+
     expectedStructure = orderfields(expectedStructure);
 
     %% test
-    assertEqual(expectedStructure, cfg);
+    assertEqual(cfg, expectedStructure);
 
 end
 
@@ -100,11 +116,11 @@ function expectedCfgStructure = returnExpectedCfgStructure()
 
     expectedCfgStructure.eyeTracker.do = false;
 
-    expectedCfgStructure.suffix.contrastEnhancement = [];
-    expectedCfgStructure.suffix.phaseEncodingDirection = [];
-    expectedCfgStructure.suffix.reconstruction = [];
+    expectedCfgStructure.suffix.ce = [];
+    expectedCfgStructure.suffix.dir = [];
+    expectedCfgStructure.suffix.rec = [];
     expectedCfgStructure.suffix.echo = [];
-    expectedCfgStructure.suffix.acquisition = [];
+    expectedCfgStructure.suffix.acq = [];
     expectedCfgStructure.suffix.recording = [];
 
     expectedCfgStructure.bids.beh.TaskName = '';

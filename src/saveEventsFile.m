@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function logFile = saveEventsFile(action, cfg, logFile)
     %
     % Function to save output files for events that will be BIDS compliant.
@@ -74,7 +72,7 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
     %       logFile = saveEventsFile('close', cfg, logFile)
     %
-    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 2
         errorSaveEventsFile('missingArgument');
@@ -220,13 +218,13 @@ function logFile = openFile(cfg, logFile)
     if ~logFile(1).isStim
         % print the basic BIDS columns
         fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
-        fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+        talkToMe(cfg, sprintf('%s\t%s\t%s', 'onset', 'duration', 'trial_type'));
 
-        printHeaderExtraColumns(logFile);
+        printHeaderExtraColumns(cfg, logFile);
 
         % next line so we start printing at the right place
         fprintf(logFile(1).fileID, '\n');
-        fprintf(1, '\n');
+        talkToMe(cfg, '\n');
 
     elseif logFile(1).isStim
         % don't print column headers for _stim.tsv
@@ -235,7 +233,8 @@ function logFile = openFile(cfg, logFile)
 
 end
 
-function printHeaderExtraColumns(logFile)
+function printHeaderExtraColumns(cfg, logFile)
+
     % print any extra column specified by the user
 
     [namesExtraColumns] = returnNamesExtraColumns(logFile);
@@ -246,7 +245,7 @@ function printHeaderExtraColumns(logFile)
         for iCol = 1:nbCol
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
             fprintf(logFile(1).fileID, '\t%s', headerName);
-            fprintf(1, '\t%s', headerName);
+            talkToMe(cfg, sprintf('\t%s', headerName));
         end
 
     end
@@ -292,7 +291,7 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
             throwWarning(cfg, 'saveEventsFile:missingData', warningMessage);
 
             if cfg.verbose > 1
-                disp(logFile(iEvent));
+                talkToMe(cfg, sprintf('%s', logFile(iEvent)));
             end
 
         end
@@ -386,9 +385,9 @@ function printToFile(cfg, logFile, skipEvent, iEvent)
         printExtraColumns(logFile, iEvent, cfg);
 
         fprintf(logFile(1).fileID, '\n');
-        fprintf(1, '\n');
-
+        talkToMe(cfg, '\n');
     end
+
 end
 
 function printExtraColumns(logFile, iEvent, cfg)

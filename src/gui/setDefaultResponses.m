@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function [cfg, responses] = setDefaultResponses(cfg)
     %
     % It sets default responses to for all the entries regarding subject group and for
@@ -15,6 +13,7 @@ function [cfg, responses] = setDefaultResponses(cfg)
     %           - :cfg: (structure) Configuration update with ``cfg.debug.do`` set to false if not
     %                   set by the user.
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 1
         cfg = struct('debug', []);

@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function cfg = checkCFG(cfg)
     %
     % Check the fields of the configuration structure ``cfg``. If a required field is
@@ -27,7 +25,7 @@ function cfg = checkCFG(cfg)
     %     sets the way the experiment is run and the different options match the imaging
     %     modality:
     %
-    %     - ``pc`` is for behavioral test
+    %     - ``pc`` or ``beh`` is for behavioral test
     %     - ``mri`` is for fMRI
     %     - ``eeg`` is for EEG...
     %
@@ -63,11 +61,11 @@ function cfg = checkCFG(cfg)
     %     for most other modalities. See ``tests/test_createFilename()`` for details on how
     %     to use these.
     %
-    %     - ``cfg.suffix.contrastEnhancement = []``
-    %     - ``cfg.suffix.phaseEncodingDirection = []``
-    %     - ``cfg.suffix.reconstruction = []``
+    %     - ``cfg.suffix.ce = []``
+    %     - ``cfg.suffix.dir = []``
+    %     - ``cfg.suffix.rec = []``
     %     - ``cfg.suffix.echo = []``
-    %     - ``cfg.suffix.acquisition = []``
+    %     - ``cfg.suffix.acq = []``
     %     - ``cfg.suffix.recording = []``
     %
     %   Group and session options:
@@ -181,6 +179,8 @@ function cfg = checkCFG(cfg)
     %    cfg.bids.meg.SoftwareFilters = [];
     %    cfg.bids.meg.DigitizedLandmarks = [];
     %    cfg.bids.meg.DigitizedHeadPoints = [];
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 1 || isempty(cfg)
         cfg = struct();
@@ -230,11 +230,11 @@ end
 function fieldsToSet = setSuffixes(fieldsToSet)
 
     % for file naming and JSON
-    fieldsToSet.suffix.contrastEnhancement = [];
-    fieldsToSet.suffix.phaseEncodingDirection = [];
-    fieldsToSet.suffix.reconstruction = [];
+    fieldsToSet.suffix.ce = [];
+    fieldsToSet.suffix.dir = [];
+    fieldsToSet.suffix.rec = [];
     fieldsToSet.suffix.echo = [];
-    fieldsToSet.suffix.acquisition = [];
+    fieldsToSet.suffix.acq = [];
     fieldsToSet.suffix.recording = [];
 
     fieldsToSet.suffix = orderfields(fieldsToSet.suffix);

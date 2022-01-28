@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function printCreditsCppBids(cfg)
     %
     % It will print the credits of this repo. Depending on the level of verbosity set in
@@ -12,6 +10,7 @@ function printCreditsCppBids(cfg)
     % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
     %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     try
         version = fileread(fullfile(fileparts(mfilename('fullpath')), ...

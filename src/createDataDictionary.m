@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function createDataDictionary(cfg, logFile)
     %
     % It creates the data dictionary to be associated with a _events.tsv file. It will create empty
@@ -13,6 +11,8 @@ function createDataDictionary(cfg, logFile)
     % :type cfg: structure
     % :param logFile: Contains the data you want to save.
     % :type logFile: structure
+    %
+    % (C) Copyright 2020 CPP_BIDS developers
 
     fileName = strrep(logFile(1).filename, '.tsv', '.json');
     fullFilename = getFullFilename(fileName, cfg);

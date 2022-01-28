@@ -39,10 +39,9 @@ function checkCppBidsDependencies(cfg)
         CPP_BIDS_INITIALIZED = true();
 
     else
-        fprintf(1, '\n\nCPP_BIDS already initialized\n\n');
+        talkToMe(cfg, '\n\nCPP_BIDS already initialized\n\n');
 
     end
-
 
 end
 
@@ -51,8 +50,8 @@ function checkSubmodule(pth)
     % and ask user to update submodules.
     if numel(dir(pth)) <= 2 % Means that the external is empty
         error(['Git submodules are not cloned!', ...
-            'Try this in your terminal:', ...
-            ' git submodule update --recursive ']);
+               'Try this in your terminal:', ...
+               ' git submodule update --recursive ']);
     else
         addpath(pth);
     end

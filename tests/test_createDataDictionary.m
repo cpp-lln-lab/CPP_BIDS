@@ -41,8 +41,7 @@ function test_createDataDictionaryBasic()
     % data to test against
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
 
-    jsonFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
-                    cfg.fileName.date '.json'];
+    jsonFilename = ['sub-001_ses-001_task-testtask_run-001_date-' cfg.fileName.date '_events.json'];
 
     % test
     assertTrue(exist(fullfile(funcDir, jsonFilename), 'file') == 2);
@@ -117,8 +116,7 @@ function test_createDataDictionaryStim()
     % data to test against
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
 
-    jsonFilename = ['sub-001_ses-001_task-testtask_run-001_stim_date-' ...
-                    cfg.fileName.date '.json'];
+    jsonFilename = ['sub-001_ses-001_task-testtask_run-001_date-' cfg.fileName.date '_stim.json'];
 
     % test
     assertTrue(exist(fullfile(funcDir, jsonFilename), 'file') == 2);

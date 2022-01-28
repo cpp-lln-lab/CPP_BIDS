@@ -37,8 +37,7 @@ function test_saveEventsFileOpenBasic()
 
     %% data to test against
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
-    eventFilename = ['sub-001_ses-001_task-testtask_run-001_events_date-' ...
-                     cfg.fileName.date '.tsv'];
+    eventFilename = ['sub-001_ses-001_task-testtask_run-001_date-' cfg.fileName.date '_events.tsv'];
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, eventFilename), 'file') == 2);
@@ -84,8 +83,7 @@ function test_saveEventsFileOpenStimfile()
 
     %% data to test against
     funcDir = fullfile(outputDir, 'source', 'sub-001', 'ses-001', 'func');
-    stimFilename = ['sub-001_ses-001_task-testtask_run-001_stim_date-' ...
-                    cfg.fileName.date '.tsv'];
+    stimFilename = ['sub-001_ses-001_task-testtask_run-001_date-' cfg.fileName.date '_stim.tsv'];
 
     % check that the file has the right path and name
     assert(exist(fullfile(funcDir, stimFilename), 'file') == 2);

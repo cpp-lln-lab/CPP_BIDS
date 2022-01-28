@@ -25,7 +25,7 @@ function cfg = checkCFG(cfg)
     %     sets the way the experiment is run and the different options match the imaging
     %     modality:
     %
-    %     - ``pc`` is for behavioral test
+    %     - ``pc`` or ``beh`` is for behavioral test
     %     - ``mri`` is for fMRI
     %     - ``eeg`` is for EEG...
     %

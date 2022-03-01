@@ -27,6 +27,7 @@ notebooks/new_experiment/*
 # ignore node js files
 node_modules/*
 package-lock.json
+package.json
 
 # visual studio code stuff
 .vscode

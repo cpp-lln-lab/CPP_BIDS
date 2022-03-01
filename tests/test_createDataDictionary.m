@@ -47,23 +47,6 @@ function test_createDataDictionaryBasic()
     assertTrue(exist(fullfile(funcDir, jsonFilename), 'file') == 2);
 
     %% check content
-
-    if bids.internal.is_github_ci
-        return
-    end
-
-    % TODO fix error in CI
-    % failure: /github/workspace/lib/JSONio/jsonread.mex: failed to load:
-    %    liboctinterp.so.4: cannot open shared object file: No such file or directory
-    % jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
-    % test_createDataDictionary>test_createDataDictionaryBasic:48
-    %   (/github/workspace/tests/test_createDataDictionary.m)
-    %
-    %     failure: fileread: cannot open file
-    %     fileread:37 (/octave/share/octave/5.2.0/m/io/fileread.m)
-    %     jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
-    %     test_createDataDictionary>test_createDataDictionaryBasic:62
-
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
 
     % data to test against
@@ -122,23 +105,6 @@ function test_createDataDictionaryStim()
     assertTrue(exist(fullfile(funcDir, jsonFilename), 'file') == 2);
 
     %% check content
-
-    if bids.internal.is_github_ci
-        return
-    end
-
-    % TODO fix error in CI
-    % failure: /github/workspace/lib/JSONio/jsonread.mex: failed to load:
-    %    liboctinterp.so.4: cannot open shared object file: No such file or directory
-    % jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
-    % test_createDataDictionary>test_createDataDictionaryBasic:48
-    %   (/github/workspace/tests/test_createDataDictionary.m)
-    %
-    %     failure: fileread: cannot open file
-    %     fileread:37 (/octave/share/octave/5.2.0/m/io/fileread.m)
-    %     jsondecode:27 (/github/workspace/lib/bids-matlab/+bids/+util/jsondecode.m)
-    %     test_createDataDictionary>test_createDataDictionaryStim:128
-
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
 
     % data to test against

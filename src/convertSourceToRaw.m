@@ -33,38 +33,32 @@ function convertSourceToRaw(cfg)
              sourceDir);
 
     copyfile(sourceDir, rawDir);
-    
+
     BIDS = bids.layout(rawDir,  'use_schema', false);
-    
+
     data = bids.query(BIDS, 'data');
+    metadata = bids.query(BIDS, 'metadata');
 
     for i = 1:size(data, 1)
-      bf = bids.File(data{i});
-      if isfield(bf.entities, 'date')
-        sourceJson = fullfile(fileparts(bf.path), bf.json_filename);
-        metadata = bids.util.jsondecode(sourceJson);
-        bf.entities.date = '';
-        bf.rename('dry_run', false, 'force', true);
-        bids.util.jsonencode(fullfile(fileparts(bf.path), bf.json_filename), metadata);
-        delete(sourceJson);
-      end
+        bf = bids.File(data{i});
+        if isfield(bf.entities, 'date')
+            % TODO probably JSON renaming should be passed to bids-matlab
+            sourceJson = fullfile(fileparts(bf.path), bf.json_filename);
+            bf.entities.date = '';
+            bf.rename('dry_run', false, 'force', true);
+            bids.util.jsonencode(fullfile(fileparts(bf.path), bf.json_filename), metadata{i});
+            delete(sourceJson);
+        end
+    end
+
+    BIDS = bids.layout(rawDir,  'use_schema', false);
+    data = bids.query(BIDS, 'data', 'suffix', {'stim', 'physio' }, 'ext', '.tsv');
+
+    for i = 1:size(data, 1)
+        gzip(data{i});
+        if exist(data{i}, 'file')
+            delete(data{i});
+        end
     end
 
 end
-
-
-function compressFiles(filenames, subjectPath)
-    if isempty(filenames)
-        filenames = {};
-    else
-        filenames = cellstr(filenames);
-    end
-
-    for i = 1:numel(filenames)
-
-        gzip(fullfile(subjectPath, filenames{i}));
-        delete(fullfile(subjectPath, filenames{i}));
-
-    end
-end
-

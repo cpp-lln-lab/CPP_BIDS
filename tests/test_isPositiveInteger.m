@@ -8,9 +8,18 @@ function test_suite = test_isPositiveInteger %#ok<*STOUT>
     initTestSuite;
 end
 
+function test_isPositiveInteger_errors()
+
+    assertExceptionThrown(@()isPositiveInteger(ones(3, 3, 3)), 'isPositiveInteger:sizeIssue');
+    assertExceptionThrown(@()isPositiveInteger(ones(3)), 'isPositiveInteger:sizeIssue');
+
+end
+
 function test_isPositiveIntegerBasic()
 
     assertTrue(isPositiveInteger(1));
+    assertTrue(isPositiveInteger([1, 2]));
+    assertTrue(isPositiveInteger([1; 2]));
     assertFalse(isPositiveInteger(nan()));
     assertFalse(isPositiveInteger(0.3));
     assertFalse(isPositiveInteger(-1));

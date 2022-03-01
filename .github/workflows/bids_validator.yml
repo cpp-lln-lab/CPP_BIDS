@@ -37,7 +37,7 @@ jobs:
 
     - name: Install BIDS validator
       run: |
-        sudo npm install -g bids-validator@1.6.2
+        sudo npm install -g bids-validator@1.9.0
 
     - name: Create dummy dataset and validate it
       run: |

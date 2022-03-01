@@ -13,10 +13,12 @@ function createJson(varargin)
     %
     % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
+    %
     % :param modality: can be any of the following ``'beh'``, ``'func'``, ``'eeg'``,
     %                  ``'ieeg'``, ``'meg'``) to specify which JSON to save. If it is not
     %                  provided it will read from ``cfg.fileName.modality``.
     % :type modality: string
+    %
     % :param extraInfo: contains information in the JSON file. Beware
     %                   that the BIDS validator is pretty strict on what information can
     %                   go in a JSON so this can be useful to store additional information
@@ -55,8 +57,7 @@ function createJson(varargin)
     end
 
     %% save
-    opts.Indent = '    ';
-    bids.util.jsonencode(fullFilename, jsonContent, opts);
+    bids.util.jsonencode(fullFilename, jsonContent);
 
 end
 

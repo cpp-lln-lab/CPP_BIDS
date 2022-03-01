@@ -12,7 +12,7 @@ fix_submodule:
 lint:
 	mh_style --fix && mh_metric --ci && mh_lint
 
-test: 
+test:
 	$(MATLAB) $(ARG) -r "runTests; exit()"
 
 version.txt: CITATION.cff

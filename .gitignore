@@ -1,16 +1,13 @@
 # exclude mac file
 *DS_Store
 
-# exclude matlab autosaves and octave workspace info
-*.m~
-*octave-workspace
-
 # exclude content of logfiles folders
 *output*
 *.mat
 
 # exclude temp files from tests and coverage
 *test_code_report.txt
+test_report.log
 *coverage*
 
 *filteredBy*
@@ -23,7 +20,6 @@ tests/*.tsv*
 check_my_code_report.txt
 
 # jupyter notebook checkpoints
-notebooks/.ipynb_checkpoints/*
 notebooks/source/*
 notebooks/output/*
 notebooks/new_experiment/*
@@ -37,6 +33,46 @@ package-lock.json
 
 # virtual env
 cpp_bids/*
+env/
 
 # documentation
 docs/build/*
+
+# jupyter notebooks
+.ipynb_checkpoints
+
+## MATLAB / OCTAVE gitignore template
+
+# From : https://github.com/github/gitignore/blob/master/Global/MATLAB.gitignore
+
+# Windows default autosave extension
+*.asv
+
+# OSX / *nix default autosave extension
+*.m~
+
+# Compiled MEX binaries (all platforms)
+*.mex*
+
+# Packaged app and toolbox files
+*.mlappinstall
+*.mltbx
+
+# Generated helpsearch folders
+helpsearch*/
+
+# Simulink code generation folders
+slprj/
+sccprj/
+
+# Matlab code generation folders
+codegen/
+
+# Simulink autosave extension
+*.autosave
+
+# Simulink cache files
+*.slxc
+
+# Octave session info
+octave-workspace

@@ -48,7 +48,9 @@ function test_createDataDictionaryBasic()
 
     %% check content
 
-    return
+    if bids.internal.is_github_ci
+        return
+    end
 
     % TODO fix error in CI
     % failure: /github/workspace/lib/JSONio/jsonread.mex: failed to load:
@@ -65,9 +67,7 @@ function test_createDataDictionaryBasic()
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
 
     % data to test against
-    expectedStruct = bids.util.jsondecode( ...
-                                          fullfile( ...
-                                                   pwd, ...
+    expectedStruct = bids.util.jsondecode(fullfile(fileparts(mfilename('fullpath')), ...
                                                    'testData', ...
                                                    'eventsDataDictionary.json'));
 
@@ -123,7 +123,9 @@ function test_createDataDictionaryStim()
 
     %% check content
 
-    return
+    if bids.internal.is_github_ci
+        return
+    end
 
     % TODO fix error in CI
     % failure: /github/workspace/lib/JSONio/jsonread.mex: failed to load:
@@ -140,9 +142,7 @@ function test_createDataDictionaryStim()
     actualStruct = bids.util.jsondecode(fullfile(funcDir, jsonFilename));
 
     % data to test against
-    expectedStruct = bids.util.jsondecode( ...
-                                          fullfile( ...
-                                                   pwd, ...
+    expectedStruct = bids.util.jsondecode(fullfile(fileparts(mfilename('fullpath')), ...
                                                    'testData', ...
                                                    'stimDataDictionary.json'));
 

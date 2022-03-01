@@ -10,8 +10,10 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %                ``'init'``, ``'init_stim'``, ``'open'``, ``'save'`` or ``'close'``.
     %                For more information on each case see below.
     % :type action: string
+    %
     % :param cfg: Configuration variable. See ``checkCFG()``.
     % :type cfg: structure
+    %
     % :param logFile: (n x 1) The ``logFile`` variable that contains the n events
     %                 you want to save must be a nx1 structure.
     % :type logFile: structure

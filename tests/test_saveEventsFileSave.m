@@ -48,10 +48,7 @@ end
 
 function test_saveEventsFile_save_no_extra_tab()
 
-    cfg.verbose = 0;
-
-    cfg.subject.subjectNb = 1;
-    cfg.subject.runNb = 1;
+    cfg = globalTestSetUp();
 
     cfg.task.name = 'testtask';
 
@@ -95,10 +92,7 @@ function test_saveEventsFile_save_stim()
 
     %% set up
 
-    cfg.verbose = 0;
-
-    cfg.subject.subjectNb = 1;
-    cfg.subject.runNb = 1;
+    cfg = globalTestSetUp();
 
     cfg.task.name = 'testtask';
 
@@ -171,8 +165,6 @@ function test_saveEventsFile_save_skip_empty_events()
     %% set up
 
     [cfg, logFile] = setUp();
-
-    cfg.verbose = 0;
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);
@@ -293,8 +285,6 @@ function test_saveEventsFile_save_array_size()
     %% set up
 
     [cfg, logFile] = setUp();
-
-    cfg.verbose = 0;
 
     % create the events file and header
     logFile = saveEventsFile('open', cfg, logFile);

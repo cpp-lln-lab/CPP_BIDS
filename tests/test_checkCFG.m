@@ -103,7 +103,7 @@ end
 function expectedCfgStructure = returnExpectedCfgStructure()
 
     expectedCfgStructure.subject.subjectGrp = '';
-    expectedCfgStructure.subject.sessionNb = 1;
+    expectedCfgStructure.subject.sessionNb = '';
     expectedCfgStructure.subject.askGrpSess = [true true];
 
     expectedCfgStructure.verbose = 0;

@@ -202,7 +202,7 @@ function cfg = checkCFG(cfg)
                                       'output');
 
     fieldsToSet.subject.askGrpSess = [true true];
-    fieldsToSet.subject.sessionNb = 1; % in case no session was provided
+    fieldsToSet.subject.sessionNb = ''; % in case no session was provided
     fieldsToSet.subject.subjectGrp = ''; % in case no group was provided
 
     fieldsToSet.testingDevice = 'pc';

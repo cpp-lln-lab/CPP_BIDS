@@ -30,31 +30,25 @@ function cfg = userInputs(cfg)
 
     cfg = checkCFG(cfg);
 
-    [cfg, responses] = setDefaultResponses(cfg);
+    [items, cfg] = createQuestionnaire(cfg);
 
-    if ~cfg.debug.do
+    if cfg.useGUI
 
-        questions = createQuestionList(cfg);
-
-        if cfg.useGUI
-
-            try
-                responses = askUserGui(questions, responses);
-            catch
-                responses = askUserCli(questions, responses);
-            end
-
-        else
-
-            responses = askUserCli(questions, responses);
-
+        try
+            responses = askUserGui(questions, responses);
+        catch
+            items = askUserCli(items);
         end
+
+    else
+
+        items = askUserCli(items);
 
     end
 
-    cfg.subject.subjectGrp = responses{1, 1};
-    cfg.subject.subjectNb = responses{2, 1};
-    cfg.subject.sessionNb = responses{3, 1};
-    cfg.subject.runNb = responses{4, 1};
+    cfg.subject.subjectGrp = items(1).response;
+    cfg.subject.subjectNb = items(2).response;
+    cfg.subject.sessionNb = items(3).response;
+    cfg.subject.runNb = items(4).response;
 
 end

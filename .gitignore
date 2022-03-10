@@ -33,6 +33,7 @@ package-lock.json
 
 # virtual env
 cpp_bids/*
+env
 
 # documentation
 docs/build/*

@@ -22,7 +22,7 @@ copyright = '2020, the CPP BIDS dev team'
 author = 'the CPP BIDS dev team'
 
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.0'
+release = 'v2.1.1dev'
 
 
 # -- General configuration ---------------------------------------------------

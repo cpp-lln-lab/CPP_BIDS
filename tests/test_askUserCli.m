@@ -8,6 +8,9 @@ function test_suite = test_askUserCli %#ok<*STOUT>
     initTestSuite;
 end
 
+% no one of those tests should go to the prompt.
+% if they do they should "fail"
+
 function test_askUserCli_do_not_show_anything()
 
     items = returnDefaultQuestionnaire();
@@ -44,6 +47,28 @@ function test_askUserCli_do_not_show_prefilled_items_2()
     cfg = struct();
     cfg.subject.subjectNb = 1;
     cfg.subject.askGrpSess = [false false];
+
+    items = createQuestionnaire(cfg);
+    items(4).show = false;
+
+    items = askUserCli(items);
+
+    expected = returnDefaultQuestionnaire();
+    expected(1).show = false;
+    expected(2).show = false;
+    expected(2).response = 1;
+    expected(3).show = false;
+    expected(3).show = false;
+
+end
+
+function test_askUserCli_do_not_show_prefilled_items_3()
+
+    % we are asking for group but it is prefilled
+    cfg = struct();
+    cfg.subject.subjectGrp = 'ctrl';
+    cfg.subject.subjectNb = 1;
+    cfg.subject.askGrpSess = [true false];
 
     items = createQuestionnaire(cfg);
     items(4).show = false;

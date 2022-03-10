@@ -26,6 +26,8 @@ function varargout = askUserCli(items)
         % no need to show pre filled items
         if items(i).mustBePosInt && isPositiveInteger(items(i).response)
             items(i).show = false;
+        elseif ~isempty(items(i).response) && ischar(items(i).response)
+            items(i).show = false;
         end
 
         while items(i).show

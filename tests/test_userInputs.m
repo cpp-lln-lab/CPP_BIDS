@@ -23,3 +23,20 @@ function test_userInputs_prefilled_cfg()
     assertEqual(cfg.subject, expected.subject);
 
 end
+
+function test_userInputs_prefilled_cfg_2()
+
+    %%
+    cfg.debug.do = false;
+    cfg.subject.subjectGrp = 'foo';
+    cfg.subject.subjectNb = 2;
+    cfg.subject.sessionNb = 2;
+    cfg.subject.runNb = 2;
+
+    cfg = checkCFG(cfg);
+
+    expected = userInputs(cfg);
+
+    assertEqual(cfg.subject, expected.subject);
+
+end

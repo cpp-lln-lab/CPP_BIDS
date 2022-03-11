@@ -1,3 +1,5 @@
+<!-- markdown-link-check-disable -->
+
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cpp-lln-lab/CPP_BIDS/master?filepath=notebooks%2Fbasic_usage.ipynb)
 [![Documentation Status: stable](https://readthedocs.org/projects/cpp-bids/badge/?version=stable)](https://cpp-bids.readthedocs.io/en/stable/?badge=stable)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4007674.svg)](https://doi.org/10.5281/zenodo.4007674)
@@ -5,6 +7,8 @@
 ![](https://github.com/cpp-lln-lab/CPP_BIDS/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/cpp-lln-lab/CPP_BIDS/branch/master/graph/badge.svg)](https://codecov.io/gh/cpp-lln-lab/CPP_BIDS)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
+<!-- markdown-link-check-enable -->
 
 # CPP_BIDS
 

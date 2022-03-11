@@ -43,6 +43,8 @@ function items = askUserGui(items)
 
     end
 
+    refItems = items;
+
     while any([items.show])
 
         items = askQuestionsGui(items);
@@ -50,43 +52,35 @@ function items = askUserGui(items)
         idx = find([items.show]);
         for i = 1:numel(idx)
 
-            if items(idx(i)).mustBePosInt
+            thisItem = items(idx(i));
 
-                items(idx(i)).response = str2double(items(i).response);
+            if thisItem.mustBePosInt
 
-                if ~isPositiveInteger(items(i).response)
-                    items(idx(i)).question = 'Please enter a positive integer: ';
-                    items(idx(i)).show = true;
-                    items(idx(i)).response = '';
+                thisItem.response = str2double(thisItem.response);
+
+                if ~isPositiveInteger(thisItem.response)
+                    thisItem.question = sprintf('%s %s\n %s', ...
+                                                '\color{red}', ...
+                                                refItems(idx(i)).question, ...
+                                                'Please enter a positive integer');
+
+                    thisItem.show = true;
+                    thisItem.response = '';
                 else
-                    items(idx(i)).show = false;
+                    thisItem.show = false;
                 end
 
             else
 
-                items(idx(i)).show = false;
+                thisItem.show = false;
 
             end
+
+            items(idx(i)) = thisItem;
 
         end
 
     end
-
-    %     % boolean for which question should be asked
-    %     isQuestionToAsk = ~cellfun('isempty', questions.questionsToAsk(:, 1));
-    %
-    %     responses = cellstr(string(responses(isQuestionToAsk)));
-    %
-    %     responses = askQuestionsGui(questions, responses, isQuestionToAsk);
-    %
-    %     % keep asking the question till we get a positive integer value for each
-    %     for iQuestion = 1:size(questions.questionsToAsk)
-    %         questions.questionsToAsk{iQuestion} = sprintf('%s %s\n %s', ...
-    %                                                       '\color{red}', ...
-    %                                                       questions.questionsToAsk{iQuestion}, ...
-    %                                                       questions.mustBePositiveInteger);
-    %     end
-    %
 
 end
 

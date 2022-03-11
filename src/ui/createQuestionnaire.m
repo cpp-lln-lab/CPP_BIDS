@@ -1,22 +1,34 @@
 function [items, cfg] = createQuestionnaire(cfg)
     %
     % It creates a list of default questions to ask the users regarding:
+    %
     %   - the subj number
     %   - the run number
-    %   - the group ID (if recquired by user)
-    %   - and session nb (if recquired by user)
+    %   - the group ID (if required by user)
+    %   - and session nb (if required by user)
     %
     % USAGE::
     %
-    %   [questions] = createQuestionnaire(cfg)
+    %   [items, cfg] = createQuestionnaire(cfg)
     %
     % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
     %
     % :returns:
-    %           :questionnaire: (structure) It contains the questions list to ask
+    %           :items: (structure) It contains the questions list to ask
     %                           and if the response given to one question
     %                           must be checked to be a positive integer.
+    %
+    %
+    % EXAMPLE
+    %
+    %   items(1).question = 'Enter subject number (1-999): ';
+    %   items(1).response = '';
+    %   items(1).mustBePosInt = true;
+    %   items(1).show = true;
+    %
+    %
+    % See also: returnDefaultQuestionnaire
     %
     % (C) Copyright 2020 CPP_BIDS developers
 

@@ -5,15 +5,20 @@ function varargout = askUserCli(items)
     %
     % USAGE::
     %
-    %   [responses] = askUserCli(questions, responses)
+    %   items = askUserCli(items)
     %
-    % :param questions: It contains the questions list to ask and if the response given to one
+    % :param items: It contains the questions list to ask and if the response given to one
     %                   question must be checked to be a positive integer.
-    % :type questions: structure
-    % :param responses: It contains the responses set by default.
-    % :type responses: cell
+    % :type items: structure
     %
-    % :returns: - :responses: (cell) Response updated with the user inputs.
+    % EXAMPLE::
+    %
+    %   items = returnDefaultQuestionnaire();
+    %   items = askUserCli(items);
+    %
+    %
+    % See also: createQuestionnaire
+    %
     %
     % (C) Copyright 2020 CPP_BIDS developers
 
@@ -24,10 +29,16 @@ function varargout = askUserCli(items)
         end
 
         % no need to show pre filled items
-        if items(i).mustBePosInt && isPositiveInteger(items(i).response)
-            items(i).show = false;
-        elseif ~isempty(items(i).response) && ischar(items(i).response)
-            items(i).show = false;
+        if ~isempty(items(i).response)
+
+            if items(i).mustBePosInt && isPositiveInteger(items(i).response)
+                items(i).show = false;
+
+            elseif ischar(items(i).response)
+                items(i).show = false;
+
+            end
+
         end
 
         while items(i).show

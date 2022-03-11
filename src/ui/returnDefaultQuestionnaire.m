@@ -1,5 +1,8 @@
 function [items, cfg] = returnDefaultQuestionnaire(cfg)
     %
+    %  Set default questions for subject / session / run number and group ID.
+    %  Also sets default values for those when in debug mode.
+    %
     %   USAGE ::
     %
     %     q = returnDefaultQuestionnaire()

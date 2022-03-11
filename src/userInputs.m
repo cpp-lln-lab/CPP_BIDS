@@ -6,7 +6,7 @@ function cfg = userInputs(cfg)
     %
     % USAGE::
     %
-    %   cfg = userInputs([cfg])
+    %   cfg = userInputs(cfg)
     %
     % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
@@ -34,11 +34,11 @@ function cfg = userInputs(cfg)
 
     if cfg.useGUI
 
-        try
-            responses = askUserGui(questions, responses);
-        catch
-            items = askUserCli(items);
-        end
+        %         try
+        items = askUserGui(items);
+        %         catch
+        %             items = askUserCli(items);
+        %         end
 
     else
 

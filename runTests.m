@@ -6,23 +6,20 @@ function runTests()
 
     tic;
 
-    cd(fileparts(mfilename('fullpath')));
+    thisPath = fileparts(mfilename('fullpath'));
 
-    cfg.verbose = 0;
-    checkCppBidsDependencies(cfg);
-
-    if bids.internal.is_github_ci
-        fprintf(1, '\nThis is github CI\n');
-    else
-        fprintf(1, '\nThis is not github CI\n');
-    end
-
+    cd(thisPath);
     fprintf('\nHome is %s\n', getenv('HOME'));
 
     warning('OFF');
 
-    folderToCover = fullfile(pwd, 'src');
-    testFolder = fullfile(pwd, 'tests');
+    addpath(fullfile(thisPath, 'lib', 'JSONio'));
+    addpath(fullfile(thisPath, 'lib', 'bids-matlab'));
+
+    folderToCover = fullfile(thisPath, 'src');
+    addpath(genpath(folderToCover));
+    testFolder = fullfile(thisPath, 'tests');
+    addpath(testFolder);
 
     addpath(fullfile(testFolder, 'utils'));
 
@@ -30,7 +27,7 @@ function runTests()
                                '-verbose', '-recursive', '-with_coverage', ...
                                '-cover', folderToCover, ...
                                '-cover_xml_file', 'coverage.xml', ...
-                               '-cover_html_dir', fullfile(pwd, 'coverage_html'));
+                               '-cover_html_dir', fullfile(thisPath, 'coverage_html'));
 
     if success
         system('echo 0 > test_report.log');

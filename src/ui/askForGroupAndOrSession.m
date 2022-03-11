@@ -19,8 +19,8 @@ function cfg = askForGroupAndOrSession(cfg)
     askGrpSess = [true true];
 
     if isfield(cfg, 'subject') && ...
-            isfield(cfg.subject, 'askGrpSess') && ...
-            ~isempty(cfg.subject.askGrpSess)
+       isfield(cfg.subject, 'askGrpSess') && ...
+       ~isempty(cfg.subject.askGrpSess)
 
         askGrpSess = cfg.subject.askGrpSess;
 

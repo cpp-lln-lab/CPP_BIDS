@@ -2,13 +2,16 @@
 *DS_Store
 
 # exclude content of logfiles folders
-*output*
+output
+
 *.mat
 
 # exclude temp files from tests and coverage
 *test_code_report.txt
 test_report.log
 *coverage*
+test_report.log
+check_my_code_report.txt
 
 *filteredBy*
 
@@ -16,16 +19,14 @@ tests/*.nii*
 tests/*.json*
 tests/*.tsv*
 
-# exclude report from check_my_code
-check_my_code_report.txt
-
 # jupyter notebook checkpoints
+.ipynb_checkpoints
 notebooks/source/*
-notebooks/output/*
 notebooks/new_experiment/*
 
 # ignore node js files
 node_modules/*
+package.json
 package-lock.json
 package.json
 
@@ -34,13 +35,10 @@ package.json
 
 # virtual env
 cpp_bids/*
-env/
+env
 
 # documentation
 docs/build/*
-
-# jupyter notebooks
-.ipynb_checkpoints
 
 ## MATLAB / OCTAVE gitignore template
 

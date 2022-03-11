@@ -17,7 +17,3 @@ List of functions in the ``utils`` folder.
 .. autofunction:: returnNamesExtraColumns
 .. autofunction:: returnNbColumns
 .. autofunction:: setDefaultFields
-
-.. automodule:: src.gui
-
-.. autofunction:: askUserCli

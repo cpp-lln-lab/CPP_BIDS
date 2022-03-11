@@ -8,7 +8,7 @@ that can be used to deal with ``userInputs()``.
 
 .. automodule:: src.ui
 
-.. autofunction:: askUserCli  
+.. autofunction:: askUserCli
 .. autofunction:: askUserGui
 
 .. autofunction:: createQuestionnaire

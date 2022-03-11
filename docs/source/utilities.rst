@@ -13,8 +13,6 @@ List of functions in the ``utils`` folder.
 .. autofunction:: isPositiveInteger
 .. autofunction:: nanPadding
 .. autofunction:: printCreditsCppBids
-.. autofunction:: removeAllDateSuffix
-.. autofunction:: removeDateSuffix
 .. autofunction:: returnHeaderName
 .. autofunction:: returnNamesExtraColumns
 .. autofunction:: returnNbColumns

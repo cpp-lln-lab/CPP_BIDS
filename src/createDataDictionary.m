@@ -17,20 +17,22 @@ function createDataDictionary(cfg, logFile)
     fileName = strrep(logFile(1).filename, '.tsv', '.json');
     fullFilename = getFullFilename(fileName, cfg);
 
-    jsonContent = setJsonContent(logFile);
+    jsonContent = setJsonContent(logFile, cfg);
 
-    opts.Indent = '    ';
-
-    bids.util.jsonencode(fullFilename, jsonContent, opts);
+    bids.util.jsonencode(fullFilename, jsonContent);
 
 end
 
-function jsonContent = setJsonContent(logFile)
+function jsonContent = setJsonContent(logFile, cfg)
 
     % regular _events file: add default _event file fields to the json content
     if ~isfield(logFile, 'isStim') || isempty(logFile.isStim) || ~logFile.isStim
 
         jsonContent = logFile.columns;
+
+        if isfield(cfg, 'StimulusPresentation')
+            jsonContent.StimulusPresentation = cfg.StimulusPresentation;
+        end
 
         % _stim file: write stim-specific fields to the json content
     elseif logFile.isStim

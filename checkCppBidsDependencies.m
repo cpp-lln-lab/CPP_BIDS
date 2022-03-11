@@ -46,7 +46,9 @@ function checkCppBidsDependencies(cfg)
         CPP_BIDS_INITIALIZED = true();
 
     else
-        fprintf(1, '\n\nCPP_BIDS already initialized\n\n');
+        if cfg.verbose
+            fprintf(1, '\n\nCPP_BIDS already initialized\n\n');
+        end
 
     end
 

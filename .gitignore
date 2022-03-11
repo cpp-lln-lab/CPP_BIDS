@@ -8,6 +8,7 @@ output
 
 # exclude temp files from tests and coverage
 *test_code_report.txt
+test_report.log
 *coverage*
 test_report.log
 check_my_code_report.txt
@@ -27,6 +28,7 @@ notebooks/new_experiment/*
 node_modules/*
 package.json
 package-lock.json
+package.json
 
 # visual studio code stuff
 .vscode
@@ -37,7 +39,6 @@ env
 
 # documentation
 docs/build/*
-
 
 ## MATLAB / OCTAVE gitignore template
 

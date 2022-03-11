@@ -12,6 +12,7 @@ function test_checkCfgDefault()
 
     %% set up
     cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
+    cfg.verbose = 0;
     cfg = checkCFG(cfg);
 
     %% create test data

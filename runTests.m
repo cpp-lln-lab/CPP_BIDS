@@ -9,7 +9,6 @@ function runTests()
     thisPath = fileparts(mfilename('fullpath'));
 
     cd(thisPath);
-
     fprintf('\nHome is %s\n', getenv('HOME'));
 
     warning('OFF');
@@ -21,6 +20,7 @@ function runTests()
     addpath(genpath(folderToCover));
     testFolder = fullfile(thisPath, 'tests');
     addpath(testFolder);
+
     addpath(fullfile(testFolder, 'utils'));
 
     success = moxunit_runtests(testFolder, ...

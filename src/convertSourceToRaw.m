@@ -34,26 +34,31 @@ function convertSourceToRaw(cfg)
 
     copyfile(sourceDir, rawDir);
 
-    % list subjects
-    subjects = cellstr(bids.internal.file_utils('List', rawDir, 'dir', '^sub-.*$'));
+    BIDS = bids.layout(rawDir,  'use_schema', false);
 
-    if isequal(subjects, {''})
-        error('No subjects found in BIDS directory.');
+    data = bids.query(BIDS, 'data');
+    metadata = bids.query(BIDS, 'metadata');
+
+    for i = 1:size(data, 1)
+        bf = bids.File(data{i});
+        if isfield(bf.entities, 'date')
+            % TODO probably JSON renaming should be passed to bids-matlab
+            sourceJson = fullfile(fileparts(bf.path), bf.json_filename);
+            bf.entities.date = '';
+            bf.rename('dry_run', false, 'force', true);
+            bids.util.jsonencode(fullfile(fileparts(bf.path), bf.json_filename), metadata{i});
+            delete(sourceJson);
+        end
     end
 
-    % go through the subject files and parses them to remove the date suffix
-    for su = 1:numel(subjects)
+    BIDS = bids.layout(rawDir,  'use_schema', false);
+    data = bids.query(BIDS, 'data', 'suffix', {'stim', 'physio' }, 'ext', '.tsv');
 
-        sess = cellstr(bids.internal.file_utils('List', ...
-                                                fullfile(rawDir, ...
-                                                         subjects{su}), ...
-                                                'dir', ...
-                                                '^ses-.*$'));
-
-        for se = 1:numel(sess)
-            removeAllDateSuffix(rawDir, subjects{su}, sess{se});
+    for i = 1:size(data, 1)
+        gzip(data{i});
+        if exist(data{i}, 'file')
+            delete(data{i});
         end
-
     end
 
 end

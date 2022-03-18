@@ -4,7 +4,7 @@ function filename = saveCfg(varargin)
     %
     % USAGE::
     %
-    %   createJson(cfg [, filename])
+    %   saveCfg(cfg [, filename])
     %
     % :param cfg: Required. Configuration. See ``checkCFG()``.
     % :type cfg: structure

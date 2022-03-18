@@ -18,6 +18,8 @@ tests/*.nii*
 tests/*.json*
 tests/*.tsv*
 
+*_cfg.json
+
 # jupyter notebook checkpoints
 .ipynb_checkpoints
 notebooks/source/*
@@ -27,7 +29,6 @@ notebooks/new_experiment/*
 node_modules
 package.json
 package-lock.json
-
 
 # visual studio code stuff
 .vscode

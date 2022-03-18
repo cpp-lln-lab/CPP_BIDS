@@ -15,10 +15,16 @@ function filename = saveCfg(varargin)
     % :output: filename
     %
     % If a filename is provided, this will be used as an output file (and will
-    % create any required directory)
+    % create any required directory).
     %
     % If no filename is provided, it will try to create one based on the content
-    % of ``cfg.fileName`` and ``cfg.dir``. If this fails it will save the file
+    % of ``cfg.fileName`` and ``cfg.dir``. This would for example create a
+    % file::
+    %
+    %   ./output/source/sub-01/func/sub-01_task-testTask_run-001_date-202203181752_cfg.json
+    %
+    %
+    % If this fails it will save the file
     % in the ``pwd`` under ``'date-yyyymmddHHMM_cfg.json'``.
     %
     %

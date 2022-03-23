@@ -13,9 +13,16 @@ function fullFilename = getFullFilename(fileName, cfg)
     %
     % (C) Copyright 2020 CPP_BIDS developers
 
-    fullFilename = fullfile( ...
-                            cfg.dir.outputSubject, ...
-                            cfg.fileName.modality, ...
-                            fileName);
+    if isfield(cfg, 'dir') && isfield(cfg.dir, 'outputSubject') && ...
+        isfield(cfg, 'fileName') && isfield(cfg.fileName, 'modality')
+
+        fullFilename = fullfile(cfg.dir.outputSubject, ...
+                                cfg.fileName.modality, ...
+                                fileName);
+    else
+        warning('Not enough information to build a fullpath filename');
+        fullFilename = fileName;
+
+    end
 
 end

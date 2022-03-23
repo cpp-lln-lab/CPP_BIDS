@@ -10,7 +10,6 @@ output
 *test_code_report.txt
 test_report.log
 *coverage*
-test_report.log
 check_my_code_report.txt
 
 *filteredBy*
@@ -19,16 +18,17 @@ tests/*.nii*
 tests/*.json*
 tests/*.tsv*
 
+*_cfg.json
+
 # jupyter notebook checkpoints
 .ipynb_checkpoints
 notebooks/source/*
 notebooks/new_experiment/*
 
 # ignore node js files
-node_modules/*
+node_modules
 package.json
 package-lock.json
-package.json
 
 # visual studio code stuff
 .vscode

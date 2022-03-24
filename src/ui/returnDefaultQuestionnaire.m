@@ -44,6 +44,11 @@ function [items, cfg] = returnDefaultQuestionnaire(cfg)
         items(3).response = 666;
         items(4).response = 666;
 
+        cfg.subject.subjectGrp = items(1).response;
+        cfg.subject.subjectNb = items(2).response;
+        cfg.subject.sessionNb = items(3).response;
+        cfg.subject.runNb = items(4).response;
+
     end
 
 end

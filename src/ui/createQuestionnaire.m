@@ -42,7 +42,7 @@ function [items, cfg] = createQuestionnaire(cfg)
 
     cfg = askForGroupAndOrSession(cfg);
 
-    items = returnDefaultQuestionnaire(cfg);
+    [items, cfg] = returnDefaultQuestionnaire(cfg);
 
     % check pre filled answers
     fields = {'subjectGrp', 'subjectNb', 'sessionNb', 'runNb'};

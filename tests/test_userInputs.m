@@ -8,6 +8,26 @@ function test_suite = test_userInputs %#ok<*STOUT>
     initTestSuite;
 end
 
+function test_userInputs_prefilled_cfg_ignored_by_debug()
+
+    %%
+    cfg.debug.do = true;
+    cfg.subject.subjectGrp = 'foo';
+    cfg.subject.subjectNb = 2;
+    cfg.subject.sessionNb = 2;
+    cfg.subject.runNb = 2;
+
+    cfg = checkCFG(cfg);
+
+    cfg = userInputs(cfg);
+
+    assertEqual(cfg.subject.subjectGrp, 'ctrl');
+    assertEqual(cfg.subject.subjectNb, 666);
+    assertEqual(cfg.subject.sessionNb, 666);
+    assertEqual(cfg.subject.runNb, 666);
+
+end
+
 function test_userInputs_prefilled_cfg_cli()
 
     %%

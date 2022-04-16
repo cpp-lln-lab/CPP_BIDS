@@ -37,6 +37,14 @@ function convertSourceToRaw(varargin)
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'raw');
 
+    % back up description to not overwrite
+    % TODO bids malab should be smart enought to not do that
+    isFile = @(x) exist(x, 'file');
+    if isFile(fullfile(rawDir, 'dataset_description.json'))
+        copyfile(fullfile(rawDir, 'dataset_description.json'), ...
+                 fullfile(rawDir, 'dataset_description_bu.json'));
+    end
+
     % trick use bids matlab copy dataset function
     bids.copy_to_derivative(sourceDir, ...
                             'pipeline_name', '.', ...
@@ -48,14 +56,27 @@ function convertSourceToRaw(varargin)
                             'use_schema', false, ...
                             'verbose', true);
 
+    if isFile(fullfile(rawDir, 'dataset_description_bu.json'))
+        copyfile(fullfile(rawDir, 'dataset_description_bu.json'), ...
+                 fullfile(rawDir, 'dataset_description.json'));
+        delete(fullfile(rawDir, 'dataset_description_bu.json'));
+    else
+        % clean up description
+        description = bids.util.jsondecode(fullfile(rawDir, 'dataset_description.json'));
+        description.BIDSVersion = '1.7.0';
+        description.Name = 'FIXME';
+        description.DatasetType = 'raw';
+        description = rmfield(description, 'GeneratedBy');
+        description = rmfield(description, 'SourceDatasets');
+        bids.util.jsonencode(fullfile(rawDir, 'dataset_description.json'), description);
+    end
+
     removeDateEntity(rawDir, 'filter', filter);
 
     gunzipTimeSeries(rawDir);
 
     % add dummy README and CHANGE file
     templateFolder = fullfile(fileparts(mfilename('fullpath')), '..', 'templates');
-
-    isFile = @(x) exist(x, 'file');
 
     if ~isFile(fullfile(rawDir, 'README'))
         copyfile(fullfile(templateFolder, 'README'), ...

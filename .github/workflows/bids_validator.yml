@@ -2,10 +2,9 @@ name: BIDS validator
 
 on:
   push:
-    branches:
-      - master
+    branches: ['master', 'main', 'dev']
   pull_request:
-    branches: ['master']
+    branches: ['*']
 
 env:
   OCTFLAGS: --no-gui --no-window-system --silent

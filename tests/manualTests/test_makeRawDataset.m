@@ -192,7 +192,9 @@ function test_makeRawDataset()
     clear;
 
     cfg.dir.output = outputDir();
-    convertSourceToRaw(cfg);
+
+    filter = struct('sub', '001');
+    convertSourceToRaw(cfg, 'filter', filter);
 
 end
 

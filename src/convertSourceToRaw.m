@@ -6,12 +6,12 @@ function convertSourceToRaw(varargin)
     %
     % USAGE::
     %
-    %   convertSourceToRaw(cfg)
+    %   convertSourceToRaw(cfg, 'filter', filter)
     %
     % :param cfg: cfg structure is needed only for providing the path in ``cfg.dir.output``.
     % :type cfg: structure
     %
-    % :param filter: bids.query fitler to only convert a subset of files.
+    % :param filter: bids.query filter to only convert a subset of files.
     % :type filter: structure
     %
     % :output:
@@ -32,25 +32,49 @@ function convertSourceToRaw(varargin)
     args.parse(varargin{:});
 
     cfg = args.Results.cfg;
+    filter = args.Results.filter;
 
     sourceDir = fullfile(cfg.dir.output, 'source');
     rawDir = fullfile(cfg.dir.output, 'raw');
 
+    % trick use bids matlab copy dataset function
+    bids.copy_to_derivative(sourceDir, ...
+                            'pipeline_name', '.', ...
+                            'out_path', rawDir, ...
+                            'filter', filter, ...
+                            'unzip', false, ...
+                            'force', true, ...
+                            'skip_dep', false, ...
+                            'use_schema', false, ...
+                            'verbose', true);
+
+    removeDateEntity(rawDir, 'filter', filter);
+
+    gunzipTimeSeries(rawDir);
+
     % add dummy README and CHANGE file
     templateFolder = fullfile(fileparts(mfilename('fullpath')), '..', 'templates');
 
-    copyfile(fullfile(templateFolder, 'README'), ...
-             sourceDir);
-    copyfile(fullfile(templateFolder, 'CHANGES'), ...
-             sourceDir);
-    copyfile(fullfile(templateFolder, '.bidsignore'), ...
-             sourceDir);
+    isFile = @(x) exist(x, 'file');
 
-    copyfile(sourceDir, rawDir);
+    if ~isFile(fullfile(rawDir, 'README'))
+        copyfile(fullfile(templateFolder, 'README'), ...
+                 rawDir);
+    end
+    if ~isFile(fullfile(rawDir, 'CHANGES'))
+        copyfile(fullfile(templateFolder, 'CHANGES'), ...
+                 rawDir);
+    end
+    if ~isFile(fullfile(rawDir, '.bidsignore'))
+        copyfile(fullfile(templateFolder, '.bidsignore'), ...
+                 rawDir);
+    end
 
-    removeDateEntity(rawDir);
+end
 
-    BIDS = bids.layout(rawDir,  'use_schema', false);
+function gunzipTimeSeries(pathToDataSet)
+
+    BIDS = bids.layout(pathToDataSet,  'use_schema', false);
     data = bids.query(BIDS, 'data', 'suffix', {'stim', 'physio' }, 'ext', '.tsv');
 
     for i = 1:size(data, 1)
@@ -59,25 +83,4 @@ function convertSourceToRaw(varargin)
             delete(data{i});
         end
     end
-
-end
-
-function removeDateEntity(pathToDataSet)
-
-    BIDS = bids.layout(pathToDataSet,  'use_schema', false);
-
-    filter = struct('date', {'[0-9]+'});
-    data = bids.query(BIDS, 'data', filter);
-    metadata = bids.query(BIDS, 'metadata', filter);
-
-    for i = 1:size(data, 1)
-        bf = bids.File(data{i});
-        % TODO probably JSON renaming should be passed to bids-matlab
-        sourceJson = fullfile(fileparts(bf.path), bf.json_filename);
-        bf.entities.date = '';
-        bf.rename('dry_run', false, 'force', true);
-        bids.util.jsonencode(fullfile(fileparts(bf.path), bf.json_filename), metadata{i});
-        delete(sourceJson);
-    end
-
 end

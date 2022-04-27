@@ -6,184 +6,195 @@ function test_makeRawDataset()
         rmdir(outputDir(), 's');
     end
 
-    %% set up
-    cfg = baseCfg();
-
-    cfg.bids.datasetDescription.Name = 'dummy';
-    cfg.bids.datasetDescription.BIDSVersion = '1.0.0';
-    cfg.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
-
-    cfg.testingDevice = 'mri';
-
-    %% MRI task data
-    cfg.mri.repetitionTime = 1.56;
-
-    cfg.task.name = 'testtask';
-
-    cfg = createFilename(cfg);
-
-    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
-    createJson(cfg, extraInfo);
-
-    createTsvWithContent(cfg);
-
-    createDatasetDescription(cfg);
-
-    %% MRI bold rest data and fancy suffixes
-    clear cfg;
-
-    cfg = baseCfg();
-
-    cfg.testingDevice = 'mri';
-
-    % deal with MRI suffixes
-    cfg.suffix.reconstruction = 'fast recon';
-    cfg.suffix.contrastEnhancement = 'test';
-    cfg.suffix.phaseEncodingDirection = 'y pos';
-    cfg.suffix.echo = '1';
-    cfg.suffix.acquisition = ' new tYpe';
-
-    cfg.mri.repetitionTime = 1.56;
-
-    cfg.task.name = 'rest';
-
-    cfg = createFilename(cfg);
-
-    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
-    createJson(cfg, extraInfo);
-
-    %% EEG data and fancy suffixes
-    clear cfg;
-
-    cfg = baseCfg();
-
-    cfg.testingDevice = 'eeg';
-
-    cfg.task.name = 'target practice';
-
-    cfg.bids.eeg.EEGReference = 'Cz';
-    cfg.bids.eeg.SamplingFrequency = 2400;
-    cfg.bids.eeg.PowerLineFrequency = 50;
-    cfg.bids.eeg.SoftwareFilters = 'n/a';
-
-    cfg = createFilename(cfg);
-
-    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
-    createJson(cfg, extraInfo);
-
-    createTsvWithContent(cfg);
-
-    %% iEEG data and fancy suffixes
-    clear cfg;
-
-    cfg = baseCfg();
-
-    cfg.testingDevice = 'ieeg';
-
-    cfg.task.name = 'implanted target practice';
-
-    cfg.bids.ieeg.iEEGReference = 'Cz';
-    cfg.bids.ieeg.SamplingFrequency = 2400;
-    cfg.bids.ieeg.PowerLineFrequency = 50;
-    cfg.bids.ieeg.SoftwareFilters = 'n/a';
-
-    cfg = createFilename(cfg);
-
-    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
-    createJson(cfg, extraInfo);
-
-    createTsvWithContent(cfg);
-
-    %% MEG data and fancy suffixes
-    clear cfg;
-
-    cfg = baseCfg();
-
-    cfg.testingDevice = 'meg';
-
-    cfg.task.name = 'magnetic target practice';
-
-    cfg.bids.meg.SamplingFrequency = 2400;
-    cfg.bids.meg.PowerLineFrequency = 60;
-    cfg.bids.meg.DewarPosition = 'upright';
-    cfg.bids.meg.SoftwareFilters = 'n/a';
-    cfg.bids.meg.DigitizedLandmarks = false;
-    cfg.bids.meg.DigitizedHeadPoints = false;
-
-    cfg = createFilename(cfg);
-
-    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
-    createJson(cfg, extraInfo);
-
-    createTsvWithContent(cfg);
-
-    %% beh data and fancy suffixes
-    clear cfg;
-
-    cfg = baseCfg();
-
-    cfg.testingDevice = 'pc';
-
-    cfg.task.name = 'easy target practice';
-
-    cfg = createFilename(cfg);
-
-    extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
-    createJson(cfg, extraInfo);
-
-    createTsvWithContent(cfg);
-
-    %% add dummy data
     templateFolder = fullfile(fileparts(mfilename('fullpath')), '..', '..', 'templates');
 
-    subjectDir = fullfile(cfg.dir.output, 'source', 'sub-001', 'ses-001');
-    funcDir = fullfile(subjectDir, 'func');
+    for iSub = 1:2
+        %% set up
+        cfg = baseCfg(iSub);
 
-    basename = 'sub-001_ses-001';
+        cfg.bids.datasetDescription.Name = 'dummy';
+        cfg.bids.datasetDescription.BIDSVersion = '1.0.0';
+        cfg.bids.datasetDescription.Authors = {'Jane Doe', 'John Doe'};
 
-    boldFilename = [basename '_task-testtask_run-001_date-' cfg.fileName.date '_bold.nii.gz'];
+        cfg.testingDevice = 'mri';
 
-    copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
-             fullfile(funcDir, boldFilename));
+        %% MRI task data
+        cfg.mri.repetitionTime = 1.56;
 
-    boldFilename = [basename '_task-rest',  ...
-                    '_run-001_echo-1_date-' cfg.fileName.date '_bold.nii.gz'];
+        cfg.task.name = 'testtask';
 
-    copyfile( ...
-             fullfile(templateFolder, 'dummyData.nii.gz'), ...
-             fullfile(funcDir, boldFilename));
+        cfg = createFilename(cfg);
 
-    eegDir = fullfile(subjectDir, 'eeg');
-    megDir = fullfile(subjectDir, 'meg');
-    ieegDir = fullfile(subjectDir, 'ieeg');
-    behDir = fullfile(subjectDir, 'beh');
+        extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+        createJson(cfg, extraInfo);
 
-    eegFilename = [basename '_task-targetPractice_run-001_date-', ...
-                   cfg.fileName.date '_eeg.edf'];
-    megFilename = [basename '_task-magneticTargetPractice_run-001_date-', ...
-                   cfg.fileName.date '_meg.fif'];
-    ieegFilename = [basename '_task-implantedTargetPractice_run-001_date-', ...
-                    cfg.fileName.date '_ieeg.edf'];
-    behFilename = [basename '_task-easyTargetPractice_run-001_date-', ...
-                   cfg.fileName.date '_beh.tsv'];
+        createTsvWithContent(cfg);
 
-    copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
-             fullfile(eegDir, eegFilename));
+        createDatasetDescription(cfg);
 
-    copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
-             fullfile(megDir, megFilename));
+        %% MRI bold rest data and fancy suffixes
+        clear cfg;
 
-    copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
-             fullfile(ieegDir, ieegFilename));
+        cfg = baseCfg(iSub);
 
-    copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
-             fullfile(behDir, behFilename));
+        cfg.testingDevice = 'mri';
+
+        % deal with MRI suffixes
+        cfg.suffix.reconstruction = 'fast recon';
+        cfg.suffix.contrastEnhancement = 'test';
+        cfg.suffix.phaseEncodingDirection = 'y pos';
+        cfg.suffix.echo = '1';
+        cfg.suffix.acquisition = ' new tYpe';
+
+        cfg.mri.repetitionTime = 1.56;
+
+        cfg.task.name = 'rest';
+
+        cfg = createFilename(cfg);
+
+        extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+        createJson(cfg, extraInfo);
+
+        %% EEG data and fancy suffixes
+        clear cfg;
+
+        cfg = baseCfg(iSub);
+
+        cfg.testingDevice = 'eeg';
+
+        cfg.task.name = 'target practice';
+
+        cfg.bids.eeg.EEGReference = 'Cz';
+        cfg.bids.eeg.SamplingFrequency = 2400;
+        cfg.bids.eeg.PowerLineFrequency = 50;
+        cfg.bids.eeg.SoftwareFilters = 'n/a';
+
+        cfg = createFilename(cfg);
+
+        extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+        createJson(cfg, extraInfo);
+
+        createTsvWithContent(cfg);
+
+        %% iEEG data and fancy suffixes
+        clear cfg;
+
+        cfg = baseCfg(iSub);
+
+        cfg.testingDevice = 'ieeg';
+
+        cfg.task.name = 'implanted target practice';
+
+        cfg.bids.ieeg.iEEGReference = 'Cz';
+        cfg.bids.ieeg.SamplingFrequency = 2400;
+        cfg.bids.ieeg.PowerLineFrequency = 50;
+        cfg.bids.ieeg.SoftwareFilters = 'n/a';
+
+        cfg = createFilename(cfg);
+
+        extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+        createJson(cfg, extraInfo);
+
+        createTsvWithContent(cfg);
+
+        %% MEG data and fancy suffixes
+        clear cfg;
+
+        cfg = baseCfg(iSub);
+
+        cfg.testingDevice = 'meg';
+
+        cfg.task.name = 'magnetic target practice';
+
+        cfg.bids.meg.SamplingFrequency = 2400;
+        cfg.bids.meg.PowerLineFrequency = 60;
+        cfg.bids.meg.DewarPosition = 'upright';
+        cfg.bids.meg.SoftwareFilters = 'n/a';
+        cfg.bids.meg.DigitizedLandmarks = false;
+        cfg.bids.meg.DigitizedHeadPoints = false;
+
+        cfg = createFilename(cfg);
+
+        extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+        createJson(cfg, extraInfo);
+
+        createTsvWithContent(cfg);
+
+        %% beh data and fancy suffixes
+        clear cfg;
+
+        cfg = baseCfg(iSub);
+
+        cfg.testingDevice = 'pc';
+
+        cfg.task.name = 'easy target practice';
+
+        cfg = createFilename(cfg);
+
+        extraInfo = struct('extraInfo', struct('nestedExtraInfo', 'something extra'));
+        createJson(cfg, extraInfo);
+
+        createTsvWithContent(cfg);
+
+    end
+
+    %% add dummy data
+    subjectsLabel = {'001', '002'};
+
+    for iSub = 1:numel(subjectsLabel)
+
+        subjectDir = fullfile(cfg.dir.output, 'source', ['sub-' subjectsLabel{iSub}], 'ses-001');
+        funcDir = fullfile(subjectDir, 'func');
+
+        basename = ['sub-' subjectsLabel{iSub} '_ses-001'];
+
+        boldFilename = [basename '_task-testtask_run-001_date-' cfg.fileName.date '_bold.nii.gz'];
+
+        copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
+                 fullfile(funcDir, boldFilename));
+
+        boldFilename = [basename '_task-rest',  ...
+                        '_run-001_echo-1_date-' cfg.fileName.date '_bold.nii.gz'];
+
+        copyfile( ...
+                 fullfile(templateFolder, 'dummyData.nii.gz'), ...
+                 fullfile(funcDir, boldFilename));
+
+        eegDir = fullfile(subjectDir, 'eeg');
+        megDir = fullfile(subjectDir, 'meg');
+        ieegDir = fullfile(subjectDir, 'ieeg');
+        behDir = fullfile(subjectDir, 'beh');
+
+        eegFilename = [basename '_task-targetPractice_run-001_date-', ...
+                       cfg.fileName.date '_eeg.edf'];
+        megFilename = [basename '_task-magneticTargetPractice_run-001_date-', ...
+                       cfg.fileName.date '_meg.fif'];
+        ieegFilename = [basename '_task-implantedTargetPractice_run-001_date-', ...
+                        cfg.fileName.date '_ieeg.edf'];
+        behFilename = [basename '_task-easyTargetPractice_run-001_date-', ...
+                       cfg.fileName.date '_beh.tsv'];
+
+        copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
+                 fullfile(eegDir, eegFilename));
+
+        copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
+                 fullfile(megDir, megFilename));
+
+        copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
+                 fullfile(ieegDir, ieegFilename));
+
+        copyfile(fullfile(templateFolder, 'dummyData.nii.gz'), ...
+                 fullfile(behDir, behFilename));
+
+    end
 
     %% actually do the conversion of the source data thus created
     clear;
 
     cfg.dir.output = outputDir();
-    convertSourceToRaw(cfg);
+
+    filter = struct('sub', '001');
+    convertSourceToRaw(cfg, 'filter', filter);
 
 end
 
@@ -263,10 +274,10 @@ function value = outputDir()
     value = fullfile(fileparts(mfilename('fullpath')), 'output');
 end
 
-function value = baseCfg()
+function value = baseCfg(subjectNb)
     value.dir.output = outputDir;
     value.StimulusPresentation = stimulusPresentation();
-    value.subject.subjectNb = 1;
+    value.subject.subjectNb = subjectNb;
     value.subject.runNb = 1;
     value.task.instructions = 'do this';
     value.verbosity = 0;

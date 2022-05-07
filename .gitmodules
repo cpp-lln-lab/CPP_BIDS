@@ -5,4 +5,4 @@
 [submodule "lib/JSONio"]
 	path = lib/JSONio
 	url = https://github.com/gllmflndn/JSONio.git
-	branch = master
+	branch = main

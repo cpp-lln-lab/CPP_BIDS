@@ -1,8 +1,8 @@
 [submodule "lib/bids-matlab"]
 	path = lib/bids-matlab
 	url = https://github.com/bids-standard/bids-matlab.git
-	branch = master
+	branch = dev
 [submodule "lib/JSONio"]
 	path = lib/JSONio
 	url = https://github.com/gllmflndn/JSONio.git
-	branch = master
+	branch = main

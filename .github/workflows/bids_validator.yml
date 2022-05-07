@@ -2,10 +2,9 @@ name: BIDS validator
 
 on:
   push:
-    branches:
-      - master
+    branches: ['master', 'main', 'dev']
   pull_request:
-    branches: ['master']
+    branches: ['*']
 
 env:
   OCTFLAGS: --no-gui --no-window-system --silent
@@ -15,7 +14,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - uses: actions/checkout@v3
       with:
         submodules: true
         fetch-depth: 1
@@ -37,9 +40,10 @@ jobs:
 
     - name: Install BIDS validator
       run: |
-        sudo npm install -g bids-validator@1.9.0
+        sudo npm install -g bids-validator
 
     - name: Create dummy dataset and validate it
       run: |
         cd tests/manualTests
-        octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders
+        octave $OCTFLAGS --eval "test_makeRawDataset"
+        bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders

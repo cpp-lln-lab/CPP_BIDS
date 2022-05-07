@@ -23,7 +23,7 @@ function logFile = initializeExtraColumns(logFile)
     fieldsToSet.length = 1;
     fieldsToSet.bids.LongName = '';
     fieldsToSet.bids.Description = '';
-    fieldsToSet.bids.Levels = '';
+    fieldsToSet.bids.Levels = struct();
     fieldsToSet.bids.TermURL = '';
     fieldsToSet.bids.Units = '';
 

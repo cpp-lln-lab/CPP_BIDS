@@ -5,7 +5,7 @@
     },
     "trial_type": {
         "Description": "types of trial",
-        "Levels": ""
+        "Levels": {}
     },
     "duration": {
         "Description": "duration of the event or the block",
@@ -14,28 +14,28 @@
     "Speed": {
         "LongName": "",
         "Description": "",
-        "Levels": "",
+        "Levels": {},
         "TermURL": "",
         "Units": ""
     },
     "LHL24_01": {
         "LongName": "",
         "Description": "",
-        "Levels": "",
+        "Levels": {},
         "TermURL": "",
         "Units": ""
     },
     "LHL24_02": {
         "LongName": "",
         "Description": "",
-        "Levels": "",
+        "Levels": {},
         "TermURL": "",
         "Units": ""
     },
     "LHL24_03": {
         "LongName": "",
         "Description": "",
-        "Levels": "",
+        "Levels": {},
         "TermURL": "",
         "Units": ""
     }

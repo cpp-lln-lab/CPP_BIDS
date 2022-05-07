@@ -1,4 +1,4 @@
-name: MOxUnit
+name: tests and coverage
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - master
       - dev
   pull_request:
-    branches: '*'
+    branches: ['*']
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
 
     - uses: actions/checkout@v2
@@ -21,17 +21,18 @@ jobs:
     - name: Make jsonread for octave
       run: |
         sudo apt-get -y -qq update
-        sudo apt-get -y install octave 
+        sudo apt-get -y install octave
         sudo apt-get -y install liboctave-dev
         cd lib/JSONio
         mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS
-      # cd ../..
 
     - name: MOxUnit Action
-      uses: joergbrech/moxunit-action@v1.1
+      uses: joergbrech/moxunit-action@master
       with:
-        tests: tests
-        src: src
+        tests: tests # files or directories containing the MOxUnit test cases
+        src: src # directories to be added to the Octave search path before running the tests.
+        ext: tests/utils # External resources to add to the search put (excluded from coverage)
+        # data: # Directory for test data
         with_coverage: true
         cover_xml_file: coverage.xml
 

@@ -48,7 +48,7 @@ Template proposal
 
    end
 
-.. autofunction:: templateFunction  
+.. autofunction:: templateFunction
 
 
 Example code in the help section
@@ -100,6 +100,3 @@ Example code in the help section
    end
 
 .. autofunction:: templateFunctionExample
-
-
-

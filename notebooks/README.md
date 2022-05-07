@@ -10,7 +10,7 @@
     install it. If using miniconda, run `conda install jupyter` to download and
     install the Jupyter Notebook package.
 
-1.  Install [Octave kernel](https://pypi.org/project/octave-kernel/): 
+1.  Install [Octave kernel](https://pypi.org/project/octave-kernel/):
     `pip install octave_kernel`
 
 1.  Run `jupyter notebook` in your terminal. `Octave` should appear on the list

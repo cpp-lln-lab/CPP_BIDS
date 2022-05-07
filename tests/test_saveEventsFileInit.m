@@ -28,7 +28,7 @@ function test_saveEventsFileInitBasic()
     expectedStrcut(1).columns.onset.Units = 's';
 
     expectedStrcut(1).columns.trial_type.Description = 'types of trial';
-    expectedStrcut(1).columns.trial_type.Levels = '';
+    expectedStrcut(1).columns.trial_type.Levels = struct();
 
     expectedStrcut(1).columns.duration.Description = 'duration of the event or the block';
     expectedStrcut(1).columns.duration.Units = 's';
@@ -55,7 +55,7 @@ function test_saveEventsFileInitExtraColumns()
     expectedStrcut(1).extraColumns.Speed.length = 1;
     expectedStrcut(1).extraColumns.Speed.bids.LongName = '';
     expectedStrcut(1).extraColumns.Speed.bids.Description = '';
-    expectedStrcut(1).extraColumns.Speed.bids.Levels = '';
+    expectedStrcut(1).extraColumns.Speed.bids.Levels = struct();
     expectedStrcut(1).extraColumns.Speed.bids.TermURL = '';
     expectedStrcut(1).extraColumns.Speed.bids.Units = '';
 
@@ -82,13 +82,13 @@ function test_saveEventsFileInitExtraColumnsArray()
     expectedStrcut(1).extraColumns.Speed.length = 1;
     expectedStrcut(1).extraColumns.Speed.bids.LongName = '';
     expectedStrcut(1).extraColumns.Speed.bids.Description = '';
-    expectedStrcut(1).extraColumns.Speed.bids.Levels = '';
+    expectedStrcut(1).extraColumns.Speed.bids.Levels = struct();
     expectedStrcut(1).extraColumns.Speed.bids.TermURL = '';
     expectedStrcut(1).extraColumns.Speed.bids.Units = '';
     expectedStrcut(1).extraColumns.LHL24.length = 3;
     expectedStrcut(1).extraColumns.LHL24.bids.LongName = '';
     expectedStrcut(1).extraColumns.LHL24.bids.Description = '';
-    expectedStrcut(1).extraColumns.LHL24.bids.Levels = '';
+    expectedStrcut(1).extraColumns.LHL24.bids.Levels = struct();
     expectedStrcut(1).extraColumns.LHL24.bids.TermURL = '';
     expectedStrcut(1).extraColumns.LHL24.bids.Units = '';
 

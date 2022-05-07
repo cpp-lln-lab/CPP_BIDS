@@ -1,0 +1,45 @@
+name: BIDS validator
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: ['master']
+
+env:
+  OCTFLAGS: --no-gui --no-window-system --silent
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+        fetch-depth: 1
+
+    - name: Make jsonread for octave
+      run: |
+        sudo apt-get -y -qq update
+        sudo apt-get -y install octave
+        sudo apt-get -y install liboctave-dev
+        cd lib/JSONio
+        mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS
+        cd ..
+
+    - name: Update octave path
+      run: |
+        octave $OCTFLAGS --eval "addpath(pwd); savepath();"
+        octave $OCTFLAGS --eval "addpath(genpath(fullfile(pwd, 'lib'))); savepath();"
+        octave $OCTFLAGS --eval "addpath(genpath(fullfile(pwd, 'src'))); savepath();"
+
+    - name: Install BIDS validator
+      run: |
+        sudo npm install -g bids-validator@1.6.2
+
+    - name: Create dummy dataset and validate it
+      run: |
+        cd tests/manualTests
+        octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders

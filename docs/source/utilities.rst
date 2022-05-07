@@ -1,13 +1,12 @@
 Utility functions
 *****************
-  
-List of functions in the ``utils`` folder.  
+
+List of functions in the ``utils`` folder.
 
 ----
 
 .. automodule:: src.utils
 
-.. autofunction:: checkCppBidsDependencies
 .. autofunction:: checkInput
 .. autofunction:: createValidName
 .. autofunction:: getFullFilename
@@ -22,6 +21,6 @@ List of functions in the ``utils`` folder.
 .. autofunction:: returnNbColumns
 .. autofunction:: setDefaultFields
 
-.. automodule:: src.gui 
+.. automodule:: src.gui
 
 .. autofunction:: askUserCli

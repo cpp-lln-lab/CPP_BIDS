@@ -47,7 +47,7 @@ env:
   # to update all submodules
   SUBMOD_TO_UPDATE: "*"
   # otherwise use a space separated list of the relative paths of each submodule to update
-  # SUBMOD_TO_UPDATE: "lib/sub_3 lib/sub_1" 
+  # SUBMOD_TO_UPDATE: "lib/sub_3 lib/sub_1"
 
 defaults:
   run:

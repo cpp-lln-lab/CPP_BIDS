@@ -10,14 +10,18 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %   outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputTsv, cfg)
     %
     % :param columnName: the header of the column where the content of interest is stored
-    %                    (for example for ``trigger`` will be ``trial type``)
-    % :type columnName: string
+    %                    (for example for ``trigger`` will be ``trial_type``)
+    % :type columnName: char
     %
-    % :param filterBy: the content of the column you want to filter out. It can take just
-    %                  part of the content name (for example, if you want to display the triggers
-    %                  and you have ``trigger_motion`` and ``trigger_static``,
-    %                  ``trigger`` as input will do)
-    % :type filterBy: string
+    % :param filterBy: The content of the column you want to filter out. 
+    %                  Relies on the ``filter`` transformer of bids.matlab
+    %                  Supports:
+    %  
+    %                    - ``>``, ``<``, ``>=``, ``<=``, ``==`` for numeric values
+    %                    - ``==`` for string operation (case sensitive)
+    %
+    %                  For example, ``trial_type==trigger`` or `onset > 1`.
+    % :type filterBy: char
     %
     % :param saveOutputTsv: flag to save the filtered output in a tsv file
     % :type saveOutputTsv: boolean
@@ -34,12 +38,13 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %           :outputFiltered: dataset with only the specified content, to see it
     %                            in the command window use ``display(outputFiltered)``.
     %
+    %
+    % See also: bids.transformers.filter 
+    %
+    %
     % (C) Copyright 2020 CPP_BIDS developers
 
-    % Create tag to add to output file in case you want to save it
-    outputFilterTag = ['_filteredBy-' columnName '_' filterBy '.tsv'];
-
-    % Checke if input is cfg or the file path and assign the output filename for later saving
+    % Check if input is cfg or the file path and assign the output filename for later saving
     if ischar(varargin{1})
 
         tsvFile = varargin{1};
@@ -52,8 +57,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
 
     end
 
-    % Create output file name
-    outputFileName = strrep(tsvFile, '.tsv', outputFilterTag);
+
 
     % Check if the file exists
     if ~exist(tsvFile, 'file')
@@ -69,14 +73,23 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
         % Read the the tsv file and store each column in a field of `output` structure
         output = bids.util.tsvread(tsvFile);
     end
+    
+    transformers{1} = struct('Name', 'Filter', ...
+                          'Input', columnName, ...
+                          'Query', filterBy);
 
-    % Get the index of the target content to filter and display
-    filterIdx = strncmp(output.(columnName), filterBy, length(filterBy));
-
-    % apply the filter
+    output = bids.transformers(transformers, output);
+    
+    % remove nans
+    if isnumeric(output.(columnName))
+        rowsToRemove = isnan(output.(columnName));
+    elseif iscell(output.(columnName))
+      rowsToRemove = cellfun(@(x) numel(x) == 1 && isnan(x), ...
+                             output.(columnName));
+    end
     listFields = fieldnames(output);
     for iField = 1:numel(listFields)
-        output.(listFields{iField})(~filterIdx) = [];
+        output.(listFields{iField})(rowsToRemove) = [];
     end
 
     % Convert the structure to dataset
@@ -89,7 +102,13 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
 
     if saveOutputTsv
 
-        bids.util.tsvwrite(outputFileName, output);
+      % Create tag to add to output file in case you want to save it
+      outputFilterTag = ['_filteredOn-' columnName '.tsv'];
+      
+      % Create output file name
+      outputFileName = strrep(tsvFile, '.tsv', outputFilterTag);
+      
+      bids.util.tsvwrite(outputFileName, output);
 
     end
 

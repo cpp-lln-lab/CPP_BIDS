@@ -13,10 +13,10 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %                    (for example for ``trigger`` will be ``trial_type``)
     % :type columnName: char
     %
-    % :param filterBy: The content of the column you want to filter out. 
+    % :param filterBy: The content of the column you want to filter out.
     %                  Relies on the ``filter`` transformer of bids.matlab
     %                  Supports:
-    %  
+    %
     %                    - ``>``, ``<``, ``>=``, ``<=``, ``==`` for numeric values
     %                    - ``==`` for string operation (case sensitive)
     %
@@ -39,7 +39,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     %                            in the command window use ``display(outputFiltered)``.
     %
     %
-    % See also: bids.transformers.filter 
+    % See also: bids.transformers.filter
     %
     %
     % (C) Copyright 2020 CPP_BIDS developers
@@ -57,8 +57,6 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
 
     end
 
-
-
     % Check if the file exists
     if ~exist(tsvFile, 'file')
         error([newline 'Input file does not exist: %s'], tsvFile);
@@ -73,19 +71,19 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
         % Read the the tsv file and store each column in a field of `output` structure
         output = bids.util.tsvread(tsvFile);
     end
-    
+
     transformers{1} = struct('Name', 'Filter', ...
-                          'Input', columnName, ...
-                          'Query', filterBy);
+                             'Input', columnName, ...
+                             'Query', filterBy);
 
     output = bids.transformers(transformers, output);
-    
+
     % remove nans
     if isnumeric(output.(columnName))
         rowsToRemove = isnan(output.(columnName));
     elseif iscell(output.(columnName))
-      rowsToRemove = cellfun(@(x) numel(x) == 1 && isnan(x), ...
-                             output.(columnName));
+        rowsToRemove = cellfun(@(x) numel(x) == 1 && isnan(x), ...
+                               output.(columnName));
     end
     listFields = fieldnames(output);
     for iField = 1:numel(listFields)
@@ -102,13 +100,13 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
 
     if saveOutputTsv
 
-      % Create tag to add to output file in case you want to save it
-      outputFilterTag = ['_filteredOn-' columnName '.tsv'];
-      
-      % Create output file name
-      outputFileName = strrep(tsvFile, '.tsv', outputFilterTag);
-      
-      bids.util.tsvwrite(outputFileName, output);
+        % Create tag to add to output file in case you want to save it
+        outputFilterTag = ['_filteredOn-' columnName '.tsv'];
+
+        % Create output file name
+        outputFileName = strrep(tsvFile, '.tsv', outputFilterTag);
+
+        bids.util.tsvwrite(outputFileName, output);
 
     end
 

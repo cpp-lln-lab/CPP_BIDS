@@ -69,8 +69,8 @@ function test_readAndFilterLogfile_basic()
 
     assertEqual(content.trial_type{1}, 'motion_down');
     assertEqual(content.trial_type{2}, 'motion_down');
-    
-    delete(expectedFile)
+
+    delete(expectedFile);
 
 end
 
@@ -93,7 +93,7 @@ function test_readAndFilterLogfile_from_file()
     content = bids.util.tsvread(expectedFile);
 
     assertEqual(content.trial_type{1}, 'VisStat');
-    
-    delete(expectedFile)
+
+    delete(expectedFile);
 
 end

@@ -12,15 +12,19 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     % :param columnName: the header of the column where the content of interest is stored
     %                    (for example for ``trigger`` will be ``trial type``)
     % :type columnName: string
+    %
     % :param filterBy: the content of the column you want to filter out. It can take just
     %                  part of the content name (for example, if you want to display the triggers
     %                  and you have ``trigger_motion`` and ``trigger_static``,
     %                  ``trigger`` as input will do)
     % :type filterBy: string
+    %
     % :param saveOutputTsv: flag to save the filtered output in a tsv file
     % :type saveOutputTsv: boolean
+    %
     % :param tsvFile: TSV file to filter
     % :type tsvFile: string
+    %
     % :param cfg: Configuration. See ``checkCFG()``. If ``cfg`` is given as input the name
     %             of the TSV file to read will be infered from there.
     % :type cfg: structure
@@ -66,7 +70,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
         output = bids.util.tsvread(tsvFile);
     end
 
-    % Get the index of the target contentent to filter and display
+    % Get the index of the target content to filter and display
     filterIdx = strncmp(output.(columnName), filterBy, length(filterBy));
 
     % apply the filter
@@ -75,7 +79,13 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
         output.(listFields{iField})(~filterIdx) = [];
     end
 
-    outputFiltered = output;
+    % Convert the structure to dataset
+    try
+        outputFiltered = struct2dataset(output);
+    catch
+        % dataset not yet supported by octave
+        outputFiltered = output;
+    end
 
     if saveOutputTsv
 

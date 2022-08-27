@@ -32,8 +32,6 @@ function checkCppBidsDependencies(cfg)
 
             addpath(pth);
 
-            addpath(fullfile(pth, 'lib', 'utils'));
-
             checkSubmodule(fullfile(pth, 'lib', 'JSONio'));
             checkSubmodule(fullfile(pth, 'lib', 'bids-matlab'));
 

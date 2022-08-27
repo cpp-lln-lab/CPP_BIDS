@@ -14,10 +14,10 @@ end
 function test_askUserCli_do_not_show_anything()
 
     items = returnDefaultQuestionnaire();
-    items(1).show = false;
-    items(2).show = false;
-    items(3).show = false;
-    items(4).show = false;
+    items.group.show = false;
+    items.subject.show = false;
+    items.session.show = false;
+    items.run.show = false;
 
     expected = askUserCli(items);
 
@@ -28,15 +28,15 @@ end
 function test_askUserCli_do_not_show_prefilled_items()
 
     items = returnDefaultQuestionnaire();
-    items(2).response = 1;
+    items.subject.response = 1;
 
-    items(1).show = false;
-    items(3).show = false;
-    items(4).show = false;
+    items.group.show = false;
+    items.session.show = false;
+    items.run.show = false;
 
     items = askUserCli(items);
     expected = items;
-    items(2).show = false;
+    items.subject.show = false;
 
     assertEqual(items, expected);
 
@@ -46,19 +46,12 @@ function test_askUserCli_do_not_show_prefilled_items_2()
 
     cfg = struct();
     cfg.subject.subjectNb = 1;
-    cfg.subject.askGrpSess = [false false];
+    cfg.subject.ask = {};
 
     items = createQuestionnaire(cfg);
-    items(4).show = false;
+    items.run.show = false;
 
     items = askUserCli(items);
-
-    expected = returnDefaultQuestionnaire();
-    expected(1).show = false;
-    expected(2).show = false;
-    expected(2).response = 1;
-    expected(3).show = false;
-    expected(3).show = false;
 
 end
 
@@ -68,18 +61,11 @@ function test_askUserCli_do_not_show_prefilled_items_3()
     cfg = struct();
     cfg.subject.subjectGrp = 'ctrl';
     cfg.subject.subjectNb = 1;
-    cfg.subject.askGrpSess = [true false];
+    cfg.subject.ask = {'grp'};
 
     items = createQuestionnaire(cfg);
-    items(4).show = false;
+    items.run.show = false;
 
     items = askUserCli(items);
-
-    expected = returnDefaultQuestionnaire();
-    expected(1).show = false;
-    expected(2).show = false;
-    expected(2).response = 1;
-    expected(3).show = false;
-    expected(3).show = false;
 
 end

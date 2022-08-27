@@ -1,7 +1,8 @@
 function cfg = askForGroupAndOrSession(cfg)
     %
-    % It checks ``cfg`` if ``group`` and ``session`` are recquired in ``cfg.subject.askGrpSess`` by
-    % the user. If not specified, it will add these as ``true`` by default.
+    % It checks ``cfg`` if ``group``, ``session``, ``run`` are required
+    % in ``cfg.subject.ask`` by the user.
+    % If not specified, it will add these by default.
     %
     % USAGE::
     %
@@ -16,20 +17,23 @@ function cfg = askForGroupAndOrSession(cfg)
     %
     % (C) Copyright 2020 CPP_BIDS developers
 
-    askGrpSess = [true true];
+    if isempty(cfg)
+
+        cfg = struct('subject', struct('ask', {{'grp', 'ses', 'run'}}));
+
+    end
+
+    if ~isfield(cfg, 'subject')
+
+        cfg.subject.ask = {'grp', 'ses', 'run'};
+
+    end
 
     if isfield(cfg, 'subject') && ...
-       isfield(cfg.subject, 'askGrpSess') && ...
-       ~isempty(cfg.subject.askGrpSess)
+       ~isfield(cfg.subject, 'ask')
 
-        askGrpSess = cfg.subject.askGrpSess;
+        cfg.subject.ask = {'grp', 'ses', 'run'};
 
     end
-
-    if numel(askGrpSess) < 2
-        askGrpSess(2) = 1;
-    end
-
-    cfg.subject.askGrpSess = askGrpSess;
 
 end

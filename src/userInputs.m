@@ -34,11 +34,7 @@ function cfg = userInputs(cfg)
 
     if cfg.useGUI
 
-        %         try
         items = askUserGui(items);
-        %         catch
-        %             items = askUserCli(items);
-        %         end
 
     else
 
@@ -46,9 +42,9 @@ function cfg = userInputs(cfg)
 
     end
 
-    cfg.subject.subjectGrp = items(1).response;
-    cfg.subject.subjectNb = items(2).response;
-    cfg.subject.sessionNb = items(3).response;
-    cfg.subject.runNb = items(4).response;
+    cfg.subject.subjectGrp = items.group.response;
+    cfg.subject.subjectNb = items.subject.response;
+    cfg.subject.sessionNb = items.session.response;
+    cfg.subject.runNb = items.run.response;
 
 end

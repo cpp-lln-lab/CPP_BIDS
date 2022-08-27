@@ -8,6 +8,22 @@ function test_suite = test_userInputs %#ok<*STOUT>
     initTestSuite;
 end
 
+function test_userInputs_cli_specific_questions()
+
+    % skip in CI
+    if isOctave()
+        return
+    end
+
+    %%
+    clear;
+    cfg.debug.do = false;
+    cfg.subject.ask = {'grp', 'run'};
+
+    cfg = userInputs(cfg);
+
+end
+
 function test_userInputs_prefilled_cfg_ignored_by_debug()
 
     %%
@@ -32,7 +48,7 @@ function test_userInputs_prefilled_cfg_cli()
 
     %%
     cfg.debug.do = false;
-    cfg.subject.askGrpSess = [false false];
+    cfg.subject.ask = {};
     cfg.subject.subjectNb = 2;
     cfg.subject.runNb = 2;
 
@@ -50,7 +66,7 @@ function test_userInputs_prefilled_cfg_gui()
 
     %%
     cfg.debug.do = false;
-    cfg.subject.askGrpSess = [false false];
+    cfg.subject.ask = {'run'};
     cfg.subject.subjectNb = 2;
     cfg.subject.runNb = 2;
 

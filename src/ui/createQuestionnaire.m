@@ -46,20 +46,21 @@ function [items, cfg] = createQuestionnaire(cfg)
 
     % check pre filled answers
     fields = {'subjectGrp', 'subjectNb', 'sessionNb', 'runNb'};
+    counterpart = {'group', 'subject', 'session', 'run'};
     for i = 1:numel(fields)
         if isfield(cfg.subject, fields{i})
-            items(i).response = cfg.subject.(fields{i});
+            items.(counterpart{i}).response = cfg.subject.(fields{i});
         end
     end
 
-    % subject group
-    if ~cfg.subject.askGrpSess(1)
-        items(1).show = false;
+    if ~ismember('grp', cfg.subject.ask)
+        items.group.show = false;
     end
-
-    % the session number
-    if  ~cfg.subject.askGrpSess(2)
-        items(3).show = false;
+    if  ~ismember('ses', cfg.subject.ask)
+        items.session.show = false;
+    end
+    if  ~ismember('run', cfg.subject.ask)
+        items.run.show = false;
     end
 
 end

@@ -22,43 +22,46 @@ function varargout = askUserCli(items)
     %
     % (C) Copyright 2020 CPP_BIDS developers
 
-    for i = 1:numel(items)
+    fields = fieldnames(items);
 
-        if isempty(items(i).question)
-            items(i).show = false;
+    for i = 1:numel(fields)
+
+        if isempty(items.(fields{i}).question)
+            items.(fields{i}).show = false;
         end
 
         % no need to show pre filled items
-        if ~isempty(items(i).response)
+        if ~isempty(items.(fields{i}).response)
 
-            if items(i).mustBePosInt && isPositiveInteger(items(i).response)
-                items(i).show = false;
+            if items.(fields{i}).mustBePosInt && ...
+                isPositiveInteger(items.(fields{i}).response)
+                items.(fields{i}).show = false;
 
-            elseif ischar(items(i).response)
-                items(i).show = false;
+            elseif ischar(items.(fields{i}).response)
+                items.(fields{i}).show = false;
 
             end
 
         end
 
-        while items(i).show
+        while items.(fields{i}).show
 
-            items(i).response = input(['\n' items(i).question], 's'); %#ok<*AGROW>
+            items.(fields{i}).response = input(['\n' items.(fields{i}).question], 's'); %#ok<*AGROW>
 
-            if items(i).mustBePosInt
+            if items.(fields{i}).mustBePosInt
 
-                items(i).response = str2double(items(i).response);
+                items.(fields{i}).response = str2double(items.(fields{i}).response);
 
-                if ~isPositiveInteger(items(i).response)
-                    items(i).question = 'Please enter a positive integer: ';
-                    items(i).show = true;
+                if ~isPositiveInteger(items.(fields{i}).response)
+                    items.(fields{i}).question = 'Please enter a positive integer: ';
+                    items.(fields{i}).show = true;
                 else
-                    items(i).show = false;
+                    items.(fields{i}).show = false;
                 end
 
             else
 
-                items(i).show = false;
+                items.(fields{i}).show = false;
 
             end
 

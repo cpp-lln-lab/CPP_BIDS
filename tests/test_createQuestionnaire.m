@@ -17,9 +17,9 @@ function test_createQuestionnaire_prefilled()
     items = createQuestionnaire(cfg);
 
     expected = returnDefaultQuestionnaire();
-    expected(2).response = 1;
+    expected.subject.response = 1;
 
-    assertEqual(items(2), expected(2));
+    assertEqual(items.subject, expected.subject);
 
 end
 
@@ -40,13 +40,13 @@ function test_createQuestionnaire_restricted()
 
     %% set up
     cfg = struct();
-    cfg.subject.askGrpSess = [false false];
+    cfg.subject.ask = {'run'};
 
     items = createQuestionnaire(cfg);
 
     expected = returnDefaultQuestionnaire();
-    expected(1).show = false;
-    expected(3).show = false;
+    expected.group.show = false;
+    expected.session.show = false;
 
     assertEqual(items, expected);
 
@@ -61,10 +61,10 @@ function test_createQuestionnaire_debug()
     items = createQuestionnaire(cfg);
 
     expected = returnDefaultQuestionnaire(cfg);
-    expected(1).response = 'ctrl';
-    expected(2).response = 666;
-    expected(3).response = 666;
-    expected(4).response = 666;
+    expected.group.response = 'ctrl';
+    expected.subject.response = 666;
+    expected.session.response = 666;
+    expected.run.response = 666;
 
     assertEqual(items, expected);
 

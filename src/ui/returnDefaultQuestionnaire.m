@@ -17,37 +17,37 @@ function [items, cfg] = returnDefaultQuestionnaire(cfg)
         cfg.debug.do = false;
     end
 
-    items(1) = struct('question', 'Enter subject group (leave empty if none): ', ...
-                      'response', '', ...
-                      'mustBePosInt', false, ...
-                      'show', true);
+    items.group = struct('question', 'Enter subject group (leave empty if none): ', ...
+                         'response', '', ...
+                         'mustBePosInt', false, ...
+                         'show', true);
 
-    items(2).question = 'Enter subject number (1-999): ';
-    items(2).response = '';
-    items(2).mustBePosInt = true;
-    items(2).show = true;
+    items.subject.question = 'Enter subject number (1-999): ';
+    items.subject.response = '';
+    items.subject.mustBePosInt = true;
+    items.subject.show = true;
 
-    items(3).question = 'Enter the session number (i.e day ; 1-999): ';
-    items(3).response = '';
-    items(3).mustBePosInt = true;
-    items(3).show = true;
+    items.session.question = 'Enter the session number (i.e day ; 1-999): ';
+    items.session.response = '';
+    items.session.mustBePosInt = true;
+    items.session.show = true;
 
-    items(4).question = 'Enter the run number (1-999): ';
-    items(4).response = '';
-    items(4).mustBePosInt = true;
-    items(4).show = true;
+    items.run.question = 'Enter the run number (1-999): ';
+    items.run.response = '';
+    items.run.mustBePosInt = true;
+    items.run.show = true;
 
     if cfg.debug.do
 
-        items(1).response = 'ctrl';
-        items(2).response = 666;
-        items(3).response = 666;
-        items(4).response = 666;
+        items.group.response = 'ctrl';
+        items.subject.response = 666;
+        items.session.response = 666;
+        items.run.response = 666;
 
-        cfg.subject.subjectGrp = items(1).response;
-        cfg.subject.subjectNb = items(2).response;
-        cfg.subject.sessionNb = items(3).response;
-        cfg.subject.runNb = items(4).response;
+        cfg.subject.subjectGrp = items.group.response;
+        cfg.subject.subjectNb = items.subject.response;
+        cfg.subject.sessionNb = items.session.response;
+        cfg.subject.runNb = items.run.response;
 
     end
 

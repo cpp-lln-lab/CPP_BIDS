@@ -201,7 +201,7 @@ function cfg = checkCFG(cfg)
                                       '..', ...
                                       'output');
 
-    fieldsToSet.subject.askGrpSess = [true true];
+    fieldsToSet.subject.ask = {'grp'; 'ses'; 'run'};
     fieldsToSet.subject.sessionNb = []; % in case no session was provided
     fieldsToSet.subject.subjectGrp = []; % in case no group was provided
     fieldsToSet.subject.runNb = [];

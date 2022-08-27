@@ -107,7 +107,7 @@ function expected = returnExpectedCfgStructure()
     expected.subject.sessionNb = [];
     expected.subject.runNb = [];
     expected.subject.subjectNb = [];
-    expected.subject.askGrpSess = [true true];
+    expected.subject.ask = {'grp'; 'ses'; 'run'};
 
     expected.verbose = 0;
 

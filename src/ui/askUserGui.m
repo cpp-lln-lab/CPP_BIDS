@@ -18,41 +18,59 @@ function items = askUserGui(items)
     %
     % (C) Copyright 2020 CPP_BIDS developers
 
-    for  i = 1:numel(items)
+    fields = fieldnames(items);
 
-        if isempty(items(i).question)
-            items(i).show = false;
+    for  i = 1:numel(fields)
+
+        question = items.(fields{i}).question;
+        response = items.(fields{i}).response;
+        show = items.(fields{i}).show;
+
+        % no need to show empty questions
+        if isempty(question)
+            show = false;
         end
 
         % no need to show pre filled items
-        if ~isempty(items(i).response)
+        if ~isempty(response)
 
-            if items(i).mustBePosInt && isPositiveInteger(items(i).response)
-                items(i).show = false;
+            if items.(fields{i}).mustBePosInt && isPositiveInteger(response)
+                show = false;
 
-            elseif ischar(items(i).response)
-                items(i).show = false;
+            elseif ischar(response)
+                show = false;
 
             end
 
         end
 
-        if items(i).show && ~ischar(items(i).response) && isempty(items(i).response)
-            items(i).response = '';
+        if show &&  ~ischar(response) && isempty(response)
+            response = '';
         end
+
+        items.(fields{i}).question = question;
+        items.(fields{i}).response = response;
+        items.(fields{i}).show = show;
 
     end
 
     refItems = items;
 
-    while any([items.show])
+    while any(toShow(items))
 
         items = askQuestionsGui(items);
 
-        idx = find([items.show]);
-        for i = 1:numel(idx)
+        fields = fieldnames(items);
 
-            thisItem = items(idx(i));
+        for i = 1:numel(fields)
+
+            thisItem = items.(fields{i});
+
+            if ~thisItem.show
+                continue
+            end
+
+            thisItem.show = false;
 
             if thisItem.mustBePosInt
 
@@ -61,22 +79,16 @@ function items = askUserGui(items)
                 if ~isPositiveInteger(thisItem.response)
                     thisItem.question = sprintf('%s %s\n %s', ...
                                                 '\color{red}', ...
-                                                refItems(idx(i)).question, ...
+                                                refItems.(fields{i}).question, ...
                                                 'Please enter a positive integer');
 
                     thisItem.show = true;
                     thisItem.response = '';
-                else
-                    thisItem.show = false;
                 end
-
-            else
-
-                thisItem.show = false;
 
             end
 
-            items(idx(i)) = thisItem;
+            items.(fields{i}) = thisItem;
 
         end
 
@@ -88,17 +100,35 @@ function items = askQuestionsGui(items)
 
     opts.Interpreter = 'tex';
 
-    fieldDim = repmat([1 50], sum([items.show]), 1);
+    fieldDim = repmat([1 50], sum(toShow(items)), 1);
 
-    currentResp = inputdlg({items([items.show]).question}, ...
-                           'Subject info', ...
-                           fieldDim, ...
-                           {items([items.show]).response}, ...
-                           opts);
+    questions = {};
+    responses = {};
 
-    idx = find([items.show]);
+    fields = fieldnames(items);
+    for i = 1:numel(fields)
+        if items.(fields{i}).show
+            questions{end + 1} = items.(fields{i}).question;
+            responses{end + 1} = items.(fields{i}).response;
+        end
+    end
+
+    currentResp = inputdlg(questions, 'Subject info', fieldDim, responses, opts);
+
+    idx = find(toShow(items));
     for i = 1:numel(idx)
-        items(idx(i)).response = currentResp{i};
+        items.(fields{idx(i)}).response = currentResp{i};
+    end
+
+end
+
+function status = toShow(items)
+
+    status = [];
+
+    fields = fieldnames(items);
+    for i = 1:numel(fields)
+        status(end + 1) = items.(fields{i}).show;
     end
 
 end

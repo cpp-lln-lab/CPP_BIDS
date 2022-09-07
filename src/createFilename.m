@@ -53,17 +53,20 @@ function cfg = createFilename(cfg)
     cfg = setFilenames(cfg);
 
     talkToMe(cfg, sprintf('\nData will be saved in this directory:\n\t%s\n', ...
-                          fullfile(cfg.dir.outputSubject, cfg.fileName.modality)));
+                          pathToPrint(fullfile(cfg.dir.outputSubject, ...
+                                               cfg.fileName.modality))));
 
-    talkToMe(cfg, sprintf('\nData will be saved in this file:\n\t%s\n', cfg.fileName.events));
+    talkToMe(cfg, sprintf('\nData will be saved in this file:\n\t%s\n', ...
+                          pathToPrint(cfg.fileName.events)));
 
     if cfg.eyeTracker.do
 
         talkToMe(cfg, sprintf('\nEyetracking data will be saved in this directory:\n\t%s\n', ...
-                              fullfile(cfg.dir.outputSubject, 'eyetracker')));
+                              pathToPrint(fullfile(cfg.dir.outputSubject, ...
+                                                   'eyetracker'))));
 
         talkToMe(cfg, sprintf('\nEyetracking data will be saved in this file:\n\t%s\n', ...
-                              cfg.fileName.eyetracker));
+                              pathToPrint(cfg.fileName.eyetracker)));
 
     end
 

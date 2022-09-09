@@ -12,25 +12,30 @@ function printCreditsCppBids(cfg)
     %
     % (C) Copyright 2020 CPP_BIDS developers
 
-    try
-        version = fileread(fullfile(fileparts(mfilename('fullpath')), ...
-                                    '..', '..', 'version.txt'));
-    catch
-        version = 'v1.0.0';
-    end
+    version = getVersion();
 
     verbose = 2;
-    if ~isempty(cfg) && isfield(cfg, 'verbose') && ~isempty(cfg.verbose)
+    if nargin > 0 && ~isempty(cfg) && isfield(cfg, 'verbose') && ~isempty(cfg.verbose)
         verbose = cfg.verbose;
     end
 
-    if verbose > 1
+    try
 
-        contributors = { ...
-                        'Remi Gau', ...
-                        'Marco Barilari', ...
-                        'Ceren Battal', ...
-                        'Tomas Lenc'};
+        content = bids.util.jsondecode(fullfile(returnRootDir(), '.all-contributorsrc'));
+        contributors = {content.contributors.name}';
+        contributors = contributors(randperm(numel(contributors)));
+        contributors = cat(1, contributors, 'Why not be the next?');
+
+    catch
+
+        contributors =          {'Remi Gau', ...
+                                 'Marco Barilari', ...
+                                 'Ceren Battal', ...
+                                 'Tomas Lenc', ...
+                                 'Iqra Shahzad'};
+    end
+
+    if verbose > 1
 
         DOI_URL = 'https://doi.org/10.5281/zenodo.4007674';
 

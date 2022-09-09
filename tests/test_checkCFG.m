@@ -12,7 +12,7 @@ function test_checkCfgDefault()
 
     %% set up
     cfg.dir.output = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
-    cfg.verbose = 0;
+    cfg.verbose = false;
     cfg = checkCFG(cfg);
 
     %% create test data
@@ -32,7 +32,7 @@ function test_checkCfgBasic()
     %% set up
     outputDir = fullfile(fileparts(mfilename('fullpath')), '..', 'output');
 
-    cfg.verbose = 0;
+    cfg.verbose = false;
 
     cfg.subject.subjectNb = 1;
     cfg.subject.runNb = 1;
@@ -109,7 +109,7 @@ function expected = returnExpectedCfgStructure()
     expected.subject.subjectNb = [];
     expected.subject.ask = {'grp'; 'ses'; 'run'};
 
-    expected.verbose = 0;
+    expected.verbose = false;
 
     expected.useGUI = false;
 

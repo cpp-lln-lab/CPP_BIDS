@@ -188,7 +188,7 @@ function cfg = checkCFG(cfg)
 
     checkCppBidsDependencies(cfg);
 
-    fieldsToSet.verbose = 0;
+    fieldsToSet.verbose = false;
 
     fieldsToSet.useGUI = false;
 

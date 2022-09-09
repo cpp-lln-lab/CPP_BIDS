@@ -11,7 +11,8 @@ function runTests()
     cd(thisPath);
     fprintf('\nHome is %s\n', getenv('HOME'));
 
-    warning('OFF');
+    warning off;
+    more off;
 
     addpath(fullfile(thisPath, 'lib', 'JSONio'));
     addpath(fullfile(thisPath, 'lib', 'bids-matlab'));

@@ -23,7 +23,7 @@ function cpp_bids(varargin)
     defaultAction = 'init';
 
     addOptional(p, 'action', defaultAction, @ischar);
-    addOptional(p, 'verbose', true);
+    addParameter(p, 'verbose', true);
 
     parse(p, varargin{:});
 

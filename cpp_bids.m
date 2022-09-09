@@ -23,16 +23,18 @@ function cpp_bids(varargin)
     defaultAction = 'init';
 
     addOptional(p, 'action', defaultAction, @ischar);
+    addOptional(p, 'verbose', true);
 
     parse(p, varargin{:});
 
     action = p.Results.action;
+    verbose = p.Results.verbose;
 
     switch lower(action)
 
         case 'init'
 
-            initCppBids();
+            initCppBids(verbose);
 
         case 'uninit'
 
@@ -46,7 +48,7 @@ function cpp_bids(varargin)
 
 end
 
-function initCppBids()
+function initCppBids(verbose)
     %
     % Adds the relevant folders to the path for a given session.
     % Has to be run to be able to use CPP_BIDS.
@@ -86,10 +88,14 @@ function initCppBids()
 
         detectCppBids();
 
-        printCreditsCppBids();
+        if verbose
+            printCreditsCppBids();
+        end
 
     else
-        fprintf('\n\nCPP_BIDS already initialized\n\n');
+        if verbose
+            fprintf('\n\nCPP_BIDS already initialized\n\n');
+        end
 
     end
 

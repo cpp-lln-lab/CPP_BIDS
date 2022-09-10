@@ -12,17 +12,19 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))
+
+sys.path.insert(0, os.path.abspath("../.."))
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'CPP BIDS'
-copyright = '2020, the CPP BIDS dev team'
-author = 'the CPP BIDS dev team'
+project = "CPP BIDS"
+copyright = "2020, the CPP BIDS dev team"
+author = "the CPP BIDS dev team"
 
 # The full version, including alpha/beta/rc tags
-release = 'v2.1.2dev'
+with open("../../version.txt", encoding="utf-8") as version_file:
+    release = version_file.read()
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,13 +33,16 @@ release = 'v2.1.2dev'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinxcontrib.matlab',
-    'sphinx.ext.autodoc']
-matlab_src_dir = os.path.dirname(os.path.abspath('../../src'))
-primary_domain = 'mat'
+    "sphinxcontrib.matlab",
+    "sphinx.ext.autodoc",
+    "myst_parser",
+    "sphinx_copybutton",
+]
+matlab_src_dir = os.path.dirname(os.path.abspath("../../src"))
+primary_domain = "mat"
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -45,13 +50,13 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = "sphinx"
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ".rst"
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -59,14 +64,14 @@ source_suffix = '.rst'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
-html_logo = '_static/cpp_lab_logo.png'
+html_logo = "_static/cpp_lab_logo.png"
 
 # html_theme_options = {
 #     'github_user': 'cpp-lln-lab',
@@ -81,11 +86,11 @@ html_logo = '_static/cpp_lab_logo.png'
 # }
 
 html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'relations.html',  # needs 'show_related': True theme option to display
-        'searchbox.html',
-        'donate.html',
+    "**": [
+        "about.html",
+        "navigation.html",
+        "relations.html",  # needs 'show_related': True theme option to display
+        "searchbox.html",
+        "donate.html",
     ]
 }

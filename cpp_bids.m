@@ -139,9 +139,9 @@ function uninitCppBids()
         rmpath(CPP_BIDS_PATHS);
 
         if isOctave
-            clear -g;
+            clear -g CPP_BIDS_INITIALIZED CPP_BIDS_PATHS;
         else
-            clearvars -GLOBAL;
+            clearvars -GLOBAL CPP_BIDS_INITIALIZED CPP_BIDS_PATHS;
         end
 
     end

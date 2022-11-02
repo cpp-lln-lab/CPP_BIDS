@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function nbCol = returnNbColumns(logFile, nameExtraColumn)
     %
     % It returns the number of columns associated to one entry of the extra column list.
@@ -17,6 +15,8 @@ function nbCol = returnNbColumns(logFile, nameExtraColumn)
     %           - :nbCol: (integer) The number of columns associated to one entry of the extra
     %                     column list.
     %
+
+    % (C) Copyright 2020 CPP_BIDS developers
 
     thisExtraColumn = logFile(1).extraColumns.(nameExtraColumn);
 

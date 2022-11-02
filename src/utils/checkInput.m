@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function data = checkInput(data)
     %
     % Check the data to write and convert to the proper format if needed.
@@ -10,6 +8,8 @@ function data = checkInput(data)
     %
     %   data = checkInput(data)
     %
+
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if islogical(data) && data
         data = 'true';

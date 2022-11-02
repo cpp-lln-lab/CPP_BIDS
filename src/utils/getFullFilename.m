@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function fullFilename = getFullFilename(fileName, cfg)
     %
     % Returns the full path of a file (fo a given subject and modality in a run).
@@ -14,9 +12,18 @@ function fullFilename = getFullFilename(fileName, cfg)
     % :type cfg: structure
     %
 
-    fullFilename = fullfile( ...
-                            cfg.dir.outputSubject, ...
-                            cfg.fileName.modality, ...
-                            fileName);
+    % (C) Copyright 2020 CPP_BIDS developers
+
+    if isfield(cfg, 'dir') && isfield(cfg.dir, 'outputSubject') && ...
+        isfield(cfg, 'fileName') && isfield(cfg.fileName, 'modality')
+
+        fullFilename = fullfile(cfg.dir.outputSubject, ...
+                                cfg.fileName.modality, ...
+                                fileName);
+    else
+        warning('Not enough information to build a fullpath filename');
+        fullFilename = fileName;
+
+    end
 
 end

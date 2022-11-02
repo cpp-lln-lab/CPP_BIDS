@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function headerName = returnHeaderName(columnName, nbCol, iCol)
     %
     % It returns one by one the column name to be used as a header in a recently opened event file
@@ -17,6 +15,8 @@ function headerName = returnHeaderName(columnName, nbCol, iCol)
     %
     % :returns: - :headerName: (string) return the extra column name to be used as header
     %
+
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nbCol == 1
         headerName = sprintf('%s', columnName);

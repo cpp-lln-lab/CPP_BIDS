@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function logFile = saveEventsFile(action, cfg, logFile)
     %
     % Function to save output files for events that will be BIDS compliant.
@@ -12,8 +10,10 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %                ``'init'``, ``'init_stim'``, ``'open'``, ``'save'`` or ``'close'``.
     %                For more information on each case see below.
     % :type action: string
+    %
     % :param cfg: Configuration variable. See ``checkCFG()``.
     % :type cfg: structure
+    %
     % :param logFile: (n x 1) The ``logFile`` variable that contains the n events
     %                 you want to save must be a nx1 structure.
     % :type logFile: structure
@@ -74,7 +74,8 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
     %       logFile = saveEventsFile('close', cfg, logFile)
     %
-    %
+
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 2
         errorSaveEventsFile('missingArgument');
@@ -90,8 +91,7 @@ function logFile = saveEventsFile(action, cfg, logFile)
             % flag to indicate that this will be an _events file
             logFile(1).isStim = false;
 
-            if isfield(cfg, 'fileName') && ...
-                                        isfield(cfg.fileName, 'events') && ...
+            if isfield(cfg, 'fileName') && isfield(cfg.fileName, 'events') && ...
                                         ~isempty(cfg.fileName.events)
                 logFile(1).filename = cfg.fileName.events;
             else
@@ -182,8 +182,7 @@ function logFile = initializeFile(logFile)
     % before calling openFile.
 
     % initialize holy trinity (onset, trial_type, duration) columns
-    logFile(1).columns = struct( ...
-                                'onset', struct( ...
+    logFile(1).columns = struct('onset', struct( ...
                                                 'Description', ...
                                                 'time elapsed since experiment start', ...
                                                 'Units', 's'), ...
@@ -210,9 +209,7 @@ function logFile = openFile(cfg, logFile)
 
     % Initialize txt logfiles and empty fields for the standard BIDS
     % event file
-    logFile(1).fileID = fopen( ...
-                              fullfile( ...
-                                       cfg.dir.outputSubject, ...
+    logFile(1).fileID = fopen(fullfile(cfg.dir.outputSubject, ...
                                        cfg.fileName.modality, ...
                                        logFile.filename), ...
                               'w');
@@ -220,13 +217,13 @@ function logFile = openFile(cfg, logFile)
     if ~logFile(1).isStim
         % print the basic BIDS columns
         fprintf(logFile(1).fileID, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
-        fprintf(1, '%s\t%s\t%s', 'onset', 'duration', 'trial_type');
+        talkToMe(cfg, sprintf('%s\t%s\t%s', 'onset', 'duration', 'trial_type'));
 
-        printHeaderExtraColumns(logFile);
+        printHeaderExtraColumns(cfg, logFile);
 
         % next line so we start printing at the right place
         fprintf(logFile(1).fileID, '\n');
-        fprintf(1, '\n');
+        talkToMe(cfg, '\n');
 
     elseif logFile(1).isStim
         % don't print column headers for _stim.tsv
@@ -235,7 +232,8 @@ function logFile = openFile(cfg, logFile)
 
 end
 
-function printHeaderExtraColumns(logFile)
+function printHeaderExtraColumns(cfg, logFile)
+
     % print any extra column specified by the user
 
     [namesExtraColumns] = returnNamesExtraColumns(logFile);
@@ -246,7 +244,7 @@ function printHeaderExtraColumns(logFile)
         for iCol = 1:nbCol
             headerName = returnHeaderName(namesExtraColumns{iExtraColumn}, nbCol, iCol);
             fprintf(logFile(1).fileID, '\t%s', headerName);
-            fprintf(1, '\t%s', headerName);
+            talkToMe(cfg, sprintf('\t%s', headerName));
         end
 
     end
@@ -279,21 +277,15 @@ function logFile = checkExtracolumns(logFile, iEvent, cfg)
 
             warningMessage = [];
             if any(isnan(data))
-                warningMessage = sprintf( ...
-                                         'Missing some %s data for this event.', ...
+                warningMessage = sprintf('Missing some %s data for this event.', ...
                                          namesExtraColumns{iExtraColumn});
 
             elseif all(isnan(data))
-                warningMessage = sprintf( ...
-                                         'Missing %s data for this event.', ...
+                warningMessage = sprintf('Missing %s data for this event.', ...
                                          namesExtraColumns{iExtraColumn});
 
             end
             throwWarning(cfg, 'saveEventsFile:missingData', warningMessage);
-
-            if cfg.verbose > 1
-                disp(logFile(iEvent));
-            end
 
         end
 
@@ -386,9 +378,9 @@ function printToFile(cfg, logFile, skipEvent, iEvent)
         printExtraColumns(logFile, iEvent, cfg);
 
         fprintf(logFile(1).fileID, '\n');
-        fprintf(1, '\n');
-
+        talkToMe(cfg, '\n');
     end
+
 end
 
 function printExtraColumns(logFile, iEvent, cfg)

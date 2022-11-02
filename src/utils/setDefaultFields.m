@@ -1,21 +1,21 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function structure = setDefaultFields(structure, fieldsToSet)
     %
-    % Recursively loop through the fields of a structure and sets a default value if
-    % they don't exist.
+    % Recursively loop through the fields of a structure and sets a value if they don't exist.
     %
     % USAGE::
     %
-    %   structure = setDefaultFields(structure, fieldsToSet)
+    %   structure = setDefaults(structure, fieldsToSet)
     %
-    % :param structure: Structure to check.
+    % :param structure:
     % :type structure: structure
-    % :param fieldsToSet: Structure containing the defaults for the missing fields.
+    %
+    % :param fieldsToSet:
     % :type fieldsToSet: structure
     %
-    % :returns: :structure: (structure)
+    % :returns: - :structure: (structure)
     %
+
+    % (C) Copyright 2020 CPP_BIDS developers
 
     fieldsToSet = orderfields(fieldsToSet);
 
@@ -32,8 +32,7 @@ function structure = setDefaultFields(structure, fieldsToSet)
 
         else
 
-            structure = setFieldToIfNotPresent( ...
-                                               structure, ...
+            structure = setFieldToIfNotPresent(structure, ...
                                                names{i}, ...
                                                thisField);
         end

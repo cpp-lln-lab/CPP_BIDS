@@ -11,44 +11,35 @@ end
 function test_askForGroupAndOrSessionBasic()
 
     %% set up
-    cfg = struct();
+    cfg = struct([]);
     cfg = askForGroupAndOrSession(cfg);
 
-    expectedStructure = struct('subject', struct('askGrpSess', [true true]));
+    expectedStructure = struct('subject', struct('ask', {{'grp', 'ses', 'run'}}));
 
-    assertEqual(expectedStructure, cfg);
+    assertEqual(cfg, expectedStructure);
+
+end
+
+function test_askForGroupAndOrSessionBasic_2()
+
+    %% set up
+    cfg.subject.subjectNb = 1;
+    cfg = askForGroupAndOrSession(cfg);
+
+    expectedStructure = struct('subject', struct('ask', {{'grp', 'ses', 'run'}}, ...
+                                                 'subjectNb', 1));
+
+    assertEqual(cfg, expectedStructure);
 
 end
 
 function test_askForGroupAndOrSessionNoGroup()
 
-    cfg.subject.askGrpSess = 0;
+    cfg.subject.ask = {'ses'};
     cfg = askForGroupAndOrSession(cfg);
 
-    expectedStructure = struct('subject', struct('askGrpSess', [false true]));
+    expectedStructure = struct('subject', struct('ask', {{'ses'}}));
 
-    assertEqual(expectedStructure, cfg);
-
-end
-
-function test_askForGroupAndOrSessionNoGroupNoSession()
-
-    cfg.subject.askGrpSess = [0 0];
-    cfg = askForGroupAndOrSession(cfg);
-
-    expectedStructure = struct('subject', struct('askGrpSess', [false false]));
-
-    assertEqual(expectedStructure, cfg);
-
-end
-
-function test_askForGroupAndOrSessionNoSession()
-
-    cfg.subject.askGrpSess = [1 0];
-    cfg = askForGroupAndOrSession(cfg);
-
-    expectedStructure = struct('subject', struct('askGrpSess', [true false]));
-
-    assertEqual(expectedStructure, cfg);
+    assertEqual(cfg, expectedStructure);
 
 end

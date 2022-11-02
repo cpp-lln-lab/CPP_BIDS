@@ -1,58 +1,106 @@
-<!-- lint disable -->
-
-**Try it**
+<!-- markdown-link-check-disable -->
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/cpp-lln-lab/CPP_BIDS/master?filepath=notebooks%2Fbasic_usage.ipynb)
-
-**Documentation**
-
 [![Documentation Status: stable](https://readthedocs.org/projects/cpp-bids/badge/?version=stable)](https://cpp-bids.readthedocs.io/en/stable/?badge=stable)
-
-**Cite it**
-
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4007674.svg)](https://doi.org/10.5281/zenodo.4007674)
-
-**Unit tests and coverage**
-
 [![](https://img.shields.io/badge/Octave-CI-blue?logo=Octave&logoColor=white)](https://github.com/cpp-lln-lab/CPP_BIDS/actions)
 ![](https://github.com/cpp-lln-lab/CPP_BIDS/workflows/CI/badge.svg)
-
 [![codecov](https://codecov.io/gh/cpp-lln-lab/CPP_BIDS/branch/master/graph/badge.svg)](https://codecov.io/gh/cpp-lln-lab/CPP_BIDS)
-
-**Contributors**
-
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 
----
+<!-- markdown-link-check-enable -->
 
 # CPP_BIDS
-
-<!-- TOC -->
-
--   [CPP_BIDS](#cpp_bids)
--   [Output format](#output-format)
-    -   [Modality agnostic aspect](#modality-agnostic-aspect)
--   [Documentation](#documentation)
--   [Contributing](#contributing)
-    -   [Guidestyle](#guidestyle)
-    -   [BIDS naming convention](#bids-naming-convention)
-    -   [Change log](#change-log)
-    -   [Contributors ✨](#contributors-)
-
-<!-- /TOC -->
-
-<!-- lint enable -->
 
 A set of function for matlab and octave to create
 [BIDS-compatible](https://bids-specification.readthedocs.io/en/stable/) folder
 structure and filenames for the output of behavioral, EEG, fMRI, eyetracking
 studies.
 
+## Installation
+
+### Use the CPP templates for PsychToolBox experiments
+
+The easiest way to use this repository is to create a new repository by using
+the
+[template PTB experiment repository](https://github.com/cpp-lln-lab/template_PTB_experiment):
+this creates a new repository on your github account with all the basic folders,
+files and submodules (including CPP_BIDS) already set up. You only have to then
+clone the repository and you are good to go.
+
+### Download with git
+
+```bash
+cd fullpath_to_directory_where_to_install
+
+# use git to download the code and the submodules
+git clone --recurse-submodules https://github.com/cpp-lln-lab/CPP_BIDS.git
+```
+
+Then get the latest commit:
+
+```bash
+# from the directory where you downloaded the code
+git pull origin master
+```
+
+To work with a specific version, create a branch at a specific version tag
+number
+
+```bash
+# creating and checking out a branch that will be called version1 at the version tag v0.0.1
+git checkout -b version1 v2.2.1
+```
+
+### Add as a submodule
+
+Add it as a submodule in the repo you are working on.
+
+```bash
+cd fullpath_to_directory_where_to_install
+
+# use git to download the code
+git submodule add https://github.com/cpp-lln-lab/CPP_BIDS.git
+```
+
+To get the latest commit you then need to update the submodule with the
+information on its remote repository and then merge those locally.
+
+```bash
+git submodule update --remote --merge
+```
+
+Remember that updates to submodules need to be committed as well.
+
+#### Example
+
+So say you want to clone a repo that has some nested submodules, then you would
+type this to get the content of all the submodules at once (here with assumption
+that you want to clone my experiment repo):
+
+```bash
+# clone the repo
+git clone https://github.com/user_name/myExperiment.git
+
+# go into the directory
+cd myExperiment
+
+# initialize and get the content of the first level of submodules
+git submodule init
+git submodule update
+
+# get the nested submodules JSONio and BIDS-matlab for CPP_BIDS
+git submodule foreach --recursive 'git submodule init'
+git submodule foreach --recursive 'git submodule update'
+```
+
+## Demos
+
+[How to use it: jupyter notebooks](./notebooks)
+
 ## Documentation
 
--   [Installation](./docs/installation.md)
--   [How to use it: jupyter notebooks](./notebooks)
--   [General documentation](https://cpp-bids.readthedocs.io/en/dev/index.html)
+[General documentation](https://cpp-bids.readthedocs.io/en/dev/index.html)
 
 ## Contributing
 
@@ -64,85 +112,6 @@ that are meant to guide you and help you get started. If something is not clear
 or you get stuck: it is more likely we did not do good enough a job at
 explaining things. So do not hesitate to open an issue, just to ask for
 clarification.
-
-### Style guide
-
--   We use camelCase.
-
--   We keep the McCabe complexity as reported by the
-    [check_my_code function](https://github.com/Remi-Gau/check_my_code)
-    below 15.
-
--   We use the
-    [MISS_HIT linter](https://florianschanda.github.io/miss_hit/style_checker.html)
-    to automatically fix some linting issues.
-
-### BIDS naming convention
-
-Here are the naming templates used.
-
--   Behavior
-
-```bash
-sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.tsv
-sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_events.json
-sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.tsv
-sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_run-<index>]_beh.json
-```
-
--   BOLD
-
-```bash
-sub-<label>[_ses-<label>]_task-<label>[_acq-<label>][_ce-<label>][_dir-<label>][_rec-<label>][_run-<index>][_echo-<index>]_<contrast_label>.nii[.gz]
-```
-
--   iEEG
-
-```bash
-sub-<label>[_ses-<label>]_task-<task_label>[_run-<index>]_ieeg.json
-```
-
--   EEG
-
-```bash
-sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.<manufacturer_specific_extension>
-sub-<label>[_ses-<label>]_task-<label>[_run-<index>]_eeg.json
-```
-
-<!-- European data format (Each recording consisting of a .edf file)
-
-BrainVision Core Data Format (Each recording consisting of a .vhdr, .vmrk, .eeg file triplet)
-
-The format used by the MATLAB toolbox EEGLAB (Each recording consisting of a .set file with an optional .fdt file)
-
-Biosemi data format (Each recording consisting of a .bdf file) -->
-
--   MEG
-
-???
-
--   Eyetracker
-
-current format `<matches>_recording-eyetracking_physio.tsv.gz`
-
-future BEP format in a dedicated eyetracker folder
-
-```bash
-sub-<participant_label>[_ses-<label>][_acq-<label>]_task-<task_label>_eyetrack.<manufacturer_specific_extension>
-```
-
--   Stim and physio
-
-```bash
-<matches>[_recording-<label>]_physio.tsv.gz
-<matches>[_recording-<label>]_physio.json
-<matches>[_recording-<label>]_stim.tsv.gz
-<matches>[_recording-<label>]_stim.json
-```
-
-### Change log
-
- <!-- 93b4c584bf22883a3c4f8b9031b70e381deef272 -->
 
 ### Contributors ✨
 

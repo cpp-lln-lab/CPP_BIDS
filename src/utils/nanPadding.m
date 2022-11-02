@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function data = nanPadding(cfg, data, expectedLength)
     %
     % For numeric data that don't have the expected length, it will be padded
@@ -9,7 +7,8 @@ function data = nanPadding(cfg, data, expectedLength)
     %
     %  data = nanPadding(cfg, data, expectedLength)
     %
-    %
+
+    % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 2
         expectedLength = [];
@@ -22,7 +21,7 @@ function data = nanPadding(cfg, data, expectedLength)
             data(end + 1:end + padding) = nan(1, padding);
 
         elseif max(size(data)) > expectedLength
-            warningMessage = ['A field for this event is longer than expected.', ...
+            warningMessage = ['A field for this event is longer than expected. ', ...
                               'Truncating extra values.'];
             throwWarning(cfg, 'nanPadding:arrayTooLong', warningMessage);
 

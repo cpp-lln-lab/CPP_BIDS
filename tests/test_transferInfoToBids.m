@@ -31,11 +31,11 @@ function test_transferInfoToBidsTaskname()
     fieldsToSet = transferInfoToBids(fieldsToSet, cfg);
 
     expectedStruct.fileName.task = 'fooBar';
-    expectedStruct.bids.meg.TaskName = 'foo Bar';
-    expectedStruct.bids.eeg.TaskName = 'foo Bar';
-    expectedStruct.bids.ieeg.TaskName = 'foo Bar';
-    expectedStruct.bids.beh.TaskName = 'foo Bar';
-    expectedStruct.bids.mri.TaskName = 'foo Bar';
+    expectedStruct.bids.meg.TaskName = 'fooBar';
+    expectedStruct.bids.eeg.TaskName = 'fooBar';
+    expectedStruct.bids.ieeg.TaskName = 'fooBar';
+    expectedStruct.bids.beh.TaskName = 'fooBar';
+    expectedStruct.bids.mri.TaskName = 'fooBar';
     expectedStruct.bids.meg.Instructions = 'do this';
     expectedStruct.bids.eeg.Instructions = 'do this';
     expectedStruct.bids.ieeg.Instructions = 'do this';

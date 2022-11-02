@@ -12,8 +12,9 @@ List of functions in the ``src`` folder.
 .. autofunction:: createDatasetDescription
 .. autofunction:: createFilename
 .. autofunction:: createJson
+.. autofunction:: saveCfg
 
-``createJson`` can be used to save in a
+``saveCfg`` can be used to save in a
 human readable format the extra parameters that you used to run your experiment.
 This will most likely make the json file non-bids compliant but it can prove useful,
 to keep this information in your source dataset

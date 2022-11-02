@@ -2,23 +2,26 @@ name: BIDS validator
 
 on:
   push:
-    branches:
-      - master
+    branches: ['master', 'main', 'dev']
   pull_request:
-    branches: ['master']
+    branches: ['*']
 
 env:
   OCTFLAGS: --no-gui --no-window-system --silent
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
 
     - uses: actions/checkout@v3
       with:
         submodules: true
-        fetch-depth: 1
+        fetch-depth: 0
 
     - name: Make jsonread for octave
       run: |
@@ -37,9 +40,10 @@ jobs:
 
     - name: Install BIDS validator
       run: |
-        sudo npm install -g bids-validator@1.6.2
+        sudo npm install -g bids-validator
 
     - name: Create dummy dataset and validate it
       run: |
         cd tests/manualTests
-        octave $OCTFLAGS --eval "test_makeRawDataset" && bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders
+        octave $OCTFLAGS --eval "test_makeRawDataset"
+        bids-validator `pwd`/output/raw/ --ignoreNiftiHeaders

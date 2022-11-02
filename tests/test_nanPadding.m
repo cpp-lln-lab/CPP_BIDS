@@ -10,7 +10,7 @@ end
 
 function test_nanPaddingBasic()
 
-    cfg.verbose = 1;
+    cfg = globalTestSetUp();
 
     %%
     data = 'test';

@@ -1,5 +1,3 @@
-% (C) Copyright 2020 CPP_BIDS developers
-
 function createDatasetDescription(cfg)
     %
     % It creates ``dataset_description.json`` and writes in every entry contained in
@@ -14,6 +12,8 @@ function createDatasetDescription(cfg)
     %
     % :output: - :``dataset_description.json``: (jsonfile)
     %
+
+    % (C) Copyright 2020 CPP_BIDS developers
 
     opts.Indent = '    ';
 

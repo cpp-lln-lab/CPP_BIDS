@@ -17,17 +17,6 @@ A set of function for matlab and octave to create
 structure and filenames for the output of behavioral, EEG, fMRI, eyetracking
 studies.
 
-- [CPP_BIDS](#cpp_bids)
-  - [Installation](#installation)
-    - [Use the CPP templates for PsychToolBox experiments](#use-the-cpp-templates-for-psychtoolbox-experiments)
-    - [Download with git](#download-with-git)
-    - [Add as a submodule](#add-as-a-submodule)
-      - [Example](#example)
-  - [Demos](#demos)
-  - [Documentation](#documentation)
-  - [Contributing](#contributing)
-    - [Contributors ✨](#contributors-)
-
 ## Installation
 
 ### Use the CPP templates for PsychToolBox experiments

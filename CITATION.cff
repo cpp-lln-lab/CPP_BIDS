@@ -2,7 +2,7 @@ cff-version: 1.2.0
 
 title: "CPP BIDS"
 
-version: 2.1.2dev
+version: 2.2.0
 
 abstract: A lightweight Octave/MATLAB toolbox to help create BIDS data sets from source.
 

@@ -14,15 +14,10 @@ function runTests()
     warning off;
     more off;
 
-    addpath(fullfile(thisPath, 'lib', 'JSONio'));
-    addpath(fullfile(thisPath, 'lib', 'bids-matlab'));
+    cpp_bids('dev');
 
     folderToCover = fullfile(thisPath, 'src');
-    addpath(genpath(folderToCover));
     testFolder = fullfile(thisPath, 'tests');
-    addpath(testFolder);
-
-    addpath(fullfile(testFolder, 'utils'));
 
     success = moxunit_runtests(testFolder, ...
                                '-verbose', '-recursive', '-with_coverage', ...

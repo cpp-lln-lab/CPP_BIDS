@@ -35,6 +35,16 @@ function cpp_bids(varargin)
         case 'init'
 
             initCppBids(verbose);
+            
+        case 'dev'
+
+            initCppBids(verbose);
+            thisDirectory = fileparts(mfilename('fullpath'));
+            testFolder = fullfile(thisDirectory, 'tests');
+            addpath(testFolder, '-begin');
+            utilFolder = fullfile(thisDirectory, 'tests', 'utils');
+            addpath(utilFolder, '-begin');
+            
 
         case 'uninit'
 
@@ -75,10 +85,10 @@ function initCppBids(verbose)
         CPP_BIDS_PATHS = cat(2, CPP_BIDS_PATHS, ...
                              pathSep, ...
                              genpath(fullfile(thisDirectory, 'src')));
-        assert(isdir(fullfile(thisDirectory, 'lib', 'bids-matlab', '+bids')));
+        assert(isfolder(fullfile(thisDirectory, 'lib', 'bids-matlab', '+bids')));
         CPP_BIDS_PATHS = cat(2, CPP_BIDS_PATHS, pathSep, ...
                              fullfile(thisDirectory, 'lib', 'bids-matlab'));
-        assert(isdir(fullfile(thisDirectory, 'lib', 'JSONio')));
+        assert(isfolder(fullfile(thisDirectory, 'lib', 'JSONio')));
         CPP_BIDS_PATHS = cat(2, CPP_BIDS_PATHS, pathSep, ...
                              fullfile(thisDirectory, 'lib', 'JSONio'));
 

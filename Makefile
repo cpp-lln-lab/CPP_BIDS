@@ -1,17 +1,15 @@
 # TODO make more general to use the local matlab version
-MATLAB = /usr/local/MATLAB/R2017a/bin/matlab
+MATLAB = /usr/local/MATLAB/R2018a/bin/matlab
 ARG    = -nodisplay -nosplash -nodesktop
 
-<<<<<<< HEAD
-=======
-.PHONY: clean manual clean_demos fix_submodule
-clean: clean_demos
+
+.PHONY: clean manual fix_submodule
+clean:
 	rm -rf version.txt
 
 fix_submodule:
 	git submodule update --init --recursive && git submodule update --recursive
 
->>>>>>> 3a67904c66439e90c8fc528ac8729254b91d56d6
 lint:
 	mh_style --fix && mh_metric --ci && mh_lint
 

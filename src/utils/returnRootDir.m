@@ -4,6 +4,7 @@ function rootDir = returnRootDir()
     %
     %   rootDir = returnRootDir()
     %
+
     % (C) Copyright 2022 CPP_BIDS developers
 
     Mfile = 'cpp_bids.m';

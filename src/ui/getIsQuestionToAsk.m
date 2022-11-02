@@ -17,6 +17,7 @@ function isQuestionToAsk = getIsQuestionToAsk(questions, responses)
     % :returns: - :argout1: (type) (dimension)
     %           - :argout2: (type) (dimension)
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     isQuestionToAsk = cell2mat(questions.questionsToAsk(:, 2));

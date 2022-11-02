@@ -42,6 +42,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     % See also: bids.transformers.filter
     %
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     % Check if input is cfg or the file path and assign the output filename for later saving

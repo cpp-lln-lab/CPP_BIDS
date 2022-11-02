@@ -12,6 +12,7 @@ function createDataDictionary(cfg, logFile)
     % :param logFile: Contains the data you want to save.
     % :type logFile: structure
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     fileName = strrep(logFile(1).filename, '.tsv', '.json');

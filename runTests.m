@@ -1,5 +1,6 @@
 function runTests()
     %
+
     % (C) Copyright 2022 CPP_BIDS developers
 
     % Elapsed time is ??? seconds.

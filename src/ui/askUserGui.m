@@ -16,6 +16,7 @@ function items = askUserGui(items)
     %
     % :returns: - :responses: (cell) Response updated with the user inputs.
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     fields = fieldnames(items);

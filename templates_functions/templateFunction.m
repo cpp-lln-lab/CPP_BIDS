@@ -28,6 +28,7 @@ function [argout1, argout2] = templateFunction(argin1, argin2, argin3)
     %    - item 1
     %    - item 2
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     % The code goes below

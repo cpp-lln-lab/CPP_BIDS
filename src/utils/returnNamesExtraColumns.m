@@ -12,6 +12,7 @@ function [namesExtraColumns] = returnNamesExtraColumns(logFile)
     %
     % :returns: - :namesExtraColumns: (cell) (nx1)
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     namesExtraColumns = [];

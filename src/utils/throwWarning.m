@@ -4,6 +4,7 @@ function throwWarning(cfg, identifier, warningMessage)
     %
     %   throwWarning(cfg, identifier, warningMessage)
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     % TODO refactor with bids.internal.warning ?

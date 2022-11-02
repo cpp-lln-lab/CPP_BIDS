@@ -20,6 +20,7 @@ function varargout = askUserCli(items)
     % See also: createQuestionnaire
     %
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     fields = fieldnames(items);

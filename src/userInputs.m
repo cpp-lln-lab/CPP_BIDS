@@ -22,6 +22,7 @@ function cfg = userInputs(cfg)
     % - the first value set to ``false`` will skip asking for the participants group
     % - the second value set to ``false`` will skip asking for the session
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 1

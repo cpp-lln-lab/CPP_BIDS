@@ -1,5 +1,6 @@
 function cfg = globalTestSetUp()
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     cfg.verbose = false;

@@ -5,7 +5,7 @@ sphinx_rtd_theme
 myst-parser
 sphinx-copybutton
 
-miss_hit==0.9.29
+miss_hit==0.9.35
 pre-commit
 
 notebook

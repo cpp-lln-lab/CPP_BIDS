@@ -12,6 +12,7 @@ function createDatasetDescription(cfg)
     %
     % :output: - :``dataset_description.json``: (jsonfile)
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     opts.Indent = '    ';

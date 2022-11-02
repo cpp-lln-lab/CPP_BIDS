@@ -20,6 +20,7 @@ function convertSourceToRaw(varargin)
     %          - :removes: the date suffix ``_date-*`` from the files where it is present
     %          - :zips: the ``_stim.tsv`` files.
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     args = inputParser;

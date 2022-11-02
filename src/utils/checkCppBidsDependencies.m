@@ -9,6 +9,7 @@ function checkCppBidsDependencies(cfg)
     % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     global CPP_BIDS_INITIALIZED

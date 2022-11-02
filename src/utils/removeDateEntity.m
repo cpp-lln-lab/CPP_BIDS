@@ -8,6 +8,7 @@ function removeDateEntity(varargin)
     %   removeDateEntity(pathToDataSet, 'filter', filter)
     %
     %
+
     % (C) Copyright 2022 CPP_BIDS developers
 
     args = inputParser;

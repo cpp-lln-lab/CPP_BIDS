@@ -8,6 +8,7 @@ function data = checkInput(data)
     %
     %   data = checkInput(data)
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if islogical(data) && data

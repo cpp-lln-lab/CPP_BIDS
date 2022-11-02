@@ -74,6 +74,7 @@ function logFile = saveEventsFile(action, cfg, logFile)
     %
     %       logFile = saveEventsFile('close', cfg, logFile)
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 2

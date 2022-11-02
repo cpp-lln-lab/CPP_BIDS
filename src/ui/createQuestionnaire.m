@@ -30,6 +30,7 @@ function [items, cfg] = createQuestionnaire(cfg)
     %
     % See also: returnDefaultQuestionnaire
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 1

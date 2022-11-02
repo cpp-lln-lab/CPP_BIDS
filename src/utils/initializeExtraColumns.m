@@ -17,6 +17,7 @@ function logFile = initializeExtraColumns(logFile)
     %   logFile = initializeExtraColumns(logFile)
     %
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     fieldsToSet.length = 1;

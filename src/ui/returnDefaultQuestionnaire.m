@@ -7,6 +7,7 @@ function [items, cfg] = returnDefaultQuestionnaire(cfg)
     %
     %     q = returnDefaultQuestionnaire()
     %
+
     % (C) Copyright 2022 CPP_BIDS developers
 
     if nargin < 1

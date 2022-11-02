@@ -180,6 +180,7 @@ function cfg = checkCFG(cfg)
     %    cfg.bids.meg.DigitizedLandmarks = [];
     %    cfg.bids.meg.DigitizedHeadPoints = [];
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 1 || isempty(cfg)

@@ -20,6 +20,7 @@ function fieldsToSet = transferInfoToBids(fieldsToSet, cfg)
     % manually in ``cfg.mri.repetitionTime`` or in ``cfg.task.name``
     % will be passed to the correct field in right fields of ``cfg.bids``.
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if isfield(cfg, 'task') && isfield(cfg.task, 'name')

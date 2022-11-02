@@ -31,6 +31,7 @@ function createJson(varargin)
     %                         on the arguments passed in.
     %
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     %% Parse inputs

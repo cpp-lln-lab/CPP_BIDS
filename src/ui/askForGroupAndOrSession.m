@@ -15,6 +15,7 @@ function cfg = askForGroupAndOrSession(cfg)
     %           :cfg: (structure) Configuration update with the instructions if to ask for ``group``
     %                 and ``session``.
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if isempty(cfg)

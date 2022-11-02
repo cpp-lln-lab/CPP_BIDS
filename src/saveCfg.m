@@ -28,6 +28,7 @@ function filename = saveCfg(varargin)
     % in the ``pwd`` under ``'date-yyyymmddHHMM_cfg.json'``.
     %
     %
+
     % (C) Copyright 2022 CPP_BIDS developers
 
     %% Parse inputs

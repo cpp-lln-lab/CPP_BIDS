@@ -33,6 +33,7 @@ function cfg = createFilename(cfg)
     %
     % See ``test_createFilename`` in the ``tests`` folder for more details on how to use it.
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     cfg = checkCFG(cfg);

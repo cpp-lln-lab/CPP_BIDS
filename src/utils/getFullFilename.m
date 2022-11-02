@@ -11,6 +11,7 @@ function fullFilename = getFullFilename(fileName, cfg)
     % :param cfg: Configuration. See ``checkCFG()``.
     % :type cfg: structure
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if isfield(cfg, 'dir') && isfield(cfg.dir, 'outputSubject') && ...

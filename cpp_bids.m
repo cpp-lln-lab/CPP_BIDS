@@ -16,6 +16,7 @@ function cpp_bids(varargin)
     %
     % Example::
     %
+
     % (C) Copyright 2022 CPP_BIDS developers
 
     p = inputParser;
@@ -35,7 +36,7 @@ function cpp_bids(varargin)
         case 'init'
 
             initCppBids(verbose);
-            
+
         case 'dev'
 
             initCppBids(verbose);
@@ -44,7 +45,6 @@ function cpp_bids(varargin)
             addpath(testFolder, '-begin');
             utilFolder = fullfile(thisDirectory, 'tests', 'utils');
             addpath(utilFolder, '-begin');
-            
 
         case 'uninit'
 
@@ -67,6 +67,7 @@ function initCppBids(verbose)
     %
     %   initCppPtb()
     %
+
     % (C) Copyright 2022 CPP_BIDS developers
 
     thisDirectory = fileparts(mfilename('fullpath'));
@@ -136,6 +137,7 @@ function uninitCppBids()
     %
     %   uninitCppPtb()
     %
+
     % (C) Copyright 2021 CPP_BIDS developers
 
     global CPP_BIDS_INITIALIZED
@@ -168,6 +170,7 @@ function retval = isOctave()
     %
     % :returns: :retval: (boolean)
     %
+
     % (C) Copyright 2020 Agah Karakuzu
     % (C) Copyright 2022 CPP_BIDS developers
 

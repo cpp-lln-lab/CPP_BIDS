@@ -7,6 +7,7 @@ function data = nanPadding(cfg, data, expectedLength)
     %
     %  data = nanPadding(cfg, data, expectedLength)
     %
+
     % (C) Copyright 2020 CPP_BIDS developers
 
     if nargin < 2

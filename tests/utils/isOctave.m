@@ -8,6 +8,7 @@ function retval = isOctave()
     %
     % :returns: :retval: (boolean)
     %
+
     % (C) Copyright 2022 CPP_BIDS developers
 
     persistent cacheval   % speeds up repeated calls

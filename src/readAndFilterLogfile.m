@@ -30,7 +30,7 @@ function outputFiltered = readAndFilterLogfile(columnName, filterBy, saveOutputT
     % :type tsvFile: string
     %
     % :param cfg: Configuration. See ``checkCFG()``. If ``cfg`` is given as input the name
-    %             of the TSV file to read will be infered from there.
+    %             of the TSV file to read will be inferred from there.
     % :type cfg: structure
     %
     % :returns:

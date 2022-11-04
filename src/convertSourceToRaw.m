@@ -39,7 +39,7 @@ function convertSourceToRaw(varargin)
     rawDir = fullfile(cfg.dir.output, 'raw');
 
     % back up description to not overwrite
-    % TODO bids malab should be smart enought to not do that
+    % TODO bids malab should be smart enough to not do that
     isFile = @(x) exist(x, 'file');
     if isFile(fullfile(rawDir, 'dataset_description.json'))
         copyfile(fullfile(rawDir, 'dataset_description.json'), ...

@@ -30,7 +30,7 @@ function test_saveEventsFileOpenMultiColumnCheckHeader()
     % define the extra columns names
     logFile.extraColumns = {'Speed', 'LHL24', 'is_Fixation'};
 
-    % initalize logfile
+    % initialize logfile
     logFile = saveEventsFile('init', cfg, logFile);
 
     % extra columns: here we specify how many columns we want for each variable

@@ -51,12 +51,12 @@ function cfg = checkCFG(cfg)
     %     - ``cfg.fileName.task = ''``
     %       sets the name to be given to the task
     %     - ``cfg.fileName.zeroPadding = 3``
-    %       sets tha amount of 0 padding the subject, session and run number.
+    %       sets the amount of 0 padding the subject, session and run number.
     %     - ``cfg.fileName.dateFormat = 'yyyymmddHHMM'``
     %       sets the format of the date and time stamp that will be appended to all files.
     %
     %     The following fields can be used to specify certain of the labels that are used
-    %     to specify certain of the acquisition conditions of certain experemental runs
+    %     to specify certain of the acquisition conditions of certain experimental runs
     %     in a BIDS data set. These are mostly for MRI and, if set, will be ignored
     %     for most other modalities. See ``tests/test_createFilename()`` for details on how
     %     to use these.

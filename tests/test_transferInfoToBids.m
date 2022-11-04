@@ -22,7 +22,7 @@ function test_transferInfoToBidsBasic()
 end
 
 function test_transferInfoToBidsTaskname()
-    % make sure the file name gets trasnferred where it should
+    % make sure the file name gets transferred where it should
 
     cfg.task.name = 'foo bar';
     cfg.task.instructions = 'do this';
@@ -47,7 +47,7 @@ function test_transferInfoToBidsTaskname()
 end
 
 function test_transferInfoToBidsMRI()
-    % make sure the file name gets trasnferred where it should
+    % make sure the file name gets transferred where it should
 
     cfg.mri.repetitionTime = 1.56;
 

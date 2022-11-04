@@ -1,6 +1,6 @@
 function fullFilename = getFullFilename(fileName, cfg)
     %
-    % Returns the full path of a file (fo a given subject and modality in a run).
+    % Returns the full path of a file (for a given subject and modality in a run).
     %
     % USAGE::
     %

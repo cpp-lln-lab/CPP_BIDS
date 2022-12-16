@@ -43,7 +43,7 @@ function cfg = checkCFG(cfg)
     %     to query about group name, as well as for session, subject and run number.
     %
     %   - ``cfg.dir.output``
-    %     sets where the data will be saved.
+    %     sets where the data will be saved. Default is within the experiment folder.
     %
     %   Filename options:
     %     sets options that will help in creating the filenames.
@@ -199,7 +199,6 @@ function cfg = checkCFG(cfg)
 
     fieldsToSet.dir.output = fullfile( ...
                                       fileparts(mfilename('fullpath')), ...
-                                      '..', ...
                                       'output');
 
     fieldsToSet.subject.ask = {'grp'; 'ses'; 'run'};

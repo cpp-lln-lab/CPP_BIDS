@@ -1,16 +1,15 @@
 ---
-name: tests and coverage
+name: tests and coverage with octave
 
 on:
   push:
     branches:
     - master
-    - dev
   pull_request:
     branches: ['*']
 
 jobs:
-  build:
+  tests_octave:
     runs-on: ubuntu-22.04
     steps:
 

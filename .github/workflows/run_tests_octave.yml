@@ -1,15 +1,20 @@
-name: tests and coverage
+---
+name: tests and coverage with octave
 
 on:
   push:
     branches:
-      - master
-      - dev
+    - master
   pull_request:
     branches: ['*']
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+
 jobs:
-  build:
+  tests_octave:
     runs-on: ubuntu-22.04
     steps:
 
@@ -39,8 +44,5 @@ jobs:
     - name: Code coverage
       uses: codecov/codecov-action@v3
       with:
-       token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-       file:  coverage.xml # optional
-       flags: unittests # optional
-       name: codecov-umbrella # optional
-       fail_ci_if_error: true # optional (default = false)
+        file: coverage.xml
+        flags: octave

@@ -1,0 +1,61 @@
+---
+name: tests and coverage with matlab
+
+
+on:
+  push:
+    branches:
+    - dev
+    - main
+  pull_request:
+    branches: ['*']
+  schedule:
+  - cron: 1 1 1 * *
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests_matlab:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [R2021a, R2021b, R2022a, R2022b]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+    - name: Install MATLAB
+      uses: matlab-actions/setup-matlab@v1.2.4
+      with:
+        release: ${{matrix.version}}
+
+    - name: Install
+      uses: actions/checkout@v3
+      with:
+        submodules: true
+        fetch-depth: 0
+
+    - name: Install Moxunit and MOcov
+      run: |
+        git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
+        git clone https://github.com/MOcov/MOcov.git --depth 1
+
+    - name: Run tests
+      uses: matlab-actions/run-command@v1.2.0
+      with:
+        command: cd(fullfile(getenv('GITHUB_WORKSPACE'), '.github', 'workflows')); run tests_matlab;
+
+    - name: Code coverage
+      uses: codecov/codecov-action@v3
+      with:
+        file: coverage.xml
+        flags: ${{ matrix.os }}_matlab-${{ matrix.version }}
+        name: codecov-umbrella
+        fail_ci_if_error: false

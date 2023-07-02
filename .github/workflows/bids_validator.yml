@@ -1,22 +1,27 @@
+---
 name: BIDS validator
 
 on:
   push:
-    branches: ['master', 'main', 'dev']
+    branches: [master]
   pull_request:
     branches: ['*']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   OCTFLAGS: --no-gui --no-window-system --silent
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
 
     - uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        node-version: '18'
 
     - uses: actions/checkout@v3
       with:

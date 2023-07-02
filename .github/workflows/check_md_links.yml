@@ -1,3 +1,4 @@
+---
 name: Check Markdown links
 
 # checking for any dead links in markdown files
@@ -5,10 +6,13 @@ name: Check Markdown links
 on:
   push:
     branches:
-      - master
-      - dev
+    - master
   pull_request:
     branches: ['*']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   markdown-link-check:

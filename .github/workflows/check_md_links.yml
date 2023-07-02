@@ -7,9 +7,12 @@ on:
   push:
     branches:
     - master
-    - dev
   pull_request:
     branches: ['*']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true 
 
 jobs:
   markdown-link-check:

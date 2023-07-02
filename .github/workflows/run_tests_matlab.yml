@@ -1,9 +1,6 @@
 ---
 name: tests and coverage with matlab
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 on:
   push:
@@ -14,10 +11,14 @@ on:
     branches: ['*']
   schedule:
   - cron: 1 1 1 * *
-
+  
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+    
 jobs:
   tests_matlab:
 

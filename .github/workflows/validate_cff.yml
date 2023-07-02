@@ -13,6 +13,11 @@ on:
     - CITATION.cff
     - .github/workflows/validate_cff.yml
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+    
+
 jobs:
 
   validate_cff:

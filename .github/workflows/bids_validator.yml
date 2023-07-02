@@ -3,9 +3,13 @@ name: BIDS validator
 
 on:
   push:
-    branches: [master, main, dev]
+    branches: [master]
   pull_request:
     branches: ['*']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true    
 
 env:
   OCTFLAGS: --no-gui --no-window-system --silent

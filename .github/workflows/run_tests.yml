@@ -40,5 +40,5 @@ jobs:
     - name: Code coverage
       uses: codecov/codecov-action@v3
       with:
-        file: coverage.xml 
-        flags: octave 
+        file: coverage.xml
+        flags: octave

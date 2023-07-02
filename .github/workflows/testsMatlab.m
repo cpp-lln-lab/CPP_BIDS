@@ -10,4 +10,4 @@ run moxunit_set_path();
 
 cd(fullfile(root_dir));
 
-run run_tests();
+run runTests();

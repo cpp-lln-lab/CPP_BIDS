@@ -1,8 +1,9 @@
+---
 name: BIDS validator
 
 on:
   push:
-    branches: ['master', 'main', 'dev']
+    branches: [master, main, dev]
   pull_request:
     branches: ['*']
 

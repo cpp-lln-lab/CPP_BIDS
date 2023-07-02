@@ -1,10 +1,11 @@
+---
 name: tests and coverage
 
 on:
   push:
     branches:
-      - master
-      - dev
+    - master
+    - dev
   pull_request:
     branches: ['*']
 
@@ -39,7 +40,5 @@ jobs:
     - name: Code coverage
       uses: codecov/codecov-action@v3
       with:
-       token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-       file:  coverage.xml # optional
-       flags: octave # optional
-       fail_ci_if_error: true # optional (default = false)
+        file: coverage.xml 
+        flags: octave 

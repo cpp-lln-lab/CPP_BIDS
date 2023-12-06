@@ -24,7 +24,7 @@ function logFile = initializeExtraColumns(logFile)
     fieldsToSet.bids.LongName = '';
     fieldsToSet.bids.Description = '';
     fieldsToSet.bids.Levels = struct();
-    fieldsToSet.bids.TermURL = 'www.TODO.later';
+    fieldsToSet.bids.TermURL = 'https://www.TODO.later';
     fieldsToSet.bids.Units = '';
 
     % convert the cell of column name into a structure

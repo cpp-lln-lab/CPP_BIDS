@@ -24,7 +24,7 @@ function logFile = initializeExtraColumns(logFile)
     fieldsToSet.bids.LongName = '';
     fieldsToSet.bids.Description = '';
     fieldsToSet.bids.Levels = struct();
-    fieldsToSet.bids.TermURL = '';
+    fieldsToSet.bids.TermURL = 'https://www.TODO.later';
     fieldsToSet.bids.Units = '';
 
     % convert the cell of column name into a structure
@@ -35,8 +35,7 @@ function logFile = initializeExtraColumns(logFile)
 
         for iExtraColumn = 1:nbExtraColumns
             extraColumnName = logFile(1).extraColumns{iExtraColumn};
-            tmp.(extraColumnName) = struct( ...
-                                           'length', 1);
+            tmp.(extraColumnName) = struct('length', 1);
             tmp.(extraColumnName) = setDefaultFields(tmp.(extraColumnName), fieldsToSet);
         end
 

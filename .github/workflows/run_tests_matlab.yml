@@ -24,8 +24,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [R2021a, R2023b]
         os: [ubuntu-latest, windows-latest]
+        version: [R2021a, R2023b]
         include:
         - os: macos-latest
           version: R2023b

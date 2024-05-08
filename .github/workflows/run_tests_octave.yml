@@ -4,7 +4,7 @@ name: tests and coverage with octave
 on:
   push:
     branches:
-    - master
+    - main
   pull_request:
     branches: ['*']
 
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   tests_octave:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
 
     - uses: actions/checkout@v4

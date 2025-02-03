@@ -26,8 +26,7 @@ jobs:
     - name: Make jsonread for octave
       run: |
         sudo apt-get -y -qq update
-        sudo apt-get -y install octave
-        sudo apt-get -y install liboctave-dev
+        sudo apt-get -y install octave octave-dev
         cd lib/JSONio
         mkoctfile --mex jsonread.c jsmn.c -DJSMN_PARENT_LINKS
 
